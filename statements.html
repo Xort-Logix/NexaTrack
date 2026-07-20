@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Statements</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style/statements.css">
+  <link rel="stylesheet" href="style/main.css">
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" hidden>
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item " href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item " href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+        Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item active" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div class="flex-grow-1">
+          <div style="font-size:13px;font-weight:600;">James Johnson</div>
+          <small>Office Manager</small>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+      </div>
+      <div class="support-chip">
+        <i class="fa-solid fa-headset"></i>
+        <div><span>Need help?</span>Contact Support</div>
+      </div>
+    </div>
+  </div>
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
+    <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item active " href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+
+    <!-- Internal preview switcher: jumps between statement variants -->
+    <div class="engine-selector-bar">
+      <button class="engine-select-btn active" onclick="showStmt('doctor',this)">Dr. Heider (Provider)</button>
+      <button class="engine-select-btn" onclick="showStmt('isr',this)">Jeremiah Smith (Commission)</button>
+      <button class="engine-select-btn" onclick="showStmt('flat',this)">Joshua Lee (Flat Pay)</button>
+      <button class="engine-select-btn" onclick="showStmt('sdr',this)">Bianca Torres (SDR)</button>
+    </div>
+    <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+      <i class="fa-solid fa-bars"></i>
+    </label>
+    <a class="back-link" href="statements.html"><i class="fa-solid fa-arrow-left"></i> Back to Statements</a>
+
+    <div class="topbar d-flex justify-content-between align-items-start flex-wrap gap-3">
+      <div>
+        <h1 class="page-title" id="dynamic-title">Doctor Statement</h1>
+        <div class="page-sub" id="dynamic-sub">View earnings, advances, and payments for the selected pay period.</div>
+      </div>
+      <div class="d-flex gap-2 align-items-center flex-wrap">
+        <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+        <button class="btn btn-custom-outline" onclick="downloadPDF()"><i class="fa-regular fa-file-pdf me-1"></i>
+          Download PDF</button>
+        <button class="btn btn-custom-green"><i class="fa-solid fa-download me-1"></i> Export CSV</button>
+      </div>
+    </div>
+
+    <!-- =========================== DOCTOR STATEMENT =========================== -->
+    <div id="stmt-doctor" class="stmt-view">
+
+      <div class="profile-card-container">
+        <div class="profile-meta-block">
+          <img class="avatar-profile"
+            src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=150&q=80"
+            alt="Dr. Heider">
+          <div class="profile-details">
+            <h2>Dr. Heider</h2>
+            <div class="role">Provider</div>
+            <div class="contact-item"><i class="fa-regular fa-envelope"></i> dr.heider@gdgsmiles.com</div>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i> (954) 555-1234</div>
+          </div>
+        </div>
+        <div class="profile-kpi-group">
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Total Cosmetic Earned</div>
+            <div class="kpi-block-value kpi-block-value" style="color: var(--green-600);">$8,425.00</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Total General Earned</div>
+            <div class="kpi-block-value kpi-block-value" style="color: var(--blue-600);">$1,140.00</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Total Advances</div>
+            <div class="kpi-block-value kpi-block-value" style="color: var(--purple-600);">$1,300.00</div>
+          </div>
+          <div class="profile-kpi-item" style="border-left:none;">
+            <div class="net-owed-box">
+              <div class="kpi-block-label">Net Owed to Doctor</div>
+              <div class="kpi-block-value">$7,125.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="statement-tabs">
+        <button class="statement-tab-btn active" onclick="switchInnerTab('doctor','summary', this)"><i
+            class="fa-solid fa-grip"></i>Summary</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('doctor','cosmetic', this)"><i
+            class="fa-solid fa-tooth"></i>Cosmetic Production</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('doctor','general', this)"><i
+            class="fa-solid fa-notes-medical"></i>General Production</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('doctor','advances', this)"><i
+            class="fa-solid fa-hand-holding-dollar"></i>Advances</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('doctor','adjustments', this)"><i
+            class="fa-solid fa-sliders"></i>Adjustments</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('doctor','payments', this)"><i
+            class="fa-regular fa-credit-card"></i>Payments</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('doctor','history', this)"><i
+            class="fa-regular fa-clock"></i>Payroll History</button>
+      </div>
+
+      <div id="doctor-tab-contents">
+
+        <div id="doctor-view-summary" class="inner-content-pane">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Earnings Summary</h3>
+                </div>
+                <div class="panel-card-body">
+                  <div class="row-item" style="border-bottom:1px solid var(--gray-200);padding-bottom:8px;">
+                    <span class="label-text"
+                      style="font-weight:700;font-size:11px;text-transform:uppercase;color:var(--gray-500);">Category</span>
+                    <span class="detail-text"
+                      style="font-weight:700;font-size:11px;text-transform:uppercase;">Details</span>
+                    <span class="value-text"
+                      style="font-weight:700;font-size:11px;text-transform:uppercase;color:var(--gray-500);">Amount</span>
+                  </div>
+                  <div class="row-item"><span class="label-text">Cosmetic Production</span><span class="detail-text">8
+                      Cases · 118 Units</span><span class="value-text text-primary-kpi">$8,425.00</span></div>
+                  <div class="row-item"><span class="label-text">General Production</span><span class="detail-text">14
+                      Procedures</span><span class="value-text text-primary-kpi">$1,140.00</span></div>
+                  <div class="row-item total-row"><span class="label-text">Total Earned</span><span></span><span
+                      class="value-text">$9,565.00</span></div>
+
+                  <h3 class="panel-card-title mt-3 mb-1" style="font-size:11px;">Deductions &amp; Adjustments</h3>
+                  <div class="row-item deduction-row" style="padding-top:6px;"><span class="label-text">Advances
+                      Paid</span><span class="detail-text">2 Advances</span><span class="value-text">-$1,300.00</span>
+                  </div>
+                  <div class="row-item"><span class="label-text">Adjustments</span><span class="detail-text">0
+                      Adjustments</span><span class="value-text text-muted">$0.00</span></div>
+                  <div class="row-item total-row deduction-row"><span class="label-text">Total
+                      Deductions</span><span></span><span class="value-text">-$1,300.00</span></div>
+
+                  <div class="row-item highlight-row"><span class="label-text">Net Owed to
+                      Doctor</span><span></span><span class="value-text">$7,125.00</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Earnings Breakdown <i
+                      class="fa-regular fa-circle-question text-muted ms-1"></i></h3>
+                </div>
+                <div class="panel-card-body">
+                  <div class="breakdown-section-title"><span>Cosmetic Production</span><span>$8,425.00</span></div>
+                  <ul class="breakdown-list mb-2">
+                    <li>
+                      <div class="title-wrapper">Full Cases (16-20 Units)</div>
+                      <div class="amt">$7,425.00</div>
+                    </li>
+                    <li>
+                      <div class="title-wrapper">Per-Unit Cases</div>
+                      <div class="amt">$750.00</div>
+                    </li>
+                    <li>
+                      <div class="title-wrapper">Mixed Cases</div>
+                      <div class="amt">$250.00</div>
+                    </li>
+                  </ul>
+                  <div class="breakdown-section-title"><span>General Production</span><span>$1,140.00</span></div>
+                  <ul class="breakdown-list">
+                    <li>
+                      <div class="title-wrapper">Restorative</div>
+                      <div class="amt">$610.00</div>
+                    </li>
+                    <li>
+                      <div class="title-wrapper">Endodontics</div>
+                      <div class="amt">$350.00</div>
+                    </li>
+                    <li>
+                      <div class="title-wrapper">Other Procedures</div>
+                      <div class="amt">$180.00</div>
+                    </li>
+                  </ul>
+                  <div class="divider-line"></div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;">Total
+                      Earned</span>
+                    <span style="font-size:16px;color:var(--green-600);font-weight:800;">$9,565.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="d-flex flex-column gap-3">
+                <div class="panel-card">
+                  <div class="panel-card-header">
+                    <h3 class="panel-card-title">Pay Period Snapshot</h3>
+                  </div>
+                  <div class="panel-card-body">
+                    <div class="snapshot-row">
+                      <div><i class="fa-regular fa-calendar-check me-2"></i><span class="snapshot-label">Scheduled
+                          Clinical Days</span></div><span class="snapshot-value">18</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-regular fa-clock me-2"></i><span class="snapshot-label">Days Worked</span></div>
+                      <span class="snapshot-value">16</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-arrow-down-short-wide me-2"></i><span class="snapshot-label">Daily
+                          Floor</span></div><span class="snapshot-value">$650.00</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-wallet me-2"></i><span class="snapshot-label">Floor Earned</span></div>
+                      <span class="snapshot-value">$10,400.00</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-regular fa-circle-minus me-2"></i><span class="snapshot-label">Floor
+                          Applied</span></div><span class="snapshot-value neg">-$10,400.00</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-chart-line me-2"></i><span class="snapshot-label">Over Floor
+                          Earned</span></div><span class="snapshot-value">$0.00</span>
+                    </div>
+                    <div class="status-badge-box">
+                      <div class="status-badge-flex"><span class="status-badge-title"><i
+                            class="fa-regular fa-circle-check me-1"></i>Daily Floor Status</span><span
+                          class="status-pill-green">Complete</span></div>
+                      <div class="status-badge-desc">Doctor has met or exceeded all daily floors.</div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Advances</h3><button class="btn btn-sm btn-custom-outline">View
+                    All</button>
+                </div>
+                <div class="panel-card-body p-0">
+                  <table class="custom-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-muted">Mar 3, 2026</td>
+                        <td>Daily Floor Advance</td>
+                        <td class="amt-col">$650.00</td>
+                        <td class="text-muted">Week 1</td>
+                      </tr>
+                      <tr>
+                        <td class="text-muted">Mar 17, 2026</td>
+                        <td>Daily Floor Advance</td>
+                        <td class="amt-col">$650.00</td>
+                        <td class="text-muted">Week 2</td>
+                      </tr>
+                      <tr class="total-table-row">
+                        <td colspan="2">Total Advances</td>
+                        <td>$1,300.00</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Payments</h3><button class="btn btn-sm btn-custom-outline">View
+                    All</button>
+                </div>
+                <div class="panel-card-body d-flex align-items-center justify-content-center" style="min-height:150px;">
+
+                  <div class="empty-state-container">
+                    <i class="fa-solid fa-wallet text-muted opacity-50"></i>
+                    <div class="fw-semibold text-dark small">No payments for this period.</div>
+                    <p class="text-muted small mb-0 mt-1" style="font-size:11.5px;">Payments will appear here once
+                      processed.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Notes</h3><button class="icon-btn"><i
+                      class="fa-regular fa-pen-to-square"></i></button>
+                </div>
+                <div class="panel-card-body">
+                  <p class="notes-body-text mb-2">No notes for this pay period.</p>
+                  <button class="btn btn-sm btn-custom-outline"><i class="fa-solid fa-plus me-1"></i>Add Note</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="doctor-view-cosmetic" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Cosmetic Production Analytics &amp; Cases</h3>
+            </div>
+            <div class="panel-card-body">
+              <div class="row-item total-row" style="margin-bottom:10px;"><span class="label-text">Total Veneer &amp;
+                  Crown Cases</span><span></span><span class="value-text">$8,425.00</span></div>
+              <ul class="breakdown-list">
+                <li>
+                  <div class="title-wrapper"><strong>Full Cases (16-20 Units)</strong> — 8 cases completed successfully
+                  </div>
+                  <div class="amt">$7,425.00</div>
+                </li>
+                <li>
+                  <div class="title-wrapper"><strong>Per-Unit Cases</strong> — Extra standalone clinical units allocated
+                  </div>
+                  <div class="amt">$750.00</div>
+                </li>
+                <li>
+                  <div class="title-wrapper"><strong>Mixed Cases</strong> — Combined material configurations</div>
+                  <div class="amt">$250.00</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="doctor-view-general" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">General Production Breakdown</h3>
+            </div>
+            <div class="panel-card-body">
+              <div class="row-item total-row" style="margin-bottom:10px;"><span class="label-text">14 Non-Cosmetic
+                  Procedures Logged</span><span></span><span class="value-text">$1,140.00</span></div>
+              <ul class="breakdown-list">
+                <li>
+                  <div class="title-wrapper"><strong>Restorative Dentistry</strong> (Fillings, Core build-ups)</div>
+                  <div class="amt">$610.00</div>
+                </li>
+                <li>
+                  <div class="title-wrapper"><strong>Endodontics</strong> (Root Canal Treatments)</div>
+                  <div class="amt">$350.00</div>
+                </li>
+                <li>
+                  <div class="title-wrapper"><strong>Other Procedures</strong> (Hygiene, Diagnostics)</div>
+                  <div class="amt">$180.00</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="doctor-view-advances" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Advances Ledger</h3>
+            </div>
+            <div class="panel-card-body p-0">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-muted">Mar 3, 2026</td>
+                    <td>Daily Floor Advance</td>
+                    <td class="amt-col">$650.00</td>
+                    <td class="text-muted">Week 1 Ledger Advance</td>
+                  </tr>
+                  <tr>
+                    <td class="text-muted">Mar 17, 2026</td>
+                    <td>Daily Floor Advance</td>
+                    <td class="amt-col">$650.00</td>
+                    <td class="text-muted">Week 2 Ledger Advance</td>
+                  </tr>
+                  <tr class="total-table-row">
+                    <td colspan="2">Total Deductible Advances</td>
+                    <td>$1,300.00</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="doctor-view-adjustments" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Manual Adjustments</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-sliders d-block fs-3 mb-2 opacity-50"></i>
+              <div>No manual adjustments or corrections applied to this pay period.</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="doctor-view-payments" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Payments Log</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-wallet d-block fs-3 mb-2 opacity-50"></i>
+              <div class="fw-semibold text-dark small">No payout distributions processed.</div>
+              <p class="text-muted small mb-0 mt-1" style="font-size:11.5px;">Payments will instantly appear here once
+                approved by management.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="doctor-view-history" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Historical Payroll Transitions</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-clock-rotate-left d-block fs-3 mb-2 opacity-50"></i>
+              <div>Previous cycle settled at standard threshold rate.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-disclaimer">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>This statement reflects activity from <strong>Mar 1 – Mar 31, 2026</strong>. Data is locked as of Apr 2,
+          2026 9:15 AM.</span>
+      </div>
+    </div>
+
+    <!-- =========================== ISR STATEMENT =========================== -->
+    <div id="stmt-isr" class="stmt-view" style="display:none;">
+
+      <div class="profile-card-container">
+        <div class="profile-meta-block">
+          <img class="avatar-profile"
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+            alt="Jeremiah Smith">
+          <div class="profile-details">
+            <h2>Jeremiah Smith</h2>
+            <div class="role">ISR Closer (Commission)</div>
+            <div class="contact-item"><i class="fa-regular fa-envelope"></i> jeremiah.smith@gdgsmiles.com</div>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i> (954) 555-7890</div>
+          </div>
+        </div>
+        <div class="profile-kpi-group">
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Cases Closed</div>
+            <div class="kpi-block-value">18</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Total Treatment Value</div>
+            <div class="kpi-block-value">$156,250.00</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Commission Rate</div>
+            <div class="kpi-block-value highlight-purple">8%</div>
+          </div>
+          <div class="profile-kpi-item" style="border-left:none;">
+            <div class="net-owed-box">
+              <div class="kpi-block-label">Commission Earned</div>
+              <div class="kpi-block-value">$12,450.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="statement-tabs">
+        <button class="statement-tab-btn active" onclick="switchInnerTab('isr','summary', this)"><i
+            class="fa-solid fa-grip"></i>Summary</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('isr','cases', this)"><i
+            class="fa-regular fa-file-lines"></i>Cases Closed</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('isr','advances', this)"><i
+            class="fa-regular fa-id-card"></i>Advances</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('isr','payments', this)"><i
+            class="fa-regular fa-credit-card"></i>Payments</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('isr','history', this)"><i
+            class="fa-regular fa-clock"></i>Payroll History</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('isr','notes', this)"><i
+            class="fa-regular fa-note-sticky"></i>Notes</button>
+      </div>
+
+      <div id="isr-tab-contents">
+        <div id="isr-view-summary" class="inner-content-pane">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Commission Summary</h3>
+                </div>
+                <div class="panel-card-body">
+                  <div class="row-item"><span class="label-text">Total Treatment Value</span><span></span><span
+                      class="value-text">$156,250.00</span></div>
+                  <div class="row-item"><span class="label-text">Commission Rate</span><span></span><span
+                      class="value-text">8%</span></div>
+                  <div class="row-item highlight-row"><span class="label-text">Commission
+                      Earned</span><span></span><span class="value-text">$12,450.00</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Cases Closed Summary</h3>
+                </div>
+                <div class="panel-card-body p-0">
+                  <table class="custom-table">
+                    <thead>
+                      <tr>
+                        <th>Case Type</th>
+                        <th># of Cases</th>
+                        <th>Total Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Full Case (16–20 Units)</td>
+                        <td>12</td>
+                        <td class="amt-col">$108,600.00</td>
+                      </tr>
+                      <tr>
+                        <td>Per-Unit Cases (&lt;16 Units)</td>
+                        <td>5</td>
+                        <td class="amt-col">$32,750.00</td>
+                      </tr>
+                      <tr>
+                        <td>Extra Units Cases (&gt;20 Units)</td>
+                        <td>1</td>
+                        <td class="amt-col">$15,900.00</td>
+                      </tr>
+                      <tr class="total-table-row">
+                        <td>Total</td>
+                        <td>18</td>
+                        <td>$156,250.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="d-flex flex-column gap-3">
+                <div class="panel-card">
+                  <div class="panel-card-header">
+                    <h3 class="panel-card-title">Pay Period Snapshot</h3>
+                  </div>
+                  <div class="panel-card-body">
+                    <div class="snapshot-row">
+                      <div><i class="fa-regular fa-calendar me-2"></i><span class="snapshot-label">Pay Period</span>
+                      </div><span class="snapshot-value">Mar 1 – Mar 31, 2026</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-regular fa-square-check me-2"></i><span class="snapshot-label">Cases
+                          Closed</span></div><span class="snapshot-value">18</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-sack-dollar me-2"></i><span class="snapshot-label">Total Treatment
+                          Value</span></div><span class="snapshot-value">$156,250.00</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-percent me-2"></i><span class="snapshot-label">Commission Rate</span>
+                      </div><span class="snapshot-value">8%</span>
+                    </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-wallet me-2"></i><span class="snapshot-label">Commission Earned</span>
+                      </div><span class="snapshot-value">$12,450.00</span>
+                    </div>
+                    <div class="status-badge-box">
+                      <div class="status-badge-flex"><span class="status-badge-title"><i
+                            class="fa-regular fa-circle-check me-1"></i>All Good!</span><span
+                          class="status-pill-green">Verified</span></div>
+                      <div class="status-badge-desc">All cases and values are verified for this pay period.</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-lg-8">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Cases Closed</h3><button class="btn btn-sm btn-custom-outline">View All
+                    Cases</button>
+                </div>
+                <div class="panel-card-body p-0">
+                  <table class="custom-table">
+                    <thead>
+                      <tr>
+                        <th>Date Closed</th>
+                        <th>Case ID</th>
+                        <th>Patient</th>
+                        <th>Case Type</th>
+                        <th>Total Units</th>
+                        <th>Treatment Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-muted">Mar 31, 2026</td>
+                        <td>CASE-20260331-001</td>
+                        <td>Maria Garcia</td>
+                        <td>Zirconia Veneer Case</td>
+                        <td>20</td>
+                        <td class="amt-col">$14,050.00</td>
+                      </tr>
+                      <tr>
+                        <td class="text-muted">Mar 31, 2026</td>
+                        <td>CASE-20260331-002</td>
+                        <td>James Wilson</td>
+                        <td>Full Crown Case</td>
+                        <td>1</td>
+                        <td class="amt-col">$625.00</td>
+                      </tr>
+                      <tr>
+                        <td class="text-muted">Mar 30, 2026</td>
+                        <td>CASE-20260330-001</td>
+                        <td>Linda Brown</td>
+                        <td>Composite Veneer Case</td>
+                        <td>16</td>
+                        <td class="amt-col">$1,800.00</td>
+                      </tr>
+                      <tr>
+                        <td class="text-muted">Mar 30, 2026</td>
+                        <td>CASE-20260330-002</td>
+                        <td>Yorie Gouboth</td>
+                        <td>Zirconia Veneer Case</td>
+                        <td>18</td>
+                        <td class="amt-col">$13,125.00</td>
+                      </tr>
+                      <tr>
+                        <td class="text-muted">Mar 28, 2026</td>
+                        <td>CASE-20260328-001</td>
+                        <td>James Test</td>
+                        <td>Composite Veneer Case</td>
+                        <td>16</td>
+                        <td class="amt-col">$1,800.00</td>
+                      </tr>
+                      <tr class="total-table-row">
+                        <td colspan="4">Total</td>
+                        <td>18</td>
+                        <td>$156,250.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Notes</h3><button class="icon-btn"><i
+                      class="fa-regular fa-pen-to-square"></i></button>
+                </div>
+                <div class="panel-card-body">
+                  <p class="notes-body-text">Strong month! Keep closing cases and maximizing same-day conversions.
+                    Great work.</p>
+                  <button class="btn btn-sm btn-custom-outline"><i class="fa-solid fa-plus me-1"></i>Add Note</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="isr-view-cases" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">All Closed Cases</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-regular fa-file-lines d-block fs-3 mb-2 opacity-50"></i>
+              <div>Full case ledger for this pay period — 18 cases totaling $156,250.00.</div>
+            </div>
+          </div>
+        </div>
+        <div id="isr-view-advances" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Advances Ledger</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-hand-holding-dollar d-block fs-3 mb-2 opacity-50"></i>
+              <div>No advances issued this pay period.</div>
+            </div>
+          </div>
+        </div>
+        <div id="isr-view-payments" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Payments Log</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-wallet d-block fs-3 mb-2 opacity-50"></i>
+              <div>No payout distributions processed yet.</div>
+            </div>
+          </div>
+        </div>
+        <div id="isr-view-history" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Historical Payroll Transitions</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-clock-rotate-left d-block fs-3 mb-2 opacity-50"></i>
+              <div>Previous cycle settled at standard commission rate.</div>
+            </div>
+          </div>
+        </div>
+        <div id="isr-view-notes" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Notes</h3>
+            </div>
+            <div class="panel-card-body">
+              <p class="notes-body-text">Strong month! Keep closing cases and maximizing same-day conversions. Great
+                work.</p>
+              <button class="btn btn-sm btn-custom-outline"><i class="fa-solid fa-plus me-1"></i>Add Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-disclaimer">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>This statement reflects activity from <strong>Mar 1 – Mar 31, 2026</strong>. Data is locked as of Apr 2,
+          2026 9:15 AM.</span>
+      </div>
+    </div>
+
+    <!-- =========================== FLAT PAY STATEMENT =========================== -->
+    <div id="stmt-flat" class="stmt-view" style="display:none;">
+      <div class="profile-card-container">
+        <div class="profile-meta-block">
+          <div class="avatar-profile bg-secondary text-white d-flex align-items-center justify-content-center fw-bold"
+            style="font-size:20px;">JL</div>
+          <div class="profile-details">
+            <h2>Joshua Lee</h2>
+            <div class="role">ISR Representative (Flat Pay)</div>
+            <div class="contact-item"><i class="fa-regular fa-envelope"></i> joshua.lee@gdgsmiles.com</div>
+          </div>
+        </div>
+        <div class="profile-kpi-group">
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Cases Closed</div>
+            <div class="kpi-block-value">16</div>
+          </div>
+          <div class="profile-kpi-item" style="border-left:none;">
+            <div class="net-owed-box">
+              <div class="kpi-block-label">Total Earned</div>
+              <div class="kpi-block-value">$6,000.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3 class="panel-card-title">Flat Case Pay Breakdown</h3>
+        </div>
+        <div class="panel-card-body p-0">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Case Type</th>
+                <th># of Cases</th>
+                <th>Flat Rate</th>
+                <th>Total Earned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Composite</td>
+                <td>6</td>
+                <td>$100.00</td>
+                <td class="amt-col">$600.00</td>
+              </tr>
+              <tr>
+                <td>Ceramic</td>
+                <td>5</td>
+                <td>$150.00</td>
+                <td class="amt-col">$750.00</td>
+              </tr>
+              <tr>
+                <td>Zirconia</td>
+                <td>5</td>
+                <td>$930.00</td>
+                <td class="amt-col">$4,650.00</td>
+              </tr>
+              <tr class="total-table-row">
+                <td>Total</td>
+                <td>16</td>
+                <td>—</td>
+                <td>$6,000.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>This statement reflects activity from <strong>Mar 1 – Mar 31, 2026</strong>. Data is locked as of Apr 2,
+          2026 9:15 AM.</span>
+      </div>
+    </div>
+
+    <!-- =========================== SDR STATEMENT =========================== -->
+    <div id="stmt-sdr" class="stmt-view" style="display:none;">
+
+      <div class="profile-card-container">
+        <div class="profile-meta-block">
+          <img class="avatar-profile"
+            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"
+            alt="Bianca Torres">
+          <div class="profile-details">
+            <h2>Bianca Torres</h2>
+            <div class="role">SDR</div>
+            <div class="contact-item"><i class="fa-regular fa-envelope"></i> bianca.torres@gdgsmiles.com</div>
+            <div class="contact-item"><i class="fa-solid fa-phone"></i> (954) 555-8899</div>
+          </div>
+        </div>
+        <div class="profile-kpi-group">
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Hours Worked</div>
+            <div class="kpi-block-value">172.50</div>
+            <div class="kpi-delta-mini"><i class="fa-solid fa-arrow-up"></i> +6.50 vs Feb 1 – Feb 28</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Hourly Rate</div>
+            <div class="kpi-block-value">$15.00</div>
+            <div class="kpi-delta-mini text-muted" style="color:var(--gray-500) !important;">Standard Rate</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Regular Pay</div>
+            <div class="kpi-block-value text-primary-kpi">$2,512.50</div>
+          </div>
+          <div class="profile-kpi-item">
+            <div class="kpi-block-label">Overtime Pay</div>
+            <div class="kpi-block-value highlight-purple">$75.00</div>
+          </div>
+          <div class="profile-kpi-item" style="border-left:none;">
+            <div class="net-owed-box">
+              <div class="kpi-block-label">Gross Pay</div>
+              <div class="kpi-block-value">$2,587.50</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="statement-tabs">
+        <button class="statement-tab-btn active" onclick="switchInnerTab('sdr','summary', this)"><i
+            class="fa-solid fa-grip"></i>Summary</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('sdr','time', this)"><i
+            class="fa-regular fa-clock"></i>Time Entries</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('sdr','advances', this)"><i
+            class="fa-regular fa-id-card"></i>Advances</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('sdr','payments', this)"><i
+            class="fa-regular fa-credit-card"></i>Payments</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('sdr','history', this)"><i
+            class="fa-regular fa-clock-rotate-left"></i>Payroll History</button>
+        <button class="statement-tab-btn" onclick="switchInnerTab('sdr','notes', this)"><i
+            class="fa-regular fa-note-sticky"></i>Notes</button>
+      </div>
+
+      <div id="sdr-tab-contents">
+        <div id="sdr-view-summary" class="inner-content-pane">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Pay Breakdown</h3>
+                </div>
+                <div class="panel-card-body">
+                  <div class="row-item"><span class="label-text">Regular Hours (up to 40/week)</span><span
+                      class="detail-text">167.50 hrs</span><span class="value-text">$2,512.50</span></div>
+                  <div class="row-item"><span class="label-text">Overtime Hours (1.5x)</span><span
+                      class="detail-text">5.00 hrs</span><span class="value-text highlight-purple">$75.00</span></div>
+                  <div class="row-item total-row"><span class="label-text">Total Hours</span><span></span><span
+                      class="value-text" style="color:var(--gray-900);">172.50 hrs</span></div>
+                  <div class="row-item highlight-row"><span class="label-text">Gross Pay</span><span></span><span
+                      class="value-text">$2,587.50</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Hours Distribution</h3>
+                </div>
+
+                <div class="panel-card-body">
+
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="donut-wrap-sm">
+                        <canvas id="hoursChart"></canvas>
+                        <div class="donut-center-sm">
+                          <div class="amt">172.50</div>
+                          <div class="lbl">Total Hours</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="legend-line"><span class="name"><span class="legend-dotx"
+                            style="background:#10b981;"></span>Regular Hours (167.50)</span><span
+                          class="fw-semibold">97%</span></div>
+                      <div class="legend-line"><span class="name"><span class="legend-dotx"
+                            style="background:#a855f7;"></span>Overtime Hours (5.00)</span><span
+                          class="fw-semibold">3%</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Pay Period Snapshot</h3>
+                </div>
+                <div class="panel-card-body">
+                  <div class="snapshot-row">
+                    <div><i class="fa-regular fa-calendar me-2"></i><span class="snapshot-label">Pay Period</span></div>
+                    <span class="snapshot-value">Mar 1 – Mar 31, 2026</span>
+                  </div>
+                  <div class="snapshot-row">
+                    <div><i class="fa-regular fa-clock me-2"></i><span class="snapshot-label">Hours Worked</span></div>
+                    <span class="snapshot-value">172.50 hrs</span>
+                  </div>
+                  <div class="snapshot-row">
+                    <div><i class="fa-solid fa-sack-dollar me-2"></i><span class="snapshot-label">Hourly Rate</span>
+                    </div><span class="snapshot-value">$15.00 / hr</span>
+                  </div>
+                  <div class="snapshot-row">
+                    <div><i class="fa-regular fa-credit-card me-2"></i><span class="snapshot-label">Regular Pay</span>
+                    </div><span class="snapshot-value">$2,512.50</span>
+                  </div>
+                  <div class="snapshot-row">
+                    <div><i class="fa-solid fa-bolt me-2"></i><span class="snapshot-label">Overtime Pay</span></div>
+                    <span class="snapshot-value">$75.00</span>
+                  </div>
+                  <div class="status-badge-box">
+                    <div class="status-badge-flex"><span class="status-badge-title"><i
+                          class="fa-regular fa-circle-check me-1"></i>Gross Pay $2,587.50</span><span
+                        class="status-pill-green">Ready for Payroll</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-lg-5">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Time Summary</h3><button class="btn btn-sm btn-custom-outline">View
+                    Calendar</button>
+                </div>
+                <div class="panel-card-body p-0">
+                  <table class="custom-table">
+                    <thead>
+                      <tr>
+                        <th>Week</th>
+                        <th>Dates</th>
+                        <th>Regular Hours</th>
+                        <th>Overtime Hours</th>
+                        <th>Total Hours</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Week 1</td>
+                        <td class="text-muted">Mar 1 – Mar 7, 2026</td>
+                        <td>42.00</td>
+                        <td>0.00</td>
+                        <td>42.00</td>
+                      </tr>
+                      <tr>
+                        <td>Week 2</td>
+                        <td class="text-muted">Mar 8 – Mar 14, 2026</td>
+                        <td>41.50</td>
+                        <td>0.00</td>
+                        <td>41.50</td>
+                      </tr>
+                      <tr>
+                        <td>Week 3</td>
+                        <td class="text-muted">Mar 15 – Mar 21, 2026</td>
+                        <td>42.00</td>
+                        <td>3.00</td>
+                        <td>45.00</td>
+                      </tr>
+                      <tr>
+                        <td>Week 4</td>
+                        <td class="text-muted">Mar 22 – Mar 28, 2026</td>
+                        <td>42.00</td>
+                        <td>2.00</td>
+                        <td>44.00</td>
+                      </tr>
+                      <tr class="total-table-row">
+                        <td colspan="2">Total</td>
+                        <td>167.50</td>
+                        <td>5.00</td>
+                        <td>172.50</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-7">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Daily Hours</h3><button class="btn btn-sm btn-custom-outline">View All
+                    Time Entries</button>
+                </div>
+                <div class="panel-card-body p-0">
+                  <table class="custom-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th>Clock In</th>
+                        <th>Clock Out</th>
+                        <th>Break</th>
+                        <th>Reg. Hrs</th>
+                        <th>OT Hrs</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Mar 31, 2026</td>
+                        <td>Tue</td>
+                        <td>8:00 AM</td>
+                        <td>5:30 PM</td>
+                        <td>30m</td>
+                        <td>9.00</td>
+                        <td>0.00</td>
+                        <td>9.00</td>
+                        <td><span class="badge-status-mini approved">Approved</span></td>
+                      </tr>
+                      <tr>
+                        <td>Mar 30, 2026</td>
+                        <td>Mon</td>
+                        <td>8:05 AM</td>
+                        <td>6:00 PM</td>
+                        <td>30m</td>
+                        <td>9.50</td>
+                        <td class="highlight-purple">0.50</td>
+                        <td>10.00</td>
+                        <td><span class="badge-status-mini approved">Approved</span></td>
+                      </tr>
+                      <tr>
+                        <td>Mar 29, 2026</td>
+                        <td>Sun</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                        <td><span class="badge-status-mini dayoff">Day Off</span></td>
+                      </tr>
+                      <tr>
+                        <td>Mar 28, 2026</td>
+                        <td>Sat</td>
+                        <td>9:00 AM</td>
+                        <td>2:00 PM</td>
+                        <td>15m</td>
+                        <td>4.75</td>
+                        <td>0.00</td>
+                        <td>4.75</td>
+                        <td><span class="badge-status-mini approved">Approved</span></td>
+                      </tr>
+                      <tr>
+                        <td>Mar 27, 2026</td>
+                        <td>Fri</td>
+                        <td>8:00 AM</td>
+                        <td>5:30 PM</td>
+                        <td>30m</td>
+                        <td>9.00</td>
+                        <td>0.00</td>
+                        <td>9.00</td>
+                        <td><span class="badge-status-mini approved">Approved</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                    <span class="text-muted" style="font-size:11.5px;">Showing 1 to 5 of 31 entries</span>
+                    <div class="pager">
+                      <button class="active">1</button><button>2</button><button>3</button><button
+                        disabled>…</button><button>7</button>
+                      <button><i class="fa-solid fa-chevron-right" style="font-size:9px;"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-lg-8">
+              <div class="footer-disclaimer mt-0" style="height:100%;">
+                <i class="fa-solid fa-circle-info"></i>
+                <span><strong>Payroll Cut-Off:</strong> Apr 1, 2026 at 12:00 PM. All time entries after this date will
+                  be included in the next pay period.</span>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="panel-card">
+                <div class="panel-card-header">
+                  <h3 class="panel-card-title">Notes</h3><button class="icon-btn"><i
+                      class="fa-regular fa-pen-to-square"></i></button>
+                </div>
+                <div class="panel-card-body py-2">
+                  <p class="notes-body-text mb-2">No notes for this pay period.</p>
+                  <button class="btn btn-sm btn-custom-outline"><i class="fa-solid fa-plus me-1"></i>Add Note</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="sdr-view-time" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">All Time Entries</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-regular fa-clock d-block fs-3 mb-2 opacity-50"></i>
+              <div>Full time-entry ledger for this pay period — 172.50 hrs across 31 entries.</div>
+            </div>
+          </div>
+        </div>
+        <div id="sdr-view-advances" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Advances Ledger</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-hand-holding-dollar d-block fs-3 mb-2 opacity-50"></i>
+              <div>No advances issued this pay period.</div>
+            </div>
+          </div>
+        </div>
+        <div id="sdr-view-payments" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Payments Log</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-wallet d-block fs-3 mb-2 opacity-50"></i>
+              <div>No payout distributions processed yet.</div>
+            </div>
+          </div>
+        </div>
+        <div id="sdr-view-history" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Historical Payroll Transitions</h3>
+            </div>
+            <div class="panel-card-body py-5 text-center text-muted">
+              <i class="fa-solid fa-clock-rotate-left d-block fs-3 mb-2 opacity-50"></i>
+              <div>Previous cycle settled at standard hourly rate.</div>
+            </div>
+          </div>
+        </div>
+        <div id="sdr-view-notes" class="inner-content-pane" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">Notes</h3>
+            </div>
+            <div class="panel-card-body">
+              <p class="notes-body-text">No notes for this pay period.</p>
+              <button class="btn btn-sm btn-custom-outline"><i class="fa-solid fa-plus me-1"></i>Add Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById('pane-statement');
+      const opt = {
+        margin: 10,
+        filename: 'payroll-statement.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+
+    $(function () {
+      $('input[name="date"]').daterangepicker({
+        timePicker: true,
+        startDate: moment().startOf('month'),
+        endDate: moment().endOf('month'),
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      });
+    });
+    const titleMap = {
+      doctor: ['Doctor Statement', 'View earnings, advances, and payments for the selected pay period.'],
+      isr: ['ISR Statement', 'View earnings for the selected pay period.'],
+      flat: ['Flat Pay Statement', 'View flat case earnings for the selected pay period.'],
+      sdr: ['SDR Statement', 'View hours worked, pay breakdown, and payments for the selected pay period.']
+    };
+
+    let hoursChartInstance = null;
+
+    function showStmt(key, btn) {
+      document.querySelectorAll('.stmt-view').forEach(v => v.style.display = 'none');
+      const view = document.getElementById('stmt-' + key);
+      if (view) view.style.display = 'block';
+
+      document.querySelectorAll('.engine-select-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.getElementById('dynamic-title').innerText = titleMap[key][0];
+      document.getElementById('dynamic-sub').innerText = titleMap[key][1];
+
+      if (key === 'sdr') initHoursChart();
+    }
+
+    function switchInnerTab(engine, tabKey, activeBtn) {
+      const container = document.getElementById(engine + '-tab-contents');
+      if (!container) return;
+      container.querySelectorAll('.inner-content-pane').forEach(p => p.style.display = 'none');
+      const target = document.getElementById(engine + '-view-' + tabKey);
+      if (target) target.style.display = 'block';
+
+      activeBtn.closest('.statement-tabs').querySelectorAll('.statement-tab-btn').forEach(b => b.classList.remove('active'));
+      activeBtn.classList.add('active');
+    }
+
+    function initHoursChart() {
+      const ctx = document.getElementById('hoursChart');
+      if (!ctx || hoursChartInstance) return;
+      hoursChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Regular Hours', 'Overtime Hours'],
+          datasets: [{ data: [167.5, 5], backgroundColor: ['#10b981', '#a855f7'], borderWidth: 0 }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '74%',
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

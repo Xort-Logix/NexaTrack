@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" href="style/dashborad.css">
+  <link rel="stylesheet" href="style/main.css">
+
+
+  <style>
+
+
+
+  </style>
+
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item active" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div class="flex-grow-1">
+          <div style="font-size:13px;font-weight:600;">James Johnson</div>
+          <small>Office Manager</small>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+      </div>
+      <div class="support-chip">
+        <i class="fa-solid fa-headset"></i>
+        <div>
+          <span>Need help?</span>
+          Contact Support
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
+    <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item active" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Good morning, James 👋</h1>
+        <div class="page-sub">Here's your compensation overview for Mar 1 – Mar 31, 2026</div>
+      </div>
+      <div class="topbar-actions">
+        <!-- <button class="btn btn-outline-navy mobile-menu-btn" type="button" id="sidebarToggle"
+          aria-label="Open navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button> -->
+
+        <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </label>
+        <div class="date-pill">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+        <div class="topbar-pill">
+          <i class="fa-solid fa-location-dot leading"></i>
+
+          <select name="location" id="location-select">
+            <option value="all">All Locations</option>
+            <option value="usa">USA</option>
+            <option value="canada">Canada</option>
+          </select>
+
+          <i class="fa-solid fa-chevron-down trailing"></i>
+        </div>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-lines me-1"></i>Generate Payroll</button>
+        <a href="new-case.html" class="btn btn-green"><i class="fa-solid fa-plus me-1"></i>New Entry</a>
+      </div>
+    </div>
+
+    <div class="kpi-row mb-3">
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"> <img class="icon-img"
+                src="img/dollar-coin.png" alt="Total Payroll"></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Total Payroll</div>
+            <div class="kpi-value">$78,650</div>
+            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 12% vs Feb</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-wallet"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Pending Payroll</div>
+            <div class="kpi-value">$18,420</div>
+            <div class="kpi-delta text-muted">8 employees</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-simple"></i>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Total Production</div>
+            <div class="kpi-value">$412,500</div>
+            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 9% vs Feb</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-regular fa-user"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Total Advances</div>
+            <div class="kpi-value">$22,300</div>
+            <div class="kpi-delta text-muted">11 advances</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                class="fa-solid fa-circle-check"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Payroll Completion</div>
+            <div class="kpi-value">82%</div>
+            <div class="progress mt-2" style="height:5px;">
+              <div class="progress-bar bg-success" style="width:82%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;">
+              <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa fa-user-group"></i></div>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Employees Paid</div>
+            <div class="kpi-value">37</div>
+            <div class="kpi-delta text-muted">of 45 total</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="panel mb-3">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Team Compensation Summary</h2>
+              <div class="panel-sub">Every role's engine, in one table</div>
+            </div>
+            <a href="team-members.html" class="btn btn-sm btn-outline-navy">View All</a>
+          </div>
+          <div class="table-responsive">
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Team Member</th>
+                  <th>Department</th>
+                  <th>Compensation Type</th>
+                  <th>Earned</th>
+                  <th>Advances</th>
+                  <th>Net Owed</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:#4338ca;">DH</div>
+                      <div><span class="member-name">Dr. Heider</span><span class="member-role">Provider</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Providers</span></td>
+                  <td><span class="badge-comp production">Cosmetic Production</span></td>
+                  <td>$8,425.00</td>
+                  <td>$1,300.00</td>
+                  <td class="fw-bold">$7,125.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:#0d9488;">DV</div>
+                      <div><span class="member-name">Dr. Vanessa</span><span class="member-role">Provider</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Providers</span></td>
+                  <td><span class="badge-comp production">Cosmetic Production</span></td>
+                  <td>$4,600.00</td>
+                  <td>$1,300.00</td>
+                  <td class="fw-bold">$3,300.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:#f59e0b;">JR</div>
+                      <div><span class="member-name">Jeremiah</span><span class="member-role">ISR</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Sales</span></td>
+                  <td><span class="badge-comp commission">% Commission</span></td>
+                  <td>$12,450.00</td>
+                  <td>$0.00</td>
+                  <td class="fw-bold">$12,450.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:#f59e0b;">JS</div>
+                      <div><span class="member-name">Joshua</span><span class="member-role">ISR</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Sales</span></td>
+                  <td><span class="badge-comp flat">Flat Case Pay</span></td>
+                  <td>$6,000.00</td>
+                  <td>$0.00</td>
+                  <td class="fw-bold">$6,000.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:#3b82f6;">BT</div>
+                      <div><span class="member-name">Bianca</span><span class="member-role">SDR</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Sales</span></td>
+                  <td><span class="badge-comp hourly">Hourly</span></td>
+                  <td>$2,400.00</td>
+                  <td>$0.00</td>
+                  <td class="fw-bold">$2,400.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:var(--green-500);">NJ</div>
+                      <div><span class="member-name">Nancy</span><span class="member-role">CE</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Operations</span></td>
+                  <td><span class="badge-comp hourly">Hourly</span></td>
+                  <td>$2,000.00</td>
+                  <td>$0.00</td>
+                  <td class="fw-bold">$2,000.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:#a855f7;">CM</div>
+                      <div><span class="member-name">Carlos</span><span class="member-role">Marketing</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Marketing</span></td>
+                  <td><span class="badge-comp hourly">Hourly</span></td>
+                  <td>$3,000.00</td>
+                  <td>$0.00</td>
+                  <td class="fw-bold">$3,000.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="avatar-sm" style="background:var(--gray-500);">LT</div>
+                      <div><span class="member-name">Lab Tech Team</span><span class="member-role">Lab</span></div>
+                    </div>
+                  </td>
+                  <td><span class="badge-dept badge">Lab</span></td>
+                  <td><span class="badge-comp hourly">Hourly</span></td>
+                  <td>$1,850.00</td>
+                  <td>$0.00</td>
+                  <td class="fw-bold">$1,850.00</td>
+                  <td><span class="badge-status active">Clean</span></td>
+                  <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Recent Cases</h2>
+              <div class="panel-sub">Latest Master Case Records</div>
+            </div>
+            <a href="cases.html" class="btn btn-sm btn-outline-navy">View All Cases</a>
+          </div>
+          <div class="table-responsive">
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Patient</th>
+                  <th>Case Type</th>
+                  <th>Units</th>
+                  <th>Comp Method</th>
+                  <th>Doctor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mar 31, 2026</td>
+                  <td>Maria Garcia</td>
+                  <td>Zirconia Veneer Case</td>
+                  <td>20</td>
+                  <td>Full Case</td>
+                  <td>Dr. Heider</td>
+                  <td><span class="badge-status active">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>Mar 31, 2026</td>
+                  <td>James Wilson</td>
+                  <td>Full Crown Case</td>
+                  <td>1</td>
+                  <td>Per-Unit</td>
+                  <td>Dr. Vanessa</td>
+                  <td><span class="badge-status active">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>Mar 30, 2026</td>
+                  <td>Linda Brown</td>
+                  <td>Composite Veneer Case</td>
+                  <td>16</td>
+                  <td>Full Case</td>
+                  <td>Dr. Vanessa</td>
+                  <td><span class="badge-status warn">Verified</span></td>
+                </tr>
+                <tr>
+                  <td>Mar 29, 2026</td>
+                  <td>Yorie Gouboth</td>
+                  <td>Composite Veneer Case</td>
+                  <td>16</td>
+                  <td>Full Case</td>
+                  <td>Dr. Safa</td>
+                  <td><span class="badge-status warn">Pre-Completed</span></td>
+                </tr>
+                <tr>
+                  <td>Mar 29, 2026</td>
+                  <td>James Test</td>
+                  <td>Full Crown Case</td>
+                  <td>1</td>
+                  <td>Per-Unit</td>
+                  <td>Dr. Nancy</td>
+                  <td><span class="badge-status active">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="panel panel-body mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="panel-title mb-0">Payroll Overview</h2>
+            <div class="topbar-pill" style="padding:5px 10px;">This Month<i
+                class="fa-solid fa-chevron-down trailing"></i></div>
+          </div>
+          <div class="legend-row">
+            <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span>Providers</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>ISR (Commission)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span>ISR (Flat)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#a855f7;"></span>SDR</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#0d9488;"></span>CE</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#9ca3af;"></span>Other</div>
+          </div>
+          <canvas id="payrollChart" height="190"></canvas>
+        </div>
+
+        <div class="panel panel-body mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h2 class="panel-title mb-0">Advances Overview</h2>
+            <a href="advances.html" class="small text-decoration-none">View All</a>
+          </div>
+          <div class="row m-3">
+            <div class="col-4 ">
+              <div class="donut-wrap">
+                <canvas id="advancesChart"></canvas>
+                <div class="donut-center">
+                  <div class="amt">$22,300</div>
+                  <div class="lbl">Total Advances</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="m-3 ">
+                <div class="advance-legend-row">
+                  <span class="name"><span class="legend-dot" style="background:#0d9488;"></span>Dr. Heider</span>
+                  <span class="amt">$4,300.00</span>
+                  <span class="pct">19%</span>
+                </div>
+                <div class="advance-legend-row">
+                  <span class="name"><span class="legend-dot" style="background:#3b82f6;"></span>Dr. Vanessa</span>
+                  <span class="amt">$4,300.00</span>
+                  <span class="pct">19%</span>
+                </div>
+                <div class="advance-legend-row">
+                  <span class="name"><span class="legend-dot" style="background:#a855f7;"></span>Dr. Nancy</span>
+                  <span class="amt">$3,900.00</span>
+                  <span class="pct">17%</span>
+                </div>
+                <div class="advance-legend-row">
+                  <span class="name"><span class="legend-dot" style="background:#f59e0b;"></span>Dr. Safa</span>
+                  <span class="amt">$3,250.00</span>
+                  <span class="pct">15%</span>
+                </div>
+                <div class="advance-legend-row">
+                  <span class="name"><span class="legend-dot" style="background:#9ca3af;"></span>Others</span>
+                  <span class="amt">$6,550.00</span>
+                  <span class="pct">30%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel mt-3">
+      <div class="stat-strip">
+        <div class="stat-strip-item">
+          <div class="stat-strip-icon" style="background:#dbeafe;color:#1e40af;"><i
+              class="fa-regular fa-calendar-check"></i></div>
+          <div>
+            <div class="stat-strip-label">Last Payroll Run</div>
+            <div class="stat-strip-value">Apr 1, 2026 – 10:30 AM</div>
+            <div class="stat-strip-note">By James Johnson</div>
+          </div>
+        </div>
+        <div class="stat-strip-item">
+          <div class="stat-strip-icon" style="background:var(--green-50);color:var(--green-600);"><i
+              class="fa-regular fa-calendar"></i></div>
+          <div>
+            <div class="stat-strip-label">Next Payroll Run</div>
+            <div class="stat-strip-value">Apr 15, 2026</div>
+            <div class="stat-strip-note">In 14 days</div>
+          </div>
+        </div>
+        <div class="stat-strip-item">
+          <div class="stat-strip-icon" style="background:var(--green-50);color:var(--green-600);"><i
+              class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <div class="stat-strip-label">Data Status</div>
+            <div class="stat-strip-value">All records synced</div>
+            <div class="stat-strip-note">Last sync: Apr 2, 2026 – 9:15 AM</div>
+          </div>
+        </div>
+        <div class="stat-strip-item" style="cursor:pointer;">
+          <div class="stat-strip-icon" style="background:#fef3c7;color:#92400e;"><i
+              class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="flex-grow-1">
+            <div class="stat-strip-label">Attention Items</div>
+            <div class="stat-strip-value">3 items need review</div>
+            <div class="stat-strip-note">Click to review</div>
+          </div>
+          <i class="fa-solid fa-chevron-right row-chevron ms-2"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script>
+    $(function () {
+      $('input[name="date"]').daterangepicker({
+        timePicker: true,
+        startDate: moment().startOf('month'),
+        endDate: moment().endOf('month'),
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      });
+    });
+
+    // const sidebarToggle = document.getElementById('sidebarToggle');
+    // const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+    // function closeSidebar() {
+    //   document.body.classList.remove('sidebar-open');
+    // }
+
+    // if (sidebarToggle) {
+    //   sidebarToggle.addEventListener('click', () => {
+    //     document.body.classList.toggle('sidebar-open');
+    //   });
+    // }
+
+    // if (sidebarBackdrop) {
+    //   sidebarBackdrop.addEventListener('click', closeSidebar);
+    // }
+
+    // window.addEventListener('resize', () => {
+    //   if (window.innerWidth > 900) {
+    //     closeSidebar();
+    //   }
+    // });
+
+    // Payroll Overview grouped bar chart
+    const payrollCtx = document.getElementById('payrollChart');
+    new Chart(payrollCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Earned', 'Advances', 'Net Owed'],
+        datasets: [
+          { label: 'Providers', data: [19625, 2600, 17025], backgroundColor: '#10b981', borderRadius: 4 },
+          { label: 'ISR (Commission)', data: [12450, 0, 12450], backgroundColor: '#3b82f6', borderRadius: 4 },
+          { label: 'ISR (Flat)', data: [6000, 0, 6000], backgroundColor: '#f59e0b', borderRadius: 4 },
+          { label: 'SDR', data: [2400, 0, 2400], backgroundColor: '#a855f7', borderRadius: 4 },
+          { label: 'CE', data: [2000, 0, 2000], backgroundColor: '#0d9488', borderRadius: 4 },
+          { label: 'Other', data: [4850, 0, 4850], backgroundColor: '#9ca3af', borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12, weight: 600 }, color: '#374151' } },
+          y: {
+            grid: { color: '#eef1f5' },
+            ticks: {
+              callback: (v) => v === 0 ? '$0' : '$' + (v / 1000) + 'K',
+              font: { family: 'Inter', size: 11 }, color: '#6b7280'
+            }
+          }
+        }
+      }
+    });
+
+    // Advances donut chart
+    const advCtx = document.getElementById('advancesChart');
+    new Chart(advCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Dr. Heider', 'Dr. Vanessa', 'Dr. Nancy', 'Dr. Safa', 'Others'],
+        datasets: [{
+          data: [4300, 4300, 3900, 3250, 6550],
+          backgroundColor: ['#0d9488', '#3b82f6', '#a855f7', '#f59e0b', '#9ca3af'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        cutout: '72%',
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (c) => c.label + ': $' + c.parsed.toLocaleString() } }
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>

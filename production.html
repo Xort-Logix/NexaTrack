@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Production</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" href="style/produection.css">
+  <link rel="stylesheet" href="style/main.css">
+
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation Rules</a>
+      <a class="nav-link-item active" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item" href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-backdrop" onclick="document.getElementById('sidebarToggle').checked = false">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item " href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item active" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Production</h1>
+        <div class="page-sub">Track production activity across all departments and team members.</div>
+      </div>
+
+      <button class="btn btn-outline-navy mobile-menu-btn" type="button" aria-label="Open navigation"
+        onclick="document.getElementById('sidebarToggle').checked = !document.getElementById('sidebarToggle').checked">
+
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="d-flex gap-2 topbar-actions">
+        <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-pdf me-1"></i>Export PDF</button>
+        <button class="btn btn-outline-navy"><i class="fa-solid fa-download me-1"></i>Export CSV</button>
+      </div>
+    </div>
+    <ul class="nav" style="border-bottom:1px solid var(--gray-200);margin-bottom:16px;">
+      <li class="nav-item"><a class="engine-tab-btn active" style="display:inline-block;cursor:pointer;"
+          onclick="showProdTab('overview',this)">Overview</a></li>
+      <li class="nav-item"><a class="engine-tab-btn" style="display:inline-block;cursor:pointer;"
+          onclick="showProdTab('department',this)">By Department</a></li>
+      <li class="nav-item"><a class="engine-tab-btn" style="display:inline-block;cursor:pointer;"
+          onclick="showProdTab('teammember',this)">By Team Member</a></li>
+      <li class="nav-item"><a class="engine-tab-btn" style="display:inline-block;cursor:pointer;"
+          onclick="showProdTab('procedure',this)">By Procedure / Case Type</a></li>
+      <li class="nav-item"><a class="engine-tab-btn" style="display:inline-block;cursor:pointer;"
+          onclick="showProdTab('trends',this)">Trends</a></li>
+      <li class="nav-item"><a class="engine-tab-btn" style="display:inline-block;cursor:pointer;"
+          onclick="showProdTab('daily',this)">Daily Activity</a></li>
+    </ul>
+
+    <div class="panel-header">
+      <div class="d-flex gap-2 flex-wrap align-items-center">
+        <div class="input-group" style="width: 280px;">
+          <input type="text" id="daterange" name='date' class="form-control">
+          <span class="input-group-text">
+            <i class="fa-regular fa-calendar"></i>
+          </span>
+        </div>
+
+        <select class="form-select form-select-sm-custom" style="width:190px;">
+          <option>All Departments</option>
+          <option>Sales</option>
+          <option>Marketing</option>
+          <option>Engineering</option>
+          <option>Human Resources</option>
+          <option>Finance</option>
+        </select>
+        <select class="form-select form-select-sm-custom" style="width:190px;">
+          <option>All Team Members</option>
+          <option>John Doe</option>
+          <option>Jane Smith</option>
+          <option>Bob Johnson</option>
+          <option>Alice Williams</option>
+          <option>Charlie Brown</option>
+        </select>
+        <select class="form-select form-select-sm-custom" style="width:190px;">
+          <option>All Case Types</option>
+          <option>Composite Veneers</option>
+          <option>Ceramic Veneers</option>
+          <option>Porcelain / Zirconia Veneers</option>
+          <option>Crowns (All Materials)</option>
+        </select>
+        <button class="filter-btn"><i class="fa-solid fa-sliders me-1"></i>Filters</button>
+        <div class="clear-filters" onclick="renderTable()">
+          <a href="#" class="clear-filters-link"><i class="fa fa-refresh" aria-hidden="true"></i>Clear Filters</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-6 col-md-2 col-12 ">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-3">
+              <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                  class="fa-solid fa-chart-column"></i></div>
+            </div>
+            <div class="col-9">
+              <div class="kpi-label">Total Production</div>
+              <div class="kpi-value">$874,250</div>
+              <div class="kpi-delta text-success">+12.4% vs Feb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2 col-12">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-3">
+              <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-tooth"></i></div>
+            </div>
+            <div class="col-9">
+              <div class="kpi-label">Cosmetic Production</div>
+              <div class="kpi-value">$724,350</div>
+              <div class="kpi-delta text-muted">82.9% of Total</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2 col-12">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-3">
+              <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i
+                  class="fa-solid fa-briefcase-medical"></i>
+              </div>
+            </div>
+            <div class="col-9">
+              <div class="kpi-label">General Production</div>
+              <div class="kpi-value">$149,900</div>
+              <div class="kpi-delta text-muted">17.1% of Total</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 col-12">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-3">
+              <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-file-lines"></i>
+              </div>
+            </div>
+            <div class="col-9">
+              <div class="kpi-label">Total Cases</div>
+              <div class="kpi-value">126</div>
+              <div class="kpi-delta text-success">+18 vs Feb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-2 col-12">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-3">
+              <div class="kpi-icon" style="background:#e0e7ff;color:#3730a3;"><i class="fa-solid fa-user-group"></i>
+              </div>
+            </div>
+            <div class="col-9">
+              <div class="kpi-label">Total Units</div>
+              <div class="kpi-value">662</div>
+              <div class="kpi-delta text-success">+74 vs Feb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TAB: OVERVIEW ============ -->
+    <div id="ptab-overview">
+
+      <!-- Row 1: Chart + Donut + Top Producers -->
+      <div class="row g-3 mb-3">
+        <div class="col-lg-6">
+          <div class="chart-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <h2 class="panel-title mb-0">Production over Time</h2>
+              <div class="chart-legend">
+                <div class="legend-item"><span class="legend-swatch" style="background:#059669"></span><span
+                    class="legend-label">Total Production</span></div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#2563eb"></span><span
+                    class="legend-label">Cosmetic Production</span></div>
+                <div class="legend-item"><span class="legend-swatch" style="background:#7c3aed"></span><span
+                    class="legend-label">General Production</span></div>
+              </div>
+            </div>
+            <div style="height:300px;">
+              <canvas id="productionChart" style="width:100%;height:100%;"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="chart-card text-center">
+            <h2 class="panel-title mb-3 text-start">Production by Department</h2>
+            <div class="row pt-5">
+              <div class="col-12 col-lg-5 text-center">
+                <div class="prod-donut"
+                  style="background:conic-gradient(#059669 0% 68.4%, #f59e0b 68.4% 86.3%, #3b82f6 86.3% 94.6%, #a855f7 94.6% 100%);">
+                  <div class="prod-donut-hole">
+                    <div class="amt">$874,250</div>
+                    <div class="lbl">Total Production</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-5 text-center">
+                <div style="font-size:12.5px;text-align:left;">
+                  <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
+                        style="background:#059669;"></span> Providers</span><span class="fw-semibold">$598,450
+                      (68.4%)</span></div>
+                  <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
+                        style="background:#f59e0b;"></span> ISR (Commission)</span><span class="fw-semibold">$156,250
+                      (17.9%)</span></div>
+                  <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
+                        style="background:#3b82f6;"></span> ISR (Flat Pay)</span><span class="fw-semibold">$72,800
+                      (8.3%)</span></div>
+                  <div class="d-flex justify-content-between"><span><span class="prod-legend-dot"
+                        style="background:#a855f7;"></span> Other (SDR, CE, Lab, Mkt)</span><span
+                      class="fw-semibold">$46,750 (5.4%)</span></div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="chart-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h2 class="panel-title mb-0">Top Producers (By Production)</h2>
+            </div>
+            <div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">1</span>
+                  <div class="avatar-sm">DH</div><span class="small fw-semibold">Dr. Heider</span>
+                </div><span class="small fw-bold">$228,450.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">2</span>
+                  <div class="avatar-sm">DV</div><span class="small fw-semibold">Dr. Vanessa</span>
+                </div><span class="small fw-bold">$198,300.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">3</span>
+                  <div class="avatar-sm">JS</div><span class="small fw-semibold">Jeremiah Smith</span>
+                </div><span class="small fw-bold">$156,250.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">4</span>
+                  <div class="avatar-sm">JL</div><span class="small fw-semibold">Joshua Lee</span>
+                </div><span class="small fw-bold">$94,600.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">5</span>
+                  <div class="avatar-sm">DS</div><span class="small fw-semibold">Dr. Safa</span>
+                </div><span class="small fw-bold">$87,700.00</span>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-outline-navy w-100 mt-2">View All Producers</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Case Type table + Team Member table + Snapshot -->
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <div class="panel panel-body h-100">
+            <h2 class="panel-title mb-3">Production by Case Type</h2>
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Case Type</th>
+                  <th>Cases</th>
+                  <th>Units</th>
+                  <th>Production</th>
+                  <th>% of Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Composite Veneers</td>
+                  <td>42</td>
+                  <td>166</td>
+                  <td>$148,600</td>
+                  <td>17.0%</td>
+                </tr>
+                <tr>
+                  <td>Ceramic Veneers</td>
+                  <td>31</td>
+                  <td>132</td>
+                  <td>$128,250</td>
+                  <td>14.7%</td>
+                </tr>
+                <tr>
+                  <td>Porcelain / Zirconia Veneers</td>
+                  <td>28</td>
+                  <td>116</td>
+                  <td>$176,900</td>
+                  <td>20.2%</td>
+                </tr>
+                <tr>
+                  <td>Crowns (All Materials)</td>
+                  <td>17</td>
+                  <td>29</td>
+                  <td>$64,200</td>
+                  <td>7.3%</td>
+                </tr>
+                <tr>
+                  <td>Bridges</td>
+                  <td>5</td>
+                  <td>19</td>
+                  <td>$38,700</td>
+                  <td>4.4%</td>
+                </tr>
+                <tr>
+                  <td>Other General Procedures</td>
+                  <td>26</td>
+                  <td>176</td>
+                  <td>$149,900</td>
+                  <td>17.1%</td>
+                </tr>
+                <tr>
+                  <td>Other Cosmetic Procedures</td>
+                  <td>14</td>
+                  <td>-</td>
+                  <td>$167,800</td>
+                  <td>19.2%</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="fw-bold" style="border-top:2px solid var(--gray-200,#e2e6ed);color:#059669;">
+                  <td>TOTAL</td>
+                  <td>126</td>
+                  <td>662</td>
+                  <td>$874,250.00</td>
+                  <td>100%</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="panel panel-body h-100">
+            <h2 class="panel-title mb-3">Production by Team Member</h2>
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Team Member</th>
+                  <th>Department</th>
+                  <th>Cases</th>
+                  <th>Units</th>
+                  <th>Production</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Dr. Heider</td>
+                  <td>Providers</td>
+                  <td>32</td>
+                  <td>168</td>
+                  <td>$228,450.00</td>
+                </tr>
+                <tr>
+                  <td>Dr. Vanessa</td>
+                  <td>Providers</td>
+                  <td>28</td>
+                  <td>142</td>
+                  <td>$198,300.00</td>
+                </tr>
+                <tr>
+                  <td>Jeremiah Smith</td>
+                  <td>ISR (Commission)</td>
+                  <td>18</td>
+                  <td>-</td>
+                  <td>$156,250.00</td>
+                </tr>
+                <tr>
+                  <td>Joshua Lee</td>
+                  <td>ISR (Flat Pay)</td>
+                  <td>16</td>
+                  <td>-</td>
+                  <td>$94,600.00</td>
+                </tr>
+                <tr>
+                  <td>Dr. Safa</td>
+                  <td>Providers</td>
+                  <td>13</td>
+                  <td>76</td>
+                  <td>$87,700.00</td>
+                </tr>
+                <tr>
+                  <td>Bianca Torres</td>
+                  <td>SDR</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>$32,500.00</td>
+                </tr>
+                <tr>
+                  <td>Nancy Johnson</td>
+                  <td>CE</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>$24,750.00</td>
+                </tr>
+                <tr>
+                  <td>Lab Tech Team</td>
+                  <td>Lab</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>$18,200.00</td>
+                </tr>
+                <tr>
+                  <td>Carlos Ramirez</td>
+                  <td>Marketing</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>$12,500.00</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="fw-bold" style="border-top:2px solid var(--gray-200,#e2e6ed);color:#059669;">
+                  <td>TOTAL</td>
+                  <td></td>
+                  <td>126</td>
+                  <td>662</td>
+                  <td>$874,250.00</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="panel panel-body h-100">
+            <h2 class="panel-title mb-3">Production Snapshot</h2>
+            <div class="snapshot-row"><span><i class="fa-solid fa-calculator me-2 text-success"></i>Average Case
+                Value</span><span>$6,939.29</span></div>
+            <div class="snapshot-row"><span><i class="fa-solid fa-cubes me-2 text-success"></i>Average Units per
+                Case</span><span>5.25</span></div>
+            <div class="snapshot-row"><span><i class="fa-solid fa-tooth me-2 text-success"></i>Cosmetic
+                %</span><span>82.9%</span></div>
+            <div class="snapshot-row"><span><i class="fa-solid fa-stethoscope me-2 text-success"></i>General
+                %</span><span>17.1%</span></div>
+            <div class="snapshot-row"><span><i class="fa-solid fa-circle-check me-2 text-success"></i>Case Acceptance
+                Rate</span><span>58.6%</span></div>
+            <div class="snapshot-row"><span><i class="fa-solid fa-arrow-trend-up me-2 text-success"></i>Upgrade Rate (16
+                → 20)</span><span>22.4%</span></div>
+            <div class="status-chip"><i class="fa-solid fa-circle-check"></i> Data is up to date<br><small
+                style="font-weight:500;">Last synced: Apr 2, 2026 9:15 AM</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-body mt-3 d-flex justify-content-between align-items-center" style="font-size:12.5px;">
+        <span class="text-muted"><i class="fa-solid fa-circle-info me-1"></i>Production data is based on completed cases
+          and posted procedures for <strong>Mar 1 – Mar 31, 2026</strong>.</span>
+        <a href="#" class="text-decoration-none"><i class="fa-regular fa-circle-question me-1"></i>How is production
+          calculated?</a>
+      </div>
+    </div>
+
+    <!-- ============ TAB: BY DEPARTMENT ============ -->
+    <div id="ptab-department" style="display:none;">
+      <div class="panel panel-body">
+        <h2 class="panel-title mb-3">Department Breakdown</h2>
+        <table class="nexa-table">
+          <thead>
+            <tr>
+              <th>Department</th>
+              <th>Booked Revenue</th>
+              <th>% of Total</th>
+              <th>Cases Booked</th>
+              <th>Show Rate</th>
+              <th>Goal Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Providers</td>
+              <td>$598,450.00</td>
+              <td>68.4%</td>
+              <td>78</td>
+              <td>72.1%</td>
+              <td><span class="badge-status active">104%</span></td>
+            </tr>
+            <tr>
+              <td>ISR (Commission)</td>
+              <td>$156,250.00</td>
+              <td>17.9%</td>
+              <td>45</td>
+              <td>68.6%</td>
+              <td><span class="badge-status active">92%</span></td>
+            </tr>
+            <tr>
+              <td>ISR (Flat Pay)</td>
+              <td>$72,800.00</td>
+              <td>8.3%</td>
+              <td>22</td>
+              <td>64.3%</td>
+              <td><span class="badge-status warn">87%</span></td>
+            </tr>
+            <tr>
+              <td>SDR</td>
+              <td>$16,150.00</td>
+              <td>1.8%</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>CE</td>
+              <td>$5,750.00</td>
+              <td>0.7%</td>
+              <td>-</td>
+              <td>68.2%</td>
+              <td><span class="badge-status active">95%</span></td>
+            </tr>
+            <tr>
+              <td>Other</td>
+              <td>$24,850.00</td>
+              <td>2.9%</td>
+              <td>1</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ TAB: BY TEAM MEMBER ============ -->
+    <div id="ptab-teammember" style="display:none;">
+      <div class="panel panel-body">
+        <h2 class="panel-title mb-3">Production by Team Member (Full)</h2>
+        <table class="nexa-table">
+          <thead>
+            <tr>
+              <th>Team Member</th>
+              <th>Department</th>
+              <th>Cases</th>
+              <th>Units</th>
+              <th>Production</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dr. Heider</td>
+              <td>Providers</td>
+              <td>32</td>
+              <td>168</td>
+              <td>$228,450.00</td>
+            </tr>
+            <tr>
+              <td>Dr. Vanessa</td>
+              <td>Providers</td>
+              <td>28</td>
+              <td>142</td>
+              <td>$198,300.00</td>
+            </tr>
+            <tr>
+              <td>Jeremiah Smith</td>
+              <td>ISR (Commission)</td>
+              <td>18</td>
+              <td>-</td>
+              <td>$156,250.00</td>
+            </tr>
+            <tr>
+              <td>Joshua Lee</td>
+              <td>ISR (Flat Pay)</td>
+              <td>16</td>
+              <td>-</td>
+              <td>$94,600.00</td>
+            </tr>
+            <tr>
+              <td>Dr. Safa</td>
+              <td>Providers</td>
+              <td>13</td>
+              <td>76</td>
+              <td>$87,700.00</td>
+            </tr>
+            <tr>
+              <td>Bianca Torres</td>
+              <td>SDR</td>
+              <td>-</td>
+              <td>-</td>
+              <td>$32,500.00</td>
+            </tr>
+            <tr>
+              <td>Nancy Johnson</td>
+              <td>CE</td>
+              <td>-</td>
+              <td>-</td>
+              <td>$24,750.00</td>
+            </tr>
+            <tr>
+              <td>Lab Tech Team</td>
+              <td>Lab</td>
+              <td>-</td>
+              <td>-</td>
+              <td>$18,200.00</td>
+            </tr>
+            <tr>
+              <td>Carlos Ramirez</td>
+              <td>Marketing</td>
+              <td>-</td>
+              <td>-</td>
+              <td>$12,500.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ TAB: BY PROCEDURE / CASE TYPE ============ -->
+    <div id="ptab-procedure" style="display:none;">
+      <div class="panel panel-body">
+        <h2 class="panel-title mb-3">Production by Procedure / Case Type</h2>
+        <table class="nexa-table">
+          <thead>
+            <tr>
+              <th>Case Type</th>
+              <th>Cases</th>
+              <th>Units</th>
+              <th>Production</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Composite Veneers</td>
+              <td>42</td>
+              <td>166</td>
+              <td>$148,600</td>
+              <td>17.0%</td>
+            </tr>
+            <tr>
+              <td>Ceramic Veneers</td>
+              <td>31</td>
+              <td>132</td>
+              <td>$128,250</td>
+              <td>14.7%</td>
+            </tr>
+            <tr>
+              <td>Porcelain / Zirconia Veneers</td>
+              <td>28</td>
+              <td>116</td>
+              <td>$176,900</td>
+              <td>20.2%</td>
+            </tr>
+            <tr>
+              <td>Crowns (All Materials)</td>
+              <td>17</td>
+              <td>29</td>
+              <td>$64,200</td>
+              <td>7.3%</td>
+            </tr>
+            <tr>
+              <td>Bridges</td>
+              <td>5</td>
+              <td>19</td>
+              <td>$38,700</td>
+              <td>4.4%</td>
+            </tr>
+            <tr>
+              <td>Other General Procedures</td>
+              <td>26</td>
+              <td>176</td>
+              <td>$149,900</td>
+              <td>17.1%</td>
+            </tr>
+            <tr>
+              <td>Other Cosmetic Procedures</td>
+              <td>14</td>
+              <td>-</td>
+              <td>$167,800</td>
+              <td>19.2%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ TAB: TRENDS ============ -->
+    <div id="ptab-trends" style="display:none;">
+      <div class="panel panel-body">
+        <h2 class="panel-title mb-3">Weekly Production</h2>
+        <table class="nexa-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Cases</th>
+              <th>Units</th>
+              <th>Production</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mar 1 – Mar 7</td>
+              <td>27</td>
+              <td>142</td>
+              <td>$186,400</td>
+            </tr>
+            <tr>
+              <td>Mar 8 – Mar 14</td>
+              <td>31</td>
+              <td>158</td>
+              <td>$204,750</td>
+            </tr>
+            <tr>
+              <td>Mar 15 – Mar 21</td>
+              <td>34</td>
+              <td>171</td>
+              <td>$228,600</td>
+            </tr>
+            <tr>
+              <td>Mar 22 – Mar 28</td>
+              <td>29</td>
+              <td>161</td>
+              <td>$212,300</td>
+            </tr>
+            <tr>
+              <td>Mar 29 – Mar 31</td>
+              <td>5</td>
+              <td>30</td>
+              <td>$42,200</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ TAB: DAILY ACTIVITY ============ -->
+    <div id="ptab-daily" style="display:none;">
+      <div class="panel panel-body">
+        <h2 class="panel-title mb-3">Daily Activity</h2>
+        <table class="nexa-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Cases</th>
+              <th>Units</th>
+              <th>Production</th>
+              <th>Top Producer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mar 31, 2026</td>
+              <td>6</td>
+              <td>32</td>
+              <td>$42,300</td>
+              <td>Dr. Heider</td>
+            </tr>
+            <tr>
+              <td>Mar 30, 2026</td>
+              <td>5</td>
+              <td>27</td>
+              <td>$36,100</td>
+              <td>Dr. Vanessa</td>
+            </tr>
+            <tr>
+              <td>Mar 29, 2026</td>
+              <td>4</td>
+              <td>22</td>
+              <td>$28,900</td>
+              <td>Dr. Safa</td>
+            </tr>
+            <tr>
+              <td>Mar 28, 2026</td>
+              <td>5</td>
+              <td>26</td>
+              <td:>$33,450</td>
+                <td>Dr. Heider</td>
+            </tr>
+            <tr>
+              <td>Mar 27, 2026</td>
+              <td>3</td>
+              <td>18</td>
+              <td>$21,600</td>
+              <td>Jeremiah Smith</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="sidebar-backdrop" onclick="document.getElementById('sidebarToggle').checked = false">
+      <div class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">N</div>
+          <div class="brand-text">NEXA<small>TRACK</small></div>
+        </div>
+        <div class="nav-section">
+          <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+          <a class="nav-link-item active" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+          <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+            Rules</a>
+          <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+          <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+          <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+          <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+          <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+          <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+            Runs</a>
+          <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+          <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+        </div>
+        <div class="sidebar-footer">
+          <div class="user-chip">
+            <div class="user-avatar">JJ</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script>
+    $(function () {
+      $('input[name="date"]').daterangepicker({
+        timePicker: true,
+        startDate: moment().startOf('month'),
+        endDate: moment().endOf('month'),
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      });
+    });
+
+    function showProdTab(key, el) {
+      document.querySelectorAll('[id^="ptab-"]').forEach(sec => sec.style.display = 'none');
+      document.getElementById('ptab-' + key).style.display = 'block';
+      document.querySelectorAll('.engine-tab-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function () {
+      const ctx = document.getElementById('productionChart').getContext('2d');
+      const labels = ['Mar 1', 'Mar 5', 'Mar 9', 'Mar 13', 'Mar 17', 'Mar 21', 'Mar 25', 'Mar 29', 'Mar 31'];
+      const total = [52000, 68000, 72000, 80000, 76000, 85000, 90000, 94000, 88000];
+      const cosmetic = [42000, 54000, 58000, 64000, 60000, 66000, 70000, 74000, 69000];
+      const general = [12000, 18000, 20000, 22000, 21000, 24000, 26000, 28000, 25000];
+
+      const gradientTotal = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientTotal.addColorStop(0, 'rgba(5,150,105,0.12)');
+      gradientTotal.addColorStop(1, 'rgba(5,150,105,0.02)');
+
+      const gradientCos = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientCos.addColorStop(0, 'rgba(37,99,235,0.10)');
+      gradientCos.addColorStop(1, 'rgba(37,99,235,0.02)');
+
+      const gradientGen = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientGen.addColorStop(0, 'rgba(124,58,237,0.10)');
+      gradientGen.addColorStop(1, 'rgba(124,58,237,0.02)');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels, datasets: [
+            { label: 'Total', data: total, borderColor: '#059669', backgroundColor: gradientTotal, tension: 0.35, pointRadius: 0, fill: true, order: 3 },
+            { label: 'Cosmetic', data: cosmetic, borderColor: '#2563eb', backgroundColor: gradientCos, tension: 0.35, pointRadius: 0, fill: true, order: 2 },
+            { label: 'General', data: general, borderColor: '#7c3aed', backgroundColor: gradientGen, tension: 0.35, pointRadius: 0, fill: true, order: 1 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { grid: { color: 'rgba(15,23,42,0.04)' }, ticks: { callback: function (val) { return '$' + (val / 1000) + 'K'; } } },
+            x: { grid: { display: false } }
+          },
+          elements: { line: { borderWidth: 2 } }
+        }
+      });
+    })();
+
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+    function closeSidebar() {
+      document.body.classList.remove('sidebar-open');
+    }
+
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', () => {
+        document.body.classList.toggle('sidebar-open');
+      });
+    }
+
+    if (sidebarBackdrop) {
+      sidebarBackdrop.addEventListener('click', closeSidebar);
+    }
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeSidebar();
+      }
+    });
+  </script>
+</body>
+
+</html>

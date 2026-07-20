@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Reports</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" href="style/main.css">
+  <link rel="stylesheet" href="style/reports.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" hidden>
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item " href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item " href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+        Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item " href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item active" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+   <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div class="flex-grow-1">
+          <div style="font-size:13px;font-weight:600;">James Johnson</div>
+          <small>Office Manager</small>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+      </div>
+      <div class="support-chip">
+        <i class="fa-solid fa-headset"></i>
+        <div><span>Need help?</span>Contact Support</div>
+      </div>
+    </div>
+  </div>
+ <div id="sidebarBackdrop" class="sidebar-backdrop">
+    <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item active" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Reports</h1>
+        <div class="page-sub">Analyze performance, track metrics, and generate insights across the organization.</div>
+      <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+      </div>
+      <div class="d-flex gap-2 align-items-center flex-wrap">
+        <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-lines me-1"></i>Export PDF</button>
+        <button class="btn btn-green"><i class="fa-solid fa-download me-1"></i>Export CSV</button>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-clock me-1"></i>Schedule Report</button>
+      </div>
+    </div>
+
+    <div class="report-tabs">
+      <button class="report-tab-btn active" data-tab="executive" onclick="showReportTab('executive', this)">Executive
+        Summary</button>
+      <button class="report-tab-btn" data-tab="sales" onclick="showReportTab('sales', this)">Sales Den</button>
+      <button class="report-tab-btn" data-tab="sdr" onclick="showReportTab('sdr', this)">SDR Performance</button>
+      <button class="report-tab-btn" data-tab="isr" onclick="showReportTab('isr', this)">ISR Performance</button>
+      <button class="report-tab-btn" data-tab="ce" onclick="showReportTab('ce', this)">CE Performance</button>
+      <button class="report-tab-btn" data-tab="production"
+        onclick="showReportTab('production', this)">Production</button>
+      <button class="report-tab-btn" data-tab="financial" onclick="showReportTab('financial', this)">Financial</button>
+      <button class="report-tab-btn" data-tab="cases" onclick="showReportTab('cases', this)">Case Analysis</button>
+      <button class="report-tab-btn" data-tab="marketing" onclick="showReportTab('marketing', this)">Marketing</button>
+      <button class="report-tab-btn" data-tab="team" onclick="showReportTab('team', this)">Team Performance</button>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                class="fa-solid fa-sack-dollar"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Booked Revenue</div>
+            <div class="kpi-value">$874,250.00</div>
+            <div class="kpi-delta text-success">+12.4% vs Feb 1 – Feb 28</div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-chart-line"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Cases Booked</div>
+            <div class="kpi-value">126</div>
+            <div class="kpi-delta text-success">+18 vs Feb 1 – Feb 28</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-user-group"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">New Hot Leads</div>
+            <div class="kpi-value">662</div>
+            <div class="kpi-delta text-success">+74 vs Feb 1 – Feb 28</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-percent"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Show Rate</div>
+            <div class="kpi-value">68.2%</div>
+            <div class="kpi-delta text-success">+6.1% vs Feb 1 – Feb 28</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-coins"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Avg Case Value</div>
+            <div class="kpi-value">$6,939.29</div>
+            <div class="kpi-delta text-success">+3.6% vs Feb 1 – Feb 28</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#fce7f3;color:#9d174d;"><i class="fa-solid fa-bullseye"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Close Rate (Quote → Booked)</div>
+            <div class="kpi-value">18.7%</div>
+            <div class="kpi-delta text-success">+2.3% vs Feb 1 – Feb 28</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar-panel">
+      <select class="form-select form-select-sm-custom" style="width:160px;">
+        <option>All Departments</option>
+        <option>Providers</option>
+        <option>ISR (Commission)</option>
+        <option>ISR (Flat Pay)</option>
+        <option>SDR</option>
+        <option>CE</option>
+        <option>Other (Lab, Mkt, Admin)</option>
+      </select>
+      <select class="form-select form-select-sm-custom" style="width:160px;">
+        <option>All Team Members</option>
+        <option>John Doe</option>
+        <option>Jane Smith</option>
+        <option>Bob Johnson</option>
+        <option>Emily Davis</option>
+      </select>
+      <select class="form-select form-select-sm-custom" style="width:150px;">
+        <option>All Locations</option>
+        <option>Location A</option>
+        <option>Location B</option>
+        <option>Location C</option>
+      </select>
+      <select class="form-select form-select-sm-custom" style="width:150px;">
+        <option>All Case Types</option>
+        <option>Case Type A</option>
+        <option>Case Type B</option>
+        <option>Case Type C</option>
+      </select>
+      <div class="flex-grow-1"></div>
+      <button class="btn btn-outline-navy"><i class="fa-solid fa-filter me-1"></i>Filters</button>
+      <button class="btn btn-outline-navy"><i class="fa-solid fa-rotate-left me-1"></i>Clear Filters</button>
+    </div>
+
+    <div id="report-tab-contents">
+
+      <!-- EXECUTIVE SUMMARY -->
+      <div id="report-view-executive" class="report-pane">
+        <div class="row g-3">
+          <div class="col-lg-5">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2">Booked Revenue Over Time</h2>
+              <div class="chart-legend-row">
+                <span><span class="dot" style="background:#10b981;"></span>Booked Revenue</span>
+                <span><span class="dot" style="background:#a855f7;"></span>Goal</span>
+              </div>
+              <canvas id="revenueLineChart" height="170"></canvas>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3">Revenue by Department</h2>
+              <div class="d-flex align-items-center gap-3 flex-wrap">
+                <div class="donut-wrap-md">
+                  <canvas id="revDeptChart"></canvas>
+                  <div class="donut-center-md">
+                    <div class="amt">$874,250</div>
+                    <div class="lbl">Total Revenue</div>
+                  </div>
+                </div>
+                <div class="flex-grow-1" style="min-width:140px;">
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#4338ca;"></span>
+                    <div>
+                      <div class="name">Providers</div>
+                      <div class="val">$598,450 (68.4%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span>
+                    <div>
+                      <div class="name">ISR (Commission)</div>
+                      <div class="val">$156,250 (17.9%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#f59e0b;"></span>
+                    <div>
+                      <div class="name">ISR (Flat Pay)</div>
+                      <div class="val">$72,800 (8.3%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#a855f7;"></span>
+                    <div>
+                      <div class="name">SDR</div>
+                      <div class="val">$16,150 (1.8%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#10b981;"></span>
+                    <div>
+                      <div class="name">CE</div>
+                      <div class="val">$5,750 (0.7%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#9ca3af;"></span>
+                    <div>
+                      <div class="name">Other</div>
+                      <div class="val">$24,850 (2.9%)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2">Top Performers (By Booked Revenue)</h2>
+              <div class="mini-tab-group">
+                <button class="mini-tab-btn active" onclick="switchPerformers('isr', this)">ISR</button>
+                <button class="mini-tab-btn" onclick="switchPerformers('providers', this)">Providers</button>
+                <button class="mini-tab-btn" onclick="switchPerformers('sdr', this)">SDR</button>
+                <button class="mini-tab-btn" onclick="switchPerformers('ce', this)">CE</button>
+              </div>
+              <div id="performers-list"></div>
+              <button class="btn btn-sm btn-outline-navy w-100 mt-2" id="performers-view-all">View All ISR
+                Performance</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3">Funnel Overview</h2>
+              <table class="funnel-table w-100">
+                <tbody>
+                  <tr>
+                    <td style="width:55%;">
+                      <div class="funnel-stage" style="background:#3b82f6;">Messages / Leads</div>
+                    </td>
+                    <td class="text-end">19,700</td>
+                    <td class="text-end text-muted">—</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="funnel-stage" style="background:#0d9488;margin:0 4%;">Hot Leads (Photos)</div>
+                    </td>
+                    <td class="text-end">2,827</td>
+                    <td class="text-end text-muted">14.3%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="funnel-stage" style="background:#10b981;margin:0 8%;">Quotes Sent</div>
+                    </td>
+                    <td class="text-end">2,930</td>
+                    <td class="text-end text-muted">103.6%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="funnel-stage" style="background:#f59e0b;margin:0 12%;">Deposits Collected</div>
+                    </td>
+                    <td class="text-end">1,105</td>
+                    <td class="text-end text-muted">37.7%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="funnel-stage" style="background:#ea580c;margin:0 16%;">Cases Booked</div>
+                    </td>
+                    <td class="text-end">546</td>
+                    <td class="text-end text-muted">19.0%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="funnel-stage" style="background:#c026d3;margin:0 20%;">Cases Started</div>
+                    </td>
+                    <td class="text-end">382</td>
+                    <td class="text-end text-muted">69.9%</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between align-items-center mt-2 pt-2"
+                style="border-top:1px solid var(--gray-200);">
+                <span class="fw-bold text-success" style="font-size:12.5px;">Overall Conversion (Lead → Booked)</span>
+                <span class="fw-bold text-success">2.77%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3">Case Type Breakdown (By Revenue)</h2>
+              <div class="d-flex align-items-center gap-3 flex-wrap">
+                <div class="donut-wrap-md">
+                  <canvas id="caseTypeChart"></canvas>
+                  <div class="donut-center-md">
+                    <div class="amt">$874,250</div>
+                    <div class="lbl">Total Revenue</div>
+                  </div>
+                </div>
+                <div class="flex-grow-1" style="min-width:140px;">
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#0d9488;"></span>
+                    <div>
+                      <div class="name">Zirconia Cases</div>
+                      <div class="val">$452,600 (51.8%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span>
+                    <div>
+                      <div class="name">Composite Veneers</div>
+                      <div class="val">$168,300 (19.3%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#f59e0b;"></span>
+                    <div>
+                      <div class="name">Porcelain Veneers</div>
+                      <div class="val">$143,200 (16.4%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#7c3aed;"></span>
+                    <div>
+                      <div class="name">Crowns</div>
+                      <div class="val">$78,900 (9.0%)</div>
+                    </div>
+                  </div>
+                  <div class="breakdown-legend-item"><span class="dot" style="background:#9ca3af;"></span>
+                    <div>
+                      <div class="name">Other</div>
+                      <div class="val">$31,250 (3.6%)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-outline-navy w-100 mt-2">View Case Analysis Report</button>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="panel h-100">
+              <div class="panel-header">
+                <h2 class="panel-title mb-0">Department Performance Summary</h2>
+              </div>
+              <div class="panel-body">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Department</th>
+                      <th>Book Revenue</th>
+                      <th>% of Total</th>
+                      <th>Cases Booked</th>
+                      <th>Show Rate</th>
+                      <th>Goal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Providers</td>
+                      <td>$598,450</td>
+                      <td>68.4%</td>
+                      <td>78</td>
+                      <td><span class="progress-mini"><span class="bar"
+                            style="width:104%;background:var(--green-500);"></span></span><span
+                          class="text-success fw-semibold">104%</span></td>
+                      <td><span class="fw-semibold text-success">95%</span></td>
+                    </tr>
+                    <tr>
+                      <td>ISR (Commission)</td>
+                      <td>$156,250</td>
+                      <td>17.9%</td>
+                      <td>45</td>
+                      <td><span class="progress-mini"><span class="bar"
+                            style="width:92%;background:var(--green-500);"></span></span><span
+                          class="text-success fw-semibold">92%</span></td>
+                      <td><span class="fw-semibold text-success">88%</span></td>
+                    </tr>
+                    <tr>
+                      <td>ISR (Flat Pay)</td>
+                      <td>$72,800</td>
+                      <td>8.3%</td>
+                      <td>22</td>
+                      <td><span class="progress-mini"><span class="bar"
+                            style="width:81%;background:#f59e0b;"></span></span><span class="fw-semibold"
+                          style="color:#c2410c;">81%</span></td>
+                      <td><span class="fw-semibold" style="color:#c2410c;">75%</span></td>
+                    </tr>
+                    <tr>
+                      <td>SDR</td>
+                      <td>$16,150</td>
+                      <td>1.8%</td>
+                      <td>6</td>
+                      <td><span class="progress-mini"><span class="bar"
+                            style="width:68%;background:#f59e0b;"></span></span><span class="fw-semibold"
+                          style="color:#c2410c;">68%</span></td>
+                      <td><span class="fw-semibold" style="color:#c2410c;">70%</span></td>
+                    </tr>
+                    <tr>
+                      <td>CE</td>
+                      <td>$5,750</td>
+                      <td>0.7%</td>
+                      <td>3</td>
+                      <td><span class="progress-mini"><span class="bar"
+                            style="width:95%;background:var(--green-500);"></span></span><span
+                          class="text-success fw-semibold">95%</span></td>
+                      <td><span class="fw-semibold text-success">90%</span></td>
+                    </tr>
+                    <tr>
+                      <td>Other</td>
+                      <td>$24,850</td>
+                      <td>2.9%</td>
+                      <td>2</td>
+                      <td><span class="progress-mini"><span class="bar"
+                            style="width:100%;background:var(--green-500);"></span></span><span
+                          class="text-success fw-semibold">100%</span></td>
+                      <td><span class="fw-semibold text-success">85%</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-strip">
+          <span><i class="fa-solid fa-circle-info"></i>All data is based on records through Mar 31, 2026.</span>
+          <span><i class="fa-solid fa-rotate text-muted" style="color:var(--gray-500) !important;"></i>Report data last
+            updated: Apr 2, 2026 9:15 AM</span>
+        </div>
+      </div>
+
+      <!-- OTHER TABS: contextual placeholder panes -->
+      <div id="report-view-sales" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-champagne-glasses"></i>
+          <div class="fw-semibold text-dark mb-1">Sales Den</div>Team leaderboard, daily standups, and closing-room
+          activity for this pay period.
+        </div>
+      </div>
+      <div id="report-view-sdr" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-phone-volume"></i>
+          <div class="fw-semibold text-dark mb-1">SDR Performance</div>Call volume, hot-lead conversion, and hourly
+          productivity for SDR staff.
+        </div>
+      </div>
+      <div id="report-view-isr" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-handshake"></i>
+          <div class="fw-semibold text-dark mb-1">ISR Performance</div>Cases closed, treatment value, and commission
+          trends across the ISR team.
+        </div>
+      </div>
+      <div id="report-view-ce" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-headset"></i>
+          <div class="fw-semibold text-dark mb-1">CE Performance</div>Client experience scores, follow-ups completed,
+          and satisfaction trends.
+        </div>
+      </div>
+      <div id="report-view-production" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-tooth"></i>
+          <div class="fw-semibold text-dark mb-1">Production</div>Case volume by material, units produced, and provider
+          output trends.
+        </div>
+      </div>
+      <div id="report-view-financial" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-scale-balanced"></i>
+          <div class="fw-semibold text-dark mb-1">Financial</div>Payroll cost, margin analysis, and
+          compensation-to-revenue ratios.
+        </div>
+      </div>
+      <div id="report-view-cases" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-magnifying-glass-chart"></i>
+          <div class="fw-semibold text-dark mb-1">Case Analysis</div>Deep dive into case type mix, average value, and
+          completion timelines.
+        </div>
+      </div>
+      <div id="report-view-marketing" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-bullhorn"></i>
+          <div class="fw-semibold text-dark mb-1">Marketing</div>Lead source performance, cost per lead, and campaign
+          attribution.
+        </div>
+      </div>
+      <div id="report-view-team" class="report-pane" style="display:none;">
+        <div class="placeholder-pane"><i class="fa-solid fa-people-group"></i>
+          <div class="fw-semibold text-dark mb-1">Team Performance</div>Organization-wide scorecards across every role
+          and department.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script>
+
+    $(function () {
+      $('input[name="date"]').daterangepicker({
+        timePicker: true,
+        startDate: moment().startOf('month'),
+        endDate: moment().endOf('month'),
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      });
+    });
+    /* Tab switching */
+    function showReportTab(key, btn) {
+      document.querySelectorAll('.report-pane').forEach(p => p.style.display = 'none');
+      const target = document.getElementById('report-view-' + key);
+      if (target) target.style.display = 'block';
+      document.querySelectorAll('.report-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    /* Top Performers mini-tabs */
+    const performerData = {
+      isr: {
+        label: 'ISR', people: [
+          ['Jeremiah Smith', '$156,250.00', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80'],
+          ['Joshua Lee', '$94,600.00', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80'],
+          ['Vanessa Rodriguez', '$87,300.00', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80'],
+          ['Dan Mitchell', '$72,450.00', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80'],
+          ['Maggie Johnson', '$61,250.00', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80']
+        ]
+      },
+      providers: {
+        label: 'Providers', people: [
+          ['Dr. Heider', '$598,450.00', 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=80&q=80'],
+          ['Dr. Vanessa', '$412,300.00', 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80'],
+          ['Dr. Safa', '$298,750.00', 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=80&q=80']
+        ]
+      },
+      sdr: {
+        label: 'SDR', people: [
+          ['Bianca Torres', '$16,150.00', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80']
+        ]
+      },
+      ce: {
+        label: 'CE', people: [
+          ['Nancy Johnson', '$5,750.00', 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80']
+        ]
+      }
+    };
+
+    function switchPerformers(key, btn) {
+      document.querySelectorAll('.mini-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const data = performerData[key];
+      const list = document.getElementById('performers-list');
+      list.innerHTML = data.people.map((p, i) => `
+        <div class="performer-row">
+          <span class="performer-rank">${i + 1}</span>
+          <img class="performer-avatar" src="${p[2]}" alt="${p[0]}">
+          <span class="performer-name">${p[0]}</span>
+          <span class="performer-rev">${p[1]}</span>
+        </div>`).join('');
+      document.getElementById('performers-view-all').innerText = 'View All ' + data.label + ' Performance';
+    }
+    switchPerformers('isr', document.querySelector('.mini-tab-btn'));
+
+    /* Revenue over time line chart */
+    new Chart(document.getElementById('revenueLineChart'), {
+      type: 'line',
+      data: {
+        labels: ['Mar 1', 'Mar 3', 'Mar 5', 'Mar 7', 'Mar 9', 'Mar 11', 'Mar 13', 'Mar 15', 'Mar 17', 'Mar 19', 'Mar 21', 'Mar 23', 'Mar 25', 'Mar 27', 'Mar 29', 'Mar 31'],
+        datasets: [
+          {
+            label: 'Booked Revenue',
+            data: [180000, 260000, 300000, 280000, 340000, 380000, 360000, 420000, 460000, 500000, 560000, 610000, 660000, 720000, 800000, 874250],
+            borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.08)', fill: true, tension: 0.35, pointRadius: 0, borderWidth: 2.5
+          },
+          {
+            label: 'Goal',
+            data: [30000, 80000, 130000, 180000, 230000, 280000, 330000, 380000, 430000, 480000, 530000, 580000, 630000, 680000, 730000, 780000],
+            borderColor: '#a855f7', borderDash: [4, 4], pointRadius: 0, borderWidth: 2, fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#6b7280', maxTicksLimit: 6 } },
+          y: { grid: { color: '#eef1f5' }, ticks: { callback: v => v === 0 ? '$0' : '$' + (v / 1000000 >= 1 ? (v / 1000000) + 'M' : (v / 1000) + 'K'), font: { size: 10 }, color: '#6b7280' } }
+        }
+      }
+    });
+
+    /* Revenue by department donut */
+    new Chart(document.getElementById('revDeptChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Providers', 'ISR (Commission)', 'ISR (Flat Pay)', 'SDR', 'CE', 'Other'],
+        datasets: [{ data: [598450, 156250, 72800, 16150, 5750, 24850], backgroundColor: ['#4338ca', '#2563eb', '#f59e0b', '#a855f7', '#10b981', '#9ca3af'], borderWidth: 0 }]
+      },
+      options: { responsive: true, maintainAspectRatio: true, cutout: '72%', plugins: { legend: { display: false } } }
+    });
+
+    /* Case type breakdown donut */
+    new Chart(document.getElementById('caseTypeChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Zirconia Cases', 'Composite Veneers', 'Porcelain Veneers', 'Crowns', 'Other'],
+        datasets: [{ data: [452600, 168300, 143200, 78900, 31250], backgroundColor: ['#0d9488', '#2563eb', '#f59e0b', '#7c3aed', '#9ca3af'], borderWidth: 0 }]
+      },
+      options: { responsive: true, maintainAspectRatio: true, cutout: '72%', plugins: { legend: { display: false } } }
+    });
+  </script>
+
+</body>
+
+</html>

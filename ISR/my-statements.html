@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaTrack — My Case Statements</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/mystatments.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">N</div>
+            <div class="brand-text">NEXA<small>TRACK</small></div>
+        </div>
+        <div class="nav-section">
+            <a class="nav-link-item" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
+            <a class="nav-link-item" href="my-cases.html"><i class="fa-solid fa-users"></i>My Cases</a>
+            <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
+                Statements</a>
+            <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+            <!-- <a class="nav-link-item " href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a> -->
+        </div>
+        <div class="sidebar-footer">
+            <div class="user-chip">
+                <div class="user-avatar" style="background:#3b82f6;">JS</div>
+                <div class="flex-grow-1">
+                    <div style="font-size:13px;font-weight:600;">M.Zubair</div>
+                    <small>ISR</small>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+            </div>
+            <div class="support-chip">
+                <i class="fa-solid fa-headset"></i>
+                <div><span>Need help?</span>Contact Support</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="main">
+        <div class="topbar">
+            <div>
+                <h1 class="page-title">My Case Statements</h1>
+                <div class="page-sub">Review payroll details for the selected pay period.</div>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn btn-outline-navy mobile-menu-btn" id="mobileMenuBtn"><i
+                        class="fa-solid fa-bars"></i></button>
+                <div class="date-pill">
+                    <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+                    <div class="me-2">
+                        <span
+                            style="font-size:9px;color:var(--gray-500);display:block;line-height:1;margin-bottom:1px;">Pay
+                            Period</span>
+                        <input type="text" id="daterange" name="date">
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+                </div>
+                <button class="btn btn-green" onclick="downloadPDF()"><i class="fa-solid fa-download me-1"></i>Download
+                    PDF</button>
+            </div>
+        </div>
+
+        <div class="kpi-row">
+            <div class="kpi-card d-flex align-items-center gap-3">
+                <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                        class="fa-solid fa-wallet"></i></div>
+                <div>
+                    <div class="kpi-label">Gross Pay</div>
+                    <div class="kpi-value" id="grossKpi">$1,185.00</div>
+                </div>
+            </div>
+            <div class="kpi-card d-flex align-items-center gap-3">
+                <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
+                </div>
+                <div>
+                    <div class="kpi-label">Total Cases</div>
+                    <div class="kpi-value" id="hoursKpi">78.00</div>
+                </div>
+            </div>
+            <div class="kpi-card d-flex align-items-center gap-3">
+                <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <div class="kpi-label">General Production</div>
+                    <div class="kpi-value" id="otKpi">2.00</div>
+                </div>
+            </div>
+            <div class="kpi-card d-flex align-items-center gap-3">
+                <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
+                </div>
+                <div>
+                    <div class="kpi-label">Deductions</div>
+                    <div class="kpi-value" id="adjKpi">$200.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="statement-toggle-tabs">
+            <button class="toggle-tab-btn active" onclick="showPane('statement', this)">Statement View</button>
+            <button class="toggle-tab-btn" onclick="showPane('review', this)">Review &amp; Edit</button>
+        </div>
+
+        <!-- ================= STATEMENT VIEW ================= -->
+        <div class="payroll-pane active" id="pane-statement">
+            <div class="row g-3">
+                <div class="col-lg-8">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="d-flex align-items-center gap-2">
+                                <h2 class="panel-title mb-0">Pay Period: May 1 – May 15, 2026</h2>
+                                <span class="status-pill locked">Locked</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="brand-mark" style="width:26px;height:26px;font-size:11px;">N</div>
+                                    <span class="fw-bold" style="letter-spacing:1px;">NEXATRACK</span>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold" style="font-size:13px;">PAYROLL STATEMENT</div>
+                                    <div class="text-muted" style="font-size:11.5px;">Pay Date: May 16, 2026</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="text-muted"
+                                    style="font-size:11px;text-transform:uppercase;font-weight:700;">Employee</div>
+                                <div class="fw-bold" style="font-size:15px;">M.Zubair</div>
+                                <div class="text-muted" style="font-size:12px;">ISR &middot; Sales Department</div>
+                                <div class="text-muted" style="font-size:11.5px;">Employee ID: ISR001 &middot;
+                                    Compensation Type: Case Based</div>
+                            </div>
+
+                            <div class="check-preview mb-3">
+                                <div class="brand-row">
+                                    <div>
+                                        <div class="pay-to">Pay To The Order Of</div>
+                                        <div class="pay-to-name">M.Zubair</div>
+                                        <div class="memo">Memo: Pay Period May 1 – May 15, 2026</div>
+                                    </div>
+                                    <div class="amount-box">
+                                        <div class="lbl">Amount</div>
+                                        <div class="amt" id="stubAmount">$985.00</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="fw-bold mb-2"
+                                        style="font-size:11.5px;text-transform:uppercase;color:var(--gray-500);">
+                                        Earnings</div>
+                                    <table class="earnings-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th class="text-end">Units</th>
+                                                <th class="text-end">Cases</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Cosmetic Production</td>
+                                                <td class="text-end" id="stubRegHrs">76.00</td>
+                                                <td class="text-end">$15.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>General Production Hours</td>
+                                                <td class="text-end" id="stubOtHrs">2.00</td>
+                                                <td class="text-end">$22.50</td>
+                                            </tr>
+                                            <tr class="fw-bold">
+                                                <td colspan="2">Total Earnings</td>
+                                                <td class="text-end" id="stubTotalEarnings">$1,185.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="fw-bold mb-2"
+                                        style="font-size:11.5px;text-transform:uppercase;color:var(--gray-500);">
+                                        Deductions / Adjustments</div>
+                                    <table class="earnings-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th class="text-end">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Advance</td>
+                                                <td class="text-end neg-amt" id="stubAdvance">($200.00)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Other Adjustment</td>
+                                                <td class="text-end" id="stubOtherAdj">$0.00</td>
+                                            </tr>
+                                            <tr class="fw-bold">
+                                                <td>Total Deductions</td>
+                                                <td class="text-end neg-amt" id="stubTotalDeductions">($200.00)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="stub-total-bar"><span class="lbl">Total Pay (Net)</span><span class="amt"
+                                    id="stubTotalPay">$985.00</span></div>
+
+                            <div class="text-center text-muted mt-3" style="font-size:12.5px;">Thank you for your hard
+                                work!</div>
+
+                            <div class="text-center mt-3 d-flex justify-content-center gap-2">
+                                <button class="btn btn-outline-navy"
+                                    onclick="showPane('review', document.querySelectorAll('.toggle-tab-btn')[1])"><i
+                                        class="fa-regular fa-pen-to-square me-1"></i>View Case Details</button>
+                                <button class="btn btn-red-outline" data-bs-toggle="modal"
+                                    data-bs-target="#flagPayrollModal"><i class="fa-solid fa-flag me-1"></i>Flag
+                                    Payroll</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title mb-0">Statement History</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="history-row">
+                                <div>
+                                    <div class="period">May 1 – May 15, 2026</div>
+                                    <div class="meta">Paid May 16, 2026</div>
+                                </div>
+                                <div class="amt">$985.00</div>
+                            </div>
+                            <div class="history-row">
+                                <div>
+                                    <div class="period">Apr 16 – Apr 30, 2026</div>
+                                    <div class="meta">Paid May 2, 2026</div>
+                                </div>
+                                <div class="amt">$1,102.50</div>
+                            </div>
+                            <div class="history-row">
+                                <div>
+                                    <div class="period">Apr 1 – Apr 15, 2026</div>
+                                    <div class="meta">Paid Apr 18, 2026</div>
+                                </div>
+                                <div class="amt">$960.00</div>
+                            </div>
+                            <div class="history-row">
+                                <div>
+                                    <div class="period">Mar 16 – Mar 31, 2026</div>
+                                    <div class="meta">Paid Apr 4, 2026</div>
+                                </div>
+                                <div class="amt">$1,045.00</div>
+                            </div>
+                            <div class="history-row">
+                                <div>
+                                    <div class="period">Mar 1 – Mar 15, 2026 <span
+                                            class="status-pill flagged ms-1">Flagged</span></div>
+                                    <div class="meta">Paid Mar 21, 2026</div>
+                                </div>
+                                <div class="amt">$917.50</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= REVIEW & EDIT ================= -->
+        <div class="payroll-pane" id="pane-review">
+            <div class="row g-3">
+                <div class="col-lg-3">
+                    <div class="employee-card">
+                        <div class="employee-avatar">MZ</div>
+                        <h4 class="text-center mt-1 mb-1">M.Zubair</h4>
+                        <p class="text-center text-muted mb-3">ISR</p>
+                        <div class="text-center mb-3"><span class="pill-badge" id="reviewStatusPill">Pending
+                                Review</span></div>
+                        <hr>
+                        <div class="small mb-2"><span class="summary-label">Employee ID</span>
+                            <div class="fw-semibold">ISR001</div>
+                        </div>
+                        <div class="small mb-2"><span class="summary-label">Hire Date</span>
+                            <div class="fw-semibold">Jan 10, 2025</div>
+                        </div>
+                        <div class="small mb-2"><span class="summary-label">Pay Type</span>
+                            <div class="fw-semibold">Case Based</div>
+                        </div>
+                        <div class="small mb-2"><span class="summary-label">Cases</span>
+                            <div class="fw-semibold">$15.00/hr</div>
+                        </div>
+                        <div class="small mb-3"><span class="summary-label">Pay Period</span>
+                            <div class="fw-semibold">May 1 – May 15, 2026</div>
+                        </div>
+                        <button class="btn btn-green w-100 mb-2" onclick="confirmPayroll()"><i
+                                class="fa-solid fa-check me-1"></i>Confirm Payroll</button>
+                        <button class="btn btn-red-outline w-100" data-bs-toggle="modal"
+                            data-bs-target="#flagPayrollModal"><i class="fa-solid fa-flag me-1"></i>Flag for
+                            Review</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2 class="panel-title">Earnings Breakdown</h2>
+                                <div class="panel-sub">Adjust hours and deductions — totals recalculate instantly.</div>
+                            </div>
+                            <button class="btn btn-outline-navy btn-sm"
+                                onclick="showPane('statement', document.querySelectorAll('.toggle-tab-btn')[0])"><i
+                                    class="fa-regular fa-file-pdf me-1"></i>Statement Preview</button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="earnings-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Units</th>
+                                            <th>Cases</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Cosmetic Production</td>
+                                            <td><input id="reg" type="number" step="0.5" value="76"
+                                                    class="form-control"></td>
+                                            <td>$15.00</td>
+                                            <td id="regAmt" class="fw-semibold">$1,140.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>General Production</td>
+                                            <td><input id="ot" type="number" step="0.5" value="2" class="form-control">
+                                            </td>
+                                            <td>$22.50</td>
+                                            <td id="otAmt" class="fw-semibold">$45.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advance</td>
+                                            <td class="text-muted">—</td>
+                                            <td class="text-muted">—</td>
+                                            <td><input id="adv" type="number" step="1" value="200" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other Adjustment</td>
+                                            <td class="text-muted">—</td>
+                                            <td class="text-muted">—</td>
+                                            <td><input id="adj" type="number" step="1" value="0" class="form-control">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="fw-bold">Total Pay</td>
+                                            <td id="total" class="fw-bold" style="color:var(--green-600);">$985.00</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="row mt-3 g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Cosmetic Production</label>
+                                    <input class="form-control" id="regDisplay" value="76.00" disabled
+                                        style="background:var(--gray-50);">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">General Production</label>
+                                    <input class="form-control" id="otDisplay" value="2.00" disabled
+                                        style="background:var(--gray-50);">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Total Cases</label>
+                                    <input class="form-control" id="th" value="78.00" disabled
+                                        style="background:var(--gray-50);">
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="form-label">Notes for your Office Manager</label>
+                                <textarea class="form-control" rows="3" id="reviewNotes"
+                                    placeholder="e.g. I worked 11.5 hours on Tuesday but only 10.5 hours are showing."></textarea>
+                            </div>
+
+                            <div class="text-end mt-4">
+                                <button class="btn btn-outline-navy me-2"
+                                    onclick="showPane('statement', document.querySelectorAll('.toggle-tab-btn')[0])">Cancel</button>
+                                <button class="btn btn-green" onclick="saveReview()">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLAG PAYROLL MODAL -->
+    <div class="modal fade" id="flagPayrollModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius:12px;border:none;">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-flag text-danger me-2"></i>Flag Payroll
+                        Statement</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted" style="font-size:12.5px;">Let us know what looks incorrect on your May 1 – May
+                        15, 2026 statement. Your Office Manager will review and respond.</p>
+                    <label class="form-label">Reason</label>
+                    <div class="flag-modal-reason selected" onclick="selectReason(this)"><input type="radio"
+                            name="flagReason" checked>Missing hours</div>
+                    <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
+                            name="flagReason">Incorrect compensation</div>
+                    <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
+                            name="flagReason">Missing case</div>
+                    <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
+                            name="flagReason">Missing production</div>
+                    <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
+                            name="flagReason">Incorrect advance</div>
+                    <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
+                            name="flagReason">Other</div>
+                    <label class="form-label mt-2">Notes</label>
+                    <textarea class="form-control" rows="3"
+                        placeholder="e.g. I worked 11.5 hours on Tuesday but only 10.5 hours are showing.">I worked 11.5 hours on Tuesday but only 10.5 hours are showing.</textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-green" onclick="submitFlag()">Submit Flag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        /* ---------- Statement / Review tab switcher ---------- */
+        function showPane(key, btn) {
+            document.querySelectorAll('.payroll-pane').forEach(p => p.classList.remove('active'));
+            document.getElementById('pane-' + key).classList.add('active');
+            document.querySelectorAll('.toggle-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        /* ---------- Live recalculation ---------- */
+        function calc() {
+            const r = parseFloat(document.getElementById('reg').value) || 0;
+            const o = parseFloat(document.getElementById('ot').value) || 0;
+            const a = parseFloat(document.getElementById('adv').value) || 0;
+            const d = parseFloat(document.getElementById('adj').value) || 0;
+
+            const ra = r * 15;
+            const oa = o * 22.5;
+            const totalEarnings = ra + oa;
+            const totalDeductions = a + d;
+            const total = totalEarnings - totalDeductions;
+
+            document.getElementById('regAmt').innerText = '$' + ra.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('otAmt').innerText = '$' + oa.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('total').innerText = '$' + total.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+            document.getElementById('regDisplay').value = r.toFixed(2);
+            document.getElementById('otDisplay').value = o.toFixed(2);
+            document.getElementById('th').value = (r + o).toFixed(2);
+
+            document.getElementById('grossKpi').innerText = '$' + totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('hoursKpi').innerText = (r + o).toFixed(2);
+            document.getElementById('otKpi').innerText = o.toFixed(2);
+            document.getElementById('adjKpi').innerText = '$' + totalDeductions.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        }
+        ['reg', 'ot', 'adv', 'adj'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+        calc();
+
+        function confirmPayroll() {
+            document.getElementById('reviewStatusPill').innerText = 'Confirmed';
+            document.getElementById('reviewStatusPill').style.background = '#ecfdf5';
+            document.getElementById('reviewStatusPill').style.color = '#059669';
+            alert('Payroll confirmed. Your Office Manager will see this reflected in the Review Center.');
+        }
+
+        function saveReview() {
+            // push edited numbers into the read-only statement view
+            document.getElementById('stubRegHrs').innerText = document.getElementById('regDisplay').value;
+            document.getElementById('stubOtHrs').innerText = document.getElementById('otDisplay').value;
+            document.getElementById('stubTotalEarnings').innerText = document.getElementById('grossKpi').innerText;
+            const adv = parseFloat(document.getElementById('adv').value) || 0;
+            const adj = parseFloat(document.getElementById('adj').value) || 0;
+            document.getElementById('stubAdvance').innerText = '($' + adv.toLocaleString(undefined, { minimumFractionDigits: 2 }) + ')';
+            document.getElementById('stubOtherAdj').innerText = '$' + adj.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('stubTotalDeductions').innerText = '($' + (adv + adj).toLocaleString(undefined, { minimumFractionDigits: 2 }) + ')';
+            document.getElementById('stubTotalPay').innerText = document.getElementById('total').innerText;
+            document.getElementById('stubAmount').innerText = document.getElementById('total').innerText;
+
+            alert('Changes saved and submitted for review.');
+            showPane('statement', document.querySelectorAll('.toggle-tab-btn')[0]);
+        }
+
+        /* ---------- Flag modal ---------- */
+        function selectReason(el) {
+            document.querySelectorAll('.flag-modal-reason').forEach(r => r.classList.remove('selected'));
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
+        }
+        function submitFlag() {
+            bootstrap.Modal.getInstance(document.getElementById('flagPayrollModal')).hide();
+            alert('Your flag has been submitted. Status changed to "Payroll Flagged" — your Office Manager has been notified.');
+        }
+
+        /* ---------- Date range picker ---------- */
+        $(function () {
+            $('input[name="date"]').daterangepicker({
+                timePicker: false,
+                startDate: moment('2026-05-01'),
+                endDate: moment('2026-05-15'),
+                locale: { format: 'MM/DD/YYYY' }
+            });
+        });
+
+        function downloadPDF() {
+            const element = document.getElementById('pane-statement');
+            const opt = {
+                margin: 10,
+                filename: 'payroll-statement.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+        /* ---------- Mobile sidebar toggle ---------- */
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
+        document.getElementById('sidebarBackdrop')?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
+        window.addEventListener('resize', () => { if (window.innerWidth > 900) document.body.classList.remove('sidebar-open'); });
+    </script>
+
+</body>
+
+</html>

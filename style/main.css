@@ -1,0 +1,545 @@
+:root {
+    --navy-900: #0a1628;
+    --navy-800: #0f1f38;
+    --navy-700: #152847;
+    --green-500: #017863;
+    --green-600: #059669;
+    --green-50: #ecfdf5;
+    --gold-500: #c9a227;
+    --gray-50: #f7f8fa;
+    --gray-100: #eef1f5;
+    --gray-200: #e2e6ed;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --radius: 10px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: var(--gray-50);
+    color: var(--gray-900);
+    font-size: 14px;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+.kpi-row {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch
+}
+.sidbarmobile{
+    padding: 10px;
+    background:rgb(30, 32, 30);
+}
+
+/* .nexa-table {
+    min-width: 900px
+} */
+
+canvas {
+    max-width: 100% !important
+}
+
+.sidebar {
+    width: 236px;
+    background: var(--navy-900);
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
+    z-index: 100;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px 22px 8px;
+}
+
+.brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--green-500), #0d9488);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #fff;
+    font-size: 15px;
+}
+
+.brand-text {
+    font-weight: 800;
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.brand-text small {
+    display: block;
+    font-size: 9px;
+    color: var(--green-500);
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.nav-section {
+    margin-top: 6px;
+    flex: 1;
+}
+
+.nav-link-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #ffffff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.nav-link-item i {
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.nav-link-item:hover {
+    background: var(--navy-700);
+    color: #fff;
+}
+
+.nav-link-item.active {
+    background: var(--green-500);
+    color: #fff;
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--navy-700);
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.user-chip:hover {
+    background: var(--navy-700);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--green-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.user-chip small {
+    color: #93a2bd;
+    display: block;
+    font-size: 11px;
+}
+
+.support-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px 4px 8px;
+    color: #93a2bd;
+    font-size: 12px;
+}
+
+.support-chip i {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--navy-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--green-500);
+    flex-shrink: 0;
+}
+
+.support-chip span {
+    display: block;
+    color: #fff;
+    font-weight: 600;
+    font-size: 12.5px;
+}
+
+.main {
+    margin-left: 236px;
+    padding: 26px 30px 40px 30px;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.48);
+    z-index: 95;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+
+/* The drawer sidebar nested inside the backdrop slides in from the left */
+.sidebar-backdrop .sidebar {
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.page-title {
+    font-weight: 800;
+    font-size: 24px;
+    margin: 0;
+    color: var(--gray-900);
+}
+
+.page-sub {
+    color: var(--gray-500);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.btn-green {
+    background: var(--green-500);
+    border-color: var(--green-500);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.btn-green:hover {
+    background: var(--green-600);
+    border-color: var(--green-600);
+    color: #fff;
+}
+
+.btn-outline-navy {
+    border-color: var(--gray-200);
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: 13px;
+    background: #fff;
+}
+
+.btn-outline-navy:hover {
+    background: var(--gray-100);
+}
+
+.topbar-pill {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    cursor: pointer;
+}
+
+.topbar-pill select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 1px 40px 1px 35px;
+    border: none;
+    border-radius: none !important;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+}
+
+.topbar-pill .leading {
+    position: absolute;
+    left: 12px;
+    color: #666;
+    pointer-events: none;
+}
+
+.topbar-pill .trailing {
+    position: absolute;
+    right: 12px;
+    color: #666;
+    pointer-events: none;
+}
+
+.topbar-pill i.leading {
+    color: var(--green-600);
+    font-size: 13px;
+}
+
+.topbar-pill i.trailing {
+    color: var(--gray-500);
+    font-size: 10px;
+    margin-left: 2px;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.date-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    cursor: pointer;
+    min-height: 38px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    height: 38px;
+    min-width: 100%;
+    padding: 0 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Wrapper column for each KPI card — 5 per row on desktop (unchanged from before) */
+.kpi-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+.kpi-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.kpi-label {
+    font-size: 11.5px;
+    color: var(--gray-500);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.kpi-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gray-900);
+    margin-top: 5px;
+}
+
+.kpi-delta {
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.icon-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pagination .page-link {
+    color: #6c757d !important;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.pagination .page-link:hover {
+    color: #495057 !important;
+    background-color: #f8f9fa;
+}
+
+.pagination .page-item.active .page-link {
+    color: #fff !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #adb5bd !important;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+/* Checkbox toggle for sidebar */
+.sidebar-toggle-checkbox {
+    display: none;
+}
+
+/* Reveal the mobile drawer + backdrop when the checkbox is toggled on */
+#sidebarToggle:checked ~ .sidebar-backdrop {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+#sidebarToggle:checked ~ .sidebar-backdrop .sidebar {
+    transform: translateX(0) !important;
+}
+
+/* ===================== RESPONSIVE (mobile/tablet) — nothing below affects desktop >991px ===================== */
+@media(max-width:991px) {
+    .main {
+        margin-left: 0 !important;
+        padding: 20px 15px !important
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    /* Hide the always-on desktop sidebar completely; the drawer (inside .sidebar-backdrop) is the mobile nav instead */
+    body > .sidebar {
+        display: none;
+    }
+
+    body.sidebar-open > .sidebar {
+        display: flex !important;
+        transform: translateX(0) !important;
+    }
+
+    body.sidebar-open .sidebar-backdrop {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    .mobile-menu-btn {
+        display: flex !important
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: stretch
+    }
+
+    .topbar-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap
+    }
+
+    .topbar-actions .btn,
+    .topbar-actions .date-pill,
+    .topbar-actions .topbar-pill {
+        width: 100%
+    }
+
+    .panel .row.m-3>.col-4,
+    .panel .row.m-3>.col-8,
+    .kpi-card .col-3,
+    .kpi-card .col-9 {
+        flex: 0 0 100%;
+        max-width: 100%
+    }
+
+    .kpi-card .row {
+        text-align: center
+    }
+
+    .kpi-icon {
+        margin: 0 auto 12px
+    }
+
+    .stat-strip {
+        grid-template-columns: 1fr
+    }
+
+    .stat-strip-item+.stat-strip-item {
+        border-left: none;
+        border-top: 1px solid var(--gray-200)
+    }
+
+    /* KPI card columns: 2 per row on tablets */
+    .kpi-col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    /* Any fixed-pixel-width control (search boxes, selects, date pickers) never exceeds its row */
+    .panel-header input[style*="width"],
+    .panel-header select[style*="width"],
+    .panel-header > .d-flex > div[style*="width"] {
+        max-width: 100% !important;
+    }
+}
+
+@media(max-width:576px) {
+    /* KPI cards: full width, one per row on phones */
+    .kpi-col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

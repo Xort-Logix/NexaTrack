@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaTrack — Payroll Approval Workflow</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style/main.css">
+  <link rel="stylesheet" href="style/payroll-runs.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js">
+  </script>
+
+</head>
+
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation Rules</a>
+      <a class="nav-link-item " href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item" href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item active" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+        Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-backdrop" onclick="document.getElementById('sidebarToggle').checked = false">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item " href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item " href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <a class="nav-link-item active" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main">
+
+    <!-- Step Navigator -->
+    <div class="step-nav">
+      <div class="step-nav-item active" data-step="1" onclick="goToStep(1)"><span class="num">1</span><span
+          class="lbl">Generate Payroll</span></div>
+      <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
+      <div class="step-nav-item" data-step="2" onclick="goToStep(2)"><span class="num">2</span><span class="lbl">Review
+          Center</span></div>
+      <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
+      <div class="step-nav-item" data-step="3" onclick="goToStep(3)"><span class="num">3</span><span class="lbl">Final
+          Summary</span></div>
+      <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
+      <div class="step-nav-item" data-step="4" onclick="goToStep(4)"><span class="num">4</span><span class="lbl">Flags
+          &amp; Disputes</span></div>
+    </div>
+
+    <!-- ===== SCREEN 1 — GENERATE PAYROLL ===== -->
+    <div class="screen-view active" id="screen-1">
+      <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Payroll Runs</h1>
+          <div class="page-sub">Create and manage payroll — nothing is finalized until you review and confirm every
+            employee.</div>
+        </div>
+        <button class="btn btn-green" data-bs-toggle="modal" data-bs-target="#newPayrollModal"><i
+            class="fa-solid fa-plus me-1"></i>New Payroll Run</button>
+      </div>
+
+      <div class="kpi-mini-row">
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Current Period</div>
+          <div class="kpi-mini-value" style="font-size:15px;">May 1 – May 15, 2026</div>
+          <div class="kpi-mini-note">Bi-Weekly</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-value">24</div>
+          <div class="kpi-mini-note">Active Employees</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Est. Total Payroll</div>
+          <div class="kpi-mini-value">$28,450.00</div>
+          <div class="kpi-mini-note">Estimated</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Status</div>
+          <div class="kpi-mini-value text-warning" style="font-size:15px;">In Progress</div>
+          <div class="kpi-mini-note">Review Required</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-body pb-0">
+          <div class="filter-pills" id="runFilterPills">
+            <button class="filter-pill active" data-filter="all">All Runs <span class="badge-count"
+                id="countAllRuns">5</span></button>
+            <button class="filter-pill" data-filter="inprogress">In Progress <span class="badge-count"
+                id="countInProgress">1</span></button>
+            <button class="filter-pill" data-filter="completed">Completed <span class="badge-count"
+                id="countCompleted">0</span></button>
+            <button class="filter-pill" data-filter="locked">Locked <span class="badge-count"
+                id="countLocked">4</span></button>
+            <button class="filter-pill" data-filter="cancelled">Cancelled <span class="badge-count"
+                id="countCancelled">0</span></button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th>Pay Period</th>
+                <th>Pay Date</th>
+                <th>Employees</th>
+                <th>Total Payroll</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="runsTableBody">
+              <tr data-status="inprogress">
+                <td class="fw-semibold">May 1 – May 15, 2026</td>
+                <td>May 16, 2026</td>
+                <td>24</td>
+                <td>$28,450.00</td>
+                <td><span class="status-pill inprogress">In Progress</span></td>
+                <td><button class="btn btn-sm btn-green" onclick="goToStep(2)">Review Payroll</button></td>
+              </tr>
+              <tr data-status="locked">
+                <td class="fw-semibold">Apr 16 – Apr 30, 2026</td>
+                <td>May 2, 2026</td>
+                <td>24</td>
+                <td>$27,890.50</td>
+                <td><span class="status-pill locked">Locked</span></td>
+                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+              </tr>
+              <tr data-status="locked">
+                <td class="fw-semibold">Apr 1 – Apr 15, 2026</td>
+                <td>Apr 18, 2026</td>
+                <td>24</td>
+                <td>$26,540.75</td>
+                <td><span class="status-pill locked">Locked</span></td>
+                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+              </tr>
+              <tr data-status="locked">
+                <td class="fw-semibold">Mar 16 – Mar 31, 2026</td>
+                <td>Apr 4, 2026</td>
+                <td>23</td>
+                <td>$25,128.40</td>
+                <td><span class="status-pill locked">Locked</span></td>
+                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+              </tr>
+              <tr data-status="locked">
+                <td class="fw-semibold">Mar 1 – Mar 15, 2026</td>
+                <td>Mar 21, 2026</td>
+                <td>23</td>
+                <td>$24,760.30</td>
+                <td><span class="status-pill locked">Locked</span></td>
+                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+              </tr>
+              <tr data-status="completed" style="display:none;">
+                <td class="fw-semibold">Feb 16 – Feb 28, 2026</td>
+                <td>Mar 2, 2026</td>
+                <td>22</td>
+                <td>$23,450.00</td>
+                <td><span class="status-pill completed">Completed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+              </tr>
+              <tr data-status="cancelled" style="display:none;">
+                <td class="fw-semibold">Jan 16 – Jan 31, 2026</td>
+                <td>Feb 2, 2026</td>
+                <td>21</td>
+                <td>$22,100.00</td>
+                <td><span class="status-pill cancelled">Cancelled</span></td>
+                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="generate-cta" style="border-top:1px solid var(--gray-200);">
+          <button class="btn btn-green btn-lg px-4" onclick="goToStep(2)"><i
+              class="fa-solid fa-calculator me-2"></i>Generate Payroll</button>
+          <div class="note">This will calculate payroll for all employees for this pay period. Nothing is finalized
+            until every employee is reviewed and confirmed.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN 2 — REVIEW CENTER ===== -->
+    <div class="screen-view" id="screen-2">
+      <a class="back-link" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Back to Payroll Runs</a>
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Payroll Review</h1>
+          <div class="page-sub">Review and confirm payroll for May 1 – May 15, 2026.</div>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-navy" onclick="exportSummary()"><i
+              class="fa-regular fa-file-lines me-1"></i>Export Summary</button>
+        </div>
+      </div>
+
+      <div class="kpi-mini-row">
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-value">24</div>
+          <div class="kpi-mini-note">Total</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Pending Review</div>
+          <div class="kpi-mini-value text-warning" id="pendingCount2">5</div>
+          <div class="kpi-mini-note">Employees</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Confirmed</div>
+          <div class="kpi-mini-value text-success" id="confirmedCount2">18</div>
+          <div class="kpi-mini-note">Employees</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Needs Attention</div>
+          <div class="kpi-mini-value" style="color:#dc2626;">1</div>
+          <div class="kpi-mini-note">Employee</div>
+        </div>
+
+      </div>
+
+      <div class="panel">
+        <div class="panel-body" style="display:flex;gap:10px;flex-wrap:wrap;">
+          <div class="search-input-wrap"><input type="text" class="search-input" placeholder="Search employees..."><i
+              class="fa-solid fa-magnifying-glass"></i></div>
+          <select class="form-select" style="width:150px;font-size:13px;border-radius:8px;">
+            <option>All Status</option>
+          </select>
+        </div>
+        <div class="table-responsive">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Department</th>
+                <th>Type</th>
+                <th>Total Pay</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="reviewTableBody">
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80">Dr.
+                    Nancy Rose</div>
+                </td>
+                <td>Provider</td>
+                <td>Provider</td>
+                <td class="fw-semibold">$4,250.00</td>
+                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+              </tr>
+              <tr id="johnSmithRow2">
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80">John
+                    Smith</div>
+                </td>
+                <td>SDR</td>
+                <td>Hourly</td>
+                <td class="fw-semibold">$1,145.50</td>
+                <td><span class="status-pill-wf pending" id="johnSmithStatus2">Pending Review</span></td>
+                <td><button class="btn btn-sm btn-green btn-confirm-row"
+                    onclick="confirmEmployee('johnSmithRow2','johnSmithStatus2')"><i
+                      class="fa-solid fa-check me-1"></i>Confirm</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80">Sarah
+                    Johnson</div>
+                </td>
+                <td>CE</td>
+                <td>Hourly</td>
+                <td class="fw-semibold">$1,375.20</td>
+                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80">Mike
+                    Anderson</div>
+                </td>
+                <td>ISR</td>
+                <td>Commission</td>
+                <td class="fw-semibold">$2,350.00</td>
+                <td><span class="status-pill-wf attention">Needs Attention</span></td>
+                <td><button class="btn btn-sm btn-red-outline btn-confirm-row"
+                    onclick="flagAttention('Mike Anderson')"><i class="fa-solid fa-flag me-1"></i>Flag</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80">Ashley
+                    Williams</div>
+                </td>
+                <td>Marketing</td>
+                <td>Salary</td>
+                <td class="fw-semibold">$2,000.00</td>
+                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+              </tr>
+              <tr id="chrisBrownRow2">
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80">Chris
+                    Brown</div>
+                </td>
+                <td>Social Media</td>
+                <td>Hourly</td>
+                <td class="fw-semibold">$1,020.75</td>
+                <td><span class="status-pill-wf pending" id="chrisBrownStatus2">Pending Review</span></td>
+                <td><button class="btn btn-sm btn-green btn-confirm-row"
+                    onclick="confirmEmployee('chrisBrownRow2','chrisBrownStatus2')"><i
+                      class="fa-solid fa-check me-1"></i>Confirm</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80">Emma
+                    Davis</div>
+                </td>
+                <td>Dental Assistant</td>
+                <td>Hourly</td>
+                <td class="fw-semibold">$980.30</td>
+                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+              </tr>
+              <tr id="danielMartinezRow2">
+                <td>
+                  <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                      src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80">Daniel
+                    Martinez</div>
+                </td>
+                <td>Quote Specialist</td>
+                <td>Hourly</td>
+                <td class="fw-semibold">$1,150.25</td>
+                <td><span class="status-pill-wf pending" id="danielMartinezStatus2">Pending Review</span></td>
+                <td><button class="btn btn-sm btn-green btn-confirm-row"
+                    onclick="confirmEmployee('danielMartinezRow2','danielMartinezStatus2')"><i
+                      class="fa-solid fa-check me-1"></i>Confirm</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="confirm-footer">
+          <span class="count">Confirmed <span id="confirmFooterCount2">18</span> of 24 employees</span>
+          <button class="btn btn-green" onclick="goToStep(3)">Continue to Summary <i
+              class="fa-solid fa-arrow-right ms-1"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN 3 — FINAL SUMMARY ===== -->
+    <div class="screen-view" id="screen-3">
+      <a class="back-link" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Back to Review</a>
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Payroll Summary</h1>
+          <div class="page-sub">Review and confirm before generating payroll.</div>
+        </div>
+        <button class="btn btn-outline-navy" onclick="exportSummary()"><i
+            class="fa-regular fa-file-lines me-1"></i>Export Summary</button>
+      </div>
+
+      <div class="kpi-mini-row">
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-value">24</div>
+          <div class="kpi-mini-note">Total</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Total Gross Payroll</div>
+          <div class="kpi-mini-value">$28,450.00</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Total Deductions</div>
+          <div class="kpi-mini-value" style="color:#dc2626;">$1,850.00</div>
+        </div>
+        <div class="kpi-mini-card">
+          <div class="kpi-mini-label">Total Net Payroll</div>
+          <div class="kpi-mini-value text-success">$26,600.00</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title mb-0">Payroll Breakdown</h2>
+        </div>
+        <div class="panel-body">
+          <div class="row align-items-center">
+            <div class="col-md-5">
+              <div class="donut-wrap-lg">
+                <canvas id="summaryDonut"></canvas>
+                <div class="donut-center-lg">
+                  <div class="amt">$28,450.00</div>
+                  <div class="lbl">Total Payroll</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="breakdown-legend-item"><span class="dot" style="background:#10b981;"></span><span
+                  class="name">Providers</span><span class="cnt">8 Employees</span><span class="val">$15,200.00</span>
+              </div>
+              <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span><span
+                  class="name">ISR Representatives</span><span class="cnt">4 Employees</span><span
+                  class="val">$5,400.00</span></div>
+              <div class="breakdown-legend-item"><span class="dot" style="background:#a855f7;"></span><span
+                  class="name">Hourly Employees</span><span class="cnt">14 Employees</span><span
+                  class="val">$7,850.00</span></div>
+            </div>
+          </div>
+
+          <div class="lock-warning-banner">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Once you generate payroll, this pay period will be <strong>locked</strong> and no changes can be made.
+              Any corrections afterward must go through the adjustment &amp; audit process.</span>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-navy" onclick="goToStep(2)">Back to Review</button>
+            <button class="btn btn-green" onclick="generatePayroll()"><i class="fa-solid fa-lock me-1"></i>Generate
+              Payroll
+              &amp; Lock</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN 4 — FLAGS & DISPUTES ===== -->
+    <div class="screen-view" id="screen-4">
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Payroll Flags</h1>
+          <div class="page-sub">Review and manage employee payroll flags.</div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <div class="notif-bell-wrap"><i class="fa-regular fa-bell fs-5 text-muted"></i><span
+              class="notif-badge">3</span></div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="user-avatar" style="background:var(--navy-800);">AU</div>
+            <div>
+              <div style="font-size:12.5px;font-weight:700;">
+                James Johnson</div>
+              <div style="font-size:10.5px;color:var(--gray-500);">Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="panel">
+            <div class="panel-body pb-0">
+              <div class="flag-tabs" id="flagTabs">
+                <button class="flag-tab-btn active" data-filter="all">All Flags <span class="cnt-badge"
+                    id="countAll">3</span></button>
+                <button class="flag-tab-btn" data-filter="pending">Pending <span class="cnt-badge attention-badge"
+                    id="countPending">2</span></button>
+                <button class="flag-tab-btn" data-filter="inreview">In Review <span class="cnt-badge attention-badge"
+                    id="countInReview">1</span></button>
+                <button class="flag-tab-btn" data-filter="resolved">Resolved <span class="cnt-badge"
+                    id="countResolved">0</span></button>
+                <button class="flag-tab-btn" data-filter="dismissed">Dismissed <span class="cnt-badge"
+                    id="countDismissed">0</span></button>
+              </div>
+            </div>
+            <div class="panel-body" style="display:flex;gap:10px;">
+              <div class="search-input-wrap"><input type="text" class="search-input" placeholder="Search flags..."><i
+                  class="fa-solid fa-magnifying-glass"></i></div>
+              <button class="btn btn-outline-navy"><i class="fa-solid fa-filter me-1"></i>Filter</button>
+            </div>
+            <div class="table-responsive">
+              <table class="wf-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Pay Period</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Submitted</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="flagTableBody">
+                  <tr data-status="pending" onclick="loadFlag(this)" style="cursor:pointer;">
+                    <td>
+                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80">
+                        <div>
+                          <div class="fw-semibold">John Smith</div>
+                          <div class="text-muted" style="font-size:11px;">SDR</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>May 1 – May 15, 2026</td>
+                    <td>Incorrect Hours</td>
+                    <td><span class="status-pill-wf pending">Pending</span></td>
+                    <td class="text-muted">May 16, 2026</td>
+                    <td><button class="btn btn-sm btn-green">Review</button></td>
+                  </tr>
+                  <tr data-status="pending" onclick="loadFlag(this)" style="cursor:pointer;">
+                    <td>
+                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80">
+                        <div>
+                          <div class="fw-semibold">Sarah Johnson</div>
+                          <div class="text-muted" style="font-size:11px;">CE</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>May 1 – May 15, 2026</td>
+                    <td>Missing Overtime</td>
+                    <td><span class="status-pill-wf pending">Pending</span></td>
+                    <td class="text-muted">May 16, 2026</td>
+                    <td><button class="btn btn-sm btn-green">Review</button></td>
+                  </tr>
+                  <tr data-status="inreview" onclick="loadFlag(this)" style="cursor:pointer;">
+                    <td>
+                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80">
+                        <div>
+                          <div class="fw-semibold">Mike Anderson</div>
+                          <div class="text-muted" style="font-size:11px;">ISR</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>May 1 – May 15, 2026</td>
+                    <td>Missing Case</td>
+                    <td><span class="status-pill-wf flagreview">In Review</span></td>
+                    <td class="text-muted">May 16, 2026</td>
+                    <td><button class="btn btn-sm btn-outline-navy">Review</button></td>
+                  </tr>
+                  <tr data-status="resolved" onclick="loadFlag(this)" style="cursor:pointer; display:none;">
+                    <td>
+                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80">
+                        <div>
+                          <div class="fw-semibold">Emma Davis</div>
+                          <div class="text-muted" style="font-size:11px;">Dental Assistant</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>May 1 – May 15, 2026</td>
+                    <td>Duplicate Entry</td>
+                    <td><span class="status-pill-wf confirmed">Resolved</span></td>
+                    <td class="text-muted">May 17, 2026</td>
+                    <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                  </tr>
+                  <tr data-status="dismissed" onclick="loadFlag(this)" style="cursor:pointer; display:none;">
+                    <td>
+                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                          src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80">
+                        <div>
+                          <div class="fw-semibold">Chris Brown</div>
+                          <div class="text-muted" style="font-size:11px;">Social Media</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>May 1 – May 15, 2026</td>
+                    <td>Incorrect Rate</td>
+                    <td><span class="status-pill-wf" style="background:#e5e7eb;color:#6b7280;">Dismissed</span></td>
+                    <td class="text-muted">May 18, 2026</td>
+                    <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="panel mb-3">
+            <div class="panel-header">
+              <h2 class="panel-title mb-0">Employee Note</h2>
+            </div>
+            <div class="panel-body">
+              <div class="note-bubble" id="flagNoteText">I worked 11.5 hours on Tuesday (May 6th) but only 10.5 hours
+                are showing on my statement. Please review and adjust. Thank you!</div>
+              <div class="text-muted mt-2" style="font-size:11px;">— <span id="flagNoteAuthor">John Smith</span> ·
+                Submitted: May 16, 2026 at 9:15 AM</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title mb-0">Review &amp; Respond</h2>
+            </div>
+            <div class="panel-body">
+              <label class="form-label">Status</label>
+              <select class="form-select mb-3" id="flagStatusSelect">
+                <option>Pending</option>
+                <option>In Review</option>
+                <option>Resolved</option>
+                <option>Dismissed</option>
+              </select>
+              <label class="form-label">Add Internal Note</label>
+              <textarea class="form-control mb-3" rows="3" placeholder="Write a note or response..."></textarea>
+              <button class="btn btn-green w-100" onclick="saveFlagNote()">Save Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== NEW PAYROLL RUN MODAL ===== -->
+  <div class="modal fade" id="newPayrollModal" tabindex="-1" aria-labelledby="newPayrollModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newPayrollModalLabel"><i class="fa-solid fa-plus-circle me-2 text-success"></i>New
+            Payroll Run</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="newPayrollForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Pay Period Start</label>
+                <input type="date" class="form-control" id="periodStart" value="2026-06-01" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pay Period End</label>
+                <input type="date" class="form-control" id="periodEnd" value="2026-06-15" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pay Date</label>
+                <input type="date" class="form-control" id="payDate" value="2026-06-16" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Payroll Cycle</label>
+                <select class="form-select" id="payCycle">
+                  <option value="biweekly" selected>Bi-Weekly</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="semimonthly">Semi-Monthly</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Select Employees</label>
+                <select class="form-select" id="employeeSelect" multiple size="4">
+                  <option value="1" selected>Dr. Nancy Rose — Provider</option>
+                  <option value="2" selected>John Smith — SDR</option>
+                  <option value="3" selected>Sarah Johnson — CE</option>
+                  <option value="4" selected>Mike Anderson — ISR</option>
+                  <option value="5" selected>Ashley Williams — Marketing</option>
+                  <option value="6" selected>Chris Brown — Social Media</option>
+                  <option value="7" selected>Emma Davis — Dental Assistant</option>
+                  <option value="8" selected>Daniel Martinez — Quote Specialist</option>
+                </select>
+                <small class="text-muted">Hold Ctrl/Cmd to select multiple employees.</small>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Notes (Optional)</label>
+                <textarea class="form-control" rows="2" id="payrollNotes"
+                  placeholder="Add any notes about this payroll run..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-green" onclick="createPayrollRun()"><i
+              class="fa-solid fa-check me-1"></i>Create Payroll Run</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js">
+
+  </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    /* ==========================================================
+       STEP NAVIGATION
+       ========================================================== */
+    function goToStep(n) {
+      const screenMap = { 1: 'screen-1', 2: 'screen-2', 3: 'screen-3', 4: 'screen-4' };
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(screenMap[n]);
+      if (target) target.classList.add('active');
+      document.querySelectorAll('.step-nav-item').forEach(item => {
+        const step = parseInt(item.dataset.step);
+        item.classList.remove('active', 'done');
+        if (step === n) item.classList.add('active');
+        else if (step < n) item.classList.add('done');
+      });
+      window.scrollTo(0, 0);
+      if (n === 3 && !window.summaryChartDrawn) drawSummaryChart();
+      if (n === 4) updateFlagCounts();
+    }
+
+    /* ==========================================================
+       SCREEN 1 — PAYROLL RUNS FILTER
+       ========================================================== */
+    function filterRuns(filter) {
+      const rows = document.querySelectorAll('#runsTableBody tr');
+      let countMap = { all: 0, inprogress: 0, locked: 0, completed: 0, cancelled: 0 };
+      rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        if (status) countMap.all++;
+        if (status === 'inprogress') countMap.inprogress++;
+        else if (status === 'locked') countMap.locked++;
+        else if (status === 'completed') countMap.completed++;
+        else if (status === 'cancelled') countMap.cancelled++;
+      });
+      document.getElementById('countAllRuns').textContent = countMap.all;
+      document.getElementById('countInProgress').textContent = countMap.inprogress;
+      document.getElementById('countCompleted').textContent = countMap.completed;
+      document.getElementById('countLocked').textContent = countMap.locked;
+      document.getElementById('countCancelled').textContent = countMap.cancelled;
+
+      rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        row.style.display = (filter === 'all' || status === filter) ? '' : 'none';
+      });
+      document.querySelectorAll('#runFilterPills .filter-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-filter') === filter);
+      });
+    }
+
+    /* ==========================================================
+       SCREEN 2 — CONFIRM EMPLOYEE
+       ========================================================== */
+    function confirmEmployee(rowId, statusId) {
+      const row = document.getElementById(rowId);
+      const statusEl = document.getElementById(statusId);
+      if (!row || !statusEl) return;
+      statusEl.className = 'status-pill-wf confirmed';
+      statusEl.innerText = 'Confirmed';
+      const td = row.querySelectorAll('td');
+      const lastTd = td[td.length - 1];
+      lastTd.innerHTML = '<button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button>';
+      const pendingEl = document.getElementById('pendingCount2');
+      const confirmedEl = document.getElementById('confirmedCount2');
+      const footerEl = document.getElementById('confirmFooterCount2');
+      let confirmed = parseInt(confirmedEl.innerText) || 0;
+      let pending = parseInt(pendingEl.innerText) || 0;
+      confirmed++;
+      pending = Math.max(0, pending - 1);
+      confirmedEl.innerText = confirmed;
+      footerEl.innerText = confirmed;
+      pendingEl.innerText = pending;
+      const pendingKpi = document.querySelector('#screen-2 .kpi-mini-row .kpi-mini-card:nth-child(2) .kpi-mini-value');
+      const confirmedKpi = document.querySelector('#screen-2 .kpi-mini-row .kpi-mini-card:nth-child(3) .kpi-mini-value');
+      if (pendingKpi) pendingKpi.innerText = pending;
+      if (confirmedKpi) confirmedKpi.innerText = confirmed;
+    }
+
+    function flagAttention(name) {
+      alert('Employee "' + name + '" flagged for attention. It will appear in the Flags & Disputes tab.');
+      goToStep(4);
+    }
+
+    /* ==========================================================
+       SCREEN 3 — GENERATE PAYROLL
+       ========================================================== */
+    function generatePayroll() {
+      if (confirm('Are you sure you want to lock this payroll? This action cannot be undone.')) {
+        alert('Payroll generated and locked successfully!');
+        goToStep(4);
+      }
+    }
+
+    /* ==========================================================
+       SCREEN 3 — DONUT CHART
+       ========================================================== */
+    function drawSummaryChart() {
+      window.summaryChartDrawn = true;
+      new Chart(document.getElementById('summaryDonut'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Providers', 'ISR Representatives', 'Hourly Employees'],
+          datasets: [{
+            data: [15200, 5400, 7850], backgroundColor: ['#10b981', '#2563eb', '#a855f7'],
+            borderWidth: 0
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: true, cutout: '72%', plugins: { legend: { display: false } } }
+      });
+    }
+
+    /* ==========================================================
+       SCREEN 4 — FLAGS
+       ========================================================== */
+    function updateFlagCounts() {
+      const rows = document.querySelectorAll('#flagTableBody tr');
+      const counts = { all: 0, pending: 0, inreview: 0, resolved: 0, dismissed: 0 };
+      rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        if (status) {
+          counts.all++;
+          if (status === 'pending') counts.pending++;
+          else if (status === 'inreview') counts.inreview++;
+          else if (status === 'resolved') counts.resolved++;
+          else if (status === 'dismissed') counts.dismissed++;
+        }
+      });
+      document.getElementById('countAll').textContent = counts.all;
+      document.getElementById('countPending').textContent = counts.pending;
+      document.getElementById('countInReview').textContent = counts.inreview;
+      document.getElementById('countResolved').textContent = counts.resolved;
+      document.getElementById('countDismissed').textContent = counts.dismissed;
+    }
+
+    function filterFlags(filter) {
+      const rows = document.querySelectorAll('#flagTableBody tr');
+      let visibleCount = 0;
+      rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        if (filter === 'all' || status === filter) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      document.querySelectorAll('.flag-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-filter') === filter);
+      });
+      if (visibleCount === 0) {
+        document.getElementById('flagNoteText').innerText = 'No flags in this category.';
+        document.getElementById('flagNoteAuthor').innerText = '—';
+      } else {
+        const firstVisible = document.querySelector('#flagTableBody tr[style*="display: block"]') ||
+          document.querySelector('#flagTableBody tr:not([style*="display: none"])');
+        if (firstVisible) loadFlag(firstVisible);
+      }
+    }
+
+    const flagNotes = {
+      'John Smith': 'I worked 11.5 hours on Tuesday (May 6th) but only 10.5 hours are showing on my statement. Please review and adjust. Thank you!',
+      'Sarah Johnson': 'My overtime hours from the weekend shift are missing from this pay period.',
+      'Mike Anderson': 'The Rodriguez case I closed on May 9th does not appear in my commission total.',
+      'Emma Davis': 'I noticed a duplicate entry for my regular hours on May 10th. Please remove the extra entry.',
+      'Chris Brown': 'My hourly rate is showing as $14.00 but it should be $15.00 per my contract.'
+    };
+
+    function loadFlag(row) {
+      const nameEl = row.querySelector('.fw-semibold');
+      if (!nameEl) return;
+      const name = nameEl.innerText.trim();
+      document.getElementById('flagNoteAuthor').innerText = name;
+      document.getElementById('flagNoteText').innerText = flagNotes[name] || 'No additional note provided.';
+    }
+
+    function saveFlagNote() {
+      alert('Internal note saved and status updated to "' + document.getElementById('flagStatusSelect').value + '".');
+      updateFlagCounts();
+    }
+
+    /* ==========================================================
+       NEW PAYROLL RUN — MODAL
+       ========================================================== */
+    function createPayrollRun() {
+      const start = document.getElementById('periodStart').value;
+      const end = document.getElementById('periodEnd').value;
+      const payDate = document.getElementById('payDate').value;
+      if (!start || !end || !payDate) {
+        alert('Please fill in all required fields (Pay Period and Pay Date).');
+        return;
+      }
+      const startF = new Date(start).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const endF = new Date(end).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const payF = new Date(payDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const select = document.getElementById('employeeSelect');
+      const selectedCount = Array.from(select.selectedOptions).length;
+      const tbody = document.getElementById('runsTableBody');
+      const newRow = document.createElement('tr');
+      newRow.setAttribute('data-status', 'inprogress');
+      newRow.innerHTML = `
+                        <td class="fw-semibold">${startF} – ${endF}</td>
+                        <td>${payF}</td>
+                        <td>${selectedCount}</td>
+                        <td>—</td>
+                        <td><span class="status-pill inprogress">In Progress</span></td>
+                        <td><button class="btn btn-sm btn-green" onclick="goToStep(2)">Review Payroll</button></td>
+                    `;
+      tbody.prepend(newRow);
+      filterRuns('all');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('newPayrollModal'));
+      if (modal) modal.hide();
+      document.getElementById('newPayrollForm').reset();
+      document.getElementById('payrollNotes').value = '';
+      alert('Payroll run created successfully for ' + startF + ' – ' + endF + '!');
+    }
+
+    /* ==========================================================
+       EXPORT SUMMARY — CSV DOWNLOAD (WORKING)
+       ========================================================== */
+    function exportSummary() {
+      const screen2Active = document.getElementById('screen-2').classList.contains('active');
+      const screen3Active = document.getElementById('screen-3').classList.contains('active');
+
+      let csvRows = [];
+      csvRows.push('"NexaTrack Payroll Summary"');
+      csvRows.push('"Generated: ' + new Date().toLocaleString() + '"');
+      csvRows.push('');
+
+      if (screen2Active) {
+        // Export detailed employee list from screen-2
+        const rows = document.querySelectorAll('#reviewTableBody tr');
+        if (rows.length === 0) {
+          alert('No employee data to export.');
+          return;
+        }
+        csvRows.push('"Employee","Department","Type","Total Pay","Status"');
+        rows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          if (cells.length < 5) return;
+          const nameDiv = cells[0].querySelector('.d-flex');
+          let name = nameDiv ? nameDiv.textContent.trim() : cells[0].textContent.trim();
+          name = name.replace(/\s+/g, ' ').trim();
+          const dept = cells[1].textContent.trim();
+          const type = cells[2].textContent.trim();
+          const pay = cells[3].textContent.trim();
+          const statusEl = cells[4].querySelector('.status-pill-wf');
+          const status = statusEl ? statusEl.textContent.trim() : cells[4].textContent.trim();
+          csvRows.push(`"${name}","${dept}","${type}","${pay}","${status}"`);
+        });
+        // Add totals
+        const totalEmployees = rows.length;
+        const confirmedEl = document.getElementById('confirmedCount2');
+        const confirmed = confirmedEl ? confirmedEl.textContent : '0';
+        const pendingEl = document.getElementById('pendingCount2');
+        const pending = pendingEl ? pendingEl.textContent : '0';
+        csvRows.push('');
+        csvRows.push(`"Total Employees",${totalEmployees}`);
+        csvRows.push(`"Confirmed",${confirmed}`);
+        csvRows.push(`"Pending",${pending}`);
+      } else if (screen3Active) {
+        // Export summary KPIs from screen-3
+        const kpiCards = document.querySelectorAll('#screen-3 .kpi-mini-card');
+        if (kpiCards.length < 4) {
+          alert('No summary data to export.');
+          return;
+        }
+        csvRows.push('"Metric","Value"');
+        const labels = ['Employees', 'Total Gross Payroll', 'Total Deductions', 'Total Net Payroll'];
+        kpiCards.forEach((card, index) => {
+          const value = card.querySelector('.kpi-mini-value')?.textContent.trim() || '';
+          csvRows.push(`"${labels[index] || ''}","${value}"`);
+        });
+        // Breakdown
+        csvRows.push('');
+        csvRows.push('"Payroll Breakdown"');
+        csvRows.push('"Department","Employees","Amount"');
+        const breakdownItems = document.querySelectorAll('#screen-3 .breakdown-legend-item');
+        breakdownItems.forEach(item => {
+          const name = item.querySelector('.name')?.textContent.trim() || '';
+          const count = item.querySelector('.cnt')?.textContent.trim() || '';
+          const amount = item.querySelector('.val')?.textContent.trim() || '';
+          csvRows.push(`"${name}","${count}","${amount}"`);
+        });
+      } else {
+        alert('Please go to the Review Center or Final Summary to export.');
+        return;
+      }
+
+      // Download CSV
+      const csvString = csvRows.join('\n');
+      const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'payroll_summary.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    /* ==========================================================
+       INIT
+       ========================================================== */
+    document.addEventListener('DOMContentLoaded', function () {
+      // Payroll run filters
+      document.querySelectorAll('#runFilterPills .filter-pill').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          filterRuns(this.getAttribute('data-filter'));
+        });
+      });
+      filterRuns('all');
+
+      // Flag tabs
+      document.querySelectorAll('.flag-tab-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          filterFlags(this.getAttribute('data-filter'));
+        });
+      });
+      filterFlags('all');
+      const firstRow = document.querySelector('#flagTableBody tr');
+      if (firstRow) loadFlag(firstRow);
+      updateFlagCounts();
+
+      // Set default dates in modal
+      const today = new Date();
+      const first = new Date(today.getFullYear(), today.getMonth(), 1);
+      const last = new Date(today.getFullYear(), today.getMonth(), 15);
+      const pay = new Date(today.getFullYear(), today.getMonth(), 16);
+      document.getElementById('periodStart').value = first.toISOString().split('T')[0];
+      document.getElementById('periodEnd').value = last.toISOString().split('T')[0];
+      document.getElementById('payDate').value = pay.toISOString().split('T')[0];
+    });
+  </script>
+
+</body>
+
+</html>

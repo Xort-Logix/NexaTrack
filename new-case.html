@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — New Case</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-900: #0a1628;
+      --navy-800: #0f1f38;
+      --navy-700: #152847;
+      --green-500: #10b981;
+      --green-600: #059669;
+      --green-50: #ecfdf5;
+      --gold-500: #c9a227;
+      --gray-50: #f7f8fa;
+      --gray-100: #eef1f5;
+      --gray-200: #e2e6ed;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --radius: 10px;
+    }
+
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--gray-50);
+      color: var(--gray-900);
+      font-size: 14px;
+    }
+
+    .sidebar {
+      width: 236px;
+      background: var(--navy-900);
+      min-height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 14px;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px 22px 8px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--green-500), #0d9488);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .brand-text {
+      font-weight: 800;
+      color: #fff;
+      font-size: 16px;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .brand-text small {
+      display: block;
+      font-size: 9px;
+      color: var(--green-500);
+      letter-spacing: 3px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .nav-section {
+      margin-top: 6px;
+    }
+
+    .nav-link-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #93a2bd;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      margin-bottom: 2px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .nav-link-item i {
+      width: 16px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .nav-link-item:hover {
+      background: var(--navy-700);
+      color: #fff;
+    }
+
+    .nav-link-item.active {
+      background: var(--green-500);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--navy-700);
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 8px;
+      color: #fff;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .user-chip small {
+      color: #93a2bd;
+      display: block;
+      font-size: 11px;
+    }
+
+    .main {
+      margin-left: 236px;
+      padding: 26px 30px 50px 30px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .page-title {
+      font-weight: 800;
+      font-size: 22px;
+      margin: 0;
+      color: var(--gray-900);
+    }
+
+    .page-sub {
+      color: var(--gray-500);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .btn-green {
+      background: var(--green-500);
+      border-color: var(--green-500);
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .btn-green:hover {
+      background: var(--green-600);
+      border-color: var(--green-600);
+      color: #fff;
+    }
+
+    .btn-outline-navy {
+      border-color: var(--gray-200);
+      color: var(--gray-700);
+      font-weight: 600;
+      font-size: 13px;
+      background: #fff;
+    }
+
+    .btn-outline-navy:hover {
+      background: var(--gray-100);
+    }
+
+    .kpi-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      height: 100%;
+    }
+
+    .kpi-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .kpi-label {
+      font-size: 11.5px;
+      color: var(--gray-500);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-top: 2px;
+    }
+
+    .kpi-delta {
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+    }
+
+    .panel-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .panel-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .panel-sub {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .panel-body {
+      padding: 18px;
+    }
+
+    table.nexa-table {
+      width: 100%;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    table.nexa-table thead th {
+      background: var(--gray-50);
+      color: var(--gray-500);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 11px 14px;
+      white-space: nowrap;
+    }
+
+    table.nexa-table tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+
+    table.nexa-table tbody tr {
+      transition: .12s;
+    }
+
+    table.nexa-table tbody tr:hover {
+      background: var(--green-50);
+    }
+
+    table.nexa-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .avatar-sm {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--navy-700);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .member-name {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .member-email {
+      font-size: 11.5px;
+      color: var(--gray-500);
+    }
+
+    .badge-dept {
+      background: #eef1f5;
+      color: var(--gray-700);
+      font-weight: 600;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 6px;
+    }
+
+    .badge-comp {
+      font-weight: 600;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 6px;
+    }
+
+    .badge-comp.production {
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .badge-comp.commission {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-comp.flat {
+      background: #fce7f3;
+      color: #9d174d;
+    }
+
+    .badge-comp.hourly {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge-comp.salary {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .badge-status {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .badge-status.active {
+      background: var(--green-50);
+      color: var(--green-600);
+    }
+
+    .badge-status.inactive {
+      background: #f3f4f6;
+      color: var(--gray-500);
+    }
+
+    .badge-status.warn {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-status.danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .search-input {
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      font-size: 13px;
+    }
+
+    .form-select-sm-custom {
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      font-size: 13px;
+    }
+
+    .form-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    .form-control,
+    .form-select {
+      font-size: 13px;
+      border-radius: 8px;
+      border-color: var(--gray-200);
+    }
+
+    .section-label {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 10px;
+      margin-top: 6px;
+    }
+
+    .payroll-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 13.5px;
+    }
+
+    .payroll-row:last-child {
+      border-bottom: none;
+    }
+
+    .payroll-row span:first-child {
+      color: var(--gray-500);
+    }
+
+    .payroll-row.total {
+      font-weight: 800;
+      font-size: 15px;
+      padding-top: 14px;
+    }
+
+    .payroll-row.total span:last-child {
+      color: var(--green-600);
+    }
+
+    .payroll-row.deduction span:last-child {
+      color: #dc2626;
+    }
+
+    .stat-box {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 15px 16px;
+      height: 100%;
+    }
+
+    .stat-box-label {
+      font-size: 11.5px;
+      color: var(--gray-500);
+      font-weight: 600;
+    }
+
+    .stat-box-value {
+      font-size: 19px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .stat-box i {
+      color: var(--green-500);
+      font-size: 16px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .profile-header {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .avatar-lg {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--navy-800);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .profile-name {
+      font-weight: 800;
+      font-size: 19px;
+      margin: 0;
+    }
+
+    .profile-role {
+      color: var(--gray-500);
+      font-size: 13px;
+    }
+
+    .profile-stat {
+      text-align: center;
+      padding: 0 18px;
+      border-left: 1px solid var(--gray-200);
+    }
+
+    .profile-stat-label {
+      font-size: 11px;
+      color: var(--gray-500);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .profile-stat-value {
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .engine-tab-btn {
+      border: none;
+      background: none;
+      padding: 10px 4px;
+      margin-right: 24px;
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--gray-500);
+      border-bottom: 2px solid transparent;
+    }
+
+    .engine-tab-btn.active {
+      color: var(--green-600);
+      border-bottom-color: var(--green-500);
+    }
+
+    .engine-tabs {
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 18px;
+      padding: 0 4px;
+    }
+
+    .comp-type-card {
+      border: 1.5px solid var(--gray-200);
+      border-radius: 9px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .comp-type-card:hover {
+      border-color: var(--green-500);
+    }
+
+    .comp-type-card.selected {
+      border-color: var(--green-500);
+      background: var(--green-50);
+    }
+
+    .comp-type-card i {
+      font-size: 18px;
+      color: var(--green-500);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .comp-type-card span {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .dynamic-fields {
+      background: var(--gray-50);
+      border: 1px dashed var(--gray-200);
+      border-radius: 9px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .material-card {
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 16px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .material-card:hover {
+      border-color: var(--green-500);
+    }
+
+    .material-card.selected {
+      border-color: var(--green-500);
+      background: var(--green-50);
+    }
+
+    .material-card i {
+      font-size: 20px;
+      color: var(--green-500);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .material-card span {
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stepper button {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--gray-700);
+    }
+
+    .stepper input {
+      width: 64px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 16px;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      height: 34px;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 26px;
+      position: relative;
+    }
+
+    .progress-steps::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 5%;
+      right: 5%;
+      height: 2px;
+      background: var(--gray-200);
+      z-index: 0;
+    }
+
+    .progress-step {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      flex: 1;
+    }
+
+    .progress-step .dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--gray-200);
+      color: var(--gray-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      margin: 0 auto 6px auto;
+    }
+
+    .progress-step.active .dot {
+      background: var(--green-500);
+      border-color: var(--green-500);
+      color: #fff;
+    }
+
+    .progress-step.done .dot {
+      background: var(--green-600);
+      border-color: var(--green-600);
+      color: #fff;
+    }
+
+    .progress-step .label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--gray-500);
+    }
+
+    .progress-step.active .label {
+      color: var(--green-600);
+    }
+
+    .summary-panel {
+      position: sticky;
+      top: 20px;
+    }
+
+    .impact-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 13px;
+    }
+
+    .impact-row:last-child {
+      border-bottom: none;
+    }
+
+    .impact-amt {
+      font-weight: 800;
+      color: var(--green-600);
+    }
+
+    .back-link {
+      color: var(--gray-500);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .back-link:hover {
+      color: var(--green-600);
+    }
+
+    .toggle-yn .btn {
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 5px 16px;
+    }
+
+    @media(max-width:900px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item" href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <a class="back-link" href="cases.html"><i class="fa-solid fa-arrow-left"></i> Back to Cases</a>
+
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">New Case Entry</h1>
+        <div class="page-sub">Enter the treatment facts — NexaTrack calculates compensation, production, and payroll
+          automatically.</div>
+      </div>
+    </div>
+
+    <div class="progress-steps">
+      <div class="progress-step active" id="step-dot-1">
+        <div class="dot">1</div>
+        <div class="label">PATIENT</div>
+      </div>
+      <div class="progress-step" id="step-dot-2">
+        <div class="dot">2</div>
+        <div class="label">TREATMENT</div>
+      </div>
+      <div class="progress-step" id="step-dot-3">
+        <div class="dot">3</div>
+        <div class="label">FINANCIAL</div>
+      </div>
+      <div class="progress-step" id="step-dot-4">
+        <div class="dot">4</div>
+        <div class="label">REVIEW</div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <div class="panel panel-body">
+
+          <!-- STEP 1: PATIENT & TEAM -->
+          <div class="wizard-step" id="wstep-1">
+            <h2 class="panel-title mb-3">Patient & Team</h2>
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label">Patient Search</label>
+                <input type="text" class="form-control" placeholder="Search existing patient or type new name...">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Case ID</label>
+                <input type="text" class="form-control" value="CASE-2026-000234" disabled>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Procedure Date</label>
+                <input type="date" class="form-control" value="2026-07-08">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Location</label>
+                <select class="form-select">
+                  <option>Fort Lauderdale</option>
+                  <option>Boca Raton</option>
+                  <option>Miami</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Provider</label>
+                <select class="form-select">
+                  <option>Dr. Heider</option>
+                  <option>Dr. Vanessa</option>
+                  <option>Dr. Nancy</option>
+                  <option>Dr. Safa</option>
+                  <option>Dr. Silvina</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">ISR</label>
+                <select class="form-select">
+                  <option>Jeremiah Smith</option>
+                  <option>Joshua Lee</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Case Status</label>
+                <select class="form-select">
+                  <option>Draft</option>
+                  <option>Prep Complete</option>
+                  <option>Waiting for Cement</option>
+                  <option>Completed</option>
+                  <option>Verified</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: TREATMENT -->
+          <div class="wizard-step" id="wstep-2" style="display:none;">
+            <h2 class="panel-title mb-3">Treatment</h2>
+            <div class="section-label">Cosmetic — Material</div>
+            <div class="row g-2 mb-3">
+              <div class="col-3">
+                <div class="material-card selected" data-material="composite"><i
+                    class="fa-solid fa-circle-half-stroke"></i><span>Composite</span></div>
+              </div>
+              <div class="col-3">
+                <div class="material-card" data-material="ceramic"><i class="fa-solid fa-gem"></i><span>Ceramic</span>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="material-card" data-material="porcelain"><i class="fa-solid fa-tooth"></i><span>Porcelain /
+                    Zirconia</span></div>
+              </div>
+              <div class="col-3">
+                <div class="material-card" data-material="crown"><i class="fa-solid fa-crown"></i><span>Full Crown
+                    Case</span></div>
+              </div>
+            </div>
+
+            <div class="row g-3 align-items-end mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Total Units</label>
+                <div class="stepper">
+                  <button type="button" onclick="stepUnits(-1)">-</button>
+                  <input type="text" id="unitsInput" value="16" readonly>
+                  <button type="button" onclick="stepUnits(1)">+</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label d-block">Mixed Materials?</label>
+                <div class="btn-group toggle-yn" role="group">
+                  <button type="button" class="btn btn-outline-navy" onclick="toggleMixed(false)"
+                    id="mixedNo">NO</button>
+                  <button type="button" class="btn btn-outline-navy" onclick="toggleMixed(true)"
+                    id="mixedYes">YES</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="mixedFields" style="display:none;" class="dynamic-fields mb-3">
+              <div class="row g-3">
+                <div class="col-6 col-md-3"><label class="form-label">Composite Units</label><input type="number"
+                    class="form-control" value="0"></div>
+                <div class="col-6 col-md-3"><label class="form-label">Ceramic Units</label><input type="number"
+                    class="form-control" value="0"></div>
+                <div class="col-6 col-md-3"><label class="form-label">Porcelain Units</label><input type="number"
+                    class="form-control" value="0"></div>
+                <div class="col-6 col-md-3"><label class="form-label">Crown Units</label><input type="number"
+                    class="form-control" value="0"></div>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-6"><label class="form-label">Prep Doctor</label><select class="form-select"
+                  id="prepDoctor">
+                  <option>Dr. Heider</option>
+                  <option>Dr. Vanessa</option>
+                  <option>Dr. Nancy</option>
+                  <option>Dr. Safa</option>
+                  <option>Dr. Silvina</option>
+                </select></div>
+              <div class="col-md-6">
+                <label class="form-label d-block">Cement Doctor</label>
+                <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="sameDoctor" checked
+                    onchange="toggleCementDoctor()"><label class="form-check-label small" for="sameDoctor">Same
+                    Doctor</label></div>
+                <select class="form-select" id="cementDoctor" disabled>
+                  <option>Dr. Heider</option>
+                  <option>Dr. Vanessa</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="section-label d-flex justify-content-between align-items-center">
+              <span>General Dentistry</span>
+              <button class="btn btn-sm btn-outline-navy" onclick="addProcedure()"><i
+                  class="fa-solid fa-plus me-1"></i>Add Procedure</button>
+            </div>
+            <div id="procedureList"></div>
+          </div>
+
+          <!-- STEP 3: FINANCIAL -->
+          <div class="wizard-step" id="wstep-3" style="display:none;">
+            <h2 class="panel-title mb-3">Financial</h2>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label">Treatment Value</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" id="treatmentValue" value="12500" oninput="updateSummary()"></div>
+              </div>
+              <div class="col-md-6"><label class="form-label">Collected Amount</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" id="collectedAmount" value="12500" oninput="updateSummary()"></div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Financing Used</label>
+                <select class="form-select">
+                  <option>Cash</option>
+                  <option>HFD</option>
+                  <option>CareCredit</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-6"><label class="form-label">Lab Cost <span
+                    class="text-muted">(optional)</span></label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="0" oninput="updateSummary()" id="labCost"></div>
+              </div>
+              <div class="col-md-6"><label class="form-label">Merchant Fee <span
+                    class="text-muted">(optional)</span></label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="0" oninput="updateSummary()" id="merchantFee"></div>
+              </div>
+              <div class="col-md-6"><label class="form-label">Notes <span
+                    class="text-muted">(optional)</span></label><input type="text" class="form-control"
+                  placeholder="Add any case notes..."></div>
+            </div>
+          </div>
+
+          <!-- STEP 4: REVIEW -->
+          <div class="wizard-step" id="wstep-4" style="display:none;">
+            <h2 class="panel-title mb-3">Review — Payroll Impact</h2>
+            <p class="text-muted small">This is exactly how the case affects payroll. Confirm before saving.</p>
+            <div class="panel p-3 mb-3">
+              <div class="section-label">Providers</div>
+              <div class="impact-row"><span>Dr. Heider</span><span class="impact-amt">+$1,240.00</span></div>
+              <div class="section-label mt-3">General Dentistry</div>
+              <div class="impact-row"><span>Dr. Heider — Deep Cleaning</span><span class="impact-amt">+$280.00</span>
+              </div>
+              <div class="section-label mt-3">ISR Commission</div>
+              <div class="impact-row"><span>Jeremiah Smith</span><span class="impact-amt">+$960.00</span></div>
+              <div class="section-label mt-3">Flat ISR</div>
+              <div class="impact-row"><span>Joshua Lee</span><span class="impact-amt">+$200.00</span></div>
+            </div>
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="stat-box">
+                  <div class="stat-box-label">Cosmetic Production</div>
+                  <div class="stat-box-value">$12,500.00</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="stat-box">
+                  <div class="stat-box-label">General Production</div>
+                  <div class="stat-box-value">$800.00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4 pt-3" style="border-top:1px solid var(--gray-200);">
+            <button class="btn btn-outline-navy" id="btnBack" onclick="prevStep()"
+              style="visibility:hidden;">Back</button>
+            <button class="btn btn-green" id="btnNext" onclick="nextStep()">Next <i
+                class="fa-solid fa-arrow-right ms-1"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE SUMMARY PANEL -->
+      <div class="col-lg-4">
+        <div class="panel panel-body summary-panel">
+          <h2 class="panel-title mb-3">Live Summary</h2>
+
+          <div class="section-label">Compensation Summary</div>
+          <div class="payroll-row"><span>Provider Pay</span><span id="sProviderPay">$1,240.00</span></div>
+          <div class="payroll-row"><span>Prep Pay</span><span id="sPrepPay">$800.00</span></div>
+          <div class="payroll-row"><span>Cement Pay</span><span id="sCementPay">$0.00</span></div>
+          <div class="payroll-row"><span>General Dentistry Pay</span><span id="sGenPay">$280.00</span></div>
+          <div class="payroll-row"><span>ISR Commission</span><span id="sIsrComm">$960.00</span></div>
+          <div class="payroll-row"><span>Flat ISR Pay</span><span id="sFlatIsr">$200.00</span></div>
+
+          <div class="section-label mt-3">Financial Summary</div>
+          <div class="payroll-row"><span>Treatment Value</span><span id="sTreatVal">$12,500.00</span></div>
+          <div class="payroll-row"><span>Collected</span><span id="sCollected">$12,500.00</span></div>
+          <div class="payroll-row"><span>Lab Cost</span><span id="sLabCost">$0.00</span></div>
+          <div class="payroll-row"><span>Merchant Fee</span><span id="sMerchFee">$0.00</span></div>
+          <div class="payroll-row"><span>Gross Profit</span><span id="sGross">$12,500.00</span></div>
+          <div class="payroll-row total"><span>Net Profit</span><span id="sNet" class="text-success">$12,500.00</span>
+          </div>
+
+          <div class="section-label mt-3">Production Summary</div>
+          <div class="payroll-row"><span>Cosmetic Production</span><span>$12,500.00</span></div>
+          <div class="payroll-row"><span>General Production</span><span>$800.00</span></div>
+          <div class="payroll-row total"><span>Total Production</span><span>$13,300.00</span></div>
+
+          <button class="btn btn-green w-100 mt-3" id="saveCaseBtn" style="display:none;"
+            onclick="alert('Case saved. Dashboard, Production, Statements, and Payroll Runs all update automatically.')"><i
+              class="fa-solid fa-check me-1"></i>SAVE CASE</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let currentStep = 1;
+    let unitCount = 16;
+    let procCount = 0;
+
+    function goToStep(n) {
+      document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
+      document.getElementById('wstep-' + n).style.display = 'block';
+      document.querySelectorAll('.progress-step').forEach((s, i) => {
+        s.classList.remove('active', 'done');
+        if (i + 1 < n) s.classList.add('done');
+        if (i + 1 === n) s.classList.add('active');
+      });
+      document.getElementById('btnBack').style.visibility = n === 1 ? 'hidden' : 'visible';
+      document.getElementById('btnNext').style.display = n === 4 ? 'none' : 'inline-block';
+      document.getElementById('saveCaseBtn').style.display = n === 4 ? 'block' : 'none';
+      currentStep = n;
+      window.scrollTo(0, 0);
+    }
+    function nextStep() { if (currentStep < 4) goToStep(currentStep + 1); }
+    function prevStep() { if (currentStep > 1) goToStep(currentStep - 1); }
+
+    document.querySelectorAll('.material-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+
+    function stepUnits(delta) {
+      unitCount = Math.max(0, unitCount + delta);
+      document.getElementById('unitsInput').value = unitCount;
+    }
+
+    function toggleMixed(isYes) {
+      document.getElementById('mixedFields').style.display = isYes ? 'block' : 'none';
+      document.getElementById('mixedNo').classList.toggle('btn-green', !isYes);
+      document.getElementById('mixedNo').classList.toggle('btn-outline-navy', isYes);
+      document.getElementById('mixedYes').classList.toggle('btn-green', isYes);
+      document.getElementById('mixedYes').classList.toggle('btn-outline-navy', !isYes);
+    }
+    toggleMixed(false);
+
+    function toggleCementDoctor() {
+      const same = document.getElementById('sameDoctor').checked;
+      document.getElementById('cementDoctor').disabled = same;
+      if (same) document.getElementById('cementDoctor').value = document.getElementById('prepDoctor').value;
+    }
+
+    function addProcedure() {
+      procCount++;
+      const id = 'proc-' + procCount;
+      const div = document.createElement('div');
+      div.className = 'dynamic-fields mb-2';
+      div.id = id;
+      div.innerHTML = `
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4"><label class="form-label">Procedure</label><select class="form-select"><option>Extraction</option><option>Deep Cleaning</option><option>Root Canal</option><option>Bone Graft</option><option>Scaling & Root Planing</option></select></div>
+      <div class="col-md-2"><label class="form-label">Quantity</label><input type="number" class="form-control" value="1"></div>
+      <div class="col-md-3"><label class="form-label">Doctor</label><select class="form-select"><option>Dr. Heider</option><option>Dr. Vanessa</option></select></div>
+      <div class="col-md-2"><label class="form-label">Doctor Pay</label><input type="text" class="form-control" value="$140.00" disabled></div>
+      <div class="col-md-1"><button class="btn btn-outline-navy" onclick="document.getElementById('${id}').remove()"><i class="fa-solid fa-trash"></i></button></div>
+    </div>`;
+      document.getElementById('procedureList').appendChild(div);
+    }
+
+    function updateSummary() {
+      const tv = parseFloat(document.getElementById('treatmentValue').value) || 0;
+      const collected = parseFloat(document.getElementById('collectedAmount').value) || 0;
+      const lab = parseFloat(document.getElementById('labCost').value) || 0;
+      const fee = parseFloat(document.getElementById('merchantFee').value) || 0;
+      const gross = collected - lab;
+      const net = gross - fee;
+      document.getElementById('sTreatVal').textContent = '$' + tv.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sCollected').textContent = '$' + collected.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sLabCost').textContent = '$' + lab.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sMerchFee').textContent = '$' + fee.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sGross').textContent = '$' + gross.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sNet').textContent = '$' + net.toLocaleString(undefined, { minimumFractionDigits: 2 });
+    }
+
+    goToStep(1);
+  </script>
+
+</body>
+
+</html>

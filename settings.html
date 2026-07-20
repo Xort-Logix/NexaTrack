@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Settings</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style/settings.css">
+  <link rel="stylesheet" href="style/main.css">
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" hidden>
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item " href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item " href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+        Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item " href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item " href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item active" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+       <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div class="flex-grow-1">
+          <div style="font-size:13px;font-weight:600;">James Johnson</div>
+          <small>Office Manager</small>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+      </div>
+      <div class="support-chip">
+        <i class="fa-solid fa-headset"></i>
+        <div><span>Need help?</span>Contact Support</div>
+      </div>
+    </div>
+  </div>
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
+    <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item active" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Settings</h1>
+        <div class="page-sub">Manage your organization, preferences, and system configurations.</div>
+        <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </label>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-clock me-1"></i>Activity Log</button>
+        <button class="btn btn-green"><i class="fa-solid fa-check me-1"></i>Save Changes</button>
+      </div>
+    </div>
+
+    <div class="settings-tabs">
+      <button class="settings-tab-btn active" onclick="showSettingsTab('organization', this)"><i
+          class="fa-regular fa-building"></i>Organization</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('users', this)"><i
+          class="fa-solid fa-user-group"></i>Users &amp; Roles</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('permissions', this)"><i
+          class="fa-solid fa-lock"></i>Permissions</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('integrations', this)"><i
+          class="fa-solid fa-plug"></i>Integrations</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('notifications', this)"><i
+          class="fa-regular fa-bell"></i>Notifications</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('preferences', this)"><i
+          class="fa-solid fa-sliders"></i>Preferences</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('billing', this)"><i
+          class="fa-regular fa-credit-card"></i>Billing</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('security', this)"><i
+          class="fa-solid fa-shield-halved"></i>Security</button>
+      <button class="settings-tab-btn" onclick="showSettingsTab('audit', this)"><i
+          class="fa-regular fa-file-lines"></i>Audit Log</button>
+    </div>
+
+    <div id="settings-tab-contents">
+
+      <!-- ============= ORGANIZATION ============= -->
+      <div id="settings-view-organization" class="settings-pane">
+        <div class="row g-3">
+          <div class="col-lg-5">
+            <div class="panel">
+              <div class="panel-body">
+                <h2 class="panel-title mb-0">Organization Settings</h2>
+                <div class="panel-sub mb-3">Manage your organization details and preferences.</div>
+                <div class="row g-3">
+                  <div class="col-md-6"><label class="form-label">Organization Name</label><input type="text"
+                      class="form-control" value="GDG Smiles"></div>
+                  <div class="col-md-6"><label class="form-label">Time Zone</label><select class="form-select">
+                      <option>(GMT-04:00) Eastern Time (US &amp; Canada)</option>
+                    </select></div>
+                  <div class="col-md-6"><label class="form-label">DBA / Brand Name</label><input type="text"
+                      class="form-control" value="GDG Smiles"></div>
+                  <div class="col-md-6"><label class="form-label">Default Currency</label><select class="form-select">
+                      <option>USD - US Dollar ($)</option>
+                    </select></div>
+                  <div class="col-6">
+                    <label class="form-label">Address</label>
+                    <input type="text" class="form-control mb-2" value="401 E Las Olas Blvd, Suite 1400">
+                    <input type="text" class="form-control" value="Fort Lauderdale, FL 33301">
+                  </div>
+                  <div class="col-md-6"><label class="form-label">Date Format</label>
+                    <input type="date" class="form-control" value="MM/DD/YYYY">
+                  </div>
+                  <div class="col-md-6"><label class="form-label">Phone</label><input type="text" class="form-control"
+                      value="(954) 555-0100"></div>
+                  <div class="col-md-6"><label class="form-label">Time Format</label>
+                    <input type="time" class="form-control" value="HH:MM AM/PM">
+                  </div>
+                  <div class="col-6"><label class="form-label">Website</label><input type="text" class="form-control"
+                      value="https://www.gdgsmiles.com"></div>
+                  <div class="col-md-6"><label class="form-label">Week Starts On</label><select class="form-select">
+                      <option>Sunday</option>
+                    </select></div>
+                </div>
+                <button class="btn btn-outline-navy mt-3"><i class="fa-regular fa-pen-to-square me-1"></i>Edit
+                  Organization Info</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="panel">
+              <div class="panel-body">
+                <h2 class="panel-title mb-0">General Preferences</h2>
+                <div class="panel-sub mb-2">Configure general system behavior and defaults.</div>
+
+                <div class="toggle-row">
+                  <i class="icon fa-regular fa-floppy-disk"></i>
+                  <div class="flex-grow-1">
+                    <div class="t1">Auto-save changes</div>
+                    <div class="t2">Automatically save changes across the system.</div>
+                  </div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                </div>
+                <div class="toggle-row">
+                  <i class="icon fa-regular fa-circle-question"></i>
+                  <div class="flex-grow-1">
+                    <div class="t1">Require reason for case cancellations</div>
+                    <div class="t2">Enforce reason selection when cancelling cases.</div>
+                  </div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                </div>
+                <div class="toggle-row">
+                  <i class="icon fa-solid fa-chart-simple"></i>
+                  <div class="flex-grow-1">
+                    <div class="t1">Enable production targets</div>
+                    <div class="t2">Track and display production targets.</div>
+                  </div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                </div>
+                <div class="toggle-row">
+                  <i class="icon fa-solid fa-gear"></i>
+                  <div class="flex-grow-1">
+                    <div class="t1">Show confidential data</div>
+                    <div class="t2">Allow viewing of confidential financial data.</div>
+                  </div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" checked></div>
+                </div>
+                <div class="toggle-row">
+                  <i class="icon fa-regular fa-moon"></i>
+                  <div class="flex-grow-1">
+                    <div class="t1">Enable dark mode</div>
+                    <div class="t2">Use dark theme across the platform.</div>
+                  </div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox"></div>
+                </div>
+                <div class="toggle-row">
+                  <i class="icon fa-solid fa-table-list"></i>
+                  <div class="flex-grow-1">
+                    <div class="t1">Compact tables</div>
+                    <div class="t2">Reduce row height in all tables.</div>
+                  </div>
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox"></div>
+                </div>
+
+                <button class="btn btn-green mt-3">Manage Preferences</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="panel mb-3">
+              <div class="panel-body">
+                <h2 class="panel-title mb-0">Quick Actions</h2>
+                <div class="panel-sub mb-2">Common settings and actions.</div>
+                <div class="quick-action-item"><i class="lead fa-solid fa-user-plus"></i>Add New User<i
+                    class="chev fa-solid fa-chevron-right"></i></div>
+                <div class="quick-action-item"><i class="lead fa-solid fa-user-gear"></i>Manage Roles<i
+                    class="chev fa-solid fa-chevron-right"></i></div>
+                <div class="quick-action-item"><i class="lead fa-solid fa-shield-halved"></i>Permission Matrix<i
+                    class="chev fa-solid fa-chevron-right"></i></div>
+                <div class="quick-action-item"><i class="lead fa-solid fa-plug"></i>System Integrations<i
+                    class="chev fa-solid fa-chevron-right"></i></div>
+                <div class="quick-action-item"><i class="lead fa-regular fa-bell"></i>Notification Templates<i
+                    class="chev fa-solid fa-chevron-right"></i></div>
+                <div class="quick-action-item"><i class="lead fa-solid fa-download"></i>Export Data<i
+                    class="chev fa-solid fa-chevron-right"></i></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-body">
+                <h2 class="panel-title mb-2">System Information</h2>
+                <div class="sysinfo-row"><span class="k">Current Version</span><span class="v">v2.4.8</span></div>
+                <div class="sysinfo-row"><span class="k">Environment</span><span class="v">Production</span></div>
+                <div class="sysinfo-row"><span class="k">Database Status</span><span class="v"><span
+                      class="status-dot-green"></span>Healthy</span></div>
+                <div class="sysinfo-row"><span class="k">Last Backup</span><span class="v">May 3, 2026 2:15 AM</span>
+                </div>
+                <div class="sysinfo-row" style="display:block;border-bottom:none;">
+                  <div class="d-flex justify-content-between"><span class="k">Storage Used</span><span class="v">68.4 GB
+                      / 250 GB</span></div>
+                  <div class="progress mt-2" style="height:6px;">
+                    <div class="progress-bar bg-success" style="width:27%;"></div>
+                  </div>
+                  <div class="text-end text-muted mt-1" style="font-size:10.5px;">27%</div>
+                </div>
+                <button class="btn btn-outline-navy w-100 mt-1">View System Status</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+          <div class="col-lg-4">
+            <div class="panel">
+              <div class="panel-body">
+                <h2 class="panel-title mb-0">Financial Settings</h2>
+                <div class="panel-sub mb-2">Configure financial and payroll related settings.</div>
+                <div class="link-list-item"><i class="icon fa-regular fa-credit-card"></i>
+                  <div>
+                    <div class="t1">Payment Methods</div>
+                    <div class="t2">Manage payment methods and accounts</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-solid fa-percent"></i>
+                  <div>
+                    <div class="t1">Tax Settings</div>
+                    <div class="t2">Configure tax rates and rules</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-regular fa-calendar"></i>
+                  <div>
+                    <div class="t1">Payroll Settings</div>
+                    <div class="t2">Configure payroll frequencies and defaults</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-solid fa-hand-holding-dollar"></i>
+                  <div>
+                    <div class="t1">Advance Settings</div>
+                    <div class="t2">Set advance limits and repayment rules</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel">
+              <div class="panel-body">
+                <h2 class="panel-title mb-0">Workflow Settings</h2>
+                <div class="panel-sub mb-2">Customize workflows and business rules.</div>
+                <div class="link-list-item"><i class="icon fa-solid fa-diagram-project"></i>
+                  <div>
+                    <div class="t1">Pipeline Settings</div>
+                    <div class="t2">Configure pipeline stages and automation</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-regular fa-circle-dot"></i>
+                  <div>
+                    <div class="t1">Case Statuses</div>
+                    <div class="t2">Manage case statuses and transitions</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-solid fa-robot"></i>
+                  <div>
+                    <div class="t1">Task Automation</div>
+                    <div class="t2">Set up automated tasks and reminders</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-regular fa-square-check"></i>
+                  <div>
+                    <div class="t1">Approval Workflows</div>
+                    <div class="t2">Configure approval processes</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel">
+              <div class="panel-body">
+                <h2 class="panel-title mb-0">Data &amp; Security</h2>
+                <div class="panel-sub mb-2">Manage data, backups, and security settings.</div>
+                <div class="link-list-item"><i class="icon fa-solid fa-database"></i>
+                  <div>
+                    <div class="t1">Backup Settings</div>
+                    <div class="t2">Configure automated backups</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-regular fa-clock"></i>
+                  <div>
+                    <div class="t1">Data Retention</div>
+                    <div class="t2">Set data retention policies</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-solid fa-shield-halved"></i>
+                  <div>
+                    <div class="t1">Security Settings</div>
+                    <div class="t2">Password, 2FA, and session settings</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="link-list-item"><i class="icon fa-solid fa-code"></i>
+                  <div>
+                    <div class="t1">API &amp; Webhooks</div>
+                    <div class="t2">Manage API access and webhooks</div>
+                  </div><i class="chev fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 pt-3"
+          style="border-top:1px solid var(--gray-200);font-size:12px;color:var(--gray-500);">
+          <span>© 2026 GDG Smiles. All rights reserved.</span>
+          <span>NexaTrack v2.4.8</span>
+        </div>
+      </div>
+
+      <!-- ============= USERS & ROLES ============= -->
+      <div id="settings-view-users" class="settings-pane" style="display:none;">
+        <div class="panel mb-3">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title mb-0">Users</h2>
+              <div class="panel-sub">Manage who has access to NexaTrack.</div>
+            </div>
+            <button class="btn btn-green" data-bs-toggle="modal" data-bs-target="#addUserModal"><i
+                class="fa-solid fa-user-plus me-1"></i>Add User</button>
+          </div>
+          <div class="table-responsive">
+            <table class="settings-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                  <th>Last Login</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <tr>
+                  <td class="fw-semibold">James Johnson</td>
+                  <td class="text-muted">james.johnson@gdgsmiles.com</td>
+                  <td><span class="role-pill">Office Manager</span></td>
+                  <td>Operations</td>
+                  <td><span class="status-pill-mini active">Active</span></td>
+                  <td class="text-muted">Today, 9:12 AM</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold">Dr. Heider</td>
+                  <td class="text-muted">dr.heider@gdgsmiles.com</td>
+                  <td><span class="role-pill" style="background:#eef2ff;color:#4338ca;">Provider</span></td>
+                  <td>Providers</td>
+                  <td><span class="status-pill-mini active">Active</span></td>
+                  <td class="text-muted">Yesterday, 5:40 PM</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold">Jeremiah Smith</td>
+                  <td class="text-muted">jeremiah.smith@gdgsmiles.com</td>
+                  <td><span class="role-pill" style="background:#fef3c7;color:#92400e;">ISR (Commission)</span></td>
+                  <td>Sales</td>
+                  <td><span class="status-pill-mini active">Active</span></td>
+                  <td class="text-muted">Today, 8:02 AM</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold">Bianca Torres</td>
+                  <td class="text-muted">bianca.torres@gdgsmiles.com</td>
+                  <td><span class="role-pill" style="background:#dbeafe;color:#1e40af;">SDR</span></td>
+                  <td>Sales</td>
+                  <td><span class="status-pill-mini inactive">Invited</span></td>
+                  <td class="text-muted">—</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title mb-0">Roles</h2>
+              <div class="panel-sub">Define role types and how many users hold them.</div>
+            </div>
+            <button class="btn btn-outline-navy" data-bs-toggle="modal" data-bs-target="#addRoleModal"><i
+                class="fa-solid fa-plus me-1"></i>Add Role</button>
+          </div>
+          <div class="table-responsive">
+            <table class="settings-table">
+              <thead>
+                <tr>
+                  <th>Role</th>
+                  <th>Description</th>
+                  <th>Users</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="roles-table-body">
+                <tr>
+                  <td class="fw-semibold">Office Manager</td>
+                  <td class="text-muted">Full administrative access across the platform.</td>
+                  <td>2</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold">Provider</td>
+                  <td class="text-muted">Doctors and clinical staff producing cases.</td>
+                  <td>3</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold">ISR (Commission)</td>
+                  <td class="text-muted">Sales reps closing on commission.</td>
+                  <td>2</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+                <tr>
+                  <td class="fw-semibold">SDR</td>
+                  <td class="text-muted">Hourly sales development representatives.</td>
+                  <td>1</td>
+                  <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= PERMISSIONS ============= -->
+      <div id="settings-view-permissions" class="settings-pane" style="display:none;">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title mb-0">Permission Matrix</h2>
+              <div class="panel-sub">Select a role, then configure what it can view, create, edit, or delete.</div>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+              <select class="form-select" id="permRoleSelect" style="width:220px;" onchange="loadRolePermissions()">
+                <option value="office_manager">Office Manager</option>
+                <option value="provider">Provider</option>
+                <option value="isr_commission">ISR (Commission)</option>
+                <option value="isr_flat">ISR (Flat Pay)</option>
+                <option value="sdr">SDR</option>
+                <option value="ce">CE</option>
+              </select>
+              <button class="btn btn-green" onclick="savePermissions()"><i class="fa-solid fa-check me-1"></i>Save
+                Permissions</button>
+            </div>
+          </div>
+          <div class="panel-body pb-2">
+            <div class="perm-module-row" style="border-bottom:2px solid var(--gray-200);padding-bottom:10px;">
+              <div class="perm-module-name" style="font-size:11px;text-transform:uppercase;color:var(--gray-500);">
+                Module</div>
+              <div class="perm-check-group">
+                <span class="perm-check-label">View</span>
+                <span class="perm-check-label">Create</span>
+                <span class="perm-check-label">Edit</span>
+                <span class="perm-check-label">Delete</span>
+              </div>
+            </div>
+          </div>
+          <div class="pr-custom" id="permission-matrix-body"></div>
+        </div>
+      </div>
+
+      <!-- ============= SIMPLE PLACEHOLDER TABS ============= -->
+      <div id="settings-view-integrations" class="settings-pane" style="display:none;">
+        <div class="panel panel-body text-center py-5 text-muted"><i
+            class="fa-solid fa-plug fs-2 mb-2 opacity-50 d-block"></i>Connect NexaTrack with GoHighLevel, Dialpad,
+          QuickBooks, and other tools.</div>
+      </div>
+      <div id="settings-view-notifications" class="settings-pane" style="display:none;">
+        <div class="panel panel-body text-center py-5 text-muted"><i
+            class="fa-regular fa-bell fs-2 mb-2 opacity-50 d-block"></i>Configure email, SMS, and in-app notification
+          templates.</div>
+      </div>
+      <div id="settings-view-preferences" class="settings-pane" style="display:none;">
+        <div class="panel panel-body text-center py-5 text-muted"><i
+            class="fa-solid fa-sliders fs-2 mb-2 opacity-50 d-block"></i>Personal display, language, and formatting
+          preferences.</div>
+      </div>
+      <div id="settings-view-billing" class="settings-pane" style="display:none;">
+        <div class="panel panel-body text-center py-5 text-muted"><i
+            class="fa-regular fa-credit-card fs-2 mb-2 opacity-50 d-block"></i>Manage your NexaTrack subscription and
+          invoices.</div>
+      </div>
+      <div id="settings-view-security" class="settings-pane" style="display:none;">
+        <div class="panel panel-body text-center py-5 text-muted"><i
+            class="fa-solid fa-shield-halved fs-2 mb-2 opacity-50 d-block"></i>Password policy, 2FA enforcement, and
+          session timeouts.</div>
+      </div>
+      <div id="settings-view-audit" class="settings-pane" style="display:none;">
+        <div class="panel panel-body text-center py-5 text-muted"><i
+            class="fa-regular fa-file-lines fs-2 mb-2 opacity-50 d-block"></i>Full history of changes made across the
+          organization.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADD USER MODAL -->
+  <div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content" style="border-radius:12px;border:none;">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Add New User</h5><button type="button" class="btn-close"
+            data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label">Full Name</label><input type="text" class="form-control"
+                id="newUserName" placeholder="e.g. Maria Lopez"></div>
+            <div class="col-md-6"><label class="form-label">Email Address</label><input type="email"
+                class="form-control" id="newUserEmail" placeholder="maria.lopez@gdgsmiles.com"></div>
+            <div class="col-md-6">
+              <label class="form-label">Role</label>
+              <select class="form-select" id="newUserRole">
+                <option>Office Manager</option>
+                <option>Provider</option>
+                <option>ISR (Commission)</option>
+                <option>ISR (Flat Pay)</option>
+                <option>SDR</option>
+                <option>CE</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Department</label>
+              <select class="form-select" id="newUserDept">
+                <option>Providers</option>
+                <option>Sales</option>
+                <option>Operations</option>
+                <option>Lab</option>
+                <option>Marketing</option>
+              </select>
+            </div>
+            <div class="col-12 d-flex align-items-center gap-2 mt-1">
+              <input type="checkbox" class="form-check-input" id="newUserInvite" checked>
+              <label class="form-label mb-0" for="newUserInvite">Send email invitation immediately</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-green" onclick="addUser()">Add User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD ROLE MODAL -->
+  <div class="modal fade" id="addRoleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content" style="border-radius:12px;border:none;">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Add New Role</h5><button type="button" class="btn-close"
+            data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12"><label class="form-label">Role Name</label><input type="text" class="form-control"
+                id="newRoleName" placeholder="e.g. Lab Technician"></div>
+            <div class="col-12"><label class="form-label">Description</label><textarea class="form-control"
+                id="newRoleDesc" rows="2" placeholder="Briefly describe what this role does..."></textarea></div>
+            <div class="col-12"><label class="form-label">Compensation Engine</label><select class="form-select"
+                id="newRoleEngine">
+                <option>Production</option>
+                <option>Commission</option>
+                <option>Flat Case</option>
+                <option>Hourly</option>
+                <option>Salary</option>
+              </select></div>
+            <div class="col-12">
+              <label class="form-label">Starting Access Level</label>
+              <select class="form-select" id="newRoleAccess">
+                <option>Standard — view own records only</option>
+                <option>Manager — view team records</option>
+                <option>Admin — view all records</option>
+              </select>
+              <div class="text-muted mt-1" style="font-size:11.5px;">You can fine-tune exact permissions afterward from
+                the Permissions tab.</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-green" onclick="addRole()">Save Role</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    /* -------- Tab switching -------- */
+    function showSettingsTab(key, btn) {
+      document.querySelectorAll('.settings-pane').forEach(p => p.style.display = 'none');
+      const target = document.getElementById('settings-view-' + key);
+      if (target) target.style.display = 'block';
+      document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (key === 'permissions') loadRolePermissions();
+    }
+
+    /* -------- Add User -------- */
+    function addUser() {
+      const name = document.getElementById('newUserName').value.trim();
+      const email = document.getElementById('newUserEmail').value.trim();
+      const role = document.getElementById('newUserRole').value;
+      const dept = document.getElementById('newUserDept').value;
+      if (!name || !email) { alert('Please enter a name and email address.'); return; }
+
+      const roleColors = {
+        'Office Manager': 'background:#eef1f5;color:#374151;',
+        'Provider': 'background:#eef2ff;color:#4338ca;',
+        'ISR (Commission)': 'background:#fef3c7;color:#92400e;',
+        'ISR (Flat Pay)': 'background:#fce7f3;color:#9d174d;',
+        'SDR': 'background:#dbeafe;color:#1e40af;',
+        'CE': 'background:#e0e7ff;color:#3730a3;'
+      };
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="fw-semibold">${name}</td>
+        <td class="text-muted">${email}</td>
+        <td><span class="role-pill" style="${roleColors[role] || ''}">${role}</span></td>
+        <td>${dept}</td>
+        <td><span class="status-pill-mini inactive">Invited</span></td>
+        <td class="text-muted">—</td>
+        <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>`;
+      document.getElementById('users-table-body').appendChild(row);
+
+      document.getElementById('newUserName').value = '';
+      document.getElementById('newUserEmail').value = '';
+      bootstrap.Modal.getInstance(document.getElementById('addUserModal')).hide();
+    }
+
+    /* -------- Add Role -------- */
+    function addRole() {
+      const name = document.getElementById('newRoleName').value.trim();
+      const desc = document.getElementById('newRoleDesc').value.trim() || 'No description provided.';
+      if (!name) { alert('Please enter a role name.'); return; }
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="fw-semibold">${name}</td>
+        <td class="text-muted">${desc}</td>
+        <td>0</td>
+        <td><i class="fa-solid fa-ellipsis-vertical text-muted"></i></td>`;
+      document.getElementById('roles-table-body').appendChild(row);
+
+      // also register it in the permissions role dropdown
+      const opt = document.createElement('option');
+      opt.value = name.toLowerCase().replace(/\s+/g, '_');
+      opt.innerText = name;
+      document.getElementById('permRoleSelect').appendChild(opt);
+
+      document.getElementById('newRoleName').value = '';
+      document.getElementById('newRoleDesc').value = '';
+      bootstrap.Modal.getInstance(document.getElementById('addRoleModal')).hide();
+    }
+
+    /* -------- Permissions matrix -------- */
+    const modules = ['Dashboard', 'Team Members', 'Production', 'Cases', 'Advances', 'Statements', 'Payroll Runs', 'Reports', 'Compensation Rules', 'Settings'];
+
+    const defaultPerms = {
+      office_manager: modules.reduce((a, m) => (a[m] = [true, true, true, true], a), {}),
+      provider: { 'Dashboard': [true, false, false, false], 'Team Members': [false, false, false, false], 'Production': [true, false, false, false], 'Cases': [true, false, false, false], 'Advances': [true, false, false, false], 'Statements': [true, false, false, false], 'Payroll Runs': [false, false, false, false], 'Reports': [false, false, false, false], 'Compensation Rules': [false, false, false, false], 'Settings': [false, false, false, false] },
+      isr_commission: { 'Dashboard': [true, false, false, false], 'Team Members': [false, false, false, false], 'Production': [false, false, false, false], 'Cases': [true, true, true, false], 'Advances': [true, false, false, false], 'Statements': [true, false, false, false], 'Payroll Runs': [false, false, false, false], 'Reports': [false, false, false, false], 'Compensation Rules': [false, false, false, false], 'Settings': [false, false, false, false] },
+      isr_flat: { 'Dashboard': [true, false, false, false], 'Team Members': [false, false, false, false], 'Production': [false, false, false, false], 'Cases': [true, true, false, false], 'Advances': [true, false, false, false], 'Statements': [true, false, false, false], 'Payroll Runs': [false, false, false, false], 'Reports': [false, false, false, false], 'Compensation Rules': [false, false, false, false], 'Settings': [false, false, false, false] },
+      sdr: { 'Dashboard': [true, false, false, false], 'Team Members': [false, false, false, false], 'Production': [false, false, false, false], 'Cases': [false, false, false, false], 'Advances': [true, false, false, false], 'Statements': [true, false, false, false], 'Payroll Runs': [false, false, false, false], 'Reports': [false, false, false, false], 'Compensation Rules': [false, false, false, false], 'Settings': [false, false, false, false] },
+      ce: { 'Dashboard': [true, false, false, false], 'Team Members': [false, false, false, false], 'Production': [false, false, false, false], 'Cases': [true, false, true, false], 'Advances': [false, false, false, false], 'Statements': [true, false, false, false], 'Payroll Runs': [false, false, false, false], 'Reports': [false, false, false, false], 'Compensation Rules': [false, false, false, false], 'Settings': [false, false, false, false] }
+    };
+    const savedPerms = {};
+
+    function loadRolePermissions() {
+      const roleKey = document.getElementById('permRoleSelect').value;
+      const perms = savedPerms[roleKey] || defaultPerms[roleKey] || modules.reduce((a, m) => (a[m] = [false, false, false, false], a), {});
+      const body = document.getElementById('permission-matrix-body');
+      body.innerHTML = modules.map(m => {
+        const [v, c, e, d] = perms[m] || [false, false, false, false];
+        return `
+        <div class="perm-module-row">
+          <div class="perm-module-name">${m}</div>
+          <div class="perm-check-group">
+            <span class="form-check"><input class="form-check-input" type="checkbox" data-module="${m}" data-idx="0" ${v ? 'checked' : ''}></span>
+            <span class="form-check"><input class="form-check-input" type="checkbox" data-module="${m}" data-idx="1" ${c ? 'checked' : ''}></span>
+            <span class="form-check"><input class="form-check-input" type="checkbox" data-module="${m}" data-idx="2" ${e ? 'checked' : ''}></span>
+            <span class="form-check"><input class="form-check-input" type="checkbox" data-module="${m}" data-idx="3" ${d ? 'checked' : ''}></span>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function savePermissions() {
+      const roleKey = document.getElementById('permRoleSelect').value;
+      const perms = {};
+      modules.forEach(m => perms[m] = [false, false, false, false]);
+      document.querySelectorAll('#permission-matrix-body input[type="checkbox"]').forEach(chk => {
+        perms[chk.dataset.module][parseInt(chk.dataset.idx)] = chk.checked;
+      });
+      savedPerms[roleKey] = perms;
+      const roleName = document.getElementById('permRoleSelect').selectedOptions[0].innerText;
+      alert('Permissions saved for ' + roleName + '.');
+    }
+
+    loadRolePermissions();
+  </script>
+
+</body>
+
+</html>

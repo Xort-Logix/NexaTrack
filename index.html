@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NexaTrack Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bs-body-bg: #0d1117;
+            --bs-body-color: #eefbf5;
+
+            --surface: #161f1c;
+            --surface-raised: #1d2b26;
+
+            --ink-soft: #b9d4c8;
+            --ink-faint: #7b978c;
+
+            --gold: #10b981;
+            --gold-bright: #34d399;
+            --gold-wash: rgba(16, 185, 129, .12);
+
+            --line: #29433a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top,
+                    rgba(16, 185, 129, .10) 0%,
+                    transparent 45%),
+                linear-gradient(135deg, #0d1117, #101b17, #0d1117);
+
+            color: var(--bs-body-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                    rgba(16, 185, 129, .15),
+                    transparent 70%);
+            top: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .font-display {
+            font-family: 'Fraunces', serif;
+        }
+
+        .font-mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .text-soft {
+            color: var(--ink-soft) !important;
+        }
+
+        .text-faint {
+            color: var(--ink-faint) !important;
+            font-size: .72rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .text-gold {
+            color: var(--gold-bright) !important;
+        }
+
+        .login-wrap {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-mark {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-mark .icon {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            margin-bottom: 16px;
+            font-size: 1.6rem;
+
+            background: rgba(16, 185, 129, .12);
+            border: 1px solid rgba(16, 185, 129, .35);
+
+            color: var(--gold-bright);
+
+            box-shadow:
+                0 0 25px rgba(16, 185, 129, .15);
+        }
+
+        .brand-mark .name {
+            font-size: 1.9rem;
+            color: var(--gold-bright);
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+        }
+
+        .brand-mark .sub {
+            color: var(--ink-faint);
+            letter-spacing: .18em;
+            font-size: .72rem;
+            margin-top: 5px;
+        }
+
+        .login-card {
+            background: rgba(22, 31, 28, .92);
+            backdrop-filter: blur(16px);
+
+            border: 1px solid rgba(16, 185, 129, .12);
+
+            border-radius: 18px;
+
+            padding: 34px;
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, .45);
+        }
+
+        .login-card h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.45rem;
+            margin-bottom: 6px;
+        }
+
+        .lead-text {
+            color: var(--ink-soft);
+            font-size: .9rem;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            font-size: .72rem;
+            letter-spacing: .08em;
+            margin-bottom: 6px;
+        }
+
+        .input-group-gold {
+            position: relative;
+        }
+
+        .input-group-gold>i {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            color: var(--ink-faint);
+            z-index: 5;
+        }
+
+        .input-group-gold .form-control {
+            padding-left: 42px;
+        }
+
+        .form-control {
+            height: 48px;
+
+            background: #0f1714;
+
+            color: #fff;
+
+            border: 1px solid var(--line);
+
+            border-radius: 10px;
+
+            transition: .25s;
+        }
+
+        .form-control::placeholder {
+            color: #6d8a7f;
+        }
+
+        .form-control:focus {
+
+            background: #121c18;
+
+            color: #fff;
+
+            border-color: #10b981;
+
+            box-shadow:
+                0 0 0 .18rem rgba(16, 185, 129, .16);
+        }
+
+        .toggle-pass {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #7b978c;
+            z-index: 10;
+        }
+
+        .toggle-pass:hover {
+            color: #34d399;
+        }
+
+        .row-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 18px 0 24px;
+        }
+
+        .form-check-input {
+            background: #0f1714;
+            border: 1px solid var(--line);
+        }
+
+        .form-check-input:checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .form-check-label {
+            color: var(--ink-soft);
+            font-size: .85rem;
+        }
+
+        .forgot-link {
+            color: #34d399;
+            text-decoration: none;
+            font-size: .82rem;
+            transition: .2s;
+        }
+
+        .forgot-link:hover {
+            color: #6ee7b7;
+        }
+
+        .btn-gold {
+
+            width: 100%;
+            height: 50px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(135deg,
+                    #10b981,
+                    #059669);
+
+            color: #fff;
+
+            font-weight: 600;
+
+            transition: .3s;
+        }
+
+        .btn-gold:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 28px rgba(16, 185, 129, .35);
+
+            background: linear-gradient(135deg,
+                    #22c55e,
+                    #10b981);
+        }
+
+        .btn-gold:active {
+            transform: scale(.98);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .divider .line {
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .divider span {
+            color: var(--ink-faint);
+            font-size: .72rem;
+            letter-spacing: .08em;
+        }
+
+        .security-badge {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 28px;
+
+            color: var(--ink-faint);
+
+            font-size: .75rem;
+        }
+
+        .security-badge i {
+            color: #34d399;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            text-align: center;
+            color: var(--ink-faint);
+            font-size: .82rem;
+        }
+
+        .footer-note a {
+            color: #34d399;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            color: #6ee7b7;
+        }
+
+        @media(max-width:480px) {
+
+            .login-card {
+                padding: 25px;
+            }
+
+            .brand-mark .name {
+                font-size: 1.6rem;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-wrap">
+
+        <div class="brand-mark">
+            <div class="icon"><i class="fa-solid fa-tooth"></i></div>
+            <div class="name">NexaTrack</div>
+            <div class="sub">GDG Smiles · 2026</div>
+        </div>
+
+        <div class="login-card">
+            <h2>Welcome back</h2>
+            <div class="lead-text">Sign in to access your dashboard</div>
+
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <div class="input-group-gold">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" name="username" class="form-control"
+                            placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group-gold">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="Enter your password" required>
+                        <button type="button" class="toggle-pass" id="togglePass"><i
+                                class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <div class="row-between">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-gold"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</button>
+            </form>
+
+            <div class="security-badge">
+                <i class="fa-solid fa-shield-halved"></i> Secured access · GDG Smiles internal system
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Need access? <a href="#">Contact your administrator</a>
+        </div>
+
+    </div>
+
+</body>
+<script src="javescript.js"></script>
+<script>
+    const togglePassBtn = document.getElementById('togglePass');
+    if (togglePassBtn) {
+        togglePassBtn.addEventListener('click', function () {
+            const pass = document.getElementById('password');
+            const icon = this.querySelector('i');
+
+            if (!pass || !icon) return;
+
+            const showing = pass.type === 'text';
+            pass.type = showing ? 'password' : 'text';
+            icon.classList.toggle('fa-eye', showing);
+            icon.classList.toggle('fa-eye-slash', !showing);
+            this.setAttribute('aria-pressed', String(!showing));
+        });
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!this.checkValidity()) {
+                this.reportValidity();
+                return;
+            }
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (username === 'umair' && password === '1234') {
+                // manger
+                window.location.assign('dashboard.html');
+                alert(`login successful! Welcome, ${username}.`);
+            } else if (username === 'mahsan' && password === '1234') {
+                // social media
+                window.location.assign('SocialMedia/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            } else if (username === 'masghar' && password === '1234') {
+                // quality assurance
+                window.location.assign('QS/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            } else if (username === 'James' && password === '1234') {
+                // provider
+                window.location.assign('Doctores/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            } else if (username === 'mzubair' && password === '1234') {
+                // ISR
+                window.location.assign('ISR/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            }
+            else if (username === 'mnadeem' && password === '1234') {
+                // Client experience
+                window.location.assign('CE/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            }
+            else if (username === 'muhammad' && password === '1234') {
+                // SDR
+                window.location.assign('SDR/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            }
+            else if (username === 'madnan' && password === '1234') {
+                // Marketing
+                window.location.assign('Marketing/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            }
+             else if (username === 'masif' && password === '1234') {
+                // Marketing
+                window.location.assign('Dental Assistants/Empdahshabord.html');
+                alert(`login successful! Welcome, ${username}.`);
+            }
+
+
+            else {
+                alert('Invalid username or password.');
+            }
+        });
+    }
+</script>
+
+</html>

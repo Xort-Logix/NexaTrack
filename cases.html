@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Cases</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+  <link rel="stylesheet" href="style/main.css">
+  <link rel="stylesheet" href="style/cases.css">
+
+
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" hidden>
+
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item active" href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+   
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+         <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
+    <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item active" href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Cases</h1>
+        <div class="page-sub">View and manage all cases across the organization.</div>
+      </div>
+      <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+      <div class="d-flex gap-2 topbar-actions">
+        <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-pdf me-1"></i>Export PDF</button>
+        <button class="btn btn-outline-navy"><i class="fa-solid fa-download me-1"></i>Export CSV</button>
+        <a href="new-case.html" class="btn btn-green"><i class="fa-solid fa-plus me-1"></i>Add Case</a>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-6 col-md-2-4" style="flex:0 0 20%;max-width:20%;">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-4">
+              <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                  class="fa-solid fa-clipboard-list"></i></div>
+            </div>
+            <div class="col-8">
+              <div class="kpi-label">Total Cases</div>
+              <div class="kpi-value">126</div>
+              <div class="kpi-delta text-success">+18 vs Feb</div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="col-6" style="flex:0 0 20%;max-width:20%;">
+        <div class="kpi-card">
+
+          <div class="row">
+            <div class="col-4">
+              <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-tooth"></i></div>
+            </div>
+            <div class="col-8">
+              <div class="kpi-label">Total Treatment Value</div>
+              <div class="kpi-value">$874,250</div>
+              <div class="kpi-delta text-success">+12.4% vs Feb</div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="col-6" style="flex:0 0 20%;max-width:20%;">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-4">
+              <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-solid fa-sack-dollar"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="kpi-label">Average Case Value</div>
+              <div class="kpi-value">$6,939</div>
+              <div class="kpi-delta text-success">+3.6% vs Feb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6" style="flex:0 0 20%;max-width:20%;">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-4">
+              <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-hourglass-half"></i>
+              </div>
+            </div>
+
+            <div class="col-8">
+              <div class="kpi-label">Cases Started</div>
+              <div class="kpi-value">98</div>
+              <div class="kpi-delta text-success">+14 vs Feb</div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="col-6" style="flex:0 0 20%;max-width:20%;">
+        <div class="kpi-card">
+          <div class="row">
+            <div class="col-4">
+              <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                  class="fa-solid fa-circle-check"></i></div>
+            </div>
+            <div class="col-8">
+              <div class="kpi-label">Cases Completed</div>
+              <div class="kpi-value">52</div>
+              <div class="kpi-delta text-success">+5 vs Feb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-header">
+      <div class="d-flex gap-2 flex-wrap align-items-center">
+        <div class="input-group" style="width: 280px;">
+          <input type="text" id="daterange" name='date' class="form-control">
+          <span class="input-group-text">
+            <i class="fa-regular fa-calendar"></i>
+          </span>
+        </div>
+
+        <select class="form-select form-select-sm-custom" style="width:190px;">
+          <option>All Departments</option>
+          <option>Sales</option>
+          <option>Marketing</option>
+          <option>Engineering</option>
+          <option>Human Resources</option>
+          <option>Finance</option>
+        </select>
+        <select class="form-select form-select-sm-custom" style="width:190px;">
+          <option>All Team Members</option>
+          <option>John Doe</option>
+          <option>Jane Smith</option>
+          <option>Bob Johnson</option>
+          <option>Alice Williams</option>
+          <option>Charlie Brown</option>
+        </select>
+        <select class="form-select form-select-sm-custom" style="width:190px;">
+          <option>All Case Types</option>
+          <option>Composite Veneers</option>
+          <option>Ceramic Veneers</option>
+          <option>Porcelain / Zirconia Veneers</option>
+          <option>Crowns (All Materials)</option>
+        </select>
+        <button class="filter-btn"><i class="fa-solid fa-sliders me-1"></i>Filters</button>
+        <div class="clear-filters" onclick="renderTable()">
+          <a href="#" class="clear-filters-link"><i class="fa fa-refresh" aria-hidden="true"></i>Clear Filters</a>
+        </div>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-9">
+        <div class="panel">
+          <div class="row p-2" style="font-size:14px;color:var(--gray-500);">
+            <div class="col-lg-6">
+              <span>Total Cases (126)</span>
+            </div>
+            <div class="col-lg-6 text-end">
+              <span><i class="fa fa-gear" aria-hidden="true"></i></span>
+
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Patient</th>
+                  <th>Case Type</th>
+                  <th>Department</th>
+                  <th>Provider/Closer</th>
+                  <th>Status</th>
+                  <th>Treatment Value</th>
+                  <th>Date Created</th>
+                </tr>
+              </thead>
+              <tbody id="casesBody"></tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-between align-items-center p-3"
+            style="font-size:12.5px;color:var(--gray-500);">
+            <span>Showing 1 to 10 of 126 cases</span>
+            <nav>
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link">‹</a></li>
+                <li class="page-item active"><a class="page-link">1</a></li>
+                <li class="page-item"><a class="page-link">2</a></li>
+                <li class="page-item"><a class="page-link">3</a></li>
+                <li class="page-item"><a class="page-link">›</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+
+
+        <div class="panel panel-body" id="caseDetail">
+          <div class="row">
+            <div class="col-6">
+              <div class="section-label">Case Details</div>
+            </div>
+            <div class="col-6 text-end"><i class="fa fa-close" aria-hidden="true"></i></div>
+          </div><span class="badge-status active mb-1 d-inline-block">Completed</span>
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <h3 style="font-size:16px;font-weight:800;margin:0;">CASE-20260331-001</h3>
+            </div>
+            <a href="new-case.html" class="btn btn-sm btn-outline-navy">View Full</a>
+          </div>
+
+          <div class="d-flex align-items-end gap-2 mb-3">
+            <div class="avatar-sm">MG</div>
+            <div>
+              <div class="fw-semibold small">Maria Garcia</div>
+              <!-- <div class="text-muted" style="font-size:11px;">(954) 555-1122</div> -->
+            </div>
+            <div class="text-semibold small" style="font-size:11px;">Created: 03/31/2023</div>
+            <div class="text-semibold small" style="font-size:11px;">Completed: 04/15/2023</div>
+          </div>
+          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Case Type</span><span
+              class="fw-semibold">Zirconia Veneer Case</span></div>
+          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Department</span><span
+              class="fw-semibold">Providers</span></div>
+          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Provider</span><span
+              class="fw-semibold">Dr. Heider</span></div>
+          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Treatment Value</span><span
+              class="fw-semibold">$14,050.00</span></div>
+          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Units</span><span
+              class="fw-semibold">20</span></div>
+          <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Material</span><span
+              class="fw-semibold">Zirconia</span></div>
+          <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Location</span><span
+              class="fw-semibold">lofrim's</span></div>
+          <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Note</span><span
+              class="fw-semibold">null</span></div>
+          <div class="section-label" style="margin-top:0;">Compensation Impact</div>
+          <div class="impact-row"><span>Provider (Dr. Heider)</span><span class="impact-amt">$1,000.00</span></div>
+          <div class="impact-row"><span>Prep (Assistant)</span><span class="impact-amt">$200.00</span></div>
+          <div class="impact-row"><span>Cement (Assistant)</span><span class="impact-amt">$200.00</span></div>
+          <div class="impact-row" style="border-top:1px solid; color:var(--green-600); font-weight:800;"><span>Total
+              Compensation</span><span class="impact-amt">$1,400.00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const cases = [
+        ["CASE-20260331-001", "Maria Garcia", "Zirconia Veneer Case", "Dr. Heider", "provider", "Completed", "active", "$14,050.00", "2023-03-31"],
+        ["CASE-20260331-002", "James Wilson", "Full Crown Case", "Dr. Vanessa", "provider", "Treatment", "warn", "$3,875.00", "2023-03-31"],
+        ["CASE-20260330-001", "Linda Brown", "Composite Veneer Case", "Dr. Heider", "provider", "Consult", "warn", "$4,800.00", "2023-03-30"],
+        ["CASE-20260330-002", "Yorie Gauberth", "Zirconia Veneer Case", "Dr. Safa", "provider", "In Progress", "warn", "$13,125.00", "2023-03-30"],
+        ["CASE-20260329-001", "James Test", "Composite Veneer Case", "Dr. Heider", "provider", "Treatment", "warn", "$4,000.00", "2023-03-29"],
+        ["CASE-20260329-002", "Anna Taylor", "Full Crown Case", "Dr. Vanessa", "provider", "New", "inactive", "$7,500.00", "2023-03-29"],
+        ["CASE-20260328-001", "Robert Anderson", "Porcelain Veneer Case", "Dr. Safa", "provider", "Treatment", "warn", "$12,600.00", "2023-03-28"],
+        ["CASE-20260328-002", "Lisa Martinez", "Zirconia Veneer Case", "Dr. Heider", "provider", "Completed", "active", "$16,400.00", "2023-03-28"],
+        ["CASE-20260327-001", "David Lee", "Crown (Single)", "Dr. Vanessa", "provider", "Consult", "warn", "$1,250.00", "2023-03-27"],
+        ["CASE-20260327-002", "Samantha Green", "Composite Veneer Case", "Dr. Heider", "provider", "New", "inactive", "$5,200.00", "2023-03-27"],
+      ];
+      document.getElementById('casesBody').innerHTML = cases.map(c => `
+  <tr>
+    <td class="fw-semibold">${c[0]}</td>
+    <td>${c[1]}</td>
+    <td>${c[2]}</td>
+    <td>Providers</td>
+    <td>${c[3]}</td>
+    <td><span class="badge-status ${c[6]}">${c[5]}</span></td>
+    <td>${c[7]}</td>
+    <td>${c[8]}</td>
+  </tr>
+`).join('');
+    </script>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script>
+
+
+    $(function () {
+      $('input[name="date"]').daterangepicker({
+        timePicker: true,
+        startDate: moment().startOf('month'),
+        endDate: moment().endOf('month'),
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      });
+    });
+
+    const sidebarBtn = document.getElementById('sidebarBtn');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    sidebarBtn?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
+    backdrop?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
+    window.addEventListener('resize', () => { if (window.innerWidth > 991) document.body.classList.remove('sidebar-open'); });
+  </script>
+</body>
+
+</html>

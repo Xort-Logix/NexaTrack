@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" href="../style/dashborad.css">
+  <link rel="stylesheet" href="../style/main.css">
+
+</head>
+
+<body>
+  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item active" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
+
+      <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
+      <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
+      <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">NA</div>
+        <div class="flex-grow-1">
+          <div style="font-size:13px;font-weight:600;">M.Nadeem</div>
+          <small>Client Experience</small>
+        </div>
+        <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+      </div>
+      <div class="support-chip">
+        <i class="fa-solid fa-headset"></i>
+        <div>
+          <span>Need help?</span>
+          Contact Support
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
+    <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item active" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
+
+        <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
+        <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
+        <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+
+
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">NA</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">M.Nadeem</div><small>Client Experience</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Good morning, M.Nadeem 👋</h1>
+        <div class="page-sub">Here's your compensation overview for july 1 – july 31, 2026</div>
+      </div>
+      <div class="topbar-actions">
+        <!-- <button class="btn btn-outline-navy mobile-menu-btn" type="button" id="sidebarToggle"
+          aria-label="Open navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button> -->
+
+        <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </label>
+        <div class="date-pill">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="kpi-row mb-3">
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                class="fa-solid fa-clock"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Hours Worked</div>
+            <div class="kpi-value">160.00</div>
+            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 8 hrs avg/day</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Hourly Rate</div>
+            <div class="kpi-value">$18.00</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-receipt"></i>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Regular Pay</div>
+            <div class="kpi-value">$2,880</div>
+            <div class="kpi-delta text-muted">Base hours only</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-bolt"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Overtime</div>
+            <div class="kpi-value">$0.00</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
+            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                class="fa-solid fa-circle-check"></i></div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Total Pay</div>
+            <div class="kpi-value">$2,880</div>
+            <div class="progress mt-2" style="height:5px;">
+              <div class="progress-bar bg-success" style="width:100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="panel mb-3">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Attendance Overview</h2>
+              <div class="panel-sub">Weekly hours and schedule summary for the assistant</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="panel" style="background:var(--gray-50);">
+                  <div class="panel-body">
+                    <div class="small text-muted mb-1">Scheduled Hours</div>
+                    <div class="fw-bold fs-5">40.00 hrs</div>
+                    <div class="small text-success">5 shifts • 8 hrs/day</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="panel" style="background:var(--gray-50);">
+                  <div class="panel-body">
+                    <div class="small text-muted mb-1">Worked This Week</div>
+                    <div class="fw-bold fs-5">38.50 hrs</div>
+                    <div class="small text-muted">1.50 hrs pending</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Working Hours</h2>
+              <div class="panel-sub">Recent hourly shifts for the selected pay period</div>
+            </div>
+            <a href="time-clock.html" class="btn btn-sm btn-outline-navy">View Time Clock</a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Shift</th>
+                  <th>Hours</th>
+                  <th>Rate</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Mar 01, 2026</td>
+                  <td>Morning Shift</td>
+                  <td>8.00</td>
+                  <td>$18.00</td>
+                  <td>$144.00</td>
+                  <td><span class="badge-status active">Approved</span></td>
+                </tr>
+
+                <tr>
+                  <td>Mar 03, 2026</td>
+                  <td>Afternoon Shift</td>
+                  <td>7.50</td>
+                  <td>$18.00</td>
+                  <td>$135.00</td>
+                  <td><span class="badge-status active">Approved</span></td>
+                </tr>
+
+                <tr>
+                  <td>Mar 05, 2026</td>
+                  <td>Morning Shift</td>
+                  <td>8.00</td>
+                  <td>$18.00</td>
+                  <td>$144.00</td>
+                  <td><span class="badge-status warn">Pending</span></td>
+                </tr>
+
+                <tr>
+                  <td>Mar 08, 2026</td>
+                  <td>Evening Shift</td>
+                  <td>6.50</td>
+                  <td>$18.00</td>
+                  <td>$117.00</td>
+                  <td><span class="badge-status active">Approved</span></td>
+                </tr>
+
+                <tr>
+                  <td>Mar 10, 2026</td>
+                  <td>Morning Shift</td>
+                  <td>8.00</td>
+                  <td>$18.00</td>
+                  <td>$144.00</td>
+                  <td><span class="badge-status active">Approved</span></td>
+                </tr>
+
+                <tr>
+                  <td>Mar 12, 2026</td>
+                  <td>Afternoon Shift</td>
+                  <td>8.00</td>
+                  <td>$18.00</td>
+                  <td>$144.00</td>
+                  <td><span class="badge-status active">Approved</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="panel mb-3">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Assistant Payroll</h2>
+              <div class="panel-sub">Compensation model: Hourly • Manual entry for now</div>
+            </div>
+            <span class="badge-comp hourly">Hourly</span>
+          </div>
+          <div class="panel-body">
+            <div class="payroll-summary-card">
+              <div class="payroll-summary-header">
+                <div>
+                  <div class="small text-muted mb-1">Data source</div>
+                  <div class="fw-semibold">Manual entry for now, with future time clock/timesheet integration.</div>
+                </div>
+              </div>
+              <div class="payroll-stat-grid mt-3">
+                <div class="payroll-stat-item">
+                  <span class="payroll-stat-label">Hours worked</span>
+                  <span class="payroll-stat-value">160.00</span>
+                </div>
+                <div class="payroll-stat-item">
+                  <span class="payroll-stat-label">Hourly rate</span>
+                  <span class="payroll-stat-value">$18.00</span>
+                </div>
+                <div class="payroll-stat-item">
+                  <span class="payroll-stat-label">Regular pay</span>
+                  <span class="payroll-stat-value">$2,880.00</span>
+                </div>
+                <div class="payroll-stat-item">
+                  <span class="payroll-stat-label">Overtime</span>
+                  <span class="payroll-stat-value">$0.00</span>
+                </div>
+                <div class="payroll-stat-item total">
+                  <span class="payroll-stat-label">Total</span>
+                  <span class="payroll-stat-value">$2,880.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Attendance Trend</h2>
+              <div class="panel-sub">Hours worked over the last 5 weeks</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <canvas id="providerChart" height="180"></canvas>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+      $(function () {
+        $('input[name="date"]').daterangepicker({
+          timePicker: true,
+          startDate: moment().startOf('month'),
+          endDate: moment().endOf('month'),
+          locale: {
+            format: 'MM/DD/YYYY'
+          }
+        });
+      });
+
+      // const sidebarToggle = document.getElementById('sidebarToggle');
+      // const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+      // function closeSidebar() {
+      //   document.body.classList.remove('sidebar-open');
+      // }
+
+      // if (sidebarToggle) {
+      //   sidebarToggle.addEventListener('click', () => {
+      //     document.body.classList.toggle('sidebar-open');
+      //   });
+      // }
+
+      // if (sidebarBackdrop) {
+      //   sidebarBackdrop.addEventListener('click', closeSidebar);
+      // }
+
+      // window.addEventListener('resize', () => {
+      //   if (window.innerWidth > 900) {
+      //     closeSidebar();
+      //   }
+      // });
+
+      const providerCtx = document.getElementById('providerChart');
+      if (providerCtx) {
+        new Chart(providerCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [
+              {
+                label: 'Production',
+                data: [18000, 21000, 24650, 22800, 25200],
+                backgroundColor: '#0d9488',
+                borderRadius: 6
+              },
+              {
+                label: 'Net Pay',
+                data: [5200, 6100, 7125, 6800, 7400],
+                backgroundColor: '#4338ca',
+                borderRadius: 6
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: true },
+              tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } }
+            },
+            scales: {
+              x: { grid: { display: false } },
+              y: {
+                beginAtZero: true,
+                ticks: { callback: (value) => '$' + (value / 1000) + 'K' }
+              }
+            }
+          }
+        });
+      }
+
+      // Payroll Overview grouped bar chart
+      const payrollCtx = document.getElementById('payrollChart');
+      new Chart(payrollCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Earned', 'Advances', 'Net Owed'],
+          datasets: [
+            { label: 'Providers', data: [19625, 2600, 17025], backgroundColor: '#10b981', borderRadius: 4 },
+            { label: 'ISR (Commission)', data: [12450, 0, 12450], backgroundColor: '#3b82f6', borderRadius: 4 },
+            { label: 'ISR (Flat)', data: [6000, 0, 6000], backgroundColor: '#f59e0b', borderRadius: 4 },
+            { label: 'DA', data: [2400, 0, 2400], backgroundColor: '#a855f7', borderRadius: 4 },
+            { label: 'CE', data: [2000, 0, 2000], backgroundColor: '#0d9488', borderRadius: 4 },
+            { label: 'Other', data: [4850, 0, 4850], backgroundColor: '#9ca3af', borderRadius: 4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12, weight: 600 }, color: '#374151' } },
+            y: {
+              grid: { color: '#eef1f5' },
+              ticks: {
+                callback: (v) => v === 0 ? '$0' : '$' + (v / 1000) + 'K',
+                font: { family: 'Inter', size: 11 }, color: '#6b7280'
+              }
+            }
+          }
+        }
+      });
+
+      // Advances donut chart
+      const advCtx = document.getElementById('advancesChart');
+      new Chart(advCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Dr. Heider', 'Dr. Vanessa', 'Dr. Nancy', 'Dr. Safa', 'Others'],
+          datasets: [{
+            data: [4300, 4300, 3900, 3250, 6550],
+            backgroundColor: ['#0d9488', '#3b82f6', '#a855f7', '#f59e0b', '#9ca3af'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '72%',
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: (c) => c.label + ': $' + c.parsed.toLocaleString() } }
+          }
+        }
+      });
+    </script>
+
+</body>
+
+</html>

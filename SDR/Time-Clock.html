@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaTrack — Time Clock</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/dashborad.css">
+</head>
+
+<body>
+    <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+    <div class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">N</div>
+            <div class="brand-text">NEXA<small>TRACK</small></div>
+        </div>
+        <div class="nav-section">
+            <a class="nav-link-item" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
+
+            <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
+            <a class="nav-link-item active" href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
+            <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        </div>
+        <div class="sidebar-footer">
+            <div class="user-chip">
+                <div class="user-avatar">JJ</div>
+                <div class="flex-grow-1">
+                    <div style="font-size:13px;font-weight:600;">Umair</div>
+                    <small>SDR</small>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+            </div>
+            <div class="support-chip">
+                <i class="fa-solid fa-headset"></i>
+                <div>
+                    <span>Need help?</span>
+                    Contact Support
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sidebarBackdrop" class="sidebar-backdrop">
+        <div class="sidebar">
+            <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+                <i class="fa-solid fa-xmark"></i>
+            </label>
+            <div class="brand">
+                <div class="brand-mark">N</div>
+                <div class="brand-text">NEXA<small>TRACK</small></div>
+            </div>
+            <div class="nav-section">
+                <a class="nav-link-item" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
+
+                <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
+                    Statements</a>
+                <a class="nav-link-item active" href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-chip">
+                    <div class="user-avatar">JJ</div>
+                    <div>
+                        <div style="font-size:13px;font-weight:600;">Umair</div><small>SDR</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <div>
+                <h1 class="page-title">Time Clock</h1>
+                <div class="page-sub">Track your shifts, lunch breaks, and earnings in one place.</div>
+            </div>
+            <div class="topbar-actions">
+                <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+                <div class="date-pill">
+                    <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+                    <div class="me-3">
+                        <span
+                            style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+                            Period</span>
+                        <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text"
+                                id="daterange" name="date" style="border:none;"></span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-row mb-3">
+            <div class="kpi-card">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                                class="fa-solid fa-clock"></i></div>
+                    </div>
+                    <div class="col-9">
+                        <div class="kpi-label">Hours Today</div>
+                        <div class="kpi-value" id="today">0.0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i
+                                class="fa-solid fa-calendar-week"></i></div>
+                    </div>
+                    <div class="col-9">
+                        <div class="kpi-label">Weekly Hours</div>
+                        <div class="kpi-value">36.5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i
+                                class="fa-solid fa-hourglass-half"></i></div>
+                    </div>
+                    <div class="col-9">
+                        <div class="kpi-label">Pay Period</div>
+                        <div class="kpi-value">74.0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i
+                                class="fa-solid fa-dollar-sign"></i></div>
+                    </div>
+                    <div class="col-9">
+                        <div class="kpi-label">Daily Earnings</div>
+                        <div class="kpi-value">$185</div>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+                                class="fa-solid fa-wallet"></i></div>
+                    </div>
+                    <div class="col-9">
+                        <div class="kpi-label">Pay Period Earnings</div>
+                        <div class="kpi-value">$1,845</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <div class="panel mb-3">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">Time Clock Actions</h2>
+                            <div class="panel-sub">Punch in, take lunch, and close out your shift.</div>
+                        </div>
+                        <span class="badge-status active" id="status">Clocked Out</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <button class="btn btn-green" onclick="logEvent('Clock In')"><i
+                                    class="fa fa-play me-1"></i>Clock In</button>
+                            <button class="btn btn-warning" onclick="logEvent('Start Lunch')"><i
+                                    class="fa fa-utensils me-1"></i>Start Lunch</button>
+                            <button class="btn btn-info" onclick="logEvent('End Lunch')"><i
+                                    class="fa fa-bowl-food me-1"></i>End Lunch</button>
+                            <button class="btn btn-danger" onclick="logEvent('Clock Out')"><i
+                                    class="fa fa-stop me-1"></i>Clock Out</button>
+                        </div>
+                        <div class="panel" style="background:var(--gray-50);">
+                            <div class="panel-header">
+                                <div>
+                                    <h2 class="panel-title">Today's Timeline</h2>
+                                    <div class="panel-sub">Recent activity for the selected day.</div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group list-group-flush" id="timeline"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">System Calculations</h2>
+                            <div class="panel-sub">Auto-calculated values from your punch entries.</div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="nexa-table" style="font-size:13px;">
+                            <tbody>
+                                <tr>
+                                    <td>Hours Worked</td>
+                                    <td class="fw-semibold text-end" id="worked">0.0 hrs</td>
+                                </tr>
+                                <tr>
+                                    <td>Regular Hours</td>
+                                    <td class="fw-semibold text-end">8.0 hrs</td>
+                                </tr>
+                                <tr>
+                                    <td>Overtime</td>
+                                    <td class="fw-semibold text-end">0.0 hrs</td>
+                                </tr>
+                                <tr>
+                                    <td>Daily Earnings</td>
+                                    <td class="fw-semibold text-end">$185</td>
+                                </tr>
+                                <tr>
+                                    <td>Weekly Earnings</td>
+                                    <td class="fw-semibold text-end">$920</td>
+                                </tr>
+                                <tr>
+                                    <td>Pay Period Earnings</td>
+                                    <td class="fw-semibold text-end">$1,845</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel mt-3">
+            <div class="panel-header">
+                <div>
+                    <h2 class="panel-title">Recent Time Logs</h2>
+                    <div class="panel-sub">Last few shifts from your work history.</div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="nexa-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Clock In</th>
+                            <th>Lunch</th>
+                            <th>Clock Out</th>
+                            <th>Hours</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jul 15, 2026</td>
+                            <td>08:00 AM</td>
+                            <td>12:00–12:30</td>
+                            <td>05:00 PM</td>
+                            <td>8.5</td>
+                            <td><span class="badge-status active">Complete</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jul 14, 2026</td>
+                            <td>08:10 AM</td>
+                            <td>12:15–12:45</td>
+                            <td>05:10 PM</td>
+                            <td>8.3</td>
+                            <td><span class="badge-status active">Complete</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+        let hours = 0;
+
+        function logEvent(name) {
+            const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+            const item = document.createElement('li');
+            item.className = 'list-group-item d-flex justify-content-between align-items-center';
+            item.innerHTML = `<span>${name}</span><span class="text-muted">${t}</span>`;
+            document.getElementById('timeline').appendChild(item);
+
+            if (name === 'Clock In') document.getElementById('status').innerText = 'Working';
+            if (name === 'Start Lunch') document.getElementById('status').innerText = 'On Lunch';
+            if (name === 'End Lunch') document.getElementById('status').innerText = 'Working';
+            if (name === 'Clock Out') {
+                document.getElementById('status').innerText = 'Clocked Out';
+                hours = 8.5;
+            }
+
+            document.getElementById('today').innerText = hours.toFixed(1);
+            document.getElementById('worked').innerText = hours.toFixed(1) + ' hrs';
+        }
+
+        $(function () {
+            $('input[name="date"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('month'),
+                endDate: moment().endOf('month'),
+                locale: { format: 'MM/DD/YYYY' }
+            });
+        });
+
+        const sidebarBtn = document.getElementById('sidebarBtn');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        sidebarBtn?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
+        backdrop?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
+        window.addEventListener('resize', () => { if (window.innerWidth > 991) document.body.classList.remove('sidebar-open'); });
+    </script>
+</body>
+
+</html>

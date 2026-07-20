@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaTrack — Comp</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+  <link rel="stylesheet" href="style/compensation-rules.css">
+  <link rel="stylesheet" href="style/main.css">
+
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-text">NEXA<small>TRACK</small></div>
+    </div>
+    <div class="nav-section">
+      <a class="nav-link-item " href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+      <a class="nav-link-item" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+      <a class="nav-link-item active" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+        Rules</a>
+      <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+      <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+      <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+      <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+      <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
+      <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+      <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">JJ</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="sidebar-backdrop" onclick="document.getElementById('sidebarToggle').checked = false">
+    <div class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">N</div>
+        <div class="brand-text">NEXA<small>TRACK</small></div>
+      </div>
+      <div class="nav-section">
+        <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
+        <a class="nav-link-item " href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
+        <a class="nav-link-item active" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
+          Rules</a>
+        <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
+        <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
+        <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
+        <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
+          Runs</a>
+        <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
+        <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+
+      </div>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">JJ</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 class="page-title">Compensation Rules</h1>
+        <div class="page-sub">Configure and manage compensation plans, rates, and rules for all team roles.</div>
+      </div>
+      <button class="btn btn-outline-navy mobile-menu-btn" type="button" aria-label="Open navigation"
+        onclick="document.getElementById('sidebarToggle').checked = !document.getElementById('sidebarToggle').checked">
+
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="d-flex gap-2 topbar-actions">
+        <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
+          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
+          <div class="me-3">
+            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
+              Period</span>
+            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
+                name='date' style="border: none;"></span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-pdf me-1"></i>Export PDF</button>
+        <button class="btn btn-green" data-bs-toggle="modal" data-bs-target="#newRuleModal"><i
+            class="fa-solid fa-plus me-1"></i>New Comp Rule</button>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-6 col-md-3 col-12">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
+              class="fa-solid fa-clipboard-list"></i></div>
+          <div>
+            <div class="kpi-label">Active Comp Plans</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-delta">Across all roles</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 col-12">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:#f3e8ff;color:#7e22ce;"><i class="fa-solid fa-user-group"></i></div>
+          <div>
+            <div class="kpi-label">Total Team Members</div>
+            <div class="kpi-value">37</div>
+            <div class="kpi-delta">Covered by comp plans</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 col-12">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-solid fa-sack-dollar"></i></div>
+          <div>
+            <div class="kpi-label">Monthly Payout (Est.)</div>
+            <div class="kpi-value">$186,450</div>
+            <div class="kpi-delta">Based on current production</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 col-12">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-chart-simple"></i></div>
+          <div>
+            <div class="kpi-label">Avg Payout / Member</div>
+            <div class="kpi-value">$5,039</div>
+            <div class="kpi-delta">This month (est.)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-tabs">
+      <div class="role-tabs-scroll">
+        <button class="role-tab-btn active" onclick="filterByRole('all',this)">All Roles</button>
+        <button class="role-tab-btn" onclick="filterByRole('doctors',this)">Doctors</button>
+        <button class="role-tab-btn" onclick="filterByRole('isr-commission',this)">ISR (Commission)</button>
+        <button class="role-tab-btn" onclick="filterByRole('isr-flat',this)">ISR (Flat Pay)</button>
+        <button class="role-tab-btn" onclick="filterByRole('sdr',this)">SDR</button>
+        <button class="role-tab-btn" onclick="filterByRole('ce',this)">CE</button>
+        <button class="role-tab-btn" onclick="filterByRole('lab',this)">Lab</button>
+        <button class="role-tab-btn" onclick="filterByRole('marketing',this)">Marketing</button>
+        <button class="role-tab-btn" onclick="filterByRole('office-manager',this)">Office Manager</button>
+        <button class="role-tab-btn" onclick="filterByRole('other',this)">Other</button>
+      </div>
+      <button class="filter-btn"><i class="fa-solid fa-sliders me-1"></i>Filters</button>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-3">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Compensation Plans</h2>
+          </div>
+          <div class="p-3 pb-0"><input type="text" class="form-control search-input"
+              placeholder="Search by role or plan name..." id="planSearch" onkeyup="searchPlans()"></div>
+          <div class="p-2" id="planList"><!-- injected by JS --></div>
+          <div class="text-center pb-3"><a href="#" class="text-decoration-none small fw-semibold"><i
+                class="fa-regular fa-eye me-1"></i>View Inactive Plans</a></div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title" id="planTitle">Doctors (Cosmetic & General Dentistry) <span
+                  class="badge-status active ms-1">Active</span></h2>
+              <div class="panel-sub" id="planSubtitle">Production Based Compensation Plan</div>
+            </div>
+            <button class="btn btn-sm btn-outline-navy" data-bs-toggle="modal" data-bs-target="#editPlanModal"><i
+                class="fa-solid fa-pen me-1"></i>Edit Plan</button>
+          </div>
+          <div class="panel-body pb-0">
+            <div class="meta-row">
+              <div class="meta-item"><i class="fa-regular fa-calendar"></i>
+                <div>
+                  <div class="lbl">Effective Date</div>
+                  <div class="val">Mar 1, 2026</div>
+                </div>
+              </div>
+              <div class="meta-item"><i class="fa-solid fa-tags"></i>
+                <div>
+                  <div class="lbl">Plan Type</div>
+                  <div class="val">Production Based</div>
+                </div>
+              </div>
+              <div class="meta-item"><i class="fa-solid fa-user-group"></i>
+                <div>
+                  <div class="lbl">Members</div>
+                  <div class="val">8</div>
+                </div>
+              </div>
+            </div>
+            <div class="engine-tabs">
+              <button class="engine-tab-btn active" onclick="showPlanTab('overview',this)">Overview</button>
+              <button class="engine-tab-btn" onclick="showPlanTab('cosmetic',this)">Cosmetic Compensation</button>
+              <button class="engine-tab-btn" onclick="showPlanTab('general',this)">General Dentistry (35%)</button>
+              <button class="engine-tab-btn" onclick="showPlanTab('adjustments',this)">Adjustments &amp; Rules</button>
+              <button class="engine-tab-btn" onclick="showPlanTab('notes',this)">Notes</button>
+            </div>
+          </div>
+
+          <!-- TAB: Overview -->
+          <div id="ptab-overview" class="panel-body pt-0">
+            <div class="row g-4">
+              <div class="col-lg-4">
+                <div class="section-label">Plan Summary</div>
+                <p class="text-muted small">Doctors are paid based on production using the rates and rules defined
+                  below. A daily floor is paid bi-weekly and reconciled monthly against earned production.</p>
+                <div class="icon-row">
+                  <div class="left"><i class="fa-regular fa-calendar"></i>Daily Floor</div>
+                  <div class="val">$650 / day</div>
+                </div>
+                <div class="icon-row">
+                  <div class="left"><i class="fa-regular fa-clock"></i>Payment Frequency</div>
+                  <div class="val">Bi-Weekly</div>
+                </div>
+                <div class="icon-row">
+                  <div class="left"><i class="fa-solid fa-scale-balanced"></i>Reconciliation</div>
+                  <div class="val">Monthly</div>
+                </div>
+                <div class="icon-row">
+                  <div class="left"><i class="fa-solid fa-id-card"></i>Provider Type</div>
+                  <div class="val">1099 Independent Contractor</div>
+                </div>
+                <div class="icon-row">
+                  <div class="left"><i class="fa-solid fa-location-dot"></i>Non-Compete</div>
+                  <div class="val">5 Mile Radius</div>
+                </div>
+                <div class="icon-row">
+                  <div class="left"><i class="fa-regular fa-circle-question"></i>Includes Cancellations / No Shows</div>
+                  <div class="val">Yes</div>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="section-label">Cosmetic Compensation Structure</div>
+                <div class="table-responsive">
+                  <table class="nexa-table">
+                    <thead>
+                      <tr>
+                        <th>Case Type</th>
+                        <th>Details / Rules</th>
+                        <th>Doctor Pay</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Full Veneer Case<br><small class="text-muted">(16 – 20 Units)</small></td>
+                        <td>Same material only<br><small class="text-muted">(Composite / Ceramic /
+                            Porcelain-Zirconia)</small></td>
+                        <td class="text-success fw-semibold">Composite: $700<br>Ceramic: $800<br>Porcelain/Zirconia:
+                          $1,000</td>
+                      </tr>
+                      <tr>
+                        <td>Half Veneer Case<br><small class="text-muted">(Exactly 10 Units)</small></td>
+                        <td>50% of applicable full case rate</td>
+                        <td class="text-success fw-semibold">50% of Full Case Rate</td>
+                      </tr>
+                      <tr>
+                        <td>Per Unit – Veneers</td>
+                        <td>All non-qualified cases</td>
+                        <td class="text-success fw-semibold">Composite: $35<br>Ceramic: $40<br>Porcelain/Zirconia: $50
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Crowns (Per Unit)</td>
+                        <td>Any material</td>
+                        <td class="text-success fw-semibold">$80</td>
+                      </tr>
+                      <tr>
+                        <td>Full Crown Case</td>
+                        <td>Any material<br><small class="text-muted">(Outside of full veneer case rules)</small></td>
+                        <td class="text-success fw-semibold">$1,400 Flat</td>
+                      </tr>
+                      <tr>
+                        <td>Over 20 Units</td>
+                        <td>Additional units paid per unit rate based on material</td>
+                        <td class="text-success fw-semibold">Per Unit Rates Apply</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: Cosmetic Compensation -->
+          <div id="ptab-cosmetic" class="panel-body pt-0" style="display:none;">
+            <div class="section-label">Cosmetic Compensation — Full Detail</div>
+            <div class="table-responsive">
+              <table class="nexa-table">
+                <thead>
+                  <tr>
+                    <th>Material</th>
+                    <th>Full Case (16–20u)</th>
+                    <th>Half Case (10u)</th>
+                    <th>Per-Unit (&lt;16u)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Composite</td>
+                    <td class="text-success fw-semibold">$700</td>
+                    <td class="text-success fw-semibold">$350</td>
+                    <td class="text-success fw-semibold">$35 / unit</td>
+                  </tr>
+                  <tr>
+                    <td>Ceramic</td>
+                    <td class="text-success fw-semibold">$800</td>
+                    <td class="text-success fw-semibold">$400</td>
+                    <td class="text-success fw-semibold">$40 / unit</td>
+                  </tr>
+                  <tr>
+                    <td>Porcelain / Zirconia</td>
+                    <td class="text-success fw-semibold">$1,000</td>
+                    <td class="text-success fw-semibold">$500</td>
+                    <td class="text-success fw-semibold">$50 / unit</td>
+                  </tr>
+                  <tr>
+                    <td>Crown (any material)</td>
+                    <td colspan="2" class="text-muted">Per-unit only</td>
+                    <td class="text-success fw-semibold">$80 / unit</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-muted small mt-2">Mixed-material cases are paid per-unit based on the material of each unit
+              placed.</div>
+          </div>
+
+          <!-- TAB: General Dentistry -->
+          <div id="ptab-general" class="panel-body pt-0" style="display:none;">
+            <div class="section-label">General Dentistry Compensation (35% of Production)</div>
+            <table class="nexa-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Example Procedures</th>
+                  <th>Doctor Pay</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Restorative</td>
+                  <td>Fillings, Bonding</td>
+                  <td class="text-success fw-semibold">35% of Production</td>
+                </tr>
+                <tr>
+                  <td>Endodontics</td>
+                  <td>Root Canals</td>
+                  <td class="text-success fw-semibold">35% of Production</td>
+                </tr>
+                <tr>
+                  <td>Extractions</td>
+                  <td>Simple &amp; Surgical</td>
+                  <td class="text-success fw-semibold">35% of Production</td>
+                </tr>
+                <tr>
+                  <td>Other Procedures</td>
+                  <td>Scaling, Deep Cleaning, Bone Grafts</td>
+                  <td class="text-success fw-semibold">35% of Production</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-muted small mt-2">All general dentistry procedures are paid at 35% of production per the
+              Practice Fee Schedule, regardless of category.</div>
+          </div>
+
+          <!-- TAB: Adjustments & Rules -->
+          <div id="ptab-adjustments" class="panel-body pt-0" style="display:none;">
+            <div class="section-label">Adjustments &amp; Rules</div>
+            <div class="icon-row">
+              <div class="left"><i class="fa-solid fa-rotate-left"></i>Warranty Repairs</div>
+              <div class="val">Not paid separately to original provider</div>
+            </div>
+            <div class="icon-row">
+              <div class="left"><i class="fa-solid fa-layer-group"></i>Mixed Material Cases</div>
+              <div class="val">Default to per-unit rate by material</div>
+            </div>
+            <div class="icon-row">
+              <div class="left"><i class="fa-solid fa-user-group"></i>Prep / Cement Split</div>
+              <div class="val">Tracked by role, split accordingly</div>
+            </div>
+            <div class="icon-row">
+              <div class="left"><i class="fa-solid fa-ban"></i>Cancellations / No-Shows</div>
+              <div class="val">Included toward daily floor</div>
+            </div>
+            <div class="icon-row">
+              <div class="left"><i class="fa-solid fa-money-bill-transfer"></i>Advance Recoupment</div>
+              <div class="val">Deducted from next reconciliation</div>
+            </div>
+          </div>
+
+          <!-- TAB: Notes -->
+          <div id="ptab-notes" class="panel-body pt-0" style="display:none;">
+            <div class="section-label">Notes</div>
+            <div class="border-bottom pb-3 mb-3">
+              <div class="d-flex justify-content-between"><span class="fw-semibold small">James Johnson</span><span
+                  class="text-muted small">Mar 1, 2026</span></div>
+              <div class="small text-muted mt-1">Plan updated to reflect new $1,400 flat rate for full crown cases,
+                effective this pay period.</div>
+            </div>
+            <div class="small text-muted">No additional notes.</div>
+          </div>
+
+        </div>
+
+        <div class="panel mt-3 panel-body">
+          <div class="fw-semibold small mb-2"><i class="fa-solid fa-circle-exclamation text-warning me-1"></i>Important
+            Notes</div>
+          <div class="notes-grid small text-muted">
+            <div><i class="fa-solid fa-circle text-success"
+                style="font-size:5px;vertical-align:middle;margin-right:8px;"></i>Smile packages include exam, X-rays,
+              and cleaning.</div>
+            <div><i class="fa-solid fa-circle text-success"
+                style="font-size:5px;vertical-align:middle;margin-right:8px;"></i>Mixed material cases default to
+              per-unit rates based on material.</div>
+            <div><i class="fa-solid fa-circle text-success"
+                style="font-size:5px;vertical-align:middle;margin-right:8px;"></i>All general dentistry procedures are
+              paid at 35% of production per the Practice Fee Schedule.</div>
+            <div><i class="fa-solid fa-circle text-success"
+                style="font-size:5px;vertical-align:middle;margin-right:8px;"></i>Prep, cementation, and lab fees are
+              tracked by role and split accordingly.</div>
+            <div><i class="fa-solid fa-circle text-success"
+                style="font-size:5px;vertical-align:middle;margin-right:8px;"></i>Warranty repairs for original provider
+              are not paid separately.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newRuleModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">New Compensation Rule</h5><button type="button" class="btn-close"
+              data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label">Plan Name</label><input type="text" class="form-control"
+                  placeholder="e.g. ISR (Commission)"></div>
+              <div class="col-md-6"><label class="form-label">Applies To Role</label><select class="form-select">
+                  <option>Doctors</option>
+                  <option>ISR</option>
+                  <option>SDR</option>
+                  <option>CE</option>
+                  <option>Lab</option>
+                  <option>Marketing</option>
+                </select></div>
+              <div class="col-md-6"><label class="form-label">Plan Type</label><select class="form-select">
+                  <option>Production Based</option>
+                  <option>Percentage Commission</option>
+                  <option>Flat Case Pay</option>
+                  <option>Hourly</option>
+                  <option>Salary</option>
+                </select></div>
+              <div class="col-md-6"><label class="form-label">Effective Date</label><input type="date"
+                  class="form-control" value="2026-07-08"></div>
+              <div class="col-md-6"><label class="form-label">Payment Frequency</label><select class="form-select">
+                  <option>Bi-Weekly</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                </select></div>
+              <div class="col-md-6"><label class="form-label">Non-Compete Radius (optional)</label><input type="text"
+                  class="form-control" placeholder="e.g. 5 Mile Radius"></div>
+            </div>
+          </div>
+          <div class="modal-footer"><button class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button><button
+              class="btn btn-green">Create Plan</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editPlanModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold">Edit Plan — Doctors (Cosmetic & General Dentistry)</h5><button type="button"
+              class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3 mb-3">
+              <div class="col-md-4"><label class="form-label">Daily Floor</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="650"></div>
+              </div>
+              <div class="col-md-4"><label class="form-label">Full Case — Composite</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="700"></div>
+              </div>
+              <div class="col-md-4"><label class="form-label">Full Case — Ceramic</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="800"></div>
+              </div>
+              <div class="col-md-4"><label class="form-label">Full Case — Porcelain/Zirconia</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="1000"></div>
+              </div>
+              <div class="col-md-4"><label class="form-label">Per-Unit — Composite</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="35"></div>
+              </div>
+              <div class="col-md-4"><label class="form-label">Full Crown Case (Flat)</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" value="1400"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"><button class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button><button
+              class="btn btn-green">Save Changes</button></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+      $(function () {
+        $('input[name="date"]').daterangepicker({
+          timePicker: true,
+          startDate: moment().startOf('month'),
+          endDate: moment().endOf('month'),
+          locale: {
+            format: 'MM/DD/YYYY'
+          }
+        });
+      });
+      const plans = [
+        { id: "doctors", icon: "fa-tooth", color: "#4338ca", bg: "#eef2ff", name: "Doctors (Cosmetic & Gen Dent)", sub: "Production Based", members: 8, role: "doctors" },
+        { id: "isr-commission", icon: "fa-percent", color: "#92400e", bg: "#fef3c7", name: "ISR (Commission)", sub: "6% + 2% Team Lead", members: 14, role: "isr-commission" },
+        { id: "isr-flat", icon: "fa-file-invoice-dollar", color: "#9d174d", bg: "#fce7f3", name: "ISR (Flat Pay)", sub: "Flat Fee per Case", members: 6, role: "isr-flat" },
+        { id: "sdr", icon: "fa-headset", color: "#059669", bg: "#ecfdf5", name: "SDR", sub: "$15 / Hour + Bonuses", members: 5, role: "sdr" },
+        { id: "ce", icon: "fa-headset", color: "#92400e", bg: "#fef3c7", name: "CE", sub: "Hourly + Performance Bonuses", members: 4, role: "ce" },
+        { id: "lab", icon: "fa-flask", color: "#1e40af", bg: "#dbeafe", name: "Lab Technicians", sub: "Hourly", members: 4, role: "lab" },
+        { id: "marketing", icon: "fa-bullhorn", color: "#9d174d", bg: "#fce7f3", name: "Marketing", sub: "Monthly Salary + Bonuses", members: 1, role: "marketing" },
+      ];
+
+      function renderPlans(filterRole) {
+        const list = document.getElementById('planList');
+        const filtered = (!filterRole || filterRole === 'all') ? plans : plans.filter(p => p.role === filterRole);
+        if (filtered.length === 0) {
+          list.innerHTML = '<div class="text-muted small text-center py-4">No plans match this role.</div>';
+          return;
+        }
+        list.innerHTML = filtered.map((p, i) => `
+    <div class="plan-item ${p.id === 'doctors' && (!filterRole || filterRole === 'all') ? 'selected' : ''}" onclick="selectPlan('${p.id}', this)">
+      <div class="plan-icon" style="background:${p.bg};color:${p.color};"><i class="fa-solid ${p.icon}"></i></div>
+      <div>
+        <div class="plan-item-name">${p.name}</div>
+        <div class="plan-item-sub">${p.sub}</div>
+      </div>
+      <div class="plan-item-right">
+        <span class="badge-status active">Active</span>
+        <div class="members">${p.members} Members</div>
+      </div>
+    </div>
+  `).join('');
+      }
+
+      function selectPlan(id, el) {
+        document.querySelectorAll('.plan-item').forEach(x => x.classList.remove('selected'));
+        el.classList.add('selected');
+        const p = plans.find(x => x.id === id);
+        document.getElementById('planTitle').innerHTML = `${p.name} <span class="badge-status active ms-1">Active</span>`;
+        document.getElementById('planSubtitle').textContent = `${p.sub} Compensation Plan`;
+      }
+
+      function filterByRole(role, btn) {
+        document.querySelectorAll('.role-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderPlans(role);
+      }
+
+      function searchPlans() {
+        const q = document.getElementById('planSearch').value.toLowerCase();
+        const items = document.querySelectorAll('.plan-item');
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(q) ? 'flex' : 'none';
+        });
+      }
+
+      function showPlanTab(key, btn) {
+        document.querySelectorAll('[id^="ptab-"]').forEach(el => el.style.display = 'none');
+        document.getElementById('ptab-' + key).style.display = 'block';
+        document.querySelectorAll('.engine-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+
+      renderPlans('all');
+
+
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+      function closeSidebar() {
+        document.body.classList.remove('sidebar-open');
+      }
+
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+          document.body.classList.toggle('sidebar-open');
+        });
+      }
+
+      if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+      }
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+          closeSidebar();
+        }
+      });
+    </script>
+
+</body>
+
+</html>
