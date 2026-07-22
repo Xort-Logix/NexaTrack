@@ -15,9 +15,23 @@
 
 
   <style>
+    #recentCasesTable tbody tr {
+      cursor: pointer;
+    }
 
+    #recentCasesTable tbody tr:hover {
+      background: #f8fafc;
+    }
 
+    .kpi-row .kpi-card {
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
 
+    .kpi-row .kpi-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
   </style>
 
 </head>
@@ -142,6 +156,19 @@
       <div class="kpi-card">
         <div class="row">
           <div class="col-3">
+            <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-simple"></i>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="kpi-label">Total Production</div>
+            <div class="kpi-value">$412,500</div>
+            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 9% vs Feb</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="row">
+          <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"> <img class="icon-img"
                 src="img/dollar-coin.png" alt="Total Payroll"></div>
           </div>
@@ -160,23 +187,11 @@
           <div class="col-9">
             <div class="kpi-label">Pending Payroll</div>
             <div class="kpi-value">$18,420</div>
-            <div class="kpi-delta text-muted">8 employees</div>
+            <div class="kpi-delta text-muted">8 Staff</div>
           </div>
         </div>
       </div>
-      <div class="kpi-card">
-        <div class="row">
-          <div class="col-3">
-            <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-simple"></i>
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="kpi-label">Total Production</div>
-            <div class="kpi-value">$412,500</div>
-            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 9% vs Feb</div>
-          </div>
-        </div>
-      </div>
+
       <div class="kpi-card">
         <div class="row">
           <div class="col-3">
@@ -201,20 +216,6 @@
             <div class="progress mt-2" style="height:5px;">
               <div class="progress-bar bg-success" style="width:82%;"></div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="kpi-card">
-        <div class="row">
-          <div class="col-3">
-            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;">
-              <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa fa-user-group"></i></div>
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="kpi-label">Employees Paid</div>
-            <div class="kpi-value">37</div>
-            <div class="kpi-delta text-muted">of 45 total</div>
           </div>
         </div>
       </div>
@@ -379,7 +380,7 @@
             <a href="cases.html" class="btn btn-sm btn-outline-navy">View All Cases</a>
           </div>
           <div class="table-responsive">
-            <table class="nexa-table">
+            <table class="nexa-table" id="recentCasesTable">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -556,6 +557,95 @@
 
   </div>
 
+  <div class="modal fade" id="kpiDetailModal" tabindex="-1" aria-labelledby="kpiDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="kpiDetailModalLabel">KPI Detail</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <div class="small text-muted">Value</div>
+            <div class="fw-bold fs-4" id="kpiDetailModalValue"></div>
+          </div>
+          <div class="mb-3">
+            <div class="small text-muted">Change</div>
+            <div id="kpiDetailModalDelta"></div>
+          </div>
+          <div class="text-muted" id="kpiDetailModalDescription">Details about the selected KPI will appear here.</div>
+        <div class="modal-detail-table mt-4 d-none" id="kpiDetailModalDetail">
+          <div class="small text-muted mb-2" id="kpiDetailModalTableTitle">Details table</div>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr id="kpiDetailModalTableHeader"></tr>
+              </thead>
+              <tbody id="kpiDetailModalDetailBody"></tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="caseEditModal" tabindex="-1" aria-labelledby="caseEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="caseEditModalLabel">Edit Recent Case</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="caseEditForm">
+            <div class="mb-3">
+              <label for="caseDate" class="form-label">Date</label>
+              <input type="text" class="form-control" id="caseDate" name="caseDate">
+            </div>
+            <div class="mb-3">
+              <label for="casePatient" class="form-label">Patient</label>
+              <input type="text" class="form-control" id="casePatient" name="casePatient">
+            </div>
+            <div class="mb-3">
+              <label for="caseType" class="form-label">Case Type</label>
+              <input type="text" class="form-control" id="caseType" name="caseType">
+            </div>
+            <div class="mb-3">
+              <label for="caseUnits" class="form-label">Units</label>
+              <input type="number" class="form-control" id="caseUnits" name="caseUnits" min="0">
+            </div>
+            <div class="mb-3">
+              <label for="caseCompMethod" class="form-label">Comp Method</label>
+              <input type="text" class="form-control" id="caseCompMethod" name="caseCompMethod">
+            </div>
+            <div class="mb-3">
+              <label for="caseDoctor" class="form-label">Doctor</label>
+              <input type="text" class="form-control" id="caseDoctor" name="caseDoctor">
+            </div>
+            <div class="mb-3">
+              <label for="caseStatus" class="form-label">Status</label>
+              <select class="form-select" id="caseStatus" name="caseStatus">
+                <option value="Completed">Completed</option>
+                <option value="Verified">Verified</option>
+                <option value="Pre-Completed">Pre-Completed</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="caseSaveButton">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -570,6 +660,53 @@
           format: 'MM/DD/YYYY'
         }
       });
+    });
+
+    const recentCasesTable = document.getElementById('recentCasesTable');
+    const caseEditModalEl = document.getElementById('caseEditModal');
+    const caseEditModal = new bootstrap.Modal(caseEditModalEl);
+    const caseEditForm = document.getElementById('caseEditForm');
+    const caseSaveButton = document.getElementById('caseSaveButton');
+    let activeCaseRow = null;
+
+    if (recentCasesTable) {
+      recentCasesTable.querySelectorAll('tbody tr').forEach((row) => {
+        row.addEventListener('click', () => {
+          activeCaseRow = row;
+          const cells = row.querySelectorAll('td');
+          document.getElementById('caseDate').value = cells[0].textContent.trim();
+          document.getElementById('casePatient').value = cells[1].textContent.trim();
+          document.getElementById('caseType').value = cells[2].textContent.trim();
+          document.getElementById('caseUnits').value = cells[3].textContent.trim();
+          document.getElementById('caseCompMethod').value = cells[4].textContent.trim();
+          document.getElementById('caseDoctor').value = cells[5].textContent.trim();
+          document.getElementById('caseStatus').value = cells[6].textContent.trim();
+          caseEditModal.show();
+        });
+      });
+    }
+
+    function saveCaseRow() {
+      if (!activeCaseRow) {
+        return;
+      }
+      const cells = activeCaseRow.querySelectorAll('td');
+      cells[0].textContent = document.getElementById('caseDate').value;
+      cells[1].textContent = document.getElementById('casePatient').value;
+      cells[2].textContent = document.getElementById('caseType').value;
+      cells[3].textContent = document.getElementById('caseUnits').value;
+      cells[4].textContent = document.getElementById('caseCompMethod').value;
+      cells[5].textContent = document.getElementById('caseDoctor').value;
+      const statusText = document.getElementById('caseStatus').value;
+      cells[6].innerHTML = `<span class="badge-status ${statusText === 'Verified' || statusText === 'Pre-Completed' ? 'warn' : 'active'}">${statusText}</span>`;
+      caseEditModal.hide();
+    }
+
+    caseSaveButton.addEventListener('click', saveCaseRow);
+
+    caseEditForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      saveCaseRow();
     });
 
     // const sidebarToggle = document.getElementById('sidebarToggle');
@@ -647,6 +784,109 @@
           tooltip: { callbacks: { label: (c) => c.label + ': $' + c.parsed.toLocaleString() } }
         }
       }
+    });
+
+    const kpiDetailModalEl = document.getElementById('kpiDetailModal');
+    const kpiDetailModal = new bootstrap.Modal(kpiDetailModalEl);
+
+    const kpiDetailModalTableData = {
+      'total production': {
+        title: 'Top 5 production case types',
+        headers: ['Case Type', 'Value'],
+        rows: [
+          { label: 'Zirconia Veneer Case', value: '$112,000' },
+          { label: 'Full Crown Case', value: '$98,500' },
+          { label: 'Composite Veneer Case', value: '$65,200' },
+          { label: 'Implant Restoration Case', value: '$42,300' },
+          { label: 'Smile Design Case', value: '$34,500' }
+        ]
+      },
+      'total payroll': {
+        title: 'Last 6 months payroll',
+        headers: ['Month', 'Payroll'],
+        rows: [
+          { label: 'Nov 2025', value: '$69,200' },
+          { label: 'Dec 2025', value: '$72,800' },
+          { label: 'Jan 2026', value: '$75,400' },
+          { label: 'Feb 2026', value: '$78,650' },
+          { label: 'Mar 2026', value: '$80,100' },
+          { label: 'Apr 2026', value: '$82,000' }
+        ]
+      },
+      'pending payroll': {
+        title: 'Top 5 pending payroll items',
+        headers: ['Payroll Item', 'Amount'],
+        rows: [
+          { label: 'Provider timecards', value: '$12,400' },
+          { label: 'ISR commissions', value: '$8,950' },
+          { label: 'Hourly staff pay', value: '$5,200' },
+          { label: 'Overtime payouts', value: '$4,625' },
+          { label: 'Bonus holds', value: '$3,100' }
+        ]
+      },
+      'total advances': {
+        title: 'Top 5 advances',
+        headers: ['Advance Type', 'Amount'],
+        rows: [
+          { label: 'Provider advances', value: '$8,500' },
+          { label: 'ISR advances', value: '$5,200' },
+          { label: 'CE advances', value: '$3,700' },
+          { label: 'SDR advances', value: '$2,650' },
+          { label: 'Marketing advances', value: '$1,250' }
+        ]
+      },
+      'payroll completion': {
+        title: 'Top 5 completed payrolls',
+        headers: ['Payroll Run', 'Completion Rate'],
+        rows: [
+          { label: 'Apr 2026', value: '98%' },
+          { label: 'Mar 2026', value: '96%' },
+          { label: 'Feb 2026', value: '95%' },
+          { label: 'Jan 2026', value: '94%' },
+          { label: 'Dec 2025', value: '93%' }
+        ]
+      }
+    };
+
+    function openKpiCardModal(card) {
+      const title = card.querySelector('.kpi-label')?.textContent.trim() || 'KPI Detail';
+      const value = card.querySelector('.kpi-value')?.textContent.trim() || '';
+      const delta = card.querySelector('.kpi-delta')?.innerHTML.trim() || '<span class="text-muted">No summary available</span>';
+      const detailContainer = document.getElementById('kpiDetailModalDetail');
+      const detailBody = document.getElementById('kpiDetailModalDetailBody');
+      const tableTitle = document.getElementById('kpiDetailModalTableTitle');
+      const tableHeader = document.getElementById('kpiDetailModalTableHeader');
+      const detailData = kpiDetailModalTableData[title.toLowerCase()];
+
+      document.getElementById('kpiDetailModalLabel').textContent = title;
+      document.getElementById('kpiDetailModalValue').textContent = value;
+      document.getElementById('kpiDetailModalDelta').innerHTML = delta;
+
+      if (detailData) {
+        document.getElementById('kpiDetailModalDescription').textContent = detailData.title === 'Top 5 production case types'
+          ? 'Top 5 case types contributing to production are shown below.'
+          : 'Payroll history for the last 6 months is shown below.';
+
+        tableTitle.textContent = detailData.title;
+        tableHeader.innerHTML = detailData.headers.map((heading) => `<th>${heading}</th>`).join('');
+        detailBody.innerHTML = detailData.rows.map((row) => `
+          <tr>
+            <td>${row.label}</td>
+            <td class="text-end">${row.value}</td>
+          </tr>
+        `).join('');
+        detailContainer.classList.remove('d-none');
+      } else {
+        document.getElementById('kpiDetailModalDescription').textContent = `This card shows the latest ${title.toLowerCase()} overview.`;
+        detailBody.innerHTML = '';
+        detailContainer.classList.add('d-none');
+      }
+
+      kpiDetailModal.show();
+    }
+
+    document.querySelectorAll('.kpi-row .kpi-card').forEach((card) => {
+      card.addEventListener('click', () => openKpiCardModal(card));
     });
   </script>
 

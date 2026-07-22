@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/mainrole.css">
     <link rel="stylesheet" href="../style/mystatments.css">
+
 </head>
 
 <body>
@@ -26,7 +27,7 @@
             <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
                 Statements</a>
             <a class="nav-link-item " href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-             <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+            <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
         </div>
         <div class="sidebar-footer">
             <div class="user-chip">
@@ -55,9 +56,10 @@
             </div>
             <div class="nav-section">
                 <a class="nav-link-item" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
-                <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
+                <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
+                    Statements</a>
                 <a class="nav-link-item" href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-                  <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+                <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
             </div>
             <div class="sidebar-footer">
                 <div class="user-chip">
@@ -71,28 +73,78 @@
     </div>
 
     <div class="main">
+
         <div class="topbar">
+
+            <!-- Left: Title -->
             <div>
-                <h1 class="page-title">My Statements</h1>
-                <div class="page-sub">Review payroll details for the selected pay period.</div>
+                <h1 class="page-title">Time Clock</h1>
+                <!-- <div class="page-sub">Here's your compensation overview for july 1 – july 31, 2026</div> -->
             </div>
+
+            <!-- Right: Actions -->
             <div class="topbar-actions">
-                <button class="btn btn-outline-navy mobile-menu-btn" id="mobileMenuBtn"><i
-                        class="fa-solid fa-bars"></i></button>
+
+                <!-- Mobile menu -->
+                <label for="sidebarToggle" class="btn mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-green" onclick="downloadPDF()"><i
+                            class="fa-solid fa-download me-1"></i>Download
+                        PDF</button>
+                </div>
+                <!-- Date picker -->
                 <div class="date-pill">
-                    <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
-                    <div class="me-2">
-                        <span
-                            style="font-size:9px;color:var(--gray-500);display:block;line-height:1;margin-bottom:1px;">Pay
-                            Period</span>
-                        <input type="text" id="daterange" name="date">
+                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+                    <div class="date-meta">
+                        <span class="date-label">Pay Period</span>
+                        <span class="date-value">
+                            <input type="text" id="daterange" name="date" />
+                        </span>
                     </div>
                     <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
                 </div>
-                <button class="btn btn-green" onclick="downloadPDF()"><i class="fa-solid fa-download me-1"></i>Download PDF</button>
-            </div>
-        </div>
 
+                <!-- ── CLOCK WIDGET ── -->
+                <div class="clock-widget" id="clockWidget">
+
+                    <!-- Status -->
+                    <div class="clock-status">
+                        <span class="status-dot clocked-out" id="statusDot"></span>
+                        <span class="status-label clocked-out" id="statusLabel">Clocked Out</span>
+                    </div>
+
+                    <!-- Timer -->
+                    <span class="clock-timer" id="statusTimer">00:00:00</span>
+
+                    <!-- Toggle button group -->
+                    <div class="clock-actions" id="clockActions">
+                        <button class="toggle-btn clock-in active" data-action="clockin"
+                            onclick="handleClockAction('clockin')">
+                            <i class="fa-regular fa-circle-play"></i> In
+                        </button>
+                        <button class="toggle-btn start-lunch" data-action="startlunch"
+                            onclick="handleClockAction('startlunch')">
+                            <i class="fa-solid fa-utensils"></i> Lunch
+                        </button>
+                        <button class="toggle-btn end-lunch" data-action="endlunch"
+                            onclick="handleClockAction('endlunch')">
+                            <i class="fa-solid fa-bowl-food"></i> End
+                        </button>
+                        <button class="toggle-btn clock-out" data-action="clockout"
+                            onclick="handleClockAction('clockout')">
+                            <i class="fa-regular fa-circle-stop"></i> Out
+                        </button>
+                    </div>
+
+                </div>
+                <!-- /clock-widget -->
+
+            </div>
+            <!-- /topbar-actions -->
+
+        </div>
         <div class="kpi-row">
             <div class="kpi-card d-flex align-items-center gap-3">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -477,6 +529,7 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="../js/javescript.js"></script>
     <script>
         /* ---------- Statement / Review tab switcher ---------- */
         function showPane(key, btn) {
@@ -581,7 +634,7 @@
         document.getElementById('sidebarBackdrop')?.addEventListener('click', () => {
             document.getElementById('sidebarToggle').checked = false;
         });
-        window.addEventListener('resize', () => { 
+        window.addEventListener('resize', () => {
             if (window.innerWidth > 900) {
                 document.getElementById('sidebarToggle').checked = false;
             }

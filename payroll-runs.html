@@ -119,9 +119,9 @@
           <div class="kpi-mini-note">Bi-Weekly</div>
         </div>
         <div class="kpi-mini-card">
-          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-label">Staff</div>
           <div class="kpi-mini-value">24</div>
-          <div class="kpi-mini-note">Active Employees</div>
+          <div class="kpi-mini-note">Active Staff</div>
         </div>
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Est. Total Payroll</div>
@@ -156,7 +156,7 @@
               <tr>
                 <th>Pay Period</th>
                 <th>Pay Date</th>
-                <th>Employees</th>
+                <th>Staff</th>
                 <th>Total Payroll</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -225,7 +225,7 @@
         <div class="generate-cta" style="border-top:1px solid var(--gray-200);">
           <button class="btn btn-green btn-lg px-4" onclick="goToStep(2)"><i
               class="fa-solid fa-calculator me-2"></i>Generate Payroll</button>
-          <div class="note">This will calculate payroll for all employees for this pay period. Nothing is finalized
+          <div class="note">This will calculate payroll for all Staff for this pay period. Nothing is finalized
             until every employee is reviewed and confirmed.</div>
         </div>
       </div>
@@ -247,19 +247,19 @@
 
       <div class="kpi-mini-row">
         <div class="kpi-mini-card">
-          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-label">Staff</div>
           <div class="kpi-mini-value">24</div>
           <div class="kpi-mini-note">Total</div>
         </div>
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Pending Review</div>
           <div class="kpi-mini-value text-warning" id="pendingCount2">5</div>
-          <div class="kpi-mini-note">Employees</div>
+          <div class="kpi-mini-note">Staff</div>
         </div>
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Confirmed</div>
           <div class="kpi-mini-value text-success" id="confirmedCount2">18</div>
-          <div class="kpi-mini-note">Employees</div>
+          <div class="kpi-mini-note">Staff</div>
         </div>
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Needs Attention</div>
@@ -271,7 +271,7 @@
 
       <div class="panel">
         <div class="panel-body" style="display:flex;gap:10px;flex-wrap:wrap;">
-          <div class="search-input-wrap"><input type="text" class="search-input" placeholder="Search employees..."><i
+          <div class="search-input-wrap"><input type="text" class="search-input" placeholder="Search Staff..."><i
               class="fa-solid fa-magnifying-glass"></i></div>
           <select class="form-select" style="width:150px;font-size:13px;border-radius:8px;">
             <option>All Status</option>
@@ -397,7 +397,7 @@
           </table>
         </div>
         <div class="confirm-footer">
-          <span class="count">Confirmed <span id="confirmFooterCount2">18</span> of 24 employees</span>
+          <span class="count">Confirmed <span id="confirmFooterCount2">18</span> of 24 Staff</span>
           <button class="btn btn-green" onclick="goToStep(3)">Continue to Summary <i
               class="fa-solid fa-arrow-right ms-1"></i></button>
         </div>
@@ -418,7 +418,7 @@
 
       <div class="kpi-mini-row">
         <div class="kpi-mini-card">
-          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-label">Staff</div>
           <div class="kpi-mini-value">24</div>
           <div class="kpi-mini-note">Total</div>
         </div>
@@ -453,13 +453,13 @@
             </div>
             <div class="col-md-7">
               <div class="breakdown-legend-item"><span class="dot" style="background:#10b981;"></span><span
-                  class="name">Providers</span><span class="cnt">8 Employees</span><span class="val">$15,200.00</span>
+                  class="name">Providers</span><span class="cnt">8 Staff</span><span class="val">$15,200.00</span>
               </div>
               <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span><span
-                  class="name">ISR Representatives</span><span class="cnt">4 Employees</span><span
+                  class="name">ISR Representatives</span><span class="cnt">4 Staff</span><span
                   class="val">$5,400.00</span></div>
               <div class="breakdown-legend-item"><span class="dot" style="background:#a855f7;"></span><span
-                  class="name">Hourly Employees</span><span class="cnt">14 Employees</span><span
+                  class="name">Hourly Staff</span><span class="cnt">14 Staff</span><span
                   class="val">$7,850.00</span></div>
             </div>
           </div>
@@ -692,8 +692,8 @@
                 </select>
               </div>
               <div class="col-md-12">
-                <label class="form-label">Select Employees</label>
-                <select class="form-select" id="employeeSelect" multiple size="4">
+                <label class="form-label">Select Staff</label>
+                <select class="form-select" id="Staffelect" multiple size="4">
                   <option value="1" selected>Dr. Nancy Rose — Provider</option>
                   <option value="2" selected>John Smith — SDR</option>
                   <option value="3" selected>Sarah Johnson — CE</option>
@@ -703,7 +703,7 @@
                   <option value="7" selected>Emma Davis — Dental Assistant</option>
                   <option value="8" selected>Daniel Martinez — Quote Specialist</option>
                 </select>
-                <small class="text-muted">Hold Ctrl/Cmd to select multiple employees.</small>
+                <small class="text-muted">Hold Ctrl/Cmd to select multiple Staff.</small>
               </div>
               <div class="col-md-12">
                 <label class="form-label">Notes (Optional)</label>
@@ -826,7 +826,7 @@
       new Chart(document.getElementById('summaryDonut'), {
         type: 'doughnut',
         data: {
-          labels: ['Providers', 'ISR Representatives', 'Hourly Employees'],
+          labels: ['Providers', 'ISR Representatives', 'Hourly Staff'],
           datasets: [{
             data: [15200, 5400, 7850], backgroundColor: ['#10b981', '#2563eb', '#a855f7'],
             borderWidth: 0
@@ -919,7 +919,7 @@
       const startF = new Date(start).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       const endF = new Date(end).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       const payF = new Date(payDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const select = document.getElementById('employeeSelect');
+      const select = document.getElementById('Staffelect');
       const selectedCount = Array.from(select.selectedOptions).length;
       const tbody = document.getElementById('runsTableBody');
       const newRow = document.createElement('tr');
@@ -975,13 +975,13 @@
           csvRows.push(`"${name}","${dept}","${type}","${pay}","${status}"`);
         });
         // Add totals
-        const totalEmployees = rows.length;
+        const totalStaff = rows.length;
         const confirmedEl = document.getElementById('confirmedCount2');
         const confirmed = confirmedEl ? confirmedEl.textContent : '0';
         const pendingEl = document.getElementById('pendingCount2');
         const pending = pendingEl ? pendingEl.textContent : '0';
         csvRows.push('');
-        csvRows.push(`"Total Employees",${totalEmployees}`);
+        csvRows.push(`"Total Staff",${totalStaff}`);
         csvRows.push(`"Confirmed",${confirmed}`);
         csvRows.push(`"Pending",${pending}`);
       } else if (screen3Active) {
@@ -992,7 +992,7 @@
           return;
         }
         csvRows.push('"Metric","Value"');
-        const labels = ['Employees', 'Total Gross Payroll', 'Total Deductions', 'Total Net Payroll'];
+        const labels = ['Staff', 'Total Gross Payroll', 'Total Deductions', 'Total Net Payroll'];
         kpiCards.forEach((card, index) => {
           const value = card.querySelector('.kpi-mini-value')?.textContent.trim() || '';
           csvRows.push(`"${labels[index] || ''}","${value}"`);
@@ -1000,7 +1000,7 @@
         // Breakdown
         csvRows.push('');
         csvRows.push('"Payroll Breakdown"');
-        csvRows.push('"Department","Employees","Amount"');
+        csvRows.push('"Department","Staff","Amount"');
         const breakdownItems = document.querySelectorAll('#screen-3 .breakdown-legend-item');
         breakdownItems.forEach(item => {
           const name = item.querySelector('.name')?.textContent.trim() || '';

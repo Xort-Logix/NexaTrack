@@ -11,7 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" href="../style/dashborad.css">
-  <link rel="stylesheet" href="../style/main.css">
+  <link rel="stylesheet" href="../style/mainrole.css">
 
 </head>
 
@@ -27,7 +27,7 @@
 
       <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
       <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-       <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
     </div>
     <div class="sidebar-footer">
       <div class="user-chip">
@@ -61,7 +61,7 @@
 
         <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
         <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-         <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
 
 
       </div>
@@ -77,32 +77,67 @@
   </div>
   <div class="main">
     <div class="topbar">
+
+      <!-- Left: Title -->
       <div>
         <h1 class="page-title">Good morning, M.Adnan 👋</h1>
         <div class="page-sub">Here's your compensation overview for july 1 – july 31, 2026</div>
       </div>
-      <div class="topbar-actions">
-        <!-- <button class="btn btn-outline-navy mobile-menu-btn" type="button" id="sidebarToggle"
-          aria-label="Open navigation">
-          <i class="fa-solid fa-bars"></i>
-        </button> -->
 
-        <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+      <!-- Right: Actions -->
+      <div class="topbar-actions">
+
+        <!-- Mobile menu -->
+        <label for="sidebarToggle" class="btn mobile-menu-btn">
           <i class="fa-solid fa-bars"></i>
         </label>
+
+        <!-- Date picker -->
         <div class="date-pill">
-          <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
-          <div class="me-3">
-            <span style="font-size:9px;color:var(--gray-400);display:block;line-height:1;margin-bottom:1px;">Pay
-              Period</span>
-            <span style="font-size:12px;font-weight:600;color:var(--gray-900);"><input type="text" id="daterange"
-                name='date' style="border: none;"></span>
+          <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+          <div class="date-meta">
+            <span class="date-label">Pay Period</span>
+            <span class="date-value">
+              <input type="text" id="daterange" name="date" />
+            </span>
           </div>
           <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
         </div>
 
+        <!-- ── CLOCK WIDGET ── -->
+        <div class="clock-widget" id="clockWidget">
+
+          <!-- Status -->
+          <div class="clock-status">
+            <span class="status-dot clocked-out" id="statusDot"></span>
+            <span class="status-label clocked-out" id="statusLabel">Clocked Out</span>
+          </div>
+
+          <!-- Timer -->
+          <span class="clock-timer" id="statusTimer">00:00:00</span>
+
+          <!-- Toggle button group -->
+          <div class="clock-actions" id="clockActions">
+            <button class="toggle-btn clock-in active" data-action="clockin" onclick="handleClockAction('clockin')">
+              <i class="fa-regular fa-circle-play"></i> In
+            </button>
+            <button class="toggle-btn start-lunch" data-action="startlunch" onclick="handleClockAction('startlunch')">
+              <i class="fa-solid fa-utensils"></i> Lunch
+            </button>
+            <button class="toggle-btn end-lunch" data-action="endlunch" onclick="handleClockAction('endlunch')">
+              <i class="fa-solid fa-bowl-food"></i> End
+            </button>
+            <button class="toggle-btn clock-out" data-action="clockout" onclick="handleClockAction('clockout')">
+              <i class="fa-regular fa-circle-stop"></i> Out
+            </button>
+          </div>
+
+        </div>
+        <!-- /clock-widget -->
 
       </div>
+      <!-- /topbar-actions -->
+
     </div>
 
     <div class="kpi-row mb-3">
@@ -122,7 +157,8 @@
       <div class="kpi-card">
         <div class="row">
           <div class="col-3">
-            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i></div>
+            <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i>
+            </div>
           </div>
           <div class="col-9">
             <div class="kpi-label">Hourly Rate</div>
@@ -146,8 +182,7 @@
       <div class="kpi-card">
         <div class="row">
           <div class="col-3">
-            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i
-                class="fa-solid fa-bolt"></i></div>
+            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-bolt"></i></div>
           </div>
           <div class="col-9">
             <div class="kpi-label">Overtime</div>
@@ -348,9 +383,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-   <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+   <script src="../js/javescript.js"></script>
+    <script>
       $(function () {
         $('input[name="date"]').daterangepicker({
           timePicker: true,
@@ -361,40 +396,19 @@
           }
         });
       });
-  function downloadPDF() {
-            const element = document.getElementById('pane-statement');
-            const opt = {
-                margin: 10,
-                filename: 'payroll-statement.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-            };
-            html2pdf().set(opt).from(element).save();
-        }
+      function downloadPDF() {
+        const element = document.getElementById('pane-statement');
+        const opt = {
+          margin: 10,
+          filename: 'payroll-statement.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+        };
+        html2pdf().set(opt).from(element).save();
+      }
 
-      // const sidebarToggle = document.getElementById('sidebarToggle');
-      // const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-
-      // function closeSidebar() {
-      //   document.body.classList.remove('sidebar-open');
-      // }
-
-      // if (sidebarToggle) {
-      //   sidebarToggle.addEventListener('click', () => {
-      //     document.body.classList.toggle('sidebar-open');
-      //   });
-      // }
-
-      // if (sidebarBackdrop) {
-      //   sidebarBackdrop.addEventListener('click', closeSidebar);
-      // }
-
-      // window.addEventListener('resize', () => {
-      //   if (window.innerWidth > 900) {
-      //     closeSidebar();
-      //   }
-      // });
+     
 
       const providerCtx = document.getElementById('providerChart');
       if (providerCtx) {

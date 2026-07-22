@@ -115,6 +115,7 @@
         <button class="btn btn-outline-navy" style="height:38px;"><i class="fa-regular fa-file-lines me-2"></i>Export
           PDF</button>
         <button class="btn btn-green"><i class="fa-solid fa-arrow-up-from-bracket me-2"></i>Export CSV</button>
+        <button class="btn btn-primary" style="height:38px;" data-bs-toggle="modal" data-bs-target="#addAdvanceModal"><i class="fa-solid fa-plus me-2"></i>Add Advance</button>
       </div>
     </div>
 
@@ -782,6 +783,72 @@
     </div>
   </div>
 
+  <div class="modal fade" id="addAdvanceModal" tabindex="-1" aria-labelledby="addAdvanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAdvanceModalLabel">Add New Advance</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addAdvanceForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Employee</label>
+                <select class="form-select" id="advanceEmployee">
+                  <option>Dr. Heider</option>
+                  <option>Dr. Vanessa</option>
+                  <option>Jeremiah Smith</option>
+                  <option>Joshua Lee</option>
+                  <option>Nancy Johnson</option>
+                  <option>Bianca Torres</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Department</label>
+                <select class="form-select" id="advanceDepartment">
+                  <option>Providers</option>
+                  <option>Sales</option>
+                  <option>Operations</option>
+                  <option>Lab</option>
+                  <option>Marketing</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Advance Date</label>
+                <input type="date" class="form-control" id="advanceDate" value="2026-07-22">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Advance Amount</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" id="advanceAmount" value="0"></div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Repaid Amount</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" id="advanceRepaid" value="0"></div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="advanceStatus">
+                  <option>Active</option>
+                  <option>Partially Repaid</option>
+                  <option>Repaid</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" id="advanceNotes" rows="3" placeholder="Enter advance notes..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveAdvanceBtn">Save Advance</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -793,6 +860,41 @@
       document.querySelectorAll('.engine-tab-item').forEach(b => b.classList.remove('active'));
       el.classList.add('active');
     }
+
+    document.getElementById('saveAdvanceBtn')?.addEventListener('click', () => {
+      const employee = document.getElementById('advanceEmployee').value;
+      const department = document.getElementById('advanceDepartment').value;
+      const date = document.getElementById('advanceDate').value;
+      const amount = parseFloat(document.getElementById('advanceAmount').value) || 0;
+      const repaid = parseFloat(document.getElementById('advanceRepaid').value) || 0;
+      const status = document.getElementById('advanceStatus').value;
+      const notes = document.getElementById('advanceNotes').value;
+      const statusClass = status === 'Repaid' ? 'repaid' : status === 'Active' ? 'active' : 'partial';
+      const outstanding = amount - repaid;
+      const outstandingClass = outstanding > 0 ? 'color:#ea580c;' : 'color:#00a878;';
+
+      const tbody = document.querySelector('#atab-ledger tbody');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>
+          <div class="d-flex align-items-center gap-2"><div class="avatar-sm"></div>
+            <div><span class="emp-name">${employee}</span><small class="emp-id">${department.substring(0, 3).toUpperCase()}-NEW</small></div>
+          </div>
+        </td>
+        <td><span class="badge-dept ${department.toLowerCase()}">${department}</span></td>
+        <td>${moment(date).format('MMM D, YYYY')}</td>
+        <td class="fw-semibold">$${amount.toFixed(2)}</td>
+        <td>$${repaid.toFixed(2)}</td>
+        <td class="fw-semibold" style="${outstandingClass}">$${outstanding.toFixed(2)}</td>
+        <td><span class="badge-status ${statusClass}">${status}</span></td>
+        <td>—</td>
+        <td class="text-muted">${notes}</td>
+        <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
+      `;
+      tbody.prepend(row);
+      bootstrap.Modal.getInstance(document.getElementById('addAdvanceModal')).hide();
+      document.getElementById('addAdvanceForm').reset();
+    });
 
     $(function () {
       $('input[name="date"]').daterangepicker({
