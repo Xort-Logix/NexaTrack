@@ -87,6 +87,19 @@
     border-radius: var(--radius);
     padding: 16px 16px;
     height: 100%;
+    overflow: hidden;
+}
+
+.kpi-card .kpi-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kpi-card .kpi-delta {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
@@ -360,7 +373,7 @@ table.report-table tbody tr:last-child td {
     opacity: .4;
 }
 
-@media(max-width:1300px) {
+@media(max-width:1550px) {
     .kpi-row {
         grid-template-columns: repeat(3, 1fr);
     }
