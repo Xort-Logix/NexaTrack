@@ -571,14 +571,18 @@
         font-size: 11px;
     }
 
-    /* Donut chart smaller to fit col-lg-5 */
+    /* Donut chart - compact for col-xl-4 */
     .donut-wrap {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
     }
 
     .donut-center .amt {
-        font-size: 16px;
+        font-size: 14px;
+    }
+
+    .donut-center .lbl {
+        font-size: 9px;
     }
 
     /* Reduce panel padding */

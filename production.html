@@ -43,8 +43,11 @@
       </div>
     </div>
   </div>
-  <div class="sidebar-backdrop" onclick="document.getElementById('sidebarToggle').checked = false">
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
     <div class="sidebar">
+      <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
       <div class="brand">
         <div class="brand-mark">N</div>
         <div class="brand-text">NEXA<small>TRACK</small></div>
@@ -58,12 +61,12 @@
         <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
         <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
         <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
-        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+
         <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
           Runs</a>
         <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
         <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-
+        <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
       </div>
       <div class="sidebar-footer">
         <div class="user-chip">
@@ -82,11 +85,9 @@
         <div class="page-sub">Track production activity across all departments and team members.</div>
       </div>
 
-      <button class="btn btn-outline-navy mobile-menu-btn" type="button" aria-label="Open navigation"
-        onclick="document.getElementById('sidebarToggle').checked = !document.getElementById('sidebarToggle').checked">
-
+      <label for="sidebarToggle" class="btn mobile-menu-btn">
         <i class="fa-solid fa-bars"></i>
-      </button>
+      </label>
       <div class="d-flex gap-2 topbar-actions">
         <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
           <i class="fa-regular fa-calendar me-2 text-muted" style="font-size:13px;"></i>
@@ -117,9 +118,10 @@
           onclick="showProdTab('daily',this)">Daily Activity</a></li>
     </ul>
 
-    <div class="panel-header">
-      <div class="d-flex gap-2 flex-wrap align-items-center">
-        <div class="input-group" style="width: 280px;">
+    <div class="panel mb-3">
+      <div class="panel-body">
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+          <div class="input-group" style="width: 280px;">
           <input type="text" id="daterange" name='date' class="form-control">
           <span class="input-group-text">
             <i class="fa-regular fa-calendar"></i>
@@ -155,16 +157,17 @@
         </div>
       </div>
     </div>
+    </div>
 
     <div class="row g-3 mb-3">
-      <div class="col-6 col-md-2 col-12 ">
+      <div class="col-6 col-sm-4 col-md">
         <div class="kpi-card">
-          <div class="row">
-            <div class="col-3">
+          <div class="row g-2 align-items-center">
+            <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
                   class="fa-solid fa-chart-column"></i></div>
             </div>
-            <div class="col-9">
+            <div class="col-9 col-sm-8 col-xl-9">
               <div class="kpi-label">Total Production</div>
               <div class="kpi-value">$874,250</div>
               <div class="kpi-delta text-success">+12.4% vs Feb</div>
@@ -172,13 +175,13 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-md-2 col-12">
+      <div class="col-6 col-sm-4 col-md">
         <div class="kpi-card">
-          <div class="row">
-            <div class="col-3">
+          <div class="row g-2 align-items-center">
+            <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-tooth"></i></div>
             </div>
-            <div class="col-9">
+            <div class="col-9 col-sm-8 col-xl-9">
               <div class="kpi-label">Cosmetic Production</div>
               <div class="kpi-value">$724,350</div>
               <div class="kpi-delta text-muted">82.9% of Total</div>
@@ -186,15 +189,15 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-md-2 col-12">
+      <div class="col-6 col-sm-4 col-md">
         <div class="kpi-card">
-          <div class="row">
-            <div class="col-3">
+          <div class="row g-2 align-items-center">
+            <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i
                   class="fa-solid fa-briefcase-medical"></i>
               </div>
             </div>
-            <div class="col-9">
+            <div class="col-9 col-sm-8 col-xl-9">
               <div class="kpi-label">General Production</div>
               <div class="kpi-value">$149,900</div>
               <div class="kpi-delta text-muted">17.1% of Total</div>
@@ -202,14 +205,14 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-md-3 col-12">
+      <div class="col-6 col-sm-6 col-md">
         <div class="kpi-card">
-          <div class="row">
-            <div class="col-3">
+          <div class="row g-2 align-items-center">
+            <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-file-lines"></i>
               </div>
             </div>
-            <div class="col-9">
+            <div class="col-9 col-sm-8 col-xl-9">
               <div class="kpi-label">Total Cases</div>
               <div class="kpi-value">126</div>
               <div class="kpi-delta text-success">+18 vs Feb</div>
@@ -217,14 +220,14 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-md-2 col-12">
+      <div class="col-6 col-sm-6 col-md">
         <div class="kpi-card">
-          <div class="row">
-            <div class="col-3">
+          <div class="row g-2 align-items-center">
+            <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#e0e7ff;color:#3730a3;"><i class="fa-solid fa-user-group"></i>
               </div>
             </div>
-            <div class="col-9">
+            <div class="col-9 col-sm-8 col-xl-9">
               <div class="kpi-label">Total Units</div>
               <div class="kpi-value">662</div>
               <div class="kpi-delta text-success">+74 vs Feb</div>
@@ -239,6 +242,7 @@
 
       <!-- Row 1: Chart + Donut + Top Producers -->
       <div class="row g-3 mb-3">
+        <!-- Production over Time Chart -->
         <div class="col-lg-6">
           <div class="chart-card">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -257,40 +261,38 @@
             </div>
           </div>
         </div>
+
+        <!-- Donut: Production by Department -->
         <div class="col-lg-3">
           <div class="chart-card text-center">
             <h2 class="panel-title mb-3 text-start">Production by Department</h2>
-            <div class="row pt-5">
-              <div class="col-12 col-lg-5 text-center">
-                <div class="prod-donut"
-                  style="background:conic-gradient(#059669 0% 68.4%, #f59e0b 68.4% 86.3%, #3b82f6 86.3% 94.6%, #a855f7 94.6% 100%);">
-                  <div class="prod-donut-hole">
-                    <div class="amt">$874,250</div>
-                    <div class="lbl">Total Production</div>
-                  </div>
+            <div class="prod-donut-wrap">
+              <div class="prod-donut"
+                style="background:conic-gradient(#059669 0% 68.4%, #f59e0b 68.4% 86.3%, #3b82f6 86.3% 94.6%, #a855f7 94.6% 100%);">
+                <div class="prod-donut-hole">
+                  <div class="amt">$874,250</div>
+                  <div class="lbl">Total Production</div>
                 </div>
               </div>
-              <div class="col-12 col-lg-5 text-center">
-                <div style="font-size:12.5px;text-align:left;">
-                  <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
-                        style="background:#059669;"></span> Providers</span><span class="fw-semibold">$598,450
-                      (68.4%)</span></div>
-                  <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
-                        style="background:#f59e0b;"></span> ISR (Commission)</span><span class="fw-semibold">$156,250
-                      (17.9%)</span></div>
-                  <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
-                        style="background:#3b82f6;"></span> ISR (Flat Pay)</span><span class="fw-semibold">$72,800
-                      (8.3%)</span></div>
-                  <div class="d-flex justify-content-between"><span><span class="prod-legend-dot"
-                        style="background:#a855f7;"></span> Other (SDR, CE, Lab, Mkt)</span><span
-                      class="fw-semibold">$46,750 (5.4%)</span></div>
-                </div>
+              <div class="prod-legend-stack">
+                <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
+                      style="background:#059669;"></span> Providers</span><span class="fw-semibold">$598,450
+                    (68.4%)</span></div>
+                <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
+                      style="background:#f59e0b;"></span> ISR (Commission)</span><span class="fw-semibold">$156,250
+                    (17.9%)</span></div>
+                <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
+                      style="background:#3b82f6;"></span> ISR (Flat Pay)</span><span class="fw-semibold">$72,800
+                    (8.3%)</span></div>
+                <div class="d-flex justify-content-between"><span><span class="prod-legend-dot"
+                      style="background:#a855f7;"></span> Other (SDR, CE, Lab, Mkt)</span><span
+                    class="fw-semibold">$46,750 (5.4%)</span></div>
               </div>
             </div>
-
-
           </div>
         </div>
+
+        <!-- Top Producers -->
         <div class="col-lg-3">
           <div class="chart-card">
             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -337,6 +339,7 @@
         <div class="col-lg-4">
           <div class="panel panel-body h-100">
             <h2 class="panel-title mb-3">Production by Case Type</h2>
+            <div class="table-responsive">
             <table class="nexa-table">
               <thead>
                 <tr>
@@ -408,11 +411,13 @@
                 </tr>
               </tfoot>
             </table>
+            </div>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="panel panel-body h-100">
             <h2 class="panel-title mb-3">Production by Team Member</h2>
+            <div class="table-responsive">
             <table class="nexa-table">
               <thead>
                 <tr>
@@ -498,6 +503,7 @@
                 </tr>
               </tfoot>
             </table>
+            </div>
           </div>
         </div>
         <div class="col-lg-4">
@@ -533,6 +539,7 @@
     <div id="ptab-department" style="display:none;">
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Department Breakdown</h2>
+        <div class="table-responsive">
         <table class="nexa-table">
           <thead>
             <tr>
@@ -595,6 +602,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -602,6 +610,7 @@
     <div id="ptab-teammember" style="display:none;">
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Production by Team Member (Full)</h2>
+        <div class="table-responsive">
         <table class="nexa-table">
           <thead>
             <tr>
@@ -678,6 +687,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -685,6 +695,7 @@
     <div id="ptab-procedure" style="display:none;">
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Production by Procedure / Case Type</h2>
+        <div class="table-responsive">
         <table class="nexa-table">
           <thead>
             <tr>
@@ -747,6 +758,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -754,6 +766,7 @@
     <div id="ptab-trends" style="display:none;">
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Weekly Production</h2>
+        <div class="table-responsive">
         <table class="nexa-table">
           <thead>
             <tr>
@@ -796,6 +809,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -803,6 +817,7 @@
     <div id="ptab-daily" style="display:none;">
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Daily Activity</h2>
+        <div class="table-responsive">
         <table class="nexa-table">
           <thead>
             <tr>
@@ -851,129 +866,97 @@
             </tr>
           </tbody>
         </table>
-      </div>
-    </div>
-    <div class="sidebar-backdrop" onclick="document.getElementById('sidebarToggle').checked = false">
-      <div class="sidebar">
-        <div class="brand">
-          <div class="brand-mark">N</div>
-          <div class="brand-text">NEXA<small>TRACK</small></div>
-        </div>
-        <div class="nav-section">
-          <a class="nav-link-item" href="dashboard.html"><i class="fa-solid fa-grip"></i> Dashboard</a>
-          <a class="nav-link-item active" href="team-members.html"><i class="fa-solid fa-users"></i> Team Members</a>
-          <a class="nav-link-item" href="compensation-rules.html"><i class="fa-solid fa-sliders"></i> Compensation
-            Rules</a>
-          <a class="nav-link-item" href="production.html"><i class="fa-solid fa-chart-column"></i> Production</a>
-          <a class="nav-link-item " href="cases.html"><i class="fa-solid fa-briefcase-medical"></i> Cases</a>
-          <a class="nav-link-item" href="advances.html"><i class="fa-solid fa-hand-holding-dollar"></i> Advances</a>
-          <a class="nav-link-item" href="statements.html"><i class="fa-solid fa-file-invoice"></i> Statements</a>
-          <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
-          <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll
-            Runs</a>
-          <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
-          <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-
-        </div>
-        <div class="sidebar-footer">
-          <div class="user-chip">
-            <div class="user-avatar">JJ</div>
-            <div>
-              <div style="font-size:13px;font-weight:600;">James Johnson</div><small>Office Manager</small>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <script>
-    $(function () {
-      $('input[name="date"]').daterangepicker({
-        timePicker: true,
-        startDate: moment().startOf('month'),
-        endDate: moment().endOf('month'),
-        locale: {
-          format: 'MM/DD/YYYY'
-        }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+      $(function () {
+        $('input[name="date"]').daterangepicker({
+          timePicker: true,
+          startDate: moment().startOf('month'),
+          endDate: moment().endOf('month'),
+          locale: {
+            format: 'MM/DD/YYYY'
+          }
+        });
       });
-    });
 
-    function showProdTab(key, el) {
-      document.querySelectorAll('[id^="ptab-"]').forEach(sec => sec.style.display = 'none');
-      document.getElementById('ptab-' + key).style.display = 'block';
-      document.querySelectorAll('.engine-tab-btn').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-    }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    (function () {
-      const ctx = document.getElementById('productionChart').getContext('2d');
-      const labels = ['Mar 1', 'Mar 5', 'Mar 9', 'Mar 13', 'Mar 17', 'Mar 21', 'Mar 25', 'Mar 29', 'Mar 31'];
-      const total = [52000, 68000, 72000, 80000, 76000, 85000, 90000, 94000, 88000];
-      const cosmetic = [42000, 54000, 58000, 64000, 60000, 66000, 70000, 74000, 69000];
-      const general = [12000, 18000, 20000, 22000, 21000, 24000, 26000, 28000, 25000];
-
-      const gradientTotal = ctx.createLinearGradient(0, 0, 0, 300);
-      gradientTotal.addColorStop(0, 'rgba(5,150,105,0.12)');
-      gradientTotal.addColorStop(1, 'rgba(5,150,105,0.02)');
-
-      const gradientCos = ctx.createLinearGradient(0, 0, 0, 300);
-      gradientCos.addColorStop(0, 'rgba(37,99,235,0.10)');
-      gradientCos.addColorStop(1, 'rgba(37,99,235,0.02)');
-
-      const gradientGen = ctx.createLinearGradient(0, 0, 0, 300);
-      gradientGen.addColorStop(0, 'rgba(124,58,237,0.10)');
-      gradientGen.addColorStop(1, 'rgba(124,58,237,0.02)');
-
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels, datasets: [
-            { label: 'Total', data: total, borderColor: '#059669', backgroundColor: gradientTotal, tension: 0.35, pointRadius: 0, fill: true, order: 3 },
-            { label: 'Cosmetic', data: cosmetic, borderColor: '#2563eb', backgroundColor: gradientCos, tension: 0.35, pointRadius: 0, fill: true, order: 2 },
-            { label: 'General', data: general, borderColor: '#7c3aed', backgroundColor: gradientGen, tension: 0.35, pointRadius: 0, fill: true, order: 1 }
-          ]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            y: { grid: { color: 'rgba(15,23,42,0.04)' }, ticks: { callback: function (val) { return '$' + (val / 1000) + 'K'; } } },
-            x: { grid: { display: false } }
-          },
-          elements: { line: { borderWidth: 2 } }
-        }
-      });
-    })();
-
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-
-    function closeSidebar() {
-      document.body.classList.remove('sidebar-open');
-    }
-
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener('click', () => {
-        document.body.classList.toggle('sidebar-open');
-      });
-    }
-
-    if (sidebarBackdrop) {
-      sidebarBackdrop.addEventListener('click', closeSidebar);
-    }
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) {
-        closeSidebar();
+      function showProdTab(key, el) {
+        document.querySelectorAll('[id^="ptab-"]').forEach(sec => sec.style.display = 'none');
+        document.getElementById('ptab-' + key).style.display = 'block';
+        document.querySelectorAll('.engine-tab-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
       }
-    });
-  </script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      (function () {
+        const ctx = document.getElementById('productionChart').getContext('2d');
+        const labels = ['Mar 1', 'Mar 5', 'Mar 9', 'Mar 13', 'Mar 17', 'Mar 21', 'Mar 25', 'Mar 29', 'Mar 31'];
+        const total = [52000, 68000, 72000, 80000, 76000, 85000, 90000, 94000, 88000];
+        const cosmetic = [42000, 54000, 58000, 64000, 60000, 66000, 70000, 74000, 69000];
+        const general = [12000, 18000, 20000, 22000, 21000, 24000, 26000, 28000, 25000];
+
+        const gradientTotal = ctx.createLinearGradient(0, 0, 0, 300);
+        gradientTotal.addColorStop(0, 'rgba(5,150,105,0.12)');
+        gradientTotal.addColorStop(1, 'rgba(5,150,105,0.02)');
+
+        const gradientCos = ctx.createLinearGradient(0, 0, 0, 300);
+        gradientCos.addColorStop(0, 'rgba(37,99,235,0.10)');
+        gradientCos.addColorStop(1, 'rgba(37,99,235,0.02)');
+
+        const gradientGen = ctx.createLinearGradient(0, 0, 0, 300);
+        gradientGen.addColorStop(0, 'rgba(124,58,237,0.10)');
+        gradientGen.addColorStop(1, 'rgba(124,58,237,0.02)');
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels, datasets: [
+              { label: 'Total', data: total, borderColor: '#059669', backgroundColor: gradientTotal, tension: 0.35, pointRadius: 0, fill: true, order: 3 },
+              { label: 'Cosmetic', data: cosmetic, borderColor: '#2563eb', backgroundColor: gradientCos, tension: 0.35, pointRadius: 0, fill: true, order: 2 },
+              { label: 'General', data: general, borderColor: '#7c3aed', backgroundColor: gradientGen, tension: 0.35, pointRadius: 0, fill: true, order: 1 }
+            ]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { grid: { color: 'rgba(15,23,42,0.04)' }, ticks: { callback: function (val) { return '$' + (val / 1000) + 'K'; } } },
+              x: { grid: { display: false } }
+            },
+            elements: { line: { borderWidth: 2 } }
+          }
+        });
+      })();
+
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+      function closeSidebar() {
+        document.body.classList.remove('sidebar-open');
+      }
+
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+          document.body.classList.toggle('sidebar-open');
+        });
+      }
+
+      if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+      }
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+          closeSidebar();
+        }
+      });
+    </script>
 </body>
 
 </html>

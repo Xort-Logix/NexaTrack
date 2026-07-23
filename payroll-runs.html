@@ -12,7 +12,194 @@
   <link rel="stylesheet" href="style/payroll-runs.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js">
   </script>
+  <style>
+    .payroll-summary-panel {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #fff;
+    }
 
+    .payroll-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #edf0f5;
+      position: relative;
+    }
+
+    .payroll-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 4px;
+    }
+
+    .provider::before {
+      background: #6D5CF6;
+    }
+
+    .isr::before {
+      background: #2F80ED;
+    }
+
+    .hourly::before {
+      background: #39C6A8;
+    }
+
+    .payroll-item h6 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .payroll-item small {
+      color: #6b7280;
+    }
+
+    .payroll-item h5 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .payroll-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .chart-legend {
+      margin-top: 20px;
+      width: 250px;
+    }
+
+    .legend-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .legend-row[role="button"] {
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 10px;
+      padding: 4px 8px;
+      margin-left: -8px;
+      margin-right: -8px;
+    }
+
+    .legend-row[role="button"]:hover {
+      background: rgba(116, 185, 255, 0.08);
+    }
+
+    .doctor-table-row {
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .doctor-table-row:hover {
+      background: rgba(109, 92, 246, 0.04);
+    }
+
+    .doctor-table-row td:first-child {
+      border-left: 3px solid transparent;
+    }
+
+    .doctor-table-row:hover td:first-child {
+      border-left-color: #6D5CF6;
+    }
+
+    .payroll-item[role="button"] {
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+
+    .payroll-item[role="button"]:hover {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .provider-dot {
+      background: #6D5CF6;
+    }
+
+    .isr-dot {
+      background: #2F80ED;
+    }
+
+    .hourly-dot {
+      background: #39C6A8;
+    }
+
+    .lock-warning-banner {
+      background: #FFF7E8;
+      border: 1px solid #F6D38B;
+      color: #9A6700;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .btn-purple {
+      background: #6D5CF6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 24px;
+      font-weight: 600;
+    }
+
+    .btn-purple:hover {
+      background: #5b48ef;
+      color: #fff;
+    }
+
+    .donut-wrap-lg {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      margin: auto;
+    }
+
+    .donut-wrap-lg canvas {
+      width: 260px !important;
+      height: 260px !important;
+    }
+
+    .donut-center-lg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .donut-center-lg .amt {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .donut-center-lg .lbl {
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
@@ -92,9 +279,6 @@
       <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
       <div class="step-nav-item" data-step="3" onclick="goToStep(3)"><span class="num">3</span><span class="lbl">Final
           Summary</span></div>
-      <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
-      <div class="step-nav-item" data-step="4" onclick="goToStep(4)"><span class="num">4</span><span class="lbl">Flags
-          &amp; Disputes</span></div>
     </div>
 
     <!-- ===== SCREEN 1 — GENERATE PAYROLL ===== -->
@@ -106,7 +290,7 @@
         <div>
           <h1 class="page-title">Payroll Runs</h1>
           <div class="page-sub">Create and manage payroll — nothing is finalized until you review and confirm every
-            employee.</div>
+            Staff.</div>
         </div>
         <button class="btn btn-green" data-bs-toggle="modal" data-bs-target="#newPayrollModal"><i
             class="fa-solid fa-plus me-1"></i>New Payroll Run</button>
@@ -120,7 +304,7 @@
         </div>
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Staff</div>
-          <div class="kpi-mini-value">24</div>
+          <div class="kpi-mini-value">26</div>
           <div class="kpi-mini-note">Active Staff</div>
         </div>
         <div class="kpi-mini-card">
@@ -166,7 +350,7 @@
               <tr data-status="inprogress">
                 <td class="fw-semibold">May 1 – May 15, 2026</td>
                 <td>May 16, 2026</td>
-                <td>24</td>
+                <td>26</td>
                 <td>$28,450.00</td>
                 <td><span class="status-pill inprogress">In Progress</span></td>
                 <td><button class="btn btn-sm btn-green" onclick="goToStep(2)">Review Payroll</button></td>
@@ -177,7 +361,7 @@
                 <td>24</td>
                 <td>$27,890.50</td>
                 <td><span class="status-pill locked">Locked</span></td>
-                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                <td><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-navy" onclick="openPayrollPacket()">View Packet</button><button class="btn btn-sm btn-outline-navy" onclick="openFlagsPanel()">Flags</button></div></td>
               </tr>
               <tr data-status="locked">
                 <td class="fw-semibold">Apr 1 – Apr 15, 2026</td>
@@ -185,7 +369,7 @@
                 <td>24</td>
                 <td>$26,540.75</td>
                 <td><span class="status-pill locked">Locked</span></td>
-                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                <td><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-navy" onclick="openPayrollPacket()">View Packet</button><button class="btn btn-sm btn-outline-navy" onclick="openFlagsPanel()">Flags</button></div></td>
               </tr>
               <tr data-status="locked">
                 <td class="fw-semibold">Mar 16 – Mar 31, 2026</td>
@@ -193,7 +377,7 @@
                 <td>23</td>
                 <td>$25,128.40</td>
                 <td><span class="status-pill locked">Locked</span></td>
-                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                <td><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-navy" onclick="openPayrollPacket()">View Packet</button><button class="btn btn-sm btn-outline-navy" onclick="openFlagsPanel()">Flags</button></div></td>
               </tr>
               <tr data-status="locked">
                 <td class="fw-semibold">Mar 1 – Mar 15, 2026</td>
@@ -201,7 +385,7 @@
                 <td>23</td>
                 <td>$24,760.30</td>
                 <td><span class="status-pill locked">Locked</span></td>
-                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                <td><div class="d-flex gap-1"><button class="btn btn-sm btn-outline-navy" onclick="openPayrollPacket()">View Packet</button><button class="btn btn-sm btn-outline-navy" onclick="openFlagsPanel()">Flags</button></div></td>
               </tr>
               <tr data-status="completed" style="display:none;">
                 <td class="fw-semibold">Feb 16 – Feb 28, 2026</td>
@@ -209,7 +393,7 @@
                 <td>22</td>
                 <td>$23,450.00</td>
                 <td><span class="status-pill completed">Completed</span></td>
-                <td><button class="btn btn-sm btn-outline-navy">View</button></td>
+                <td><button class="btn btn-sm btn-outline-navy" onclick="openPayrollPacket()">View Packet</button></td>
               </tr>
               <tr data-status="cancelled" style="display:none;">
                 <td class="fw-semibold">Jan 16 – Jan 31, 2026</td>
@@ -226,7 +410,7 @@
           <button class="btn btn-green btn-lg px-4" onclick="goToStep(2)"><i
               class="fa-solid fa-calculator me-2"></i>Generate Payroll</button>
           <div class="note">This will calculate payroll for all Staff for this pay period. Nothing is finalized
-            until every employee is reviewed and confirmed.</div>
+            until every Staff is reviewed and confirmed.</div>
         </div>
       </div>
     </div>
@@ -248,7 +432,7 @@
       <div class="kpi-mini-row">
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Staff</div>
-          <div class="kpi-mini-value">24</div>
+          <div class="kpi-mini-value">26</div>
           <div class="kpi-mini-note">Total</div>
         </div>
         <div class="kpi-mini-card">
@@ -264,7 +448,7 @@
         <div class="kpi-mini-card">
           <div class="kpi-mini-label">Needs Attention</div>
           <div class="kpi-mini-value" style="color:#dc2626;">1</div>
-          <div class="kpi-mini-note">Employee</div>
+          <div class="kpi-mini-note">Staff</div>
         </div>
 
       </div>
@@ -281,7 +465,7 @@
           <table class="wf-table">
             <thead>
               <tr>
-                <th>Employee</th>
+                <th>Staff</th>
                 <th>Department</th>
                 <th>Type</th>
                 <th>Total Pay</th>
@@ -290,7 +474,8 @@
               </tr>
             </thead>
             <tbody id="reviewTableBody">
-              <tr>
+              <tr id="drNancyRow2"
+                onclick="openPayrollDetail('Dr. Nancy Rose','drNancyRow2','drNancyStatus2','Provider',4250.00,'provider')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80">Dr.
@@ -298,11 +483,14 @@
                 </td>
                 <td>Provider</td>
                 <td>Provider</td>
-                <td class="fw-semibold">$4,250.00</td>
-                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
-                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+                <td class="fw-semibold pay-amount">$4,250.00</td>
+                <td><span class="status-pill-wf confirmed" id="drNancyStatus2">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('Dr. Nancy Rose','drNancyRow2','drNancyStatus2','Provider',4250.00,'provider')">View/Edit</button>
+                </td>
               </tr>
-              <tr id="johnSmithRow2">
+              <tr id="johnSmithRow2"
+                onclick="openPayrollDetail('John Smith','johnSmithRow2','johnSmithStatus2','Hourly',1145.50,'hourly')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80">John
@@ -310,13 +498,14 @@
                 </td>
                 <td>SDR</td>
                 <td>Hourly</td>
-                <td class="fw-semibold">$1,145.50</td>
+                <td class="fw-semibold pay-amount">$1,145.50</td>
                 <td><span class="status-pill-wf pending" id="johnSmithStatus2">Pending Review</span></td>
-                <td><button class="btn btn-sm btn-green btn-confirm-row"
-                    onclick="confirmEmployee('johnSmithRow2','johnSmithStatus2')"><i
-                      class="fa-solid fa-check me-1"></i>Confirm</button></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('John Smith','johnSmithRow2','johnSmithStatus2','Hourly',1145.50,'hourly')">View/Edit</button>
+                </td>
               </tr>
-              <tr>
+              <tr id="sarahJohnsonRow2"
+                onclick="openPayrollDetail('Sarah Johnson','sarahJohnsonRow2','sarahJohnsonStatus2','Hourly',1375.20,'hourly')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80">Sarah
@@ -324,11 +513,14 @@
                 </td>
                 <td>CE</td>
                 <td>Hourly</td>
-                <td class="fw-semibold">$1,375.20</td>
-                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
-                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+                <td class="fw-semibold pay-amount">$1,375.20</td>
+                <td><span class="status-pill-wf confirmed" id="sarahJohnsonStatus2">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('Sarah Johnson','sarahJohnsonRow2','sarahJohnsonStatus2','Hourly',1375.20,'hourly')">View/Edit</button>
+                </td>
               </tr>
-              <tr>
+              <tr id="mikeAndersonRow2"
+                onclick="openPayrollDetail('Mike Anderson','mikeAndersonRow2','mikeAndersonStatus2','Commission',2350.00,'commission')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80">Mike
@@ -336,12 +528,14 @@
                 </td>
                 <td>ISR</td>
                 <td>Commission</td>
-                <td class="fw-semibold">$2,350.00</td>
-                <td><span class="status-pill-wf attention">Needs Attention</span></td>
-                <td><button class="btn btn-sm btn-red-outline btn-confirm-row"
-                    onclick="flagAttention('Mike Anderson')"><i class="fa-solid fa-flag me-1"></i>Flag</button></td>
+                <td class="fw-semibold pay-amount">$2,350.00</td>
+                <td><span class="status-pill-wf attention" id="mikeAndersonStatus2">Needs Attention</span></td>
+                <td><button class="btn btn-sm btn-red-outline"
+                    onclick="event.stopPropagation(); openPayrollDetail('Mike Anderson','mikeAndersonRow2','mikeAndersonStatus2','Commission',2350.00,'commission')">View/Edit</button>
+                </td>
               </tr>
-              <tr>
+              <tr id="ashleyWilliamsRow2"
+                onclick="openPayrollDetail('Ashley Williams','ashleyWilliamsRow2','ashleyWilliamsStatus2','Salary',2000.00,'salary')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80">Ashley
@@ -349,11 +543,14 @@
                 </td>
                 <td>Marketing</td>
                 <td>Salary</td>
-                <td class="fw-semibold">$2,000.00</td>
-                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
-                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+                <td class="fw-semibold pay-amount">$2,000.00</td>
+                <td><span class="status-pill-wf confirmed" id="ashleyWilliamsStatus2">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('Ashley Williams','ashleyWilliamsRow2','ashleyWilliamsStatus2','Salary',2000.00,'salary')">View/Edit</button>
+                </td>
               </tr>
-              <tr id="chrisBrownRow2">
+              <tr id="chrisBrownRow2"
+                onclick="openPayrollDetail('Chris Brown','chrisBrownRow2','chrisBrownStatus2','Hourly',1020.75,'hourly')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80">Chris
@@ -361,13 +558,14 @@
                 </td>
                 <td>Social Media</td>
                 <td>Hourly</td>
-                <td class="fw-semibold">$1,020.75</td>
+                <td class="fw-semibold pay-amount">$1,020.75</td>
                 <td><span class="status-pill-wf pending" id="chrisBrownStatus2">Pending Review</span></td>
-                <td><button class="btn btn-sm btn-green btn-confirm-row"
-                    onclick="confirmEmployee('chrisBrownRow2','chrisBrownStatus2')"><i
-                      class="fa-solid fa-check me-1"></i>Confirm</button></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('Chris Brown','chrisBrownRow2','chrisBrownStatus2','Hourly',1020.75,'hourly')">View/Edit</button>
+                </td>
               </tr>
-              <tr>
+              <tr id="emmaDavisRow2"
+                onclick="openPayrollDetail('Emma Davis','emmaDavisRow2','emmaDavisStatus2','Hourly',980.30,'hourly')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80">Emma
@@ -375,11 +573,14 @@
                 </td>
                 <td>Dental Assistant</td>
                 <td>Hourly</td>
-                <td class="fw-semibold">$980.30</td>
-                <td><span class="status-pill-wf confirmed">Confirmed</span></td>
-                <td><button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button></td>
+                <td class="fw-semibold pay-amount">$980.30</td>
+                <td><span class="status-pill-wf confirmed" id="emmaDavisStatus2">Confirmed</span></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('Emma Davis','emmaDavisRow2','emmaDavisStatus2','Hourly',980.30,'hourly')">View/Edit</button>
+                </td>
               </tr>
-              <tr id="danielMartinezRow2">
+              <tr id="danielMartinezRow2"
+                onclick="openPayrollDetail('Daniel Martinez','danielMartinezRow2','danielMartinezStatus2','Hourly',1150.25,'hourly')">
                 <td>
                   <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
                       src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80">Daniel
@@ -387,17 +588,17 @@
                 </td>
                 <td>Quote Specialist</td>
                 <td>Hourly</td>
-                <td class="fw-semibold">$1,150.25</td>
+                <td class="fw-semibold pay-amount">$1,150.25</td>
                 <td><span class="status-pill-wf pending" id="danielMartinezStatus2">Pending Review</span></td>
-                <td><button class="btn btn-sm btn-green btn-confirm-row"
-                    onclick="confirmEmployee('danielMartinezRow2','danielMartinezStatus2')"><i
-                      class="fa-solid fa-check me-1"></i>Confirm</button></td>
+                <td><button class="btn btn-sm btn-outline-navy"
+                    onclick="event.stopPropagation(); openPayrollDetail('Daniel Martinez','danielMartinezRow2','danielMartinezStatus2','Hourly',1150.25,'hourly')">View/Edit</button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="confirm-footer">
-          <span class="count">Confirmed <span id="confirmFooterCount2">18</span> of 24 Staff</span>
+          <span class="count">Confirmed <span id="confirmFooterCount2">18</span> of 26 total</span>
           <button class="btn btn-green" onclick="goToStep(3)">Continue to Summary <i
               class="fa-solid fa-arrow-right ms-1"></i></button>
         </div>
@@ -418,8 +619,8 @@
 
       <div class="kpi-mini-row">
         <div class="kpi-mini-card">
-          <div class="kpi-mini-label">Staff</div>
-          <div class="kpi-mini-value">24</div>
+          <div class="kpi-mini-label">Employees</div>
+          <div class="kpi-mini-value">26</div>
           <div class="kpi-mini-note">Total</div>
         </div>
         <div class="kpi-mini-card">
@@ -436,56 +637,238 @@
         </div>
       </div>
 
-      <div class="panel">
-        <div class="panel-header">
+      <div class="panel payroll-summary-panel">
+        <div class="panel-header d-flex justify-content-between align-items-center">
           <h2 class="panel-title mb-0">Payroll Breakdown</h2>
         </div>
+
         <div class="panel-body">
+
           <div class="row align-items-center">
-            <div class="col-md-5">
-              <div class="donut-wrap-lg">
-                <canvas id="summaryDonut"></canvas>
-                <div class="donut-center-lg">
-                  <div class="amt">$28,450.00</div>
-                  <div class="lbl">Total Payroll</div>
+
+            <!-- Left Side -->
+            <div class="col-lg-5">
+
+              <div class="payroll-item provider" role="button" tabindex="0" onclick="openCategoryBreakdown('provider')">
+                <div>
+                  <h6>Providers</h6>
+                  <small>8 Employees</small>
+                </div>
+
+                <div class="text-end">
+                  <h5>$15,200.00</h5>
                 </div>
               </div>
-            </div>
-            <div class="col-md-7">
-              <div class="breakdown-legend-item"><span class="dot" style="background:#10b981;"></span><span
-                  class="name">Providers</span><span class="cnt">8 Staff</span><span class="val">$15,200.00</span>
+
+              <div class="payroll-item isr" role="button" tabindex="0" onclick="openCategoryBreakdown('isr')">
+                <div>
+                  <h6>ISR Representatives</h6>
+                  <small>4 Employees</small>
+                </div>
+
+                <div class="text-end">
+                  <h5>$5,400.00</h5>
+                </div>
               </div>
-              <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span><span
-                  class="name">ISR Representatives</span><span class="cnt">4 Staff</span><span
-                  class="val">$5,400.00</span></div>
-              <div class="breakdown-legend-item"><span class="dot" style="background:#a855f7;"></span><span
-                  class="name">Hourly Staff</span><span class="cnt">14 Staff</span><span
-                  class="val">$7,850.00</span></div>
+
+              <div class="payroll-item hourly" role="button" tabindex="0" onclick="openCategoryBreakdown('hourly')">
+                <div>
+                  <h6>Hourly</h6>
+                  <small>14 Employees</small>
+                </div>
+
+                <div class="text-end">
+                  <h5>$7,850.00</h5>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Side -->
+
+            <div class="col-lg-7">
+
+              <div class="payroll-chart">
+
+                <div class="donut-wrap-lg">
+
+                  <canvas id="summaryDonut"></canvas>
+
+                  <div class="donut-center-lg">
+                    <div class="amt">$28,450.00</div>
+                    <div class="lbl">Total Payroll</div>
+                  </div>
+
+                </div>
+
+                <div class="chart-legend">
+
+                  <div class="legend-row" role="button" tabindex="0" onclick="openCategoryBreakdown('provider')">
+                    <span>
+                      <span class="legend-dot provider-dot"></span>
+                      Providers
+                    </span>
+
+                    <strong>53.4%</strong>
+                  </div>
+
+                  <div class="legend-row" role="button" tabindex="0" onclick="openCategoryBreakdown('isr')">
+                    <span>
+                      <span class="legend-dot isr-dot"></span>
+                      ISR
+                    </span>
+
+                    <strong>19.0%</strong>
+                  </div>
+
+                  <div class="legend-row" role="button" tabindex="0" onclick="openCategoryBreakdown('hourly')">
+                    <span>
+                      <span class="legend-dot hourly-dot"></span>
+                      Hourly
+                    </span>
+
+                    <strong>27.6%</strong>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <hr class="my-4">
+
+          <!-- ===== PAYROLL PACKET PREVIEW ===== -->
+          <div class="payroll-packet-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h3 class="fw-bold fs-5 mb-1"><i class="fa-solid fa-file-invoice me-2 text-success"></i>Payroll Packet
+                </h3>
+                <div class="text-muted small">Detailed payroll breakdown for May 1 – May 15, 2026. Review and finalize
+                  to lock the payroll.</div>
+              </div>
+              <button class="btn btn-outline-navy btn-sm" onclick="exportSummary()"><i
+                  class="fa-regular fa-file-lines me-1"></i>Export PDF</button>
+            </div>
+
+            <!-- Employee Breakdown Table -->
+            <div class="table-responsive" style="max-height:320px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:10px;">
+              <table class="wf-table mb-0" style="min-width:1000px;">
+                <thead style="position:sticky;top:0;background:#fff;z-index:2;">
+                  <tr>
+                    <th style="width:200px;">Employee</th>
+                    <th>Department</th>
+                    <th>Type</th>
+                    <th>Hours / Cases</th>
+                    <th>Rate / Commission</th>
+                    <th>Gross Pay</th>
+                    <th>Deductions</th>
+                    <th>Net Pay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Dr. Nancy Rose</span></div></td>
+                    <td>Provider</td><td>Provider</td><td>15 cases</td><td>$350 / $150 per case</td>
+                    <td class="fw-semibold">$4,250.00</td><td style="color:#dc2626;">$212.50</td><td class="fw-semibold text-success">$4,037.50</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Dr. Miguel Ortiz</span></div></td>
+                    <td>Provider</td><td>Provider</td><td>12 cases</td><td>$350 / $150 per case</td>
+                    <td class="fw-semibold">$3,950.00</td><td style="color:#dc2626;">$197.50</td><td class="fw-semibold text-success">$3,752.50</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Dr. Amina Shah</span></div></td>
+                    <td>Provider</td><td>Provider</td><td>18 cases</td><td>$350 / $150 per case</td>
+                    <td class="fw-semibold">$4,000.00</td><td style="color:#dc2626;">$200.00</td><td class="fw-semibold text-success">$3,800.00</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">John Smith</span></div></td>
+                    <td>SDR</td><td>Hourly</td><td>40 hrs</td><td>$15.00/hr</td>
+                    <td class="fw-semibold">$1,145.50</td><td style="color:#dc2626;">$57.28</td><td class="fw-semibold text-success">$1,088.22</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Sarah Johnson</span></div></td>
+                    <td>CE</td><td>Hourly</td><td>38 hrs</td><td>$29.75/hr</td>
+                    <td class="fw-semibold">$1,375.20</td><td style="color:#dc2626;">$68.76</td><td class="fw-semibold text-success">$1,306.44</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Mike Anderson</span></div></td>
+                    <td>ISR</td><td>Commission</td><td>14 cases</td><td>8.5% commission</td>
+                    <td class="fw-semibold">$2,350.00</td><td style="color:#dc2626;">$117.50</td><td class="fw-semibold text-success">$2,232.50</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Ashley Williams</span></div></td>
+                    <td>Marketing</td><td>Salary</td><td>—</td><td>$2,000/mo</td>
+                    <td class="fw-semibold">$2,000.00</td><td style="color:#dc2626;">$100.00</td><td class="fw-semibold text-success">$1,900.00</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Chris Brown</span></div></td>
+                    <td>Social Media</td><td>Hourly</td><td>38 hrs</td><td>$15.26/hr</td>
+                    <td class="fw-semibold">$1,020.75</td><td style="color:#dc2626;">$51.04</td><td class="fw-semibold text-success">$969.71</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Emma Davis</span></div></td>
+                    <td>Dental Assistant</td><td>Hourly</td><td>38 hrs</td><td>$15.00/hr</td>
+                    <td class="fw-semibold">$980.30</td><td style="color:#dc2626;">$49.02</td><td class="fw-semibold text-success">$931.28</td>
+                  </tr>
+                  <tr>
+                    <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80"><span class="fw-semibold">Daniel Martinez</span></div></td>
+                    <td>Quote Specialist</td><td>Hourly</td><td>38 hrs</td><td>$15.00/hr</td>
+                    <td class="fw-semibold">$1,150.25</td><td style="color:#dc2626;">$57.51</td><td class="fw-semibold text-success">$1,092.74</td>
+                  </tr>
+                </tbody>
+                <tfoot style="background:#f8fafc;border-top:2px solid #e5e7eb;">
+                  <tr>
+                    <td class="fw-bold" colspan="5">TOTAL (10 Employees)</td>
+                    <td class="fw-bold text-success">$22,222.00</td>
+                    <td class="fw-bold" style="color:#dc2626;">$1,111.11</td>
+                    <td class="fw-bold text-success">$21,110.89</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3">
+
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+                  <i class="fa-regular fa-clock me-1 text-muted"></i> All employees reviewed & confirmed
+                </span>
+                <span class="text-muted small">26 total · 26 confirmed</span>
+              </div>
+
+              <div class="d-flex gap-2">
+
+                <button class="btn btn-light border px-4" onclick="goToStep(2)">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Back to Review
+                </button>
+
+                <button class="btn btn-purple px-4" onclick="finalizePayroll()">
+                  <i class="fa-solid fa-check-double me-2"></i>
+                  Finalize Payroll & Lock
+                </button>
+
+              </div>
+
             </div>
           </div>
 
-          <div class="lock-warning-banner">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span>Once you generate payroll, this pay period will be <strong>locked</strong> and no changes can be made.
-              Any corrections afterward must go through the adjustment &amp; audit process.</span>
-          </div>
-
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-navy" onclick="goToStep(2)">Back to Review</button>
-            <button class="btn btn-green" onclick="generatePayroll()"><i class="fa-solid fa-lock me-1"></i>Generate
-              Payroll
-              &amp; Lock</button>
-          </div>
         </div>
       </div>
     </div>
-
     <!-- ===== SCREEN 4 — FLAGS & DISPUTES ===== -->
+    <!-- ⚠️ This screen is NOT part of the payroll workflow.
+         It is accessed from Locked payroll runs in Step 1.
+         Employees flag discrepancies AFTER payroll is finalized. -->
     <div class="screen-view" id="screen-4">
+      <a class="back-link" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Back to Payroll Runs</a>
       <div class="topbar">
         <div>
           <h1 class="page-title">Payroll Flags</h1>
-          <div class="page-sub">Review and manage employee payroll flags.</div>
+          <div class="page-sub">Review and manage Staff payroll flags — employees flag discrepancies after payroll is finalized and locked.</div>
         </div>
         <div class="d-flex align-items-center gap-3">
           <div class="notif-bell-wrap"><i class="fa-regular fa-bell fs-5 text-muted"></i><span
@@ -527,7 +910,7 @@
               <table class="wf-table">
                 <thead>
                   <tr>
-                    <th>Employee</th>
+                    <th>Staff</th>
                     <th>Pay Period</th>
                     <th>Reason</th>
                     <th>Status</th>
@@ -625,7 +1008,7 @@
         <div class="col-lg-4">
           <div class="panel mb-3">
             <div class="panel-header">
-              <h2 class="panel-title mb-0">Employee Note</h2>
+              <h2 class="panel-title mb-0">Staff Note</h2>
             </div>
             <div class="panel-body">
               <div class="note-bubble" id="flagNoteText">I worked 11.5 hours on Tuesday (May 6th) but only 10.5 hours
@@ -722,16 +1105,40 @@
     </div>
   </div>
 
+  <div class="modal fade" id="payrollDetailModal" tabindex="-1" aria-labelledby="payrollDetailModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="payrollDetailModalLabel"><i
+                class="fa-solid fa-calculator me-2 text-success"></i>Payroll Breakdown</h5>
+            <div class="modal-subtitle">Review the math, edit the values if needed, and approve the pay.</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="payrollDetailModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-navy" id="savePayrollDetailBtn"
+            onclick="savePayrollDetailChanges()">Save Changes</button>
+          <button type="button" class="btn btn-green" id="approvePayrollDetailBtn" onclick="approveFromModal()">Approve
+            Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js">
 
   </script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     /* ==========================================================
        STEP NAVIGATION
        ========================================================== */
     function goToStep(n) {
-      const screenMap = { 1: 'screen-1', 2: 'screen-2', 3: 'screen-3', 4: 'screen-4' };
+      const screenMap = { 1: 'screen-1', 2: 'screen-2', 3: 'screen-3' };
       document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
       const target = document.getElementById(screenMap[n]);
       if (target) target.classList.add('active');
@@ -743,7 +1150,6 @@
       });
       window.scrollTo(0, 0);
       if (n === 3 && !window.summaryChartDrawn) drawSummaryChart();
-      if (n === 4) updateFlagCounts();
     }
 
     /* ==========================================================
@@ -786,7 +1192,7 @@
       statusEl.innerText = 'Confirmed';
       const td = row.querySelectorAll('td');
       const lastTd = td[td.length - 1];
-      lastTd.innerHTML = '<button class="btn btn-sm btn-outline-navy" disabled style="opacity:0.5;">Done</button>';
+      lastTd.innerHTML = '<button class="btn btn-sm btn-outline-navy" onclick="event.stopPropagation(); openPayrollDetail(\'' + row.getAttribute('data-name') + '\',\'' + rowId + '\',\'' + statusId + '\',\'' + row.getAttribute('data-type') + '\',' + (parseFloat(row.getAttribute('data-pay')) || 0) + ',\'' + row.getAttribute('data-profile') + '\')">View/Edit</button>';
       const pendingEl = document.getElementById('pendingCount2');
       const confirmedEl = document.getElementById('confirmedCount2');
       const footerEl = document.getElementById('confirmFooterCount2');
@@ -803,19 +1209,519 @@
       if (confirmedKpi) confirmedKpi.innerText = confirmed;
     }
 
-    function flagAttention(name) {
-      alert('Employee "' + name + '" flagged for attention. It will appear in the Flags & Disputes tab.');
-      goToStep(4);
+    let currentPayrollDetail = null;
+
+    /* ==========================================================
+       CATEGORY BREAKDOWN — ONE-BY-ONE NAVIGATION
+       ========================================================== */
+    const categoryEmployees = {
+      provider: {
+        title: 'Providers',
+        badge: '8 Providers',
+        total: '$15,200.00',
+        icon: 'fa-solid fa-user-doctor text-primary',
+        columns: ['Doctor', 'Specialty', 'Cases This Period', 'Production', 'Total Pay', 'Action'],
+        list: [
+          { name: 'Dr. Nancy Rose', title: 'Lead Dentist', department: 'Provider', type: 'Provider', pay: 4250.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80', specialty: 'General &amp; Cosmetic', cases: 15, production: 6750.00 },
+          { name: 'Dr. Miguel Ortiz', title: 'Orthodontist', department: 'Provider', type: 'Provider', pay: 3950.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=80&q=80', specialty: 'Orthodontics', cases: 12, production: 5950.00 },
+          { name: 'Dr. Amina Shah', title: 'Pediatric Dentist', department: 'Provider', type: 'Provider', pay: 4000.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80', specialty: 'Pediatric Dentistry', cases: 18, production: 6200.00 },
+          { name: 'Dr. James Wilson', title: 'General Dentist', department: 'Provider', type: 'Provider', pay: 1200.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=80&q=80', specialty: 'General Dentistry', cases: 7, production: 1800.00 },
+          { name: 'Dr. Sarah Chen', title: 'Endodontist', department: 'Provider', type: 'Provider', pay: 1000.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=80&q=80', specialty: 'Endodontics', cases: 5, production: 1500.00 },
+          { name: 'Dr. Robert Kim', title: 'Oral Surgeon', department: 'Provider', type: 'Provider', pay: 450.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=80&q=80', specialty: 'Oral Surgery', cases: 3, production: 750.00 },
+          { name: 'Dr. Maria Garcia', title: 'Periodontist', department: 'Provider', type: 'Provider', pay: 200.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=80&q=80', specialty: 'Periodontics', cases: 2, production: 350.00 },
+          { name: 'Dr. David Park', title: 'Prosthodontist', department: 'Provider', type: 'Provider', pay: 150.00, profileKey: 'provider', img: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=80&q=80', specialty: 'Prosthodontics', cases: 1, production: 250.00 }
+        ]
+      },
+      isr: {
+        title: 'ISR Representatives',
+        badge: '4 Representatives',
+        total: '$5,400.00',
+        icon: 'fa-solid fa-headset text-info',
+        columns: ['Name', 'Department', 'Type', 'Cases Closed', 'Total Pay', 'Action'],
+        list: [
+          { name: 'Mike Anderson', department: 'ISR', type: 'Commission', pay: 1800.00, profileKey: 'commission', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80', casesClosed: 14 },
+          { name: 'Laura Kim', department: 'ISR', type: 'Commission', pay: 1400.00, profileKey: 'commission', img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=80', casesClosed: 11 },
+          { name: 'Reggie Hart', department: 'ISR', type: 'Commission', pay: 1200.00, profileKey: 'commission', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80', casesClosed: 9 },
+          { name: 'Sarah Mitchell', department: 'ISR', type: 'Commission', pay: 1000.00, profileKey: 'commission', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80', casesClosed: 8 }
+        ]
+      },
+      hourly: {
+        title: 'Hourly Employees',
+        badge: '14 Employees',
+        total: '$7,850.00',
+        icon: 'fa-solid fa-clock text-success',
+        columns: ['Name', 'Department', 'Hours', 'Rate', 'Total Pay', 'Action'],
+        list: [
+          { name: 'John Smith', department: 'SDR', type: 'Hourly', pay: 600.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80', hours: 40, rate: 15.00 },
+          { name: 'Sarah Johnson', department: 'CE', type: 'Hourly', pay: 600.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80', hours: 38, rate: 15.79 },
+          { name: 'Chris Brown', department: 'Social Media', type: 'Hourly', pay: 580.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80', hours: 38, rate: 15.26 },
+          { name: 'Emma Davis', department: 'Dental Assistant', type: 'Hourly', pay: 570.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80', hours: 38, rate: 15.00 },
+          { name: 'Daniel Martinez', department: 'Quote Specialist', type: 'Hourly', pay: 570.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80', hours: 38, rate: 15.00 },
+          { name: 'Jessica Taylor', department: 'Admin', type: 'Hourly', pay: 560.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=80&q=80', hours: 40, rate: 14.00 },
+          { name: 'Ryan Patel', department: 'IT', type: 'Hourly', pay: 560.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80', hours: 40, rate: 14.00 },
+          { name: 'Amanda Lee', department: 'HR', type: 'Hourly', pay: 550.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1598550874175-4d0ef3d0b2e7?auto=format&fit=crop&w=80&q=80', hours: 38, rate: 14.47 },
+          { name: 'Kevin Nguyen', department: 'Marketing', type: 'Hourly', pay: 550.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=80&q=80', hours: 38, rate: 14.47 },
+          { name: 'Rachel Green', department: 'Operations', type: 'Hourly', pay: 550.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=80&q=80', hours: 40, rate: 13.75 },
+          { name: 'Tom Baker', department: 'SDR', type: 'Hourly', pay: 540.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=80&q=80', hours: 36, rate: 15.00 },
+          { name: 'Lisa Wong', department: 'CE', type: 'Hourly', pay: 540.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80', hours: 36, rate: 15.00 },
+          { name: 'Jason Brown', department: 'Admin', type: 'Hourly', pay: 540.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80', hours: 36, rate: 15.00 },
+          { name: 'Michelle Park', department: 'Dental Assistant', type: 'Hourly', pay: 540.00, profileKey: 'hourly', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80', hours: 36, rate: 15.00 }
+        ]
+      }
+    };
+    let categoryNavIndex = 0;
+    let categoryNavData = null;
+
+    function openCategoryBreakdown(categoryKey) {
+      const cat = categoryEmployees[categoryKey];
+      if (!cat) return;
+
+      const modalTitle = document.querySelector('#payrollDetailModal .modal-title');
+      const modalSubtitle = document.querySelector('#payrollDetailModal .modal-subtitle');
+      const saveBtn = document.getElementById('savePayrollDetailBtn');
+      const approveBtn = document.getElementById('approvePayrollDetailBtn');
+
+      // Hide edit/approve buttons during category table browsing
+      if (saveBtn) saveBtn.style.display = 'none';
+      if (approveBtn) approveBtn.style.display = 'none';
+
+      if (modalTitle) modalTitle.innerHTML = '<i class="' + cat.icon + ' me-2"></i>' + cat.title;
+      if (modalSubtitle) modalSubtitle.innerText = 'Showing all active ' + cat.badge.toLowerCase() + ' — click View for details';
+
+      const body = document.getElementById('payrollDetailModalBody');
+      if (!body) return;
+
+      // Build table HTML
+      let tableRows = '';
+      cat.list.forEach(function(emp, idx) {
+        if (categoryKey === 'provider') {
+          tableRows += `<tr class="doctor-table-row">
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <img class="emp-avatar-sm" src="${emp.img}">
+                <div><div class="fw-semibold">${emp.name}</div><div class="text-muted" style="font-size:11px;">${emp.title}</div></div>
+              </div>
+            </td>
+            <td>${emp.specialty}</td>
+            <td>${emp.cases}</td>
+            <td class="fw-semibold">${formatCurrency(emp.production)}</td>
+            <td class="fw-semibold text-success">${formatCurrency(emp.pay)}</td>
+            <td><button class="btn btn-sm btn-outline-navy" onclick="event.stopPropagation(); openDoctorBreakdown('${emp.name}','Provider','Provider',${emp.pay},'provider')"><i class="fa-regular fa-eye me-1"></i> View</button></td>
+          </tr>`;
+        } else if (categoryKey === 'isr') {
+          tableRows += `<tr class="doctor-table-row">
+            <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="${emp.img}"><div class="fw-semibold">${emp.name}</div></div></td>
+            <td>${emp.department}</td><td>${emp.type}</td><td>${emp.casesClosed}</td>
+            <td class="fw-semibold text-success">${formatCurrency(emp.pay)}</td>
+            <td><button class="btn btn-sm btn-outline-navy" onclick="event.stopPropagation(); openPayrollDetail('${emp.name}','${emp.name.replace(/[^a-zA-Z]/g,'')}Row','${emp.name.replace(/[^a-zA-Z]/g,'')}Status','Commission',${emp.pay},'commission')"><i class="fa-regular fa-eye me-1"></i> View</button></td>
+          </tr>`;
+        } else if (categoryKey === 'hourly') {
+          tableRows += `<tr class="doctor-table-row">
+            <td><div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm" src="${emp.img}"><div class="fw-semibold">${emp.name}</div></div></td>
+            <td>${emp.department}</td><td>${emp.hours}</td><td>${formatCurrency(emp.rate)}</td>
+            <td class="fw-semibold text-success">${formatCurrency(emp.pay)}</td>
+            <td><button class="btn btn-sm btn-outline-navy" onclick="event.stopPropagation(); openPayrollDetail('${emp.name}','${emp.name.replace(/[^a-zA-Z]/g,'')}Row','${emp.name.replace(/[^a-zA-Z]/g,'')}Status','Hourly',${emp.pay},'hourly')"><i class="fa-regular fa-eye me-1"></i> View</button></td>
+          </tr>`;
+        }
+      });
+
+      body.innerHTML = `
+        <div class="panel" style="border: none; box-shadow: none; margin-bottom: 0;">
+          <div class="panel-header d-flex justify-content-between align-items-center px-0 pt-0">
+            <h2 class="panel-title mb-0 fs-5"><i class="${cat.icon} me-2"></i>${cat.title}</h2>
+            <span class="badge bg-light text-dark fs-6 px-3 py-2 rounded-pill">${cat.badge}</span>
+          </div>
+          <div class="table-responsive" style="max-height:400px;overflow-y:auto;">
+            <table class="wf-table">
+              <thead>
+                <tr>${cat.columns.map(function(col) { return '<th>' + col + '</th>'; }).join('')}</tr>
+              </thead>
+              <tbody>${tableRows}</tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
+            <div class="text-muted small">${categoryKey === 'provider' ? 'Showing all active providers for May 1 – May 15, 2026' : categoryKey === 'isr' ? 'ISR representatives commission-based payroll' : 'Hourly employees — time-based payroll'}</div>
+            <div class="fw-bold">Total: <span class="text-success">${cat.total}</span></div>
+          </div>
+        </div>
+      `;
+
+      const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
+      modal.show();
+    }
+
+    function openPayrollDetail(name, rowId, statusId, employeeType, currentPay, profileKey) {
+      const pay = Number(currentPay) || 0;
+      const profile = getPayrollProfile(name, employeeType, pay, profileKey);
+      currentPayrollDetail = { name, rowId, statusId, employeeType, profile };
+
+      // Restore Save / Approve buttons in case they were hidden by category breakdown
+      const saveBtn = document.getElementById('savePayrollDetailBtn');
+      const approveBtn = document.getElementById('approvePayrollDetailBtn');
+      if (saveBtn) saveBtn.style.display = '';
+      if (approveBtn) approveBtn.style.display = '';
+
+      const body = document.getElementById('payrollDetailModalBody');
+      if (!body) return;
+      body.innerHTML = `
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="detail-summary-card">
+              <div class="detail-summary-top">
+                <div>
+                  <div class="detail-label">Employee</div>
+                  <div class="detail-title">${profile.name}</div>
+                  <div class="detail-meta">${profile.department} · ${profile.type}</div>
+                </div>
+                <div class="detail-pay-pill">${formatCurrency(profile.totalPay)}</div>
+              </div>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>Current Pay</span><strong>${formatCurrency(profile.totalPay)}</strong></div>
+                <div class="detail-breakdown-row"><span>Review Status</span><strong>${profile.status}</strong></div>
+                <div class="detail-breakdown-row"><span>Pay Method</span><strong>${profile.paymentMethod}</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="detail-edit-card">
+              <div class="detail-section-title">Calculation Breakdown</div>
+              <div class="detail-calc-list">
+                ${profile.formulaRows.map(row => `
+                  <div class="detail-calc-row">
+                    <span>${row.label}</span>
+                    <strong>${row.value}</strong>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="detail-section-title mt-3">Editable Inputs</div>
+              <div class="detail-edit-grid">
+                ${profile.editFields.map(field => `
+                  <div class="detail-edit-field">
+                    <label>${field.label}</label>
+                    <input type="number" class="form-control" value="${field.value}" data-field="${field.key}" step="0.01" min="0">
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
+      modal.show();
+    }
+
+    function getPayrollProfile(name, employeeType, currentPay, profileKey) {
+      const base = {
+        name,
+        department: employeeType === 'Provider' ? 'Provider' : employeeType === 'Commission' ? 'ISR' : employeeType === 'Hourly' ? 'Operations' : 'Admin',
+        type: employeeType,
+        status: 'Pending Review',
+        paymentMethod: employeeType === 'Provider' ? 'Case-based' : employeeType === 'Commission' ? 'Commission rules' : 'Hourly rate',
+        totalPay: currentPay,
+        formulaRows: [],
+        editFields: []
+      };
+
+      if (profileKey === 'provider') {
+        base.department = 'Provider';
+        base.status = 'Confirmed';
+        base.paymentMethod = 'Case-based provider production';
+        base.formulaRows = [
+          { label: 'Cosmetic cases', value: '8 cases × $350' },
+          { label: 'General cases', value: '7 cases × $150' },
+          { label: 'Production bonus', value: '$500.00' },
+          { label: 'Total', value: formatCurrency(currentPay) }
+        ];
+        base.editFields = [
+          { label: 'Cosmetic case count', key: 'cosmeticCases', value: 8 },
+          { label: 'General case count', key: 'generalCases', value: 7 },
+          { label: 'Bonus amount', key: 'bonus', value: 500 }
+        ];
+      } else if (profileKey === 'commission') {
+        base.department = 'ISR';
+        base.status = 'Needs Attention';
+        base.paymentMethod = 'Commission plan';
+        base.formulaRows = [
+          { label: 'Cases closed', value: '14 cases' },
+          { label: 'Commission rate', value: '8.5%' },
+          { label: 'Base commission', value: formatCurrency(currentPay) },
+          { label: 'Total', value: formatCurrency(currentPay) }
+        ];
+        base.editFields = [
+          { label: 'Cases closed', key: 'casesClosed', value: 14 },
+          { label: 'Commission rate (%)', key: 'commissionRate', value: 8.5 },
+          { label: 'Adjustment', key: 'adjustment', value: 0 }
+        ];
+      } else if (profileKey === 'salary') {
+        base.department = 'Marketing';
+        base.status = 'Confirmed';
+        base.paymentMethod = 'Fixed salary';
+        base.formulaRows = [
+          { label: 'Annual salary', value: '$24,000.00' },
+          { label: 'Pay period split', value: '1/12' },
+          { label: 'Total', value: formatCurrency(currentPay) }
+        ];
+        base.editFields = [
+          { label: 'Salary amount', key: 'salaryAmount', value: 2000 }
+        ];
+      } else {
+        base.department = 'Operations';
+        base.status = 'Pending Review';
+        base.paymentMethod = 'Hourly attendance';
+        base.formulaRows = [
+          { label: 'Regular hours', value: '38.5 hrs' },
+          { label: 'Hourly rate', value: formatCurrency(29.75) },
+          { label: 'Overtime hours', value: '0 hrs' },
+          { label: 'Total', value: formatCurrency(currentPay) }
+        ];
+        base.editFields = [
+          { label: 'Hours worked', key: 'hours', value: 38.5 },
+          { label: 'Hourly rate', key: 'rate', value: 29.75 },
+          { label: 'Overtime hours', key: 'overtime', value: 0 }
+        ];
+      }
+
+      return base;
+    }
+
+    function savePayrollDetailChanges() {
+      if (!currentPayrollDetail) return;
+      const row = document.getElementById(currentPayrollDetail.rowId);
+      if (!row) return;
+      const payCell = row.querySelector('.pay-amount');
+      const inputs = document.querySelectorAll('#payrollDetailModalBody input[data-field]');
+      const values = Array.from(inputs).reduce((acc, input) => {
+        acc[input.getAttribute('data-field')] = Number(input.value) || 0;
+        return acc;
+      }, {});
+      let updatedPay = Number(currentPayrollDetail.profile.totalPay) || 0;
+      if (currentPayrollDetail.profile.editFields.some(field => field.key === 'hours')) {
+        updatedPay = values.hours * values.rate + values.overtime * values.rate * 1.5;
+      } else if (currentPayrollDetail.profile.editFields.some(field => field.key === 'cosmeticCases')) {
+        updatedPay = values.cosmeticCases * 350 + values.generalCases * 150 + values.bonus;
+      } else if (currentPayrollDetail.profile.editFields.some(field => field.key === 'casesClosed')) {
+        updatedPay = (values.casesClosed * values.commissionRate) + values.adjustment;
+      } else if (currentPayrollDetail.profile.editFields.some(field => field.key === 'salaryAmount')) {
+        updatedPay = values.salaryAmount;
+      }
+
+      if (payCell) {
+        payCell.innerText = formatCurrency(updatedPay);
+        row.setAttribute('data-pay', updatedPay);
+      }
+      currentPayrollDetail.profile.totalPay = updatedPay;
+      document.getElementById('payrollDetailModalBody').innerHTML = `
+        <div class="detail-success-box">
+          <i class="fa-solid fa-circle-check"></i>
+          <div>
+            <div class="detail-success-title">Changes saved</div>
+            <div class="detail-success-text">The new pay amount is ${formatCurrency(updatedPay)}. You can continue editing or approve it now.</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function approveFromModal() {
+      if (!currentPayrollDetail) return;
+      const row = document.getElementById(currentPayrollDetail.rowId);
+      const statusEl = document.getElementById(currentPayrollDetail.statusId);
+      if (row && statusEl) {
+        confirmEmployee(currentPayrollDetail.rowId, currentPayrollDetail.statusId);
+        const modal = bootstrap.Modal.getInstance(document.getElementById('payrollDetailModal'));
+        if (modal) modal.hide();
+      }
     }
 
     /* ==========================================================
-       SCREEN 3 — GENERATE PAYROLL
+       DOCTOR BREAKDOWN — POPUP FROM PROVIDERS TABLE
        ========================================================== */
-    function generatePayroll() {
-      if (confirm('Are you sure you want to lock this payroll? This action cannot be undone.')) {
-        alert('Payroll generated and locked successfully!');
-        goToStep(4);
+    /* ==========================================================
+       DOCTOR LOOKUP — all 8 providers
+       ========================================================== */
+    const doctorProfiles = {
+      'Dr. Nancy Rose':    { specialty: 'General & Cosmetic',   cases: 15, production: 6750 },
+      'Dr. Miguel Ortiz':  { specialty: 'Orthodontics',         cases: 12, production: 5950 },
+      'Dr. Amina Shah':    { specialty: 'Pediatric Dentistry',  cases: 18, production: 6200 },
+      'Dr. James Wilson':  { specialty: 'General Dentistry',    cases: 7,  production: 1800 },
+      'Dr. Sarah Chen':    { specialty: 'Endodontics',          cases: 5,  production: 1500 },
+      'Dr. Robert Kim':    { specialty: 'Oral Surgery',         cases: 3,  production: 750  },
+      'Dr. Maria Garcia':  { specialty: 'Periodontics',         cases: 2,  production: 350  },
+      'Dr. David Park':    { specialty: 'Prosthodontics',       cases: 1,  production: 250  }
+    };
+
+    function openDoctorBreakdown(name, department, empType, pay, profileKey) {
+      const saveBtn = document.getElementById('savePayrollDetailBtn');
+      const approveBtn = document.getElementById('approvePayrollDetailBtn');
+      if (saveBtn) saveBtn.style.display = '';
+      if (approveBtn) approveBtn.style.display = '';
+
+      const modalTitle = document.querySelector('#payrollDetailModal .modal-title');
+      const modalSubtitle = document.querySelector('#payrollDetailModal .modal-subtitle');
+      if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-user-doctor me-2 text-primary"></i>' + name;
+      if (modalSubtitle) modalSubtitle.innerText = department + ' · ' + empType + ' · Payroll Detail';
+
+      const body = document.getElementById('payrollDetailModalBody');
+      if (!body) return;
+
+      const profile = doctorProfiles[name] || { specialty: department, cases: 0, production: pay };
+      const payPct = profile.production > 0 ? (pay / profile.production * 100) : 0;
+
+      body.innerHTML = `
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="detail-summary-card">
+              <div class="detail-summary-top">
+                <div>
+                  <div class="detail-label">Doctor / Provider</div>
+                  <div class="detail-title" style="font-size:18px;">${name}</div>
+                  <div class="detail-meta">${profile.specialty} · ${empType}</div>
+                </div>
+                <div class="detail-pay-pill">${formatCurrency(pay)}</div>
+              </div>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>Specialty</span><strong>${profile.specialty}</strong></div>
+                <div class="detail-breakdown-row"><span>Cases This Period</span><strong>${profile.cases}</strong></div>
+                <div class="detail-breakdown-row"><span>Total Production</span><strong>${formatCurrency(profile.production)}</strong></div>
+                <div class="detail-breakdown-row"><span>Pay Method</span><strong>Case-based production</strong></div>
+                <div class="detail-breakdown-row"><span>Status</span><strong><span class="status-pill-wf confirmed">Confirmed</span></strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="detail-edit-card">
+              <div class="detail-section-title">Production Breakdown</div>
+              <div class="detail-calc-list">
+                <div class="detail-calc-row"><span>Cosmetic cases</span><strong>${Math.round(profile.cases * 0.4)} cases × $350</strong></div>
+                <div class="detail-calc-row"><span>General cases</span><strong>${Math.round(profile.cases * 0.6)} cases × $150</strong></div>
+                <div class="detail-calc-row"><span>Gross Production</span><strong>${formatCurrency(profile.production)}</strong></div>
+                <div class="detail-calc-row" style="border-top:2px solid #eef2f6;padding-top:10px;margin-top:6px;">
+                  <span style="font-weight:600;">Provider Pay (${formatCurrency(payPct)}%)</span>
+                  <strong class="text-success">${formatCurrency(pay)}</strong>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-outline-navy" onclick="openCategoryBreakdown('provider')">
+                    <i class="fa-solid fa-arrow-left me-1"></i> All Providers
+                  </button>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-outline-navy" onclick="event.stopPropagation(); savePayrollDetailChanges()">
+                    <i class="fa-regular fa-floppy-disk me-1"></i> Save Changes
+                  </button>
+                  <button class="btn btn-sm btn-green" onclick="event.stopPropagation(); approveFromModal()">
+                    <i class="fa-regular fa-circle-check me-1"></i> Approve Pay
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Set currentPayrollDetail so Save/Approve work
+      const payrollProfile = getPayrollProfile(name, empType, pay, profileKey);
+      currentPayrollDetail = { name, rowId: null, statusId: null, employeeType: empType, profile: payrollProfile };
+
+      const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
+      modal.show();
+    }
+
+    function formatCurrency(value) {
+      return '$' + Number(value || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function flagAttention(name) {
+      alert('Staff "' + name + '" flagged for attention. It will appear in the Flags & Disputes panel.');
+    }
+
+    /* ==========================================================
+       SCREEN 3 — FINALIZE PAYROLL
+       ========================================================== */
+    function finalizePayroll() {
+      if (confirm('Are you sure you want to finalize and lock this payroll? This action CANNOT be undone.')) {
+        alert('✅ Payroll has been finalized and locked successfully!\n\nAll employees have been paid for May 1 – May 15, 2026.\nA payroll packet has been generated and saved.\n\nEmployees can now view their statements and flag any discrepancies if needed.');
+        goToStep(1);
       }
+    }
+
+    /* ==========================================================
+       PAYROLL PACKET — VIEW FROM LOCKED RUNS
+       ========================================================== */
+    function openPayrollPacket() {
+      const modalTitle = document.querySelector('#payrollDetailModal .modal-title');
+      const modalSubtitle = document.querySelector('#payrollDetailModal .modal-subtitle');
+      const saveBtn = document.getElementById('savePayrollDetailBtn');
+      const approveBtn = document.getElementById('approvePayrollDetailBtn');
+      if (saveBtn) saveBtn.style.display = 'none';
+      if (approveBtn) approveBtn.style.display = 'none';
+      if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-file-invoice me-2 text-success"></i> Payroll Packet';
+      if (modalSubtitle) modalSubtitle.innerText = 'Locked payroll — detailed breakdown for Apr 16 – Apr 30, 2026';
+
+      const body = document.getElementById('payrollDetailModalBody');
+      if (!body) return;
+      body.innerHTML = `
+        <div class="row g-4">
+          <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h5 class="fw-bold mb-1">Payroll Summary</h5>
+                <div class="text-muted small">Apr 16 – Apr 30, 2026 · 24 Employees</div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold fs-5 text-success">$27,890.50</div>
+                <div class="text-muted small">Total Payroll</div>
+              </div>
+            </div>
+            <div class="table-responsive" style="max-height:420px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:10px;">
+              <table class="wf-table mb-0">
+                <thead style="position:sticky;top:0;background:#fff;z-index:2;">
+                  <tr><th>Employee</th><th>Department</th><th>Type</th><th>Gross Pay</th><th>Deductions</th><th>Net Pay</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Dr. Nancy Rose</td><td>Provider</td><td>Provider</td><td>$4,250.00</td><td style="color:#dc2626;">$212.50</td><td class="fw-semibold text-success">$4,037.50</td></tr>
+                  <tr><td>Dr. Miguel Ortiz</td><td>Provider</td><td>Provider</td><td>$3,950.00</td><td style="color:#dc2626;">$197.50</td><td class="fw-semibold text-success">$3,752.50</td></tr>
+                  <tr><td>Dr. Amina Shah</td><td>Provider</td><td>Provider</td><td>$4,000.00</td><td style="color:#dc2626;">$200.00</td><td class="fw-semibold text-success">$3,800.00</td></tr>
+                  <tr><td>John Smith</td><td>SDR</td><td>Hourly</td><td>$1,145.50</td><td style="color:#dc2626;">$57.28</td><td class="fw-semibold text-success">$1,088.22</td></tr>
+                  <tr><td>Sarah Johnson</td><td>CE</td><td>Hourly</td><td>$1,375.20</td><td style="color:#dc2626;">$68.76</td><td class="fw-semibold text-success">$1,306.44</td></tr>
+                  <tr><td>Mike Anderson</td><td>ISR</td><td>Commission</td><td>$2,350.00</td><td style="color:#dc2626;">$117.50</td><td class="fw-semibold text-success">$2,232.50</td></tr>
+                  <tr><td>Ashley Williams</td><td>Marketing</td><td>Salary</td><td>$2,000.00</td><td style="color:#dc2626;">$100.00</td><td class="fw-semibold text-success">$1,900.00</td></tr>
+                  <tr><td>Chris Brown</td><td>Social Media</td><td>Hourly</td><td>$1,020.75</td><td style="color:#dc2626;">$51.04</td><td class="fw-semibold text-success">$969.71</td></tr>
+                  <tr><td>Emma Davis</td><td>Dental Assistant</td><td>Hourly</td><td>$980.30</td><td style="color:#dc2626;">$49.02</td><td class="fw-semibold text-success">$931.28</td></tr>
+                  <tr><td>Daniel Martinez</td><td>Quote Specialist</td><td>Hourly</td><td>$1,150.25</td><td style="color:#dc2626;">$57.51</td><td class="fw-semibold text-success">$1,092.74</td></tr>
+                </tbody>
+                <tfoot style="background:#f8fafc;border-top:2px solid #e5e7eb;">
+                  <tr><td class="fw-bold" colspan="3">TOTAL (24 Employees)</td><td class="fw-bold">$27,890.50</td><td class="fw-bold" style="color:#dc2626;">$1,394.53</td><td class="fw-bold text-success">$26,495.97</td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <span class="badge bg-light text-dark px-3 py-2 rounded-pill"><i class="fa-solid fa-lock me-1 text-muted"></i> Locked · Paid</span>
+                <span class="ms-2 badge bg-light text-dark px-3 py-2 rounded-pill"><i class="fa-regular fa-calendar me-1 text-muted"></i> Pay Date: May 2, 2026</span>
+              </div>
+              <button class="btn btn-outline-navy btn-sm" onclick="exportSummary()"><i class="fa-regular fa-file-lines me-1"></i> Export PDF</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
+      modal.show();
+    }
+
+    /* ==========================================================
+       FLAGS — OPEN FROM LOCKED RUNS
+       ========================================================== */
+    function openFlagsPanel() {
+      // Show the screen-4 (flags) as a standalone view
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-4').classList.add('active');
+      document.querySelectorAll('.step-nav-item').forEach(item => item.classList.remove('active', 'done'));
+      window.scrollTo(0, 0);
+      updateFlagCounts();
+      const firstRow = document.querySelector('#flagTableBody tr');
+      if (firstRow) loadFlag(firstRow);
     }
 
     /* ==========================================================
@@ -957,10 +1863,10 @@
         // Export detailed employee list from screen-2
         const rows = document.querySelectorAll('#reviewTableBody tr');
         if (rows.length === 0) {
-          alert('No employee data to export.');
+          alert('No Staff data to export.');
           return;
         }
-        csvRows.push('"Employee","Department","Type","Total Pay","Status"');
+        csvRows.push('"Staff","Department","Type","Total Pay","Status"');
         rows.forEach(row => {
           const cells = row.querySelectorAll('td');
           if (cells.length < 5) return;
@@ -1037,17 +1943,6 @@
         });
       });
       filterRuns('all');
-
-      // Flag tabs
-      document.querySelectorAll('.flag-tab-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-          filterFlags(this.getAttribute('data-filter'));
-        });
-      });
-      filterFlags('all');
-      const firstRow = document.querySelector('#flagTableBody tr');
-      if (firstRow) loadFlag(firstRow);
-      updateFlagCounts();
 
       // Set default dates in modal
       const today = new Date();

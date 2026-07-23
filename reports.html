@@ -11,9 +11,36 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" href="style/main.css">
   <link rel="stylesheet" href="style/reports.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-
-
+  <style>
+    .export-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .export-toolbar .export-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .export-toolbar .btn {
+      font-size: 12px;
+      padding: 4px 12px;
+    }
+    @media print {
+      .sidebar, .topbar, .report-tabs, .kpi-row, .toolbar-panel, .export-toolbar { display: none !important; }
+      .report-pane { display: block !important; }
+      #report-tab-contents { margin: 0 !important; }
+      .panel { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
 </head>
 
 <body>
@@ -35,7 +62,7 @@
       <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
       <a class="nav-link-item active" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
       <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-   <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
     </div>
     <div class="sidebar-footer">
       <div class="user-chip">
@@ -52,7 +79,7 @@
       </div>
     </div>
   </div>
- <div id="sidebarBackdrop" class="sidebar-backdrop">
+  <div id="sidebarBackdrop" class="sidebar-backdrop">
     <div class="sidebar">
       <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
         <i class="fa-solid fa-xmark"></i>
@@ -92,9 +119,9 @@
       <div>
         <h1 class="page-title">Reports</h1>
         <div class="page-sub">Analyze performance, track metrics, and generate insights across the organization.</div>
-      <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
-        <i class="fa-solid fa-bars"></i>
-      </label>
+        <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </label>
       </div>
       <div class="d-flex gap-2 align-items-center flex-wrap">
         <div class="d-flex align-items-center bg-white px-3 py-1 border rounded-3" style="height:38px;">
@@ -107,25 +134,33 @@
           </div>
           <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
         </div>
-        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-lines me-1"></i>Export PDF</button>
+        <!-- <button class="btn btn-outline-navy"><i class="fa-regular fa-file-lines me-1"></i>Export PDF</button>
         <button class="btn btn-green"><i class="fa-solid fa-download me-1"></i>Export CSV</button>
-        <button class="btn btn-outline-navy"><i class="fa-regular fa-clock me-1"></i>Schedule Report</button>
+        <button class="btn btn-outline-navy"><i class="fa-regular fa-clock me-1"></i>Schedule Report</button> -->
       </div>
     </div>
 
     <div class="report-tabs">
       <button class="report-tab-btn active" data-tab="executive" onclick="showReportTab('executive', this)">Executive
-        Summary</button>
-      <button class="report-tab-btn" data-tab="sales" onclick="showReportTab('sales', this)">Sales Den</button>
-      <button class="report-tab-btn" data-tab="sdr" onclick="showReportTab('sdr', this)">SDR Performance</button>
-      <button class="report-tab-btn" data-tab="isr" onclick="showReportTab('isr', this)">ISR Performance</button>
-      <button class="report-tab-btn" data-tab="ce" onclick="showReportTab('ce', this)">CE Performance</button>
+        Reports
+      </button>
       <button class="report-tab-btn" data-tab="production"
         onclick="showReportTab('production', this)">Production</button>
+      <button class="report-tab-btn" data-tab="payroll" onclick="showReportTab('payroll', this)">Payroll
+        Reports</button>
+      <button class="report-tab-btn" data-tab="providers" onclick="showReportTab('providers', this)">Provider
+        Reports</button>
+   
+      <button class="report-tab-btn" data-tab="isr" onclick="showReportTab('isr', this)">ISR Performance</button>
+    
+
       <button class="report-tab-btn" data-tab="financial" onclick="showReportTab('financial', this)">Financial</button>
-      <button class="report-tab-btn" data-tab="cases" onclick="showReportTab('cases', this)">Case Analysis</button>
-      <button class="report-tab-btn" data-tab="marketing" onclick="showReportTab('marketing', this)">Marketing</button>
-      <button class="report-tab-btn" data-tab="team" onclick="showReportTab('team', this)">Team Performance</button>
+   
+      <button class="report-tab-btn" data-tab="hourly" onclick="showReportTab('hourly', this)">Hourly Employee</button>
+      <button class="report-tab-btn" data-tab="operational" onclick="showReportTab('operational', this)">Operational
+        Reports</button>
+      <button class="report-tab-btn" data-tab="audit" onclick="showReportTab('audit', this)">Audit Reports</button>
+      <button class="report-tab-btn" data-tab="kpi" onclick="showReportTab('kpi', this)">KPI Reports</button>
     </div>
 
     <div class="kpi-row">
@@ -240,85 +275,156 @@
       <button class="btn btn-outline-navy"><i class="fa-solid fa-rotate-left me-1"></i>Clear Filters</button>
     </div>
 
+    <div class="export-toolbar">
+      <span class="export-label"><i class="fa-solid fa-download me-1"></i>Export Current Tab:</span>
+      <button class="btn btn-sm btn-outline-navy" onclick="exportPDF()"><i class="fa-regular fa-file-pdf me-1"></i>PDF</button>
+      <button class="btn btn-sm btn-outline-navy" onclick="exportExcel()"><i class="fa-regular fa-file-excel me-1"></i>Excel</button>
+      <button class="btn btn-sm btn-outline-navy" onclick="exportCSV()"><i class="fa-solid fa-file-csv me-1"></i>CSV</button>
+      <button class="btn btn-sm btn-outline-navy" onclick="exportPrint()"><i class="fa-solid fa-print me-1"></i>Print</button>
+    </div>
+
     <div id="report-tab-contents">
 
       <!-- EXECUTIVE SUMMARY -->
       <div id="report-view-executive" class="report-pane">
         <div class="row g-3">
           <div class="col-lg-5">
+
             <div class="panel panel-body h-100">
-              <h2 class="panel-title mb-2">Booked Revenue Over Time</h2>
-              <div class="chart-legend-row">
-                <span><span class="dot" style="background:#10b981;"></span>Booked Revenue</span>
-                <span><span class="dot" style="background:#a855f7;"></span>Goal</span>
-              </div>
-              <canvas id="revenueLineChart" height="170"></canvas>
+              <h2 class="panel-title mb-2">Production Summary</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Case Type</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Zirconia Cases</td>
+                    <td>65</td>
+                    <td>$452,600</td>
+                    <td>$6,966.15</td>
+                  </tr>
+                  <tr>
+                    <td>Composite Veneers</td>
+                    <td>24</td>
+                    <td>$168,300</td>
+                    <td>$7,012.50</td>
+                  </tr>
+                  <tr>
+                    <td>Porcelain Veneers</td>
+                    <td>20</td>
+                    <td>$143,200</td>
+                    <td>$7,160.00</td>
+                  </tr>
+                  <tr>
+                    <td>Crowns</td>
+                    <td>12</td>
+                    <td>$78,900</td>
+                    <td>$6,575.00</td>
+                  </tr>
+                  <tr>
+                    <td>Other Cases</td>
+                    <td>5</td>
+                    <td>$31,250</td>
+                    <td>$6,250.00</td>
+                  </tr>
+
+                </tbody>
+
+              </table>
             </div>
+
           </div>
           <div class="col-lg-4">
             <div class="panel panel-body h-100">
-              <h2 class="panel-title mb-3">Revenue by Department</h2>
-              <div class="d-flex align-items-center gap-3 flex-wrap">
-                <div class="donut-wrap-md">
-                  <canvas id="revDeptChart"></canvas>
-                  <div class="donut-center-md">
-                    <div class="amt">$874,250</div>
-                    <div class="lbl">Total Revenue</div>
-                  </div>
-                </div>
-                <div class="flex-grow-1" style="min-width:140px;">
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#4338ca;"></span>
-                    <div>
-                      <div class="name">Providers</div>
-                      <div class="val">$598,450 (68.4%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span>
-                    <div>
-                      <div class="name">ISR (Commission)</div>
-                      <div class="val">$156,250 (17.9%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#f59e0b;"></span>
-                    <div>
-                      <div class="name">ISR (Flat Pay)</div>
-                      <div class="val">$72,800 (8.3%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#a855f7;"></span>
-                    <div>
-                      <div class="name">SDR</div>
-                      <div class="val">$16,150 (1.8%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#10b981;"></span>
-                    <div>
-                      <div class="name">CE</div>
-                      <div class="val">$5,750 (0.7%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#9ca3af;"></span>
-                    <div>
-                      <div class="name">Other</div>
-                      <div class="val">$24,850 (2.9%)</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <h2 class="panel-title mb-3">Payroll Summary</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th>Payroll Cost</th>
+                    <th>Revenue</th>
+                    <th>Comp-to-Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Providers</td>
+                    <td>$120,000</td>
+                    <td>$598,450</td>
+                    <td>20.1%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>$45,000</td>
+                    <td>$156,250</td>
+                    <td>28.8%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>$30,000</td>
+                    <td>$72,800</td>
+                    <td>41.2%</td>
+                  </tr>
+                  <tr>
+                    <td>SDR</td>
+                    <td>$12,000</td>
+                    <td>$16,150</td>
+                    <td>74.4%</td>
+                  </tr>
+                  <tr>
+                    <td>CE</td>
+                    <td>$8,000</td>
+                    <td>$5,750</td>
+                    <td>139.1%</td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
             </div>
           </div>
           <div class="col-lg-3">
             <div class="panel panel-body h-100">
-              <h2 class="panel-title mb-2">Top Performers (By Booked Revenue)</h2>
-              <div class="mini-tab-group">
-                <button class="mini-tab-btn active" onclick="switchPerformers('isr', this)">ISR</button>
-                <button class="mini-tab-btn" onclick="switchPerformers('providers', this)">Providers</button>
-                <button class="mini-tab-btn" onclick="switchPerformers('sdr', this)">SDR</button>
-                <button class="mini-tab-btn" onclick="switchPerformers('ce', this)">CE</button>
-              </div>
-              <div id="performers-list"></div>
-              <button class="btn btn-sm btn-outline-navy w-100 mt-2" id="performers-view-all">View All ISR
-                Performance</button>
+              <h2 class="panel-title mb-2">Department Performance</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th>Show Rate</th>
+                    <th>Goal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Providers</td>
+                    <td>104%</td>
+                    <td>95%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>92%</td>
+                    <td>88%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>81%</td>
+                    <td>75%</td>
+                  </tr>
+                  <tr>
+                    <td>SDR</td>
+                    <td>68%</td>
+                    <td>70%</td>
+                  </tr>
+
+                </tbody>
+
+              </table>
             </div>
           </div>
         </div>
@@ -326,380 +432,3638 @@
         <div class="row g-3 mt-1">
           <div class="col-lg-4">
             <div class="panel panel-body h-100">
-              <h2 class="panel-title mb-3">Funnel Overview</h2>
-              <table class="funnel-table w-100">
+              <h2 class="panel-title mb-3">Office Performance</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Revenue</th>
+                    <th>Cases Booked</th>
+                    <th>Show Rate</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
-                    <td style="width:55%;">
-                      <div class="funnel-stage" style="background:#3b82f6;">Messages / Leads</div>
-                    </td>
-                    <td class="text-end">19,700</td>
-                    <td class="text-end text-muted">—</td>
+                    <td>Location A</td>
+                    <td>$412,300</td>
+                    <td>58</td>
+                    <td>72%</td>
                   </tr>
                   <tr>
-                    <td>
-                      <div class="funnel-stage" style="background:#0d9488;margin:0 4%;">Hot Leads (Photos)</div>
-                    </td>
-                    <td class="text-end">2,827</td>
-                    <td class="text-end text-muted">14.3%</td>
+                    <td>Location B</td>
+                    <td>$298,750</td>
+                    <td>42</td>
+                    <td>65%</td>
                   </tr>
                   <tr>
-                    <td>
-                      <div class="funnel-stage" style="background:#10b981;margin:0 8%;">Quotes Sent</div>
-                    </td>
-                    <td class="text-end">2,930</td>
-                    <td class="text-end text-muted">103.6%</td>
+                    <td>Location C</td>
+                    <td>$163,200</td>
+                    <td>26</td>
+                    <td>69%</td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="funnel-stage" style="background:#f59e0b;margin:0 12%;">Deposits Collected</div>
-                    </td>
-                    <td class="text-end">1,105</td>
-                    <td class="text-end text-muted">37.7%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="funnel-stage" style="background:#ea580c;margin:0 16%;">Cases Booked</div>
-                    </td>
-                    <td class="text-end">546</td>
-                    <td class="text-end text-muted">19.0%</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="funnel-stage" style="background:#c026d3;margin:0 20%;">Cases Started</div>
-                    </td>
-                    <td class="text-end">382</td>
-                    <td class="text-end text-muted">69.9%</td>
-                  </tr>
+
                 </tbody>
+
               </table>
-              <div class="d-flex justify-content-between align-items-center mt-2 pt-2"
-                style="border-top:1px solid var(--gray-200);">
-                <span class="fw-bold text-success" style="font-size:12.5px;">Overall Conversion (Lead → Booked)</span>
-                <span class="fw-bold text-success">2.77%</span>
-              </div>
             </div>
           </div>
 
           <div class="col-lg-4">
             <div class="panel panel-body h-100">
-              <h2 class="panel-title mb-3">Case Type Breakdown (By Revenue)</h2>
-              <div class="d-flex align-items-center gap-3 flex-wrap">
-                <div class="donut-wrap-md">
-                  <canvas id="caseTypeChart"></canvas>
-                  <div class="donut-center-md">
-                    <div class="amt">$874,250</div>
-                    <div class="lbl">Total Revenue</div>
-                  </div>
-                </div>
-                <div class="flex-grow-1" style="min-width:140px;">
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#0d9488;"></span>
-                    <div>
-                      <div class="name">Zirconia Cases</div>
-                      <div class="val">$452,600 (51.8%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#2563eb;"></span>
-                    <div>
-                      <div class="name">Composite Veneers</div>
-                      <div class="val">$168,300 (19.3%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#f59e0b;"></span>
-                    <div>
-                      <div class="name">Porcelain Veneers</div>
-                      <div class="val">$143,200 (16.4%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#7c3aed;"></span>
-                    <div>
-                      <div class="name">Crowns</div>
-                      <div class="val">$78,900 (9.0%)</div>
-                    </div>
-                  </div>
-                  <div class="breakdown-legend-item"><span class="dot" style="background:#9ca3af;"></span>
-                    <div>
-                      <div class="name">Other</div>
-                      <div class="val">$31,250 (3.6%)</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button class="btn btn-outline-navy w-100 mt-2">View Case Analysis Report</button>
+              <h2 class="panel-title mb-3">Revenue Summary</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Revenue Source</th>
+                    <th>Revenue</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Providers</td>
+                    <td>$598,450</td>
+                    <td>68.4%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>$156,250</td>
+                    <td>17.9%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>$72,800</td>
+                    <td>8.3%</td>
+                  </tr>
+                  <tr>
+                    <td>SDR</td>
+                    <td>$16,150</td>
+                    <td>1.8%</td>
+                  </tr>
+                  <tr>
+                    <td>CE</td>
+                    <td>$5,750</td>
+                    <td>0.7%</td>
+                  </tr>
+
+                </tbody>
+              </table>
             </div>
           </div>
-
-          <div class="col-lg-4">
-            <div class="panel h-100">
-              <div class="panel-header">
-                <h2 class="panel-title mb-0">Department Performance Summary</h2>
-              </div>
-              <div class="panel-body">
-                <table class="report-table">
-                  <thead>
-                    <tr>
-                      <th>Department</th>
-                      <th>Book Revenue</th>
-                      <th>% of Total</th>
-                      <th>Cases Booked</th>
-                      <th>Show Rate</th>
-                      <th>Goal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Providers</td>
-                      <td>$598,450</td>
-                      <td>68.4%</td>
-                      <td>78</td>
-                      <td><span class="progress-mini"><span class="bar"
-                            style="width:104%;background:var(--green-500);"></span></span><span
-                          class="text-success fw-semibold">104%</span></td>
-                      <td><span class="fw-semibold text-success">95%</span></td>
-                    </tr>
-                    <tr>
-                      <td>ISR (Commission)</td>
-                      <td>$156,250</td>
-                      <td>17.9%</td>
-                      <td>45</td>
-                      <td><span class="progress-mini"><span class="bar"
-                            style="width:92%;background:var(--green-500);"></span></span><span
-                          class="text-success fw-semibold">92%</span></td>
-                      <td><span class="fw-semibold text-success">88%</span></td>
-                    </tr>
-                    <tr>
-                      <td>ISR (Flat Pay)</td>
-                      <td>$72,800</td>
-                      <td>8.3%</td>
-                      <td>22</td>
-                      <td><span class="progress-mini"><span class="bar"
-                            style="width:81%;background:#f59e0b;"></span></span><span class="fw-semibold"
-                          style="color:#c2410c;">81%</span></td>
-                      <td><span class="fw-semibold" style="color:#c2410c;">75%</span></td>
-                    </tr>
-                    <tr>
-                      <td>SDR</td>
-                      <td>$16,150</td>
-                      <td>1.8%</td>
-                      <td>6</td>
-                      <td><span class="progress-mini"><span class="bar"
-                            style="width:68%;background:#f59e0b;"></span></span><span class="fw-semibold"
-                          style="color:#c2410c;">68%</span></td>
-                      <td><span class="fw-semibold" style="color:#c2410c;">70%</span></td>
-                    </tr>
-                    <tr>
-                      <td>CE</td>
-                      <td>$5,750</td>
-                      <td>0.7%</td>
-                      <td>3</td>
-                      <td><span class="progress-mini"><span class="bar"
-                            style="width:95%;background:var(--green-500);"></span></span><span
-                          class="text-success fw-semibold">95%</span></td>
-                      <td><span class="fw-semibold text-success">90%</span></td>
-                    </tr>
-                    <tr>
-                      <td>Other</td>
-                      <td>$24,850</td>
-                      <td>2.9%</td>
-                      <td>2</td>
-                      <td><span class="progress-mini"><span class="bar"
-                            style="width:100%;background:var(--green-500);"></span></span><span
-                          class="text-success fw-semibold">100%</span></td>
-                      <td><span class="fw-semibold text-success">85%</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer-strip">
-          <span><i class="fa-solid fa-circle-info"></i>All data is based on records through Mar 31, 2026.</span>
-          <span><i class="fa-solid fa-rotate text-muted" style="color:var(--gray-500) !important;"></i>Report data last
-            updated: Apr 2, 2026 9:15 AM</span>
         </div>
       </div>
 
       <!-- OTHER TABS: contextual placeholder panes -->
-      <div id="report-view-sales" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-champagne-glasses"></i>
-          <div class="fw-semibold text-dark mb-1">Sales Den</div>Team leaderboard, daily standups, and closing-room
-          activity for this pay period.
-        </div>
-      </div>
-      <div id="report-view-sdr" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-phone-volume"></i>
-          <div class="fw-semibold text-dark mb-1">SDR Performance</div>Call volume, hot-lead conversion, and hourly
-          productivity for SDR staff.
+      <div id="report-view-providers" class="report-pane" style="display:none;">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-tooth me-1 text-success"></i>Provider Production</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Cases Done</th>
+                    <th>Revenue</th>
+                    <th>Avg / Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>45</td>
+                    <td>$312,500</td>
+                    <td>$6,944</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>38</td>
+                    <td>$265,750</td>
+                    <td>$6,993</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>43</td>
+                    <td>$296,000</td>
+                    <td>$6,884</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>31</td>
+                    <td>$215,800</td>
+                    <td>$6,961</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>27</td>
+                    <td>$189,400</td>
+                    <td>$7,015</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-sack-dollar me-1 text-success"></i>Provider
+                Compensation</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Gross Revenue</th>
+                    <th>Compensation</th>
+                    <th>Comp %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>$312,500</td>
+                    <td>$78,125</td>
+                    <td>25.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>$265,750</td>
+                    <td>$66,438</td>
+                    <td>25.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>$296,000</td>
+                    <td>$74,000</td>
+                    <td>25.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>$215,800</td>
+                    <td>$53,950</td>
+                    <td>25.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>$189,400</td>
+                    <td>$47,350</td>
+                    <td>25.0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-ranking-star me-1 text-success"></i>Provider
+                Leaderboard</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Provider</th>
+                    <th>Cases</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Dr. Emily Johnson</td>
+                    <td>43</td>
+                    <td>98.2%</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Dr. John Smith</td>
+                    <td>45</td>
+                    <td>96.5%</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Dr. Jane Doe</td>
+                    <td>38</td>
+                    <td>94.1%</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Dr. Michael Brown</td>
+                    <td>31</td>
+                    <td>91.8%</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>27</td>
+                    <td>89.3%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-cubes me-1 text-success"></i>Units Completed</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Units</th>
+                    <th>Avg Units/Case</th>
+                    <th>Revenue/Unit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>142</td>
+                    <td>3.2</td>
+                    <td>$2,200</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>118</td>
+                    <td>3.1</td>
+                    <td>$2,252</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>135</td>
+                    <td>3.1</td>
+                    <td>$2,193</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>96</td>
+                    <td>3.1</td>
+                    <td>$2,248</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>82</td>
+                    <td>3.0</td>
+                    <td>$2,310</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-palette me-1 text-success"></i>Cosmetic vs General</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Cosmetic</th>
+                    <th>General</th>
+                    <th>Cosmetic %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>$218,750</td>
+                    <td>$93,750</td>
+                    <td>70%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>$186,025</td>
+                    <td>$79,725</td>
+                    <td>70%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>$207,200</td>
+                    <td>$88,800</td>
+                    <td>70%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>$151,060</td>
+                    <td>$64,740</td>
+                    <td>70%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>$132,580</td>
+                    <td>$56,820</td>
+                    <td>70%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-toolbox me-1 text-success"></i>Prep vs Cement</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Prep Cases</th>
+                    <th>Cement Cases</th>
+                    <th>Prep %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>27</td>
+                    <td>18</td>
+                    <td>60%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>23</td>
+                    <td>15</td>
+                    <td>61%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>26</td>
+                    <td>17</td>
+                    <td>60%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>19</td>
+                    <td>12</td>
+                    <td>61%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>16</td>
+                    <td>11</td>
+                    <td>59%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <div id="report-view-isr" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-handshake"></i>
-          <div class="fw-semibold text-dark mb-1">ISR Performance</div>Cases closed, treatment value, and commission
-          trends across the ISR team.
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-handshake me-1 text-success"></i>Percentage ISR</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>ISR</th>
+                    <th>Cases Closed</th>
+                    <th>Revenue Closed</th>
+                    <th>Commission Earned</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sarah Wilson</td>
+                    <td>24</td>
+                    <td>$168,300</td>
+                    <td>$50,490</td>
+                    <td>$7,013</td>
+                  </tr>
+                  <tr>
+                    <td>Kevin Hart</td>
+                    <td>16</td>
+                    <td>$112,500</td>
+                    <td>$33,750</td>
+                    <td>$7,031</td>
+                  </tr>
+                  <tr>
+                    <td>Laura Palmer</td>
+                    <td>14</td>
+                    <td>$98,200</td>
+                    <td>$29,460</td>
+                    <td>$7,014</td>
+                  </tr>
+                  <tr>
+                    <td>Mona Lisa</td>
+                    <td>12</td>
+                    <td>$86,400</td>
+                    <td>$25,920</td>
+                    <td>$7,200</td>
+                  </tr>
+                  <tr>
+                    <td>Nate Diaz</td>
+                    <td>10</td>
+                    <td>$72,100</td>
+                    <td>$21,630</td>
+                    <td>$7,210</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-file-invoice me-1 text-success"></i>Flat Pay ISR</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>ISR</th>
+                    <th>Composite Cases</th>
+                    <th>Ceramic Cases</th>
+                    <th>Porcelain Cases</th>
+                    <th>Crown Cases</th>
+                    <th>Flat Pay Earned</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mike Adams</td>
+                    <td>8</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>$35,800</td>
+                  </tr>
+                  <tr>
+                    <td>Nina Patel</td>
+                    <td>6</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>$28,500</td>
+                  </tr>
+                  <tr>
+                    <td>Oscar Torres</td>
+                    <td>7</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>$26,400</td>
+                  </tr>
+                  <tr>
+                    <td>Paula Gomez</td>
+                    <td>5</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>$22,700</td>
+                  </tr>
+                  <tr>
+                    <td>Quinn Hughes</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>$19,800</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-trend-up me-1 text-success"></i>Commission Trends</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Total Cases</th>
+                    <th>Total Commission</th>
+                    <th>Avg Commission/Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>January</td>
+                    <td>52</td>
+                    <td>$91,250</td>
+                    <td>$1,754.81</td>
+                  </tr>
+                  <tr>
+                    <td>February</td>
+                    <td>58</td>
+                    <td>$104,300</td>
+                    <td>$1,798.28</td>
+                  </tr>
+                  <tr>
+                    <td>March</td>
+                    <td>48</td>
+                    <td>$82,500</td>
+                    <td>$1,718.75</td>
+                  </tr>
+                  <tr>
+                    <td>April</td>
+                    <td>55</td>
+                    <td>$96,800</td>
+                    <td>$1,760.00</td>
+                  </tr>
+                  <tr>
+                    <td>May (MTD)</td>
+                    <td>52</td>
+                    <td>$94,250</td>
+                    <td>$1,812.50</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
+
       <div id="report-view-ce" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-headset"></i>
-          <div class="fw-semibold text-dark mb-1">CE Performance</div>Client experience scores, follow-ups completed,
-          and satisfaction trends.
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-headset me-1 text-success"></i>Client Experience Scores
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>CE</th>
+                    <th>Surveys</th>
+                    <th>Avg Score</th>
+                    <th>Follow-ups Done</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Olivia Pope</td>
+                    <td>42</td>
+                    <td>4.8 / 5</td>
+                    <td>38</td>
+                  </tr>
+                  <tr>
+                    <td>Peter Parker</td>
+                    <td>38</td>
+                    <td>4.7 / 5</td>
+                    <td>35</td>
+                  </tr>
+                  <tr>
+                    <td>Quinn Fabray</td>
+                    <td>35</td>
+                    <td>4.9 / 5</td>
+                    <td>33</td>
+                  </tr>
+                  <tr>
+                    <td>Rachel Green</td>
+                    <td>30</td>
+                    <td>4.6 / 5</td>
+                    <td>28</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-regular fa-face-smile me-1 text-success"></i>Satisfaction Trends
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Satisfaction</th>
+                    <th>Follow-ups</th>
+                    <th>Retention %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>January</td>
+                    <td>4.7</td>
+                    <td>98%</td>
+                    <td>92%</td>
+                  </tr>
+                  <tr>
+                    <td>February</td>
+                    <td>4.8</td>
+                    <td>99%</td>
+                    <td>94%</td>
+                  </tr>
+                  <tr>
+                    <td>March</td>
+                    <td>4.7</td>
+                    <td>97%</td>
+                    <td>91%</td>
+                  </tr>
+                  <tr>
+                    <td>April</td>
+                    <td>4.8</td>
+                    <td>99%</td>
+                    <td>93%</td>
+                  </tr>
+                  <tr>
+                    <td>May (MTD)</td>
+                    <td>4.8</td>
+                    <td>98%</td>
+                    <td>93%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- PRODUCTION -->
       <div id="report-view-production" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-tooth"></i>
-          <div class="fw-semibold text-dark mb-1">Production</div>Case volume by material, units produced, and provider
-          output trends.
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-user-doctor me-1 text-success"></i>Production by Doctor
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Doctor</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>45</td>
+                    <td>$312,500</td>
+                    <td>$6,944.44</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>38</td>
+                    <td>$265,750</td>
+                    <td>$6,993.42</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>43</td>
+                    <td>$296,000</td>
+                    <td>$6,883.72</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>31</td>
+                    <td>$215,800</td>
+                    <td>$6,961.29</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>27</td>
+                    <td>$189,400</td>
+                    <td>$7,014.81</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3"><i class="fa-solid fa-building me-1 text-success"></i>Production by Office
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Location A</td>
+                    <td>58</td>
+                    <td>$412,300</td>
+                    <td>$7,111.21</td>
+                  </tr>
+                  <tr>
+                    <td>Location B</td>
+                    <td>42</td>
+                    <td>$298,750</td>
+                    <td>$7,107.14</td>
+                  </tr>
+                  <tr>
+                    <td>Location C</td>
+                    <td>26</td>
+                    <td>$163,200</td>
+                    <td>$6,276.92</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3"><i class="fa-solid fa-sitemap me-1 text-success"></i>Production by Department
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Providers</td>
+                    <td>126</td>
+                    <td>$874,250</td>
+                    <td>$6,939.29</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>24</td>
+                    <td>$168,300</td>
+                    <td>$7,012.50</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>20</td>
+                    <td>$143,200</td>
+                    <td>$7,160.00</td>
+                  </tr>
+                  <tr>
+                    <td>SDR</td>
+                    <td>12</td>
+                    <td>$72,800</td>
+                    <td>$6,066.67</td>
+                  </tr>
+                  <tr>
+                    <td>CE</td>
+                    <td>8</td>
+                    <td>$55,500</td>
+                    <td>$6,937.50</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3"><i class="fa-solid fa-flask me-1 text-success"></i>Production by Material
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Material</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Zirconia Cases</td>
+                    <td>65</td>
+                    <td>$452,600</td>
+                    <td>$6,966.15</td>
+                  </tr>
+                  <tr>
+                    <td>Composite Veneers</td>
+                    <td>24</td>
+                    <td>$168,300</td>
+                    <td>$7,012.50</td>
+                  </tr>
+                  <tr>
+                    <td>Porcelain Veneers</td>
+                    <td>20</td>
+                    <td>$143,200</td>
+                    <td>$7,160.00</td>
+                  </tr>
+                  <tr>
+                    <td>Crowns (PFM)</td>
+                    <td>8</td>
+                    <td>$52,400</td>
+                    <td>$6,550.00</td>
+                  </tr>
+                  <tr>
+                    <td>Crowns (Full Cast)</td>
+                    <td>4</td>
+                    <td>$26,500</td>
+                    <td>$6,625.00</td>
+                  </tr>
+                  <tr>
+                    <td>Other Materials</td>
+                    <td>5</td>
+                    <td>$31,250</td>
+                    <td>$6,250.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3"><i class="fa-solid fa-calendar me-1 text-success"></i>Production by Month
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>January</td>
+                    <td>112</td>
+                    <td>$782,500</td>
+                    <td>$6,982.14</td>
+                  </tr>
+                  <tr>
+                    <td>February</td>
+                    <td>126</td>
+                    <td>$874,250</td>
+                    <td>$6,939.29</td>
+                  </tr>
+                  <tr>
+                    <td>March</td>
+                    <td>98</td>
+                    <td>$698,300</td>
+                    <td>$7,125.51</td>
+                  </tr>
+                  <tr>
+                    <td>April</td>
+                    <td>115</td>
+                    <td>$801,200</td>
+                    <td>$6,967.83</td>
+                  </tr>
+                  <tr>
+                    <td>May</td>
+                    <td>108</td>
+                    <td>$756,400</td>
+                    <td>$7,003.70</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3"><i class="fa-regular fa-calendar-week me-1 text-success"></i>Production by
+                Week</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Week</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Week 1 (May 1–7)</td>
+                    <td>30</td>
+                    <td>$210,000</td>
+                    <td>$7,000.00</td>
+                  </tr>
+                  <tr>
+                    <td>Week 2 (May 8–14)</td>
+                    <td>32</td>
+                    <td>$220,500</td>
+                    <td>$6,890.63</td>
+                  </tr>
+                  <tr>
+                    <td>Week 3 (May 15–21)</td>
+                    <td>28</td>
+                    <td>$198,400</td>
+                    <td>$7,085.71</td>
+                  </tr>
+                  <tr>
+                    <td>Week 4 (May 22–28)</td>
+                    <td>35</td>
+                    <td>$245,000</td>
+                    <td>$7,000.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-3"><i class="fa-regular fa-calendar-day me-1 text-success"></i>Production by Day
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Cases Booked</th>
+                    <th>Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Monday</td>
+                    <td>6</td>
+                    <td>$42,500</td>
+                    <td>$7,083.33</td>
+                  </tr>
+                  <tr>
+                    <td>Tuesday</td>
+                    <td>8</td>
+                    <td>$56,200</td>
+                    <td>$7,025.00</td>
+                  </tr>
+                  <tr>
+                    <td>Wednesday</td>
+                    <td>5</td>
+                    <td>$34,800</td>
+                    <td>$6,960.00</td>
+                  </tr>
+                  <tr>
+                    <td>Thursday</td>
+                    <td>7</td>
+                    <td>$48,900</td>
+                    <td>$6,985.71</td>
+                  </tr>
+                  <tr>
+                    <td>Friday</td>
+                    <td>9</td>
+                    <td>$63,100</td>
+                    <td>$7,011.11</td>
+                  </tr>
+                  <tr>
+                    <td>Saturday</td>
+                    <td>3</td>
+                    <td>$19,500</td>
+                    <td>$6,500.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- PAYROLL -->
+      <div id="report-view-payroll" class="report-pane" style="display:none;">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-user me-1 text-success"></i>Payroll by Employee</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Role</th>
+                    <th>Gross Pay</th>
+                    <th>Net Pay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>Dentist</td>
+                    <td>$18,250</td>
+                    <td>$14,600</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>Dentist</td>
+                    <td>$16,800</td>
+                    <td>$13,440</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>Dentist</td>
+                    <td>$15,200</td>
+                    <td>$12,160</td>
+                  </tr>
+                  <tr>
+                    <td>Robert Kim</td>
+                    <td>Dental Assistant</td>
+                    <td>$5,600</td>
+                    <td>$4,480</td>
+                  </tr>
+                  <tr>
+                    <td>Lisa Thompson</td>
+                    <td>Dental Assistant</td>
+                    <td>$5,200</td>
+                    <td>$4,160</td>
+                  </tr>
+                  <tr>
+                    <td>Emily Davis</td>
+                    <td>ISR</td>
+                    <td>$6,800</td>
+                    <td>$5,440</td>
+                  </tr>
+                  <tr>
+                    <td>Michael Brown</td>
+                    <td>ISR</td>
+                    <td>$6,400</td>
+                    <td>$5,120</td>
+                  </tr>
+                  <tr>
+                    <td>Jessica Wilson</td>
+                    <td>SDR</td>
+                    <td>$5,900</td>
+                    <td>$4,720</td>
+                  </tr>
+                  <tr>
+                    <td>David Martinez</td>
+                    <td>SDR</td>
+                    <td>$5,500</td>
+                    <td>$4,400</td>
+                  </tr>
+                  <tr>
+                    <td>Amanda Taylor</td>
+                    <td>CE</td>
+                    <td>$4,800</td>
+                    <td>$3,840</td>
+                  </tr>
+                  <tr>
+                    <td>Chris Anderson</td>
+                    <td>CE</td>
+                    <td>$4,600</td>
+                    <td>$3,680</td>
+                  </tr>
+                  <tr>
+                    <td>Stephanie Lee</td>
+                    <td>Marketing</td>
+                    <td>$5,200</td>
+                    <td>$4,160</td>
+                  </tr>
+                  <tr>
+                    <td>Daniel Garcia</td>
+                    <td>Admin</td>
+                    <td>$6,500</td>
+                    <td>$5,200</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-building me-1 text-success"></i>Payroll by Department
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th>Employees</th>
+                    <th>Gross Pay</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Clinical (Dentists)</td>
+                    <td>6</td>
+                    <td>$98,450</td>
+                    <td>35.2%</td>
+                  </tr>
+                  <tr>
+                    <td>Dental Assistants</td>
+                    <td>4</td>
+                    <td>$22,400</td>
+                    <td>8.0%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>3</td>
+                    <td>$25,800</td>
+                    <td>9.2%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>2</td>
+                    <td>$11,200</td>
+                    <td>4.0%</td>
+                  </tr>
+                  <tr>
+                    <td>SDR</td>
+                    <td>3</td>
+                    <td>$18,600</td>
+                    <td>6.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Client Experience</td>
+                    <td>3</td>
+                    <td>$15,200</td>
+                    <td>5.4%</td>
+                  </tr>
+                  <tr>
+                    <td>Marketing</td>
+                    <td>2</td>
+                    <td>$10,400</td>
+                    <td>3.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Administration</td>
+                    <td>3</td>
+                    <td>$18,500</td>
+                    <td>6.6%</td>
+                  </tr>
+                  <tr>
+                    <td>Operations</td>
+                    <td>4</td>
+                    <td>$21,600</td>
+                    <td>7.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Management</td>
+                    <td>2</td>
+                    <td>$15,400</td>
+                    <td>5.5%</td>
+                  </tr>
+                  <tr>
+                    <td>Executive</td>
+                    <td>1</td>
+                    <td>$22,000</td>
+                    <td>7.9%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>33</td>
+                    <td>$279,550</td>
+                    <td>100%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-location-dot me-1 text-success"></i>Payroll by Office
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Office</th>
+                    <th>Employees</th>
+                    <th>Gross Pay</th>
+                    <th>Avg/Employee</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Main Street Dental</td>
+                    <td>12</td>
+                    <td>$112,400</td>
+                    <td>$9,366.67</td>
+                  </tr>
+                  <tr>
+                    <td>Oakwood Clinic</td>
+                    <td>8</td>
+                    <td>$67,800</td>
+                    <td>$8,475.00</td>
+                  </tr>
+                  <tr>
+                    <td>Pine Hills Dental</td>
+                    <td>7</td>
+                    <td>$54,250</td>
+                    <td>$7,750.00</td>
+                  </tr>
+                  <tr>
+                    <td>Lakeview Practice</td>
+                    <td>6</td>
+                    <td>$45,100</td>
+                    <td>$7,516.67</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>33</td>
+                    <td>$279,550</td>
+                    <td>$8,471.21</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mt-2">
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-chart-line me-1 text-success"></i>Gross Payroll</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>This Month</th>
+                    <th>Last Month</th>
+                    <th>Change</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Clinical Salaries</td>
+                    <td>$98,450</td>
+                    <td>$95,200</td>
+                    <td class="text-success">+3.4%</td>
+                  </tr>
+                  <tr>
+                    <td>Commission (ISR/SDR)</td>
+                    <td>$44,400</td>
+                    <td>$41,800</td>
+                    <td class="text-success">+6.2%</td>
+                  </tr>
+                  <tr>
+                    <td>Flat Pay (ISR)</td>
+                    <td>$11,200</td>
+                    <td>$11,200</td>
+                    <td class="text-muted">0.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Hourly (Assistants)</td>
+                    <td>$22,400</td>
+                    <td>$21,600</td>
+                    <td class="text-success">+3.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Admin & Ops</td>
+                    <td>$40,100</td>
+                    <td>$39,500</td>
+                    <td class="text-success">+1.5%</td>
+                  </tr>
+                  <tr>
+                    <td>Management</td>
+                    <td>$37,400</td>
+                    <td>$37,400</td>
+                    <td class="text-muted">0.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Overtime</td>
+                    <td>$8,600</td>
+                    <td>$7,200</td>
+                    <td class="text-danger">+19.4%</td>
+                  </tr>
+                  <tr>
+                    <td>Bonuses & Incentives</td>
+                    <td>$6,200</td>
+                    <td>$5,500</td>
+                    <td class="text-success">+12.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Benefits & Taxes (Est.)</td>
+                    <td>$10,800</td>
+                    <td>$10,400</td>
+                    <td class="text-success">+3.8%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total Gross Payroll</td>
+                    <td>$279,550</td>
+                    <td>$269,800</td>
+                    <td class="text-success">+3.6%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-clock me-1 text-success"></i>Overtime Summary</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>OT Hours</th>
+                    <th>OT Pay</th>
+                    <th>Dept</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Robert Kim</td>
+                    <td>12</td>
+                    <td>$450</td>
+                    <td>Assistants</td>
+                  </tr>
+                  <tr>
+                    <td>Lisa Thompson</td>
+                    <td>10</td>
+                    <td>$375</td>
+                    <td>Assistants</td>
+                  </tr>
+                  <tr>
+                    <td>Daniel Garcia</td>
+                    <td>8</td>
+                    <td>$360</td>
+                    <td>Admin</td>
+                  </tr>
+                  <tr>
+                    <td>Jessica Wilson</td>
+                    <td>7</td>
+                    <td>$280</td>
+                    <td>SDR</td>
+                  </tr>
+                  <tr>
+                    <td>Chris Anderson</td>
+                    <td>6</td>
+                    <td>$225</td>
+                    <td>CE</td>
+                  </tr>
+                  <tr>
+                    <td>Amanda Taylor</td>
+                    <td>5</td>
+                    <td>$188</td>
+                    <td>CE</td>
+                  </tr>
+                  <tr>
+                    <td>David Martinez</td>
+                    <td>4</td>
+                    <td>$160</td>
+                    <td>SDR</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>52</td>
+                    <td>$2,038</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-hand-holding-dollar me-1 text-success"></i>Advance
+                Summary</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Advance</th>
+                    <th>Remaining</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>$3,000</td>
+                    <td>$1,200</td>
+                    <td><span class="badge bg-warning">Partial</span></td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>$2,500</td>
+                    <td>$0</td>
+                    <td><span class="badge bg-success">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td>Emily Davis</td>
+                    <td>$1,800</td>
+                    <td>$800</td>
+                    <td><span class="badge bg-warning">Partial</span></td>
+                  </tr>
+                  <tr>
+                    <td>Michael Brown</td>
+                    <td>$1,500</td>
+                    <td>$0</td>
+                    <td><span class="badge bg-success">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td>Jessica Wilson</td>
+                    <td>$1,200</td>
+                    <td>$600</td>
+                    <td><span class="badge bg-warning">Partial</span></td>
+                  </tr>
+                  <tr>
+                    <td>Stephanie Lee</td>
+                    <td>$1,000</td>
+                    <td>$1,000</td>
+                    <td><span class="badge bg-danger">Unpaid</span></td>
+                  </tr>
+                  <tr>
+                    <td>Daniel Garcia</td>
+                    <td>$2,000</td>
+                    <td>$500</td>
+                    <td><span class="badge bg-warning">Partial</span></td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>$13,000</td>
+                    <td>$4,100</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-clock-rotate-left me-1 text-success"></i>Payroll
+                History</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Pay Period</th>
+                    <th>Gross Pay</th>
+                    <th>Net Pay</th>
+                    <th>Employees</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>May 16–31, 2025</td>
+                    <td>$279,550</td>
+                    <td>$223,640</td>
+                    <td>33</td>
+                  </tr>
+                  <tr>
+                    <td>May 1–15, 2025</td>
+                    <td>$269,800</td>
+                    <td>$215,840</td>
+                    <td>33</td>
+                  </tr>
+                  <tr>
+                    <td>Apr 16–30, 2025</td>
+                    <td>$265,200</td>
+                    <td>$212,160</td>
+                    <td>32</td>
+                  </tr>
+                  <tr>
+                    <td>Apr 1–15, 2025</td>
+                    <td>$258,400</td>
+                    <td>$206,720</td>
+                    <td>32</td>
+                  </tr>
+                  <tr>
+                    <td>Mar 16–31, 2025</td>
+                    <td>$261,500</td>
+                    <td>$209,200</td>
+                    <td>31</td>
+                  </tr>
+                  <tr>
+                    <td>Mar 1–15, 2025</td>
+                    <td>$252,800</td>
+                    <td>$202,240</td>
+                    <td>31</td>
+                  </tr>
+                  <tr>
+                    <td>Feb 16–28, 2025</td>
+                    <td>$245,100</td>
+                    <td>$196,080</td>
+                    <td>31</td>
+                  </tr>
+                  <tr>
+                    <td>Feb 1–15, 2025</td>
+                    <td>$248,600</td>
+                    <td>$198,880</td>
+                    <td>30</td>
+                  </tr>
+                  <tr>
+                    <td>Jan 16–31, 2025</td>
+                    <td>$240,300</td>
+                    <td>$192,240</td>
+                    <td>30</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINANCIAL -->
       <div id="report-view-financial" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-scale-balanced"></i>
-          <div class="fw-semibold text-dark mb-1">Financial</div>Payroll cost, margin analysis, and
-          compensation-to-revenue ratios.
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-sack-dollar me-1 text-success"></i>Revenue</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Revenue Source</th>
+                    <th>Amount</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Provider Production</td>
+                    <td>$874,250</td>
+                    <td>66.5%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>$168,300</td>
+                    <td>12.8%</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>$143,200</td>
+                    <td>10.9%</td>
+                  </tr>
+                  <tr>
+                    <td>SDR Referrals</td>
+                    <td>$72,800</td>
+                    <td>5.5%</td>
+                  </tr>
+                  <tr>
+                    <td>CE Referrals</td>
+                    <td>$55,500</td>
+                    <td>4.2%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total Revenue</td>
+                    <td>$1,314,050</td>
+                    <td>100%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-hand-holding-dollar me-1 text-success"></i>Collections
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>% Billed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Collected (Insurance)</td>
+                    <td>$682,350</td>
+                    <td>51.9%</td>
+                  </tr>
+                  <tr>
+                    <td>Collected (Patient)</td>
+                    <td>$394,215</td>
+                    <td>30.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Pending Insurance</td>
+                    <td>$118,264</td>
+                    <td>9.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Pending Patient</td>
+                    <td>$78,843</td>
+                    <td>6.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Overdue / Bad Debt</td>
+                    <td>$40,378</td>
+                    <td>3.1%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total Billed</td>
+                    <td>$1,314,050</td>
+                    <td>100%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-handshake me-1 text-success"></i>Financing Breakdown
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Financing Type</th>
+                    <th>Cases</th>
+                    <th>Amount Financed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>CareCredit</td>
+                    <td>28</td>
+                    <td>$196,250</td>
+                  </tr>
+                  <tr>
+                    <td>Patient Payment Plans</td>
+                    <td>42</td>
+                    <td>$273,600</td>
+                  </tr>
+                  <tr>
+                    <td>Third-Party Lending</td>
+                    <td>15</td>
+                    <td>$112,800</td>
+                  </tr>
+                  <tr>
+                    <td>In-House 0% Interest</td>
+                    <td>22</td>
+                    <td>$148,500</td>
+                  </tr>
+                  <tr>
+                    <td>Insurance Assignment</td>
+                    <td>56</td>
+                    <td>$389,200</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-credit-card me-1 text-success"></i>Merchant Fees</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Card Type</th>
+                    <th>Volume</th>
+                    <th>Fee Rate</th>
+                    <th>Total Fees</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Visa / Mastercard</td>
+                    <td>$218,400</td>
+                    <td>2.3%</td>
+                    <td>$5,023</td>
+                  </tr>
+                  <tr>
+                    <td>Amex</td>
+                    <td>$86,500</td>
+                    <td>3.5%</td>
+                    <td>$3,028</td>
+                  </tr>
+                  <tr>
+                    <td>Discover</td>
+                    <td>$42,300</td>
+                    <td>2.5%</td>
+                    <td>$1,058</td>
+                  </tr>
+                  <tr>
+                    <td>Digital Wallets</td>
+                    <td>$67,200</td>
+                    <td>2.9%</td>
+                    <td>$1,949</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>$414,400</td>
+                    <td>—</td>
+                    <td>$11,058</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-flask me-1 text-success"></i>Lab Costs</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Lab Partner</th>
+                    <th>Cases</th>
+                    <th>Cost</th>
+                    <th>Avg / Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Precision Dental Lab</td>
+                    <td>52</td>
+                    <td>$78,400</td>
+                    <td>$1,508</td>
+                  </tr>
+                  <tr>
+                    <td>Artisan Ceramics</td>
+                    <td>38</td>
+                    <td>$58,200</td>
+                    <td>$1,532</td>
+                  </tr>
+                  <tr>
+                    <td>Digital Smile Lab</td>
+                    <td>24</td>
+                    <td>$42,108</td>
+                    <td>$1,755</td>
+                  </tr>
+                  <tr>
+                    <td>QuickCrown Labs</td>
+                    <td>12</td>
+                    <td>$18,400</td>
+                    <td>$1,533</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total Lab</td>
+                    <td>126</td>
+                    <td>$197,108</td>
+                    <td>$1,564</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-chart-line me-1 text-success"></i>Profitability</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Amount</th>
+                    <th>% of Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Total Revenue</td>
+                    <td>$1,314,050</td>
+                    <td>100%</td>
+                  </tr>
+                  <tr>
+                    <td>Total Compensation</td>
+                    <td>$336,927</td>
+                    <td>25.6%</td>
+                  </tr>
+                  <tr>
+                    <td>Lab Fees</td>
+                    <td>$197,108</td>
+                    <td>15.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Operating Expenses</td>
+                    <td>$262,810</td>
+                    <td>20.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Merchant Fees</td>
+                    <td>$11,058</td>
+                    <td>0.8%</td>
+                  </tr>
+                  <tr>
+                    <td>Supply & Material</td>
+                    <td>$42,500</td>
+                    <td>3.2%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Net Profit</td>
+                    <td>$463,647</td>
+                    <td class="text-success">35.3%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-building me-1 text-success"></i>Revenue by Office</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Office</th>
+                    <th>Revenue</th>
+                    <th>Cases</th>
+                    <th>Collection %</th>
+                    <th>Office Cost</th>
+                    <th>Net Margin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Location A</td>
+                    <td>$612,300</td>
+                    <td>58</td>
+                    <td>94%</td>
+                    <td>$152,100</td>
+                    <td class="text-success">75.2%</td>
+                  </tr>
+                  <tr>
+                    <td>Location B</td>
+                    <td>$438,750</td>
+                    <td>42</td>
+                    <td>91%</td>
+                    <td>$118,200</td>
+                    <td class="text-success">73.1%</td>
+                  </tr>
+                  <tr>
+                    <td>Location C</td>
+                    <td>$263,000</td>
+                    <td>26</td>
+                    <td>88%</td>
+                    <td>$78,500</td>
+                    <td class="text-success">70.2%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-user-doctor me-1 text-success"></i>Revenue by Provider
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Revenue</th>
+                    <th>Cases</th>
+                    <th>Avg / Case</th>
+                    <th>Lab Cost</th>
+                    <th>Net Margin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. John Smith</td>
+                    <td>$312,500</td>
+                    <td>45</td>
+                    <td>$6,944</td>
+                    <td>$46,875</td>
+                    <td class="text-success">85.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Jane Doe</td>
+                    <td>$265,750</td>
+                    <td>38</td>
+                    <td>$6,993</td>
+                    <td>$39,863</td>
+                    <td class="text-success">85.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Johnson</td>
+                    <td>$296,000</td>
+                    <td>43</td>
+                    <td>$6,884</td>
+                    <td>$44,400</td>
+                    <td class="text-success">85.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Michael Brown</td>
+                    <td>$215,800</td>
+                    <td>31</td>
+                    <td>$6,961</td>
+                    <td>$32,370</td>
+                    <td class="text-success">85.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Sarah Wilson</td>
+                    <td>$189,400</td>
+                    <td>27</td>
+                    <td>$7,015</td>
+                    <td>$28,410</td>
+                    <td class="text-success">85.0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="report-view-cases" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-magnifying-glass-chart"></i>
-          <div class="fw-semibold text-dark mb-1">Case Analysis</div>Deep dive into case type mix, average value, and
-          completion timelines.
+
+      <!-- CASES -->
+
+      <!-- HOURLY EMPLOYEE REPORTS -->
+      <div id="report-view-hourly" class="report-pane" style="display:none;">
+        <div class="row g-3">
+          <!-- SDR -->
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-phone me-1 text-success"></i>SDR Hourly</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Hours Worked</th>
+                    <th>Payroll</th>
+                    <th>Overtime</th>
+                    <th>Attendance</th>
+                    <th>Hours/Week</th>
+                    <th>Hours/Month</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Grace Hopper</td>
+                    <td>152</td>
+                    <td>$2,280</td>
+                    <td>8</td>
+                    <td>96%</td>
+                    <td>38</td>
+                    <td>160</td>
+                  </tr>
+                  <tr>
+                    <td>Henry Ford</td>
+                    <td>145</td>
+                    <td>$2,175</td>
+                    <td>5</td>
+                    <td>93%</td>
+                    <td>36</td>
+                    <td>152</td>
+                  </tr>
+                  <tr>
+                    <td>Iris Chen</td>
+                    <td>148</td>
+                    <td>$2,220</td>
+                    <td>6</td>
+                    <td>95%</td>
+                    <td>37</td>
+                    <td>156</td>
+                  </tr>
+                  <tr>
+                    <td>Jack Dawson</td>
+                    <td>138</td>
+                    <td>$2,070</td>
+                    <td>3</td>
+                    <td>91%</td>
+                    <td>34</td>
+                    <td>144</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- CE -->
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-headset me-1 text-success"></i>CE Hourly</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Hours Worked</th>
+                    <th>Payroll</th>
+                    <th>Overtime</th>
+                    <th>Attendance</th>
+                    <th>Hours/Week</th>
+                    <th>Hours/Month</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Olivia Pope</td>
+                    <td>148</td>
+                    <td>$2,220</td>
+                    <td>6</td>
+                    <td>97%</td>
+                    <td>37</td>
+                    <td>155</td>
+                  </tr>
+                  <tr>
+                    <td>Peter Parker</td>
+                    <td>142</td>
+                    <td>$2,130</td>
+                    <td>4</td>
+                    <td>94%</td>
+                    <td>35</td>
+                    <td>148</td>
+                  </tr>
+                  <tr>
+                    <td>Quinn Fabray</td>
+                    <td>150</td>
+                    <td>$2,250</td>
+                    <td>7</td>
+                    <td>98%</td>
+                    <td>38</td>
+                    <td>158</td>
+                  </tr>
+                  <tr>
+                    <td>Rachel Green</td>
+                    <td>135</td>
+                    <td>$2,025</td>
+                    <td>2</td>
+                    <td>90%</td>
+                    <td>34</td>
+                    <td>142</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Marketing -->
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-bullhorn me-1 text-success"></i>Marketing Hourly</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Hours Worked</th>
+                    <th>Payroll</th>
+                    <th>Overtime</th>
+                    <th>Attendance</th>
+                    <th>Hours/Week</th>
+                    <th>Hours/Month</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alice Wonder</td>
+                    <td>146</td>
+                    <td>$2,190</td>
+                    <td>5</td>
+                    <td>95%</td>
+                    <td>36</td>
+                    <td>152</td>
+                  </tr>
+                  <tr>
+                    <td>Bob Marley</td>
+                    <td>140</td>
+                    <td>$2,100</td>
+                    <td>3</td>
+                    <td>92%</td>
+                    <td>35</td>
+                    <td>146</td>
+                  </tr>
+                  <tr>
+                    <td>Carol Danvers</td>
+                    <td>151</td>
+                    <td>$2,265</td>
+                    <td>8</td>
+                    <td>97%</td>
+                    <td>38</td>
+                    <td>158</td>
+                  </tr>
+                  <tr>
+                    <td>David Beckham</td>
+                    <td>136</td>
+                    <td>$2,040</td>
+                    <td>2</td>
+                    <td>89%</td>
+                    <td>34</td>
+                    <td>142</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Social Media -->
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-camera me-1 text-success"></i>Social Media Hourly</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Hours Worked</th>
+                    <th>Payroll</th>
+                    <th>Overtime</th>
+                    <th>Attendance</th>
+                    <th>Hours/Week</th>
+                    <th>Hours/Month</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Emma Stone</td>
+                    <td>144</td>
+                    <td>$2,160</td>
+                    <td>4</td>
+                    <td>94%</td>
+                    <td>36</td>
+                    <td>150</td>
+                  </tr>
+                  <tr>
+                    <td>Frank Ocean</td>
+                    <td>139</td>
+                    <td>$2,085</td>
+                    <td>3</td>
+                    <td>91%</td>
+                    <td>35</td>
+                    <td>145</td>
+                  </tr>
+                  <tr>
+                    <td>Gina Linetti</td>
+                    <td>149</td>
+                    <td>$2,235</td>
+                    <td>6</td>
+                    <td>96%</td>
+                    <td>37</td>
+                    <td>156</td>
+                  </tr>
+                  <tr>
+                    <td>Hank Green</td>
+                    <td>132</td>
+                    <td>$1,980</td>
+                    <td>1</td>
+                    <td>88%</td>
+                    <td>33</td>
+                    <td>138</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Assistants -->
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-hand-holding-heart me-1 text-success"></i>Dental
+                Assistants Hourly</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Hours Worked</th>
+                    <th>Payroll</th>
+                    <th>Overtime</th>
+                    <th>Attendance</th>
+                    <th>Hours/Week</th>
+                    <th>Hours/Month</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ian Smith</td>
+                    <td>155</td>
+                    <td>$2,325</td>
+                    <td>10</td>
+                    <td>98%</td>
+                    <td>39</td>
+                    <td>162</td>
+                  </tr>
+                  <tr>
+                    <td>Julia Roberts</td>
+                    <td>147</td>
+                    <td>$2,205</td>
+                    <td>6</td>
+                    <td>95%</td>
+                    <td>37</td>
+                    <td>154</td>
+                  </tr>
+                  <tr>
+                    <td>Kevin Bacon</td>
+                    <td>141</td>
+                    <td>$2,115</td>
+                    <td>4</td>
+                    <td>92%</td>
+                    <td>35</td>
+                    <td>148</td>
+                  </tr>
+                  <tr>
+                    <td>Lily Collins</td>
+                    <td>138</td>
+                    <td>$2,070</td>
+                    <td>3</td>
+                    <td>91%</td>
+                    <td>34</td>
+                    <td>144</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- QS -->
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-clipboard-check me-1 text-success"></i>QS Hourly</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Hours Worked</th>
+                    <th>Payroll</th>
+                    <th>Overtime</th>
+                    <th>Attendance</th>
+                    <th>Hours/Week</th>
+                    <th>Hours/Month</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mike Ross</td>
+                    <td>153</td>
+                    <td>$2,295</td>
+                    <td>9</td>
+                    <td>97%</td>
+                    <td>38</td>
+                    <td>160</td>
+                  </tr>
+                  <tr>
+                    <td>Nancy Drew</td>
+                    <td>146</td>
+                    <td>$2,190</td>
+                    <td>5</td>
+                    <td>94%</td>
+                    <td>36</td>
+                    <td>152</td>
+                  </tr>
+                  <tr>
+                    <td>Oscar Wilde</td>
+                    <td>140</td>
+                    <td>$2,100</td>
+                    <td>3</td>
+                    <td>92%</td>
+                    <td>35</td>
+                    <td>146</td>
+                  </tr>
+                  <tr>
+                    <td>Patricia Arquette</td>
+                    <td>134</td>
+                    <td>$2,010</td>
+                    <td>2</td>
+                    <td>89%</td>
+                    <td>34</td>
+                    <td>140</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="report-view-marketing" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-bullhorn"></i>
-          <div class="fw-semibold text-dark mb-1">Marketing</div>Lead source performance, cost per lead, and campaign
-          attribution.
+
+      <!-- OPERATIONAL -->
+      <div id="report-view-operational" class="report-pane" style="display:none;">
+        <div class="row g-3">
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-check-circle me-1 text-success"></i>Cases Entered</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Entered</th>
+                    <th>Target</th>
+                    <th>% Achieved</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mon, Jul 21</td>
+                    <td>12</td>
+                    <td>15</td>
+                    <td>80%</td>
+                  </tr>
+                  <tr>
+                    <td>Tue, Jul 22</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>93%</td>
+                  </tr>
+                  <tr>
+                    <td>Wed, Jul 23</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>67%</td>
+                  </tr>
+                  <tr>
+                    <td>Thu, Jul 24</td>
+                    <td>16</td>
+                    <td>15</td>
+                    <td class="text-success fw-bold">107%</td>
+                  </tr>
+                  <tr>
+                    <td>Fri, Jul 25</td>
+                    <td>13</td>
+                    <td>15</td>
+                    <td>87%</td>
+                  </tr>
+                  <tr>
+                    <td>Sat, Jul 26</td>
+                    <td>8</td>
+                    <td>10</td>
+                    <td>80%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>This Week</td>
+                    <td>73</td>
+                    <td>85</td>
+                    <td>86%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-triangle-exclamation me-1 text-danger"></i>Missing
+                Cases</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Missing</th>
+                    <th>Follow-Up</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>3</td>
+                    <td>Jul 28</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>5</td>
+                    <td>Jul 25</td>
+                    <td><span class="badge bg-danger">Overdue</span></td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>1</td>
+                    <td>Jul 30</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>Dr. David Park</td>
+                    <td>2</td>
+                    <td>Jul 26</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Stone</td>
+                    <td>4</td>
+                    <td>Jul 24</td>
+                    <td><span class="badge bg-danger">Overdue</span></td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>15</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-flask me-1 text-warning"></i>Missing Cement</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Days Open</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#C-1042</td>
+                    <td>John Smith</td>
+                    <td>Dr. Mitchell</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1047</td>
+                    <td>Sarah Connor</td>
+                    <td>Dr. Chen</td>
+                    <td>7</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1051</td>
+                    <td>Mike Johnson</td>
+                    <td>Dr. Lopez</td>
+                    <td>2</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1053</td>
+                    <td>Linda Adams</td>
+                    <td>Dr. Park</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1056</td>
+                    <td>Tom Hardy</td>
+                    <td>Dr. Stone</td>
+                    <td>3</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1058</td>
+                    <td>Jane Doe</td>
+                    <td>Dr. Mitchell</td>
+                    <td>6</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total Open</td>
+                    <td colspan="3">6 cases</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-hourglass-half me-1 text-info"></i>Cases Waiting
+                Verification</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Patient</th>
+                    <th>Status</th>
+                    <th>Since</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#C-1038</td>
+                    <td>Anna Bell</td>
+                    <td>Pending Review</td>
+                    <td>Jul 18</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1040</td>
+                    <td>Paul Green</td>
+                    <td>Awaiting X-Ray</td>
+                    <td>Jul 19</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1043</td>
+                    <td>Rose Black</td>
+                    <td>Pending Approval</td>
+                    <td>Jul 20</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1045</td>
+                    <td>Mark White</td>
+                    <td>Verify Insurance</td>
+                    <td>Jul 20</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1048</td>
+                    <td>Lucy Grey</td>
+                    <td>Awaiting Images</td>
+                    <td>Jul 21</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1050</td>
+                    <td>Sam Brown</td>
+                    <td>Pending Review</td>
+                    <td>Jul 22</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td colspan="2">Total Waiting</td>
+                    <td colspan="2">6 cases</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mt-2">
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-dollar-sign me-1 text-danger"></i>Missing Collections
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Amount</th>
+                    <th>Days Overdue</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>John Smith</td>
+                    <td>$2,400</td>
+                    <td>35</td>
+                    <td><span class="badge bg-danger">Urgent</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sarah Connor</td>
+                    <td>$1,800</td>
+                    <td>28</td>
+                    <td><span class="badge bg-warning">Reminder</span></td>
+                  </tr>
+                  <tr>
+                    <td>Mike Johnson</td>
+                    <td>$3,200</td>
+                    <td>42</td>
+                    <td><span class="badge bg-danger">Urgent</span></td>
+                  </tr>
+                  <tr>
+                    <td>Linda Adams</td>
+                    <td>$900</td>
+                    <td>14</td>
+                    <td><span class="badge bg-warning">Reminder</span></td>
+                  </tr>
+                  <tr>
+                    <td>Tom Hardy</td>
+                    <td>$5,100</td>
+                    <td>60</td>
+                    <td><span class="badge bg-danger">Urgent</span></td>
+                  </tr>
+                  <tr>
+                    <td>Jane Doe</td>
+                    <td>$1,200</td>
+                    <td>10</td>
+                    <td><span class="badge bg-info">Notice</span></td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>$14,600</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-user-slash me-1 text-danger"></i>Missing ISR</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>ISR</th>
+                    <th>Cases Missing</th>
+                    <th>Pending Sign-off</th>
+                    <th>Escalated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Emily Davis</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <td>Michael Brown</td>
+                    <td>5</td>
+                    <td>4</td>
+                    <td><span class="text-danger fw-bold">Yes</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sarah Wilson</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>No</td>
+                  </tr>
+                  <tr>
+                    <td>Alex Turner</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td><span class="text-danger fw-bold">Yes</span></td>
+                  </tr>
+                  <tr>
+                    <td>Rachel Green</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>No</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>15</td>
+                    <td>11</td>
+                    <td>2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-user-md me-1 text-warning"></i>Missing Provider</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Patient</th>
+                    <th>Assigned To</th>
+                    <th>Action Needed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#C-1035</td>
+                    <td>Nina P.</td>
+                    <td>Unassigned</td>
+                    <td><span class="badge bg-danger">Assign Now</span></td>
+                  </tr>
+                  <tr>
+                    <td>#C-1039</td>
+                    <td>Omar F.</td>
+                    <td>Unassigned</td>
+                    <td><span class="badge bg-danger">Assign Now</span></td>
+                  </tr>
+                  <tr>
+                    <td>#C-1041</td>
+                    <td>Kate M.</td>
+                    <td>Pending</td>
+                    <td><span class="badge bg-warning">Confirm</span></td>
+                  </tr>
+                  <tr>
+                    <td>#C-1044</td>
+                    <td>Jack R.</td>
+                    <td>Unassigned</td>
+                    <td><span class="badge bg-danger">Assign Now</span></td>
+                  </tr>
+                  <tr>
+                    <td>#C-1046</td>
+                    <td>Helen C.</td>
+                    <td>Pending</td>
+                    <td><span class="badge bg-warning">Confirm</span></td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td colspan="3">5 unassigned</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-circle-exclamation me-1 text-danger"></i>Incomplete
+                Cases</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Patient</th>
+                    <th>Missing Info</th>
+                    <th>Days Open</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#C-1033</td>
+                    <td>William S.</td>
+                    <td>Treatment Plan</td>
+                    <td>9</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1036</td>
+                    <td>Emma W.</td>
+                    <td>Insurance Auth</td>
+                    <td>6</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1037</td>
+                    <td>James B.</td>
+                    <td>Patient Consent</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1040</td>
+                    <td>Paul Green</td>
+                    <td>X-Ray Images</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1042</td>
+                    <td>John Smith</td>
+                    <td>Cement Specs</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1045</td>
+                    <td>Mark White</td>
+                    <td>Insurance Auth</td>
+                    <td>3</td>
+                  </tr>
+                  <tr>
+                    <td>#C-1048</td>
+                    <td>Lucy Grey</td>
+                    <td>Images</td>
+                    <td>2</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td colspan="3">7 open cases</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-      <div id="report-view-team" class="report-pane" style="display:none;">
-        <div class="placeholder-pane"><i class="fa-solid fa-people-group"></i>
-          <div class="fw-semibold text-dark mb-1">Team Performance</div>Organization-wide scorecards across every role
-          and department.
+
+      <!-- AUDIT -->
+      <div id="report-view-audit" class="report-pane" style="display:none;">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-scale-balanced me-1 text-warning"></i>Payroll
+                Adjustments</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Adjustment</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Approved By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>Retroactive Pay</td>
+                    <td class="text-success">+$850</td>
+                    <td>Jul 21</td>
+                    <td>Admin</td>
+                  </tr>
+                  <tr>
+                    <td>Robert Kim</td>
+                    <td>Overtime Correction</td>
+                    <td class="text-success">+$220</td>
+                    <td>Jul 20</td>
+                    <td>HR</td>
+                  </tr>
+                  <tr>
+                    <td>Emily Davis</td>
+                    <td>Commission Adj.</td>
+                    <td class="text-success">+$410</td>
+                    <td>Jul 19</td>
+                    <td>Finance</td>
+                  </tr>
+                  <tr>
+                    <td>Michael Brown</td>
+                    <td>Deduction Reversal</td>
+                    <td class="text-success">+$180</td>
+                    <td>Jul 18</td>
+                    <td>Admin</td>
+                  </tr>
+                  <tr>
+                    <td>Jessica Wilson</td>
+                    <td>Bonus Adjustment</td>
+                    <td class="text-danger">-$150</td>
+                    <td>Jul 17</td>
+                    <td>HR</td>
+                  </tr>
+                  <tr>
+                    <td>Daniel Garcia</td>
+                    <td>Leave Payout</td>
+                    <td class="text-success">+$630</td>
+                    <td>Jul 16</td>
+                    <td>Admin</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-flag me-1 text-danger"></i>Payroll Flags</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Flag</th>
+                    <th>Employee</th>
+                    <th>Severity</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Duplicate Entry</td>
+                    <td>Dr. James Chen</td>
+                    <td><span class="badge bg-danger">High</span></td>
+                    <td>Jul 22</td>
+                    <td>Open</td>
+                  </tr>
+                  <tr>
+                    <td>Missing Timesheet</td>
+                    <td>Lisa Thompson</td>
+                    <td><span class="badge bg-warning">Medium</span></td>
+                    <td>Jul 21</td>
+                    <td>Investigated</td>
+                  </tr>
+                  <tr>
+                    <td>Rate Mismatch</td>
+                    <td>Chris Anderson</td>
+                    <td><span class="badge bg-danger">High</span></td>
+                    <td>Jul 20</td>
+                    <td>Open</td>
+                  </tr>
+                  <tr>
+                    <td>Overtime Cap Exceeded</td>
+                    <td>Robert Kim</td>
+                    <td><span class="badge bg-warning">Medium</span></td>
+                    <td>Jul 19</td>
+                    <td>Resolved</td>
+                  </tr>
+                  <tr>
+                    <td>Tax Code Error</td>
+                    <td>David Martinez</td>
+                    <td><span class="badge bg-danger">High</span></td>
+                    <td>Jul 18</td>
+                    <td>Open</td>
+                  </tr>
+                  <tr>
+                    <td>Late Submission</td>
+                    <td>Stephanie Lee</td>
+                    <td><span class="badge bg-info">Low</span></td>
+                    <td>Jul 17</td>
+                    <td>Resolved</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-gavel me-1 text-warning"></i>Payroll Disputes</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Reason</th>
+                    <th>Amount</th>
+                    <th>Filed</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>Missing Commission</td>
+                    <td>$1,200</td>
+                    <td>Jul 15</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>Lisa Thompson</td>
+                    <td>Hours Discrepancy</td>
+                    <td>$380</td>
+                    <td>Jul 14</td>
+                    <td><span class="badge bg-info">Reviewing</span></td>
+                  </tr>
+                  <tr>
+                    <td>Michael Brown</td>
+                    <td>Bonus Not Paid</td>
+                    <td>$750</td>
+                    <td>Jul 12</td>
+                    <td><span class="badge bg-warning">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>Amanda Taylor</td>
+                    <td>Overtime Rate</td>
+                    <td>$190</td>
+                    <td>Jul 10</td>
+                    <td><span class="badge bg-success">Resolved</span></td>
+                  </tr>
+                  <tr>
+                    <td>Daniel Garcia</td>
+                    <td>Deduction Error</td>
+                    <td>$250</td>
+                    <td>Jul 08</td>
+                    <td><span class="badge bg-success">Resolved</span></td>
+                  </tr>
+                  <tr>
+                    <td>Jessica Wilson</td>
+                    <td>PTO Balance</td>
+                    <td>$0</td>
+                    <td>Jul 05</td>
+                    <td><span class="badge bg-success">Closed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mt-2">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-pen me-1 text-info"></i>Payroll Corrections</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Correction</th>
+                    <th>Employee</th>
+                    <th>Before</th>
+                    <th>After</th>
+                    <th>By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Rate Update</td>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>$17,500</td>
+                    <td>$18,250</td>
+                    <td>Finance</td>
+                  </tr>
+                  <tr>
+                    <td>Tax Fix</td>
+                    <td>Emily Davis</td>
+                    <td>$6,200</td>
+                    <td>$6,800</td>
+                    <td>Admin</td>
+                  </tr>
+                  <tr>
+                    <td>Hourly Correction</td>
+                    <td>Robert Kim</td>
+                    <td>140h</td>
+                    <td>146h</td>
+                    <td>HR</td>
+                  </tr>
+                  <tr>
+                    <td>Deduction Removed</td>
+                    <td>David Martinez</td>
+                    <td>$5,100</td>
+                    <td>$5,500</td>
+                    <td>Finance</td>
+                  </tr>
+                  <tr>
+                    <td>Back Pay Applied</td>
+                    <td>Dr. James Chen</td>
+                    <td>$16,200</td>
+                    <td>$16,800</td>
+                    <td>Admin</td>
+                  </tr>
+                  <tr>
+                    <td>Benefit Adjustment</td>
+                    <td>Stephanie Lee</td>
+                    <td>$4,800</td>
+                    <td>$5,200</td>
+                    <td>HR</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-clock-rotate-left me-1 text-primary"></i>Audit History
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Action</th>
+                    <th>Performed By</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Jul 23, 2026</td>
+                    <td>Payroll Run</td>
+                    <td>Admin</td>
+                    <td>Processed May 16-31 payroll</td>
+                  </tr>
+                  <tr>
+                    <td>Jul 22, 2026</td>
+                    <td>Rate Change</td>
+                    <td>Finance</td>
+                    <td>Updated Dr. Mitchell rate</td>
+                  </tr>
+                  <tr>
+                    <td>Jul 21, 2026</td>
+                    <td>Employee Added</td>
+                    <td>HR</td>
+                    <td>New assistant hired</td>
+                  </tr>
+                  <tr>
+                    <td>Jul 20, 2026</td>
+                    <td>Correction</td>
+                    <td>Admin</td>
+                    <td>Fixed OT calculation</td>
+                  </tr>
+                  <tr>
+                    <td>Jul 19, 2026</td>
+                    <td>Dispute Resolved</td>
+                    <td>HR</td>
+                    <td>Amanda Taylor OT closed</td>
+                  </tr>
+                  <tr>
+                    <td>Jul 18, 2026</td>
+                    <td>Flag Reviewed</td>
+                    <td>Finance</td>
+                    <td>Rate mismatch flagged</td>
+                  </tr>
+                  <tr>
+                    <td>Jul 17, 2026</td>
+                    <td>Adjustment</td>
+                    <td>Admin</td>
+                    <td>Leave payout processed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-users-gear me-1 text-info"></i>User Activity Log</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Module</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>admin@nextract.com</td>
+                    <td>Login</td>
+                    <td>Dashboard</td>
+                    <td>Jul 23, 08:15 AM</td>
+                  </tr>
+                  <tr>
+                    <td>finance@nextract.com</td>
+                    <td>Edited Pay Rates</td>
+                    <td>Compensation</td>
+                    <td>Jul 23, 09:42 AM</td>
+                  </tr>
+                  <tr>
+                    <td>hr@nextract.com</td>
+                    <td>Added Employee</td>
+                    <td>Team</td>
+                    <td>Jul 22, 02:10 PM</td>
+                  </tr>
+                  <tr>
+                    <td>admin@nextract.com</td>
+                    <td>Ran Payroll</td>
+                    <td>Payroll</td>
+                    <td>Jul 22, 04:30 PM</td>
+                  </tr>
+                  <tr>
+                    <td>dr.mitchell@nextract.com</td>
+                    <td>Viewed Report</td>
+                    <td>Production</td>
+                    <td>Jul 22, 10:05 AM</td>
+                  </tr>
+                  <tr>
+                    <td>finance@nextract.com</td>
+                    <td>Exported Reports</td>
+                    <td>Financial</td>
+                    <td>Jul 21, 11:20 AM</td>
+                  </tr>
+                  <tr>
+                    <td>hr@nextract.com</td>
+                    <td>Updated Role</td>
+                    <td>Settings</td>
+                    <td>Jul 21, 03:45 PM</td>
+                  </tr>
+                  <tr>
+                    <td>admin@nextract.com</td>
+                    <td>System Backup</td>
+                    <td>System</td>
+                    <td>Jul 21, 11:59 PM</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI -->
+      <div id="report-view-kpi" class="report-pane" style="display:none;">
+        <div class="row g-3">
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-chart-simple me-1 text-success"></i>Average Case Value
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Cases</th>
+                    <th>Total Revenue</th>
+                    <th>Avg Case Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>18</td>
+                    <td>$142,500</td>
+                    <td class="fw-bold">$7,916.67</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>15</td>
+                    <td>$113,200</td>
+                    <td class="fw-bold">$7,546.67</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>12</td>
+                    <td>$89,400</td>
+                    <td class="fw-bold">$7,450.00</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. David Park</td>
+                    <td>10</td>
+                    <td>$78,600</td>
+                    <td class="fw-bold">$7,860.00</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Stone</td>
+                    <td>14</td>
+                    <td>$106,800</td>
+                    <td class="fw-bold">$7,628.57</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Kevin Brown</td>
+                    <td>8</td>
+                    <td>$58,200</td>
+                    <td class="fw-bold">$7,275.00</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Overall Avg</td>
+                    <td>77</td>
+                    <td>$588,700</td>
+                    <td>$7,645.45</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-cubes me-1 text-success"></i>Average Units Per Case
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Total Units</th>
+                    <th>Cases</th>
+                    <th>Units/Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>86</td>
+                    <td>18</td>
+                    <td class="fw-bold">4.78</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>68</td>
+                    <td>15</td>
+                    <td class="fw-bold">4.53</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>52</td>
+                    <td>12</td>
+                    <td class="fw-bold">4.33</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. David Park</td>
+                    <td>47</td>
+                    <td>10</td>
+                    <td class="fw-bold">4.70</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Stone</td>
+                    <td>63</td>
+                    <td>14</td>
+                    <td class="fw-bold">4.50</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Kevin Brown</td>
+                    <td>34</td>
+                    <td>8</td>
+                    <td class="fw-bold">4.25</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Overall Avg</td>
+                    <td>350</td>
+                    <td>77</td>
+                    <td>4.55</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-user-md me-1 text-success"></i>Revenue Per Provider
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Revenue</th>
+                    <th>Cases</th>
+                    <th>Revenue/Case</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>$142,500</td>
+                    <td>18</td>
+                    <td>$7,916.67</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>$113,200</td>
+                    <td>15</td>
+                    <td>$7,546.67</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Stone</td>
+                    <td>$106,800</td>
+                    <td>14</td>
+                    <td>$7,628.57</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>$89,400</td>
+                    <td>12</td>
+                    <td>$7,450.00</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. David Park</td>
+                    <td>$78,600</td>
+                    <td>10</td>
+                    <td>$7,860.00</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Kevin Brown</td>
+                    <td>$58,200</td>
+                    <td>8</td>
+                    <td>$7,275.00</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>$588,700</td>
+                    <td>77</td>
+                    <td>$7,645.45</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-clock me-1 text-success"></i>Revenue Per Hour Worked
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th>Revenue</th>
+                    <th>Hours</th>
+                    <th>Rev/Hour</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dentists (Clinical)</td>
+                    <td>$588,700</td>
+                    <td>1,840</td>
+                    <td class="fw-bold">$319.95</td>
+                  </tr>
+                  <tr>
+                    <td>Dental Assistants</td>
+                    <td>$89,200</td>
+                    <td>1,920</td>
+                    <td class="fw-bold">$46.46</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Commission)</td>
+                    <td>$168,300</td>
+                    <td>1,040</td>
+                    <td class="fw-bold">$161.83</td>
+                  </tr>
+                  <tr>
+                    <td>ISR (Flat Pay)</td>
+                    <td>$143,200</td>
+                    <td>840</td>
+                    <td class="fw-bold">$170.48</td>
+                  </tr>
+                  <tr>
+                    <td>SDR</td>
+                    <td>$72,800</td>
+                    <td>720</td>
+                    <td class="fw-bold">$101.11</td>
+                  </tr>
+                  <tr>
+                    <td>Client Experience</td>
+                    <td>$55,500</td>
+                    <td>640</td>
+                    <td class="fw-bold">$86.72</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Overall</td>
+                    <td>$1,117,700</td>
+                    <td>7,000</td>
+                    <td>$159.67</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mt-2">
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-percent me-1 text-warning"></i>Payroll as % of Revenue
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>% of Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Total Revenue</td>
+                    <td>$1,314,050</td>
+                    <td>100%</td>
+                  </tr>
+                  <tr>
+                    <td>Total Gross Payroll</td>
+                    <td>$279,550</td>
+                    <td class="fw-bold">21.3%</td>
+                  </tr>
+                  <tr>
+                    <td>Clinical Salaries</td>
+                    <td>$98,450</td>
+                    <td>7.5%</td>
+                  </tr>
+                  <tr>
+                    <td>Commission (ISR/SDR)</td>
+                    <td>$44,400</td>
+                    <td>3.4%</td>
+                  </tr>
+                  <tr>
+                    <td>Hourly (Assistants/Ops)</td>
+                    <td>$74,100</td>
+                    <td>5.6%</td>
+                  </tr>
+                  <tr>
+                    <td>Management & Executive</td>
+                    <td>$37,400</td>
+                    <td>2.8%</td>
+                  </tr>
+                  <tr>
+                    <td>Overtime & Bonuses</td>
+                    <td>$14,800</td>
+                    <td>1.1%</td>
+                  </tr>
+                  <tr>
+                    <td>Benefits & Taxes (Est.)</td>
+                    <td>$10,800</td>
+                    <td>0.8%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Remaining (Profit)</td>
+                    <td>$1,034,500</td>
+                    <td>78.7%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-palette me-1 text-primary"></i>Cosmetic vs General
+                Production</h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Cosmetic</th>
+                    <th>General</th>
+                    <th>Cosmetic %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>$82,500</td>
+                    <td>$60,000</td>
+                    <td>57.9%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>$61,800</td>
+                    <td>$51,400</td>
+                    <td>54.6%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>$47,200</td>
+                    <td>$42,200</td>
+                    <td>52.8%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. David Park</td>
+                    <td>$52,600</td>
+                    <td>$26,000</td>
+                    <td>66.9%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Stone</td>
+                    <td>$58,400</td>
+                    <td>$48,400</td>
+                    <td>54.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Kevin Brown</td>
+                    <td>$30,200</td>
+                    <td>$28,000</td>
+                    <td>51.9%</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>$332,700</td>
+                    <td>$256,000</td>
+                    <td>56.5%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="panel panel-body h-100">
+              <h2 class="panel-title mb-2"><i class="fa-solid fa-bullseye me-1 text-danger"></i>Production Goal Tracking
+              </h2>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Provider</th>
+                    <th>Current</th>
+                    <th>Goal</th>
+                    <th>Achieved</th>
+                    <th>Remaining</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Sarah Mitchell</td>
+                    <td>$142,500</td>
+                    <td>$180,000</td>
+                    <td>
+                      <div class="progress" style="height:6px;">
+                        <div class="progress-bar bg-success" style="width:79%"></div>
+                      </div>79%
+                    </td>
+                    <td>$37,500</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. James Chen</td>
+                    <td>$113,200</td>
+                    <td>$150,000</td>
+                    <td>
+                      <div class="progress" style="height:6px;">
+                        <div class="progress-bar bg-success" style="width:75%"></div>
+                      </div>75%
+                    </td>
+                    <td>$36,800</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Emily Stone</td>
+                    <td>$106,800</td>
+                    <td>$140,000</td>
+                    <td>
+                      <div class="progress" style="height:6px;">
+                        <div class="progress-bar bg-warning" style="width:76%"></div>
+                      </div>76%
+                    </td>
+                    <td>$33,200</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Maria Lopez</td>
+                    <td>$89,400</td>
+                    <td>$120,000</td>
+                    <td>
+                      <div class="progress" style="height:6px;">
+                        <div class="progress-bar bg-warning" style="width:75%"></div>
+                      </div>75%
+                    </td>
+                    <td>$30,600</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. David Park</td>
+                    <td>$78,600</td>
+                    <td>$110,000</td>
+                    <td>
+                      <div class="progress" style="height:6px;">
+                        <div class="progress-bar bg-warning" style="width:71%"></div>
+                      </div>71%
+                    </td>
+                    <td>$31,400</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Kevin Brown</td>
+                    <td>$58,200</td>
+                    <td>$80,000</td>
+                    <td>
+                      <div class="progress" style="height:6px;">
+                        <div class="progress-bar bg-danger" style="width:73%"></div>
+                      </div>73%
+                    </td>
+                    <td>$21,800</td>
+                  </tr>
+                  <tr class="fw-bold">
+                    <td>Total</td>
+                    <td>$588,700</td>
+                    <td>$780,000</td>
+                    <td>75.5%</td>
+                    <td>$191,300</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
 
-  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <script>
-
-    $(function () {
-      $('input[name="date"]').daterangepicker({
-        timePicker: true,
-        startDate: moment().startOf('month'),
-        endDate: moment().endOf('month'),
-        locale: {
-          format: 'MM/DD/YYYY'
-        }
-      });
-    });
-    /* Tab switching */
-    function showReportTab(key, btn) {
-      document.querySelectorAll('.report-pane').forEach(p => p.style.display = 'none');
-      const target = document.getElementById('report-view-' + key);
-      if (target) target.style.display = 'block';
-      document.querySelectorAll('.report-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    /* Top Performers mini-tabs */
-    const performerData = {
-      isr: {
-        label: 'ISR', people: [
-          ['Jeremiah Smith', '$156,250.00', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80'],
-          ['Joshua Lee', '$94,600.00', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80'],
-          ['Vanessa Rodriguez', '$87,300.00', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80'],
-          ['Dan Mitchell', '$72,450.00', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80'],
-          ['Maggie Johnson', '$61,250.00', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80']
-        ]
-      },
-      providers: {
-        label: 'Providers', people: [
-          ['Dr. Heider', '$598,450.00', 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=80&q=80'],
-          ['Dr. Vanessa', '$412,300.00', 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80'],
-          ['Dr. Safa', '$298,750.00', 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=80&q=80']
-        ]
-      },
-      sdr: {
-        label: 'SDR', people: [
-          ['Bianca Torres', '$16,150.00', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80']
-        ]
-      },
-      ce: {
-        label: 'CE', people: [
-          ['Nancy Johnson', '$5,750.00', 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80']
-        ]
-      }
-    };
-
-    function switchPerformers(key, btn) {
-      document.querySelectorAll('.mini-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const data = performerData[key];
-      const list = document.getElementById('performers-list');
-      list.innerHTML = data.people.map((p, i) => `
-        <div class="performer-row">
-          <span class="performer-rank">${i + 1}</span>
-          <img class="performer-avatar" src="${p[2]}" alt="${p[0]}">
-          <span class="performer-name">${p[0]}</span>
-          <span class="performer-rev">${p[1]}</span>
-        </div>`).join('');
-      document.getElementById('performers-view-all').innerText = 'View All ' + data.label + ' Performance';
-    }
-    switchPerformers('isr', document.querySelector('.mini-tab-btn'));
-
-    /* Revenue over time line chart */
-    new Chart(document.getElementById('revenueLineChart'), {
-      type: 'line',
-      data: {
-        labels: ['Mar 1', 'Mar 3', 'Mar 5', 'Mar 7', 'Mar 9', 'Mar 11', 'Mar 13', 'Mar 15', 'Mar 17', 'Mar 19', 'Mar 21', 'Mar 23', 'Mar 25', 'Mar 27', 'Mar 29', 'Mar 31'],
-        datasets: [
-          {
-            label: 'Booked Revenue',
-            data: [180000, 260000, 300000, 280000, 340000, 380000, 360000, 420000, 460000, 500000, 560000, 610000, 660000, 720000, 800000, 874250],
-            borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.08)', fill: true, tension: 0.35, pointRadius: 0, borderWidth: 2.5
-          },
-          {
-            label: 'Goal',
-            data: [30000, 80000, 130000, 180000, 230000, 280000, 330000, 380000, 430000, 480000, 530000, 580000, 630000, 680000, 730000, 780000],
-            borderColor: '#a855f7', borderDash: [4, 4], pointRadius: 0, borderWidth: 2, fill: false
+      $(function () {
+        $('input[name="date"]').daterangepicker({
+          timePicker: true,
+          startDate: moment().startOf('month'),
+          endDate: moment().endOf('month'),
+          locale: {
+            format: 'MM/DD/YYYY'
           }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#6b7280', maxTicksLimit: 6 } },
-          y: { grid: { color: '#eef1f5' }, ticks: { callback: v => v === 0 ? '$0' : '$' + (v / 1000000 >= 1 ? (v / 1000000) + 'M' : (v / 1000) + 'K'), font: { size: 10 }, color: '#6b7280' } }
-        }
+        });
+      });
+      /* Tab switching */
+      function showReportTab(key, btn) {
+        document.querySelectorAll('.report-pane').forEach(p => p.style.display = 'none');
+        const target = document.getElementById('report-view-' + key);
+        if (target) target.style.display = 'block';
+        document.querySelectorAll('.report-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       }
-    });
 
-    /* Revenue by department donut */
-    new Chart(document.getElementById('revDeptChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Providers', 'ISR (Commission)', 'ISR (Flat Pay)', 'SDR', 'CE', 'Other'],
-        datasets: [{ data: [598450, 156250, 72800, 16150, 5750, 24850], backgroundColor: ['#4338ca', '#2563eb', '#f59e0b', '#a855f7', '#10b981', '#9ca3af'], borderWidth: 0 }]
-      },
-      options: { responsive: true, maintainAspectRatio: true, cutout: '72%', plugins: { legend: { display: false } } }
-    });
+      /* ── Export helpers ── */
+      function getActivePane() {
+        const pane = document.querySelector('.report-pane[style*="block"]');
+        if (pane) return pane;
+        return document.querySelector('.report-pane:not([style])');
+      }
 
-    /* Case type breakdown donut */
-    new Chart(document.getElementById('caseTypeChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Zirconia Cases', 'Composite Veneers', 'Porcelain Veneers', 'Crowns', 'Other'],
-        datasets: [{ data: [452600, 168300, 143200, 78900, 31250], backgroundColor: ['#0d9488', '#2563eb', '#f59e0b', '#7c3aed', '#9ca3af'], borderWidth: 0 }]
-      },
-      options: { responsive: true, maintainAspectRatio: true, cutout: '72%', plugins: { legend: { display: false } } }
-    });
-  </script>
+      function getActivePaneName() {
+        const active = document.querySelector('.report-tab-btn.active');
+        return active ? active.textContent.trim().replace(/\s+/g, '-') : 'report';
+      }
+
+      function getTablesFromPane(pane) {
+        return pane ? pane.querySelectorAll('.report-table') : [];
+      }
+
+      /* CSV Export — exports all tables in the active tab */
+      function exportCSV() {
+        const pane = getActivePane();
+        if (!pane) return alert('No active tab found.');
+        const tables = getTablesFromPane(pane);
+        if (!tables.length) return alert('No tables found in this tab.');
+        let csv = '';
+        tables.forEach((table, ti) => {
+          if (ti > 0) csv += '\n';
+          const caption = table.closest('.panel-body')?.querySelector('.panel-title')?.textContent?.trim() || 'Table';
+          csv += '"' + caption.replace(/"/g, '""') + '"\n';
+          const rows = table.querySelectorAll('tr');
+          rows.forEach(row => {
+            const cols = row.querySelectorAll('th, td');
+            const vals = [];
+            cols.forEach(c => {
+              let text = c.textContent.trim().replace(/"/g, '""');
+              vals.push('"' + text + '"');
+            });
+            csv += vals.join(',') + '\n';
+          });
+        });
+        downloadFile(csv, getActivePaneName() + '.csv', 'text/csv;charset=utf-8;');
+      }
+
+      /* Excel Export — builds an HTML table workbook */
+      function exportExcel() {
+        const pane = getActivePane();
+        if (!pane) return alert('No active tab found.');
+        const tables = getTablesFromPane(pane);
+        if (!tables.length) return alert('No tables found in this tab.');
+        let html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Report</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>';
+        tables.forEach(table => {
+          const caption = table.closest('.panel-body')?.querySelector('.panel-title')?.textContent?.trim() || 'Table';
+          html += '<h3>' + caption.replace(/</g,'&lt;') + '</h3>';
+          html += table.outerHTML.replace(/ style="/g, ' style="border:1px solid #ccc;');
+          html += '<br>';
+        });
+        html += '</body></html>';
+        downloadFile(html, getActivePaneName() + '.xls', 'application/vnd.ms-excel');
+      }
+
+      /* PDF Export — opens print dialog with a Print CSS hint */
+      function exportPDF() {
+        window.print();
+      }
+
+      /* Print Export */
+      function exportPrint() {
+        window.print();
+      }
+
+      /* Generic file download */
+      function downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      }
+    </script>
 
 </body>
 

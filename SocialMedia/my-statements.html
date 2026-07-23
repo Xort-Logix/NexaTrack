@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
     <div class="sidebar">
         <div class="brand">
             <div class="brand-mark">N</div>
@@ -44,24 +44,55 @@
         </div>
     </div>
 
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop">
+        <div class="sidebar">
+            <label for="sidebarToggle" class="btn btn-sm btn-light mb-3">
+                <i class="fa-solid fa-xmark"></i>
+            </label>
+            <div class="brand">
+                <div class="brand-mark">N</div>
+                <div class="brand-text">NEXA<small>TRACK</small></div>
+            </div>
+            <div class="nav-section">
+                <a class="nav-link-item" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
+                <!-- <a class="nav-link-item" href="my-cases.html"><i class="fa-solid fa-users"></i>My Cases</a> -->
+                <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
+                <a class="nav-link-item" href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
+                <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-chip">
+                    <div class="user-avatar" style="background:#3b82f6;">MA</div>
+                    <div class="flex-grow-1">
+                        <div style="font-size:13px;font-weight:600;">M.Ahsan</div>
+                        <small>Social Media</small>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="color:#93a2bd;font-size:11px;"></i>
+                </div>
+                <div class="support-chip">
+                    <i class="fa-solid fa-headset"></i>
+                    <div><span>Need help?</span>Contact Support</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="main">
           <div class="topbar">
 
             <!-- Left: Title -->
             <div>
-                <h1 class="page-title">Time Clock</h1>
-                <!-- <div class="page-sub">Here's your compensation overview for july 1 – july 31, 2026</div> -->
+                <h1 class="page-title">My Statements</h1>
             </div>
+
+            <!-- Mobile menu -->
+            <label for="sidebarToggle" class="btn mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
 
             <!-- Right: Actions -->
             <div class="topbar-actions">
 
-                <!-- Mobile menu -->
-                <label for="sidebarToggle" class="btn mobile-menu-btn">
-                    <i class="fa-solid fa-bars"></i>
-                </label>
                 <div class="d-flex align-items-center gap-2">
                     <button class="btn btn-green" onclick="downloadPDF()"><i
                             class="fa-solid fa-download me-1"></i>Download

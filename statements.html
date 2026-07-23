@@ -273,12 +273,27 @@
                   <div class="panel-card-body">
                     <div class="snapshot-row">
                       <div><i class="fa-regular fa-calendar-check me-2"></i><span class="snapshot-label">Scheduled
-                          Clinical Days</span></div><span class="snapshot-value">18</span>
+                          Clinical Days</span></div>
+                      <input class="work-day-input" id="scheduledDaysInput" type="number" min="0" step="1" value="18">
                     </div>
                     <div class="snapshot-row">
                       <div><i class="fa-regular fa-clock me-2"></i><span class="snapshot-label">Days Worked</span></div>
-                      <span class="snapshot-value">16</span>
+                      <input class="work-day-input" id="workedDaysInput" type="number" min="0" step="1" value="16">
                     </div>
+                    <div class="snapshot-row">
+                      <div><i class="fa-solid fa-chart-line me-2"></i><span class="snapshot-label">Workday Status</span></div>
+                      <span class="snapshot-value" id="daysStatusText">On track</span>
+                    </div>
+
+                    <div class="workday-controls">
+                      <label class="small-label" for="caseEntriesInput">Case entries logged</label>
+                      <div class="workday-inline">
+                        <input class="work-day-input compact" id="caseEntriesInput" type="number" min="0" step="1" value="8">
+                        <button class="btn btn-sm btn-custom-outline" type="button" onclick="applyCaseEntryCount()">Use Entries</button>
+                      </div>
+                      <button class="btn btn-sm btn-custom-green mt-2" type="button" onclick="saveWorkDays()">Save Days</button>
+                    </div>
+
                     <div class="snapshot-row">
                       <div><i class="fa-solid fa-arrow-down-short-wide me-2"></i><span class="snapshot-label">Daily
                           Floor</span></div><span class="snapshot-value">$650.00</span>
@@ -299,7 +314,7 @@
                       <div class="status-badge-flex"><span class="status-badge-title"><i
                             class="fa-regular fa-circle-check me-1"></i>Daily Floor Status</span><span
                           class="status-pill-green">Complete</span></div>
-                      <div class="status-badge-desc">Doctor has met or exceeded all daily floors.</div>
+                      <div class="status-badge-desc" id="daysSummaryText">16 of 18 scheduled days recorded. 89% attendance.</div>
                     </div>
                   </div>
                 </div>
@@ -1314,7 +1329,84 @@
       sdr: ['SDR Statement', 'View hours worked, pay breakdown, and payments for the selected pay period.']
     };
 
+    const workDaysStorageKey = 'doctorWorkDaysTracker';
+
+    function getStoredWorkDays() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(workDaysStorageKey));
+        if (saved) {
+          return {
+            scheduledDays: Number(saved.scheduledDays) || 18,
+            workedDays: Number(saved.workedDays) || 16,
+            caseEntries: Number(saved.caseEntries) || 8
+          };
+        }
+      } catch (e) {
+        console.warn('Unable to load workday tracker data.', e);
+      }
+
+      return { scheduledDays: 18, workedDays: 16, caseEntries: 8 };
+    }
+
+    function updateWorkDaysSummary(data = getStoredWorkDays()) {
+      const scheduledDaysInput = document.getElementById('scheduledDaysInput');
+      const workedDaysInput = document.getElementById('workedDaysInput');
+      const caseEntriesInput = document.getElementById('caseEntriesInput');
+      const statusText = document.getElementById('daysStatusText');
+      const summaryText = document.getElementById('daysSummaryText');
+
+      if (!scheduledDaysInput || !workedDaysInput || !caseEntriesInput || !statusText || !summaryText) {
+        return;
+      }
+
+      const scheduledDays = Number(data.scheduledDays) || 0;
+      const workedDays = Number(data.workedDays) || 0;
+      const caseEntries = Number(data.caseEntries) || 0;
+      const difference = workedDays - scheduledDays;
+      const completionPct = scheduledDays > 0 ? Math.round((workedDays / scheduledDays) * 100) : 0;
+
+      scheduledDaysInput.value = scheduledDays;
+      workedDaysInput.value = workedDays;
+      caseEntriesInput.value = caseEntries;
+
+      let statusLabel = 'On track';
+      let statusClass = 'status-neutral';
+      if (difference > 0) {
+        statusLabel = 'Above schedule';
+        statusClass = 'status-positive';
+      } else if (difference < 0) {
+        statusLabel = 'Behind schedule';
+        statusClass = 'status-warning';
+      }
+
+      statusText.textContent = statusLabel;
+      statusText.className = 'snapshot-value ' + statusClass;
+      summaryText.textContent = `${workedDays} of ${scheduledDays} scheduled days recorded · ${completionPct}% attendance`;
+    }
+
+    function saveWorkDays() {
+      const scheduledDays = Number(document.getElementById('scheduledDaysInput').value) || 0;
+      const workedDays = Number(document.getElementById('workedDaysInput').value) || 0;
+      const caseEntries = Number(document.getElementById('caseEntriesInput').value) || 0;
+      const data = { scheduledDays, workedDays, caseEntries };
+
+      localStorage.setItem(workDaysStorageKey, JSON.stringify(data));
+      updateWorkDaysSummary(data);
+    }
+
+    function applyCaseEntryCount() {
+      const caseEntries = Number(document.getElementById('caseEntriesInput').value) || 0;
+      const workedDays = Math.max(0, Math.ceil(caseEntries / 2));
+      document.getElementById('workedDaysInput').value = workedDays;
+      saveWorkDays();
+    }
+
+    window.saveWorkDays = saveWorkDays;
+    window.applyCaseEntryCount = applyCaseEntryCount;
+
     let hoursChartInstance = null;
+
+    updateWorkDaysSummary(getStoredWorkDays());
 
     function showStmt(key, btn) {
       document.querySelectorAll('.stmt-view').forEach(v => v.style.display = 'none');
