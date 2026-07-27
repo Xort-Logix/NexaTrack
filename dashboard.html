@@ -147,7 +147,7 @@
 
           <i class="fa-solid fa-chevron-down trailing"></i>
         </div>
-        <button class="btn btn-outline-navy"><i class="fa-regular fa-file-lines me-1"></i>Generate Payroll</button>
+        <button class="btn btn-outline-navy" data-bs-toggle="modal" data-bs-target="#newPayrollModal"><i class="fa-regular fa-file-lines me-1"></i>Generate Payroll</button>
         <a href="new-case.html" class="btn btn-green"><i class="fa-solid fa-plus me-1"></i>New Entry</a>
       </div>
     </div>
@@ -188,6 +188,16 @@
             <div class="kpi-label">Pending Payroll</div>
             <div class="kpi-value">$18,420</div>
             <div class="kpi-delta text-muted">8 Staff</div>
+            <div class="mt-2" style="font-size:11px;color:var(--gray-500);">
+              <div class="d-flex align-items-center gap-1 mb-1">
+                <span class="badge-status warn" style="font-size:9px;padding:2px 6px;">2 Case-based</span>
+                <span>Production not finalized</span>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <span class="badge-status danger" style="font-size:9px;padding:2px 6px;">3 Hourly</span>
+                <span>Time clock pending</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -220,6 +230,85 @@
         </div>
       </div>
     </div>
+
+    <!-- <div class="panel mb-3">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title"><i class="fa-solid fa-clock me-2" style="color:#f59e0b;"></i>Pending Payroll Items</h2>
+          <div class="panel-sub">Staff with incomplete production / time entries</div>
+        </div>
+        <a href="payroll-runs.html" class="btn btn-sm btn-outline-navy">Manage Payroll</a>
+      </div>
+      <div class="table-responsive">
+        <table class="nexa-table">
+          <thead>
+            <tr>
+              <th>Team Member</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Action Needed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="avatar-sm" style="background:#f59e0b;">DV</div>
+                  <div><span class="member-name">Dr. Vanessa</span><span class="member-role">Provider</span></div>
+                </div>
+              </td>
+              <td><span class="badge-dept badge">Providers</span></td>
+              <td><span class="badge-status warn">Cases Pending</span></td>
+              <td class="text-warning fw-semibold"><i class="fa-regular fa-file me-1"></i>Production not submitted</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="avatar-sm" style="background:#a855f7;">BT</div>
+                  <div><span class="member-name">Bianca</span><span class="member-role">SDR</span></div>
+                </div>
+              </td>
+              <td><span class="badge-dept badge">Sales</span></td>
+              <td><span class="badge-status danger">Missed</span></td>
+              <td class="text-danger fw-semibold"><i class="fa-regular fa-circle-xmark me-1"></i>Not clocked in today</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="avatar-sm" style="background:#3b82f6;">CM</div>
+                  <div><span class="member-name">Carlos</span><span class="member-role">Marketing</span></div>
+                </div>
+              </td>
+              <td><span class="badge-dept badge">Marketing</span></td>
+              <td><span class="badge-status warn">Clocked In</span></td>
+              <td class="text-warning fw-semibold"><i class="fa-regular fa-clock me-1"></i>Needs to clock out</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="avatar-sm" style="background:var(--gray-500);">LT</div>
+                  <div><span class="member-name">Lab Tech Team</span><span class="member-role">Lab</span></div>
+                </div>
+              </td>
+              <td><span class="badge-dept badge">Lab</span></td>
+              <td><span class="badge-status danger">Missed</span></td>
+              <td class="text-danger fw-semibold"><i class="fa-regular fa-circle-xmark me-1"></i>Not clocked in today</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="avatar-sm" style="background:var(--green-500);">NJ</div>
+                  <div><span class="member-name">Nancy</span><span class="member-role">CE</span></div>
+                </div>
+              </td>
+              <td><span class="badge-dept badge">Operations</span></td>
+              <td><span class="badge-status active">Pending Approval</span></td>
+              <td class="text-success fw-semibold"><i class="fa-regular fa-hourglass me-1"></i>Awaiting review</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
 
     <div class="row g-3">
       <div class="col-lg-7 col-xl-8">
@@ -574,17 +663,17 @@
             <div id="kpiDetailModalDelta"></div>
           </div>
           <div class="text-muted" id="kpiDetailModalDescription">Details about the selected KPI will appear here.</div>
-        <div class="modal-detail-table mt-4 d-none" id="kpiDetailModalDetail">
-          <div class="small text-muted mb-2" id="kpiDetailModalTableTitle">Details table</div>
-          <div class="table-responsive">
-            <table class="table table-sm mb-0">
-              <thead>
-                <tr id="kpiDetailModalTableHeader"></tr>
-              </thead>
-              <tbody id="kpiDetailModalDetailBody"></tbody>
-            </table>
+          <div class="modal-detail-table mt-4 d-none" id="kpiDetailModalDetail">
+            <div class="small text-muted mb-2" id="kpiDetailModalTableTitle">Details table</div>
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr id="kpiDetailModalTableHeader"></tr>
+                </thead>
+                <tbody id="kpiDetailModalDetailBody"></tbody>
+              </table>
+            </div>
           </div>
-        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -641,6 +730,94 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" id="caseSaveButton">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="newPayrollModal" tabindex="-1" aria-labelledby="newPayrollModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newPayrollModalLabel"><i class="fa-solid fa-plus-circle me-2 text-success"></i>New
+            Payroll Run</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="newPayrollForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Pay Period Start</label>
+                <input type="date" class="form-control" id="periodStart" value="2026-06-01" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pay Period End</label>
+                <input type="date" class="form-control" id="periodEnd" value="2026-06-15" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pay Date</label>
+                <input type="date" class="form-control" id="payDate" value="2026-06-16" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Payroll Cycle</label>
+                <select class="form-select" id="payCycle">
+                  <option value="biweekly" selected>Bi-Weekly</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="semimonthly">Semi-Monthly</option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Select Staff</label>
+                <select class="form-select" id="Staffelect" multiple size="4">
+                  <option value="1" selected>Dr. Nancy Rose — Provider</option>
+                  <option value="2" selected>John Smith — SDR</option>
+                  <option value="3" selected>Sarah Johnson — CE</option>
+                  <option value="4" selected>Mike Anderson — ISR</option>
+                  <option value="5" selected>Ashley Williams — Marketing</option>
+                  <option value="6" selected>Chris Brown — Social Media</option>
+                  <option value="7" selected>Emma Davis — Dental Assistant</option>
+                  <option value="8" selected>Daniel Martinez — Quote Specialist</option>
+                </select>
+                <small class="text-muted">Hold Ctrl/Cmd to select multiple Staff.</small>
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Notes (Optional)</label>
+                <textarea class="form-control" rows="2" id="payrollNotes"
+                  placeholder="Add any notes about this payroll run..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
+          <!-- <button type="button" class="btn btn-green" onclick="createPayrollRun()"><i
+              class="fa-solid fa-check me-1"></i>Create Payroll Run</button> -->
+              <a href="payroll-runs.html" class="btn btn-green"><i class="fa-solid fa-check me-1"></i>Create Payroll Run</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="payrollDetailModal" tabindex="-1" aria-labelledby="payrollDetailModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="payrollDetailModalLabel"><i
+                class="fa-solid fa-calculator me-2 text-success"></i>Payroll Breakdown</h5>
+            <div class="modal-subtitle">Review the math, edit the values if needed, and approve the pay.</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="payrollDetailModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-navy" id="savePayrollDetailBtn"
+            onclick="savePayrollDetailChanges()">Save Changes</button>
+          <button type="button" class="btn btn-green" id="approvePayrollDetailBtn" onclick="approveFromModal()">Approve
+            Pay</button>
         </div>
       </div>
     </div>
@@ -814,25 +991,25 @@
         ]
       },
       'pending payroll': {
-        title: 'Top 5 pending payroll items',
-        headers: ['Payroll Item', 'Amount'],
+        title: 'Staff With Incomplete Payroll Items',
+        headers: ['Team Member', 'Status / Action Needed'],
         rows: [
-          { label: 'Provider timecards', value: '$12,400' },
-          { label: 'ISR commissions', value: '$8,950' },
-          { label: 'Hourly staff pay', value: '$5,200' },
-          { label: 'Overtime payouts', value: '$4,625' },
-          { label: 'Bonus holds', value: '$3,100' }
+          { label: 'Dr. Vanessa \u2014 Provider', value: '\ud83d\udfe0 Cases Pending \u2014 Production not submitted' },
+          { label: 'Bianca \u2014 SDR', value: '\ud83d\udd34 Missed \u2014 Not clocked in today' },
+          { label: 'Carlos \u2014 Marketing', value: '\ud83d\udfe1 Clocked In \u2014 Needs to clock out' },
+          { label: 'Lab Tech Team \u2014 Lab', value: '\ud83d\udd34 Missed \u2014 Not clocked in today' },
+          { label: 'Nancy \u2014 CE', value: '\ud83d\udfe2 Pending Approval \u2014 Awaiting review' }
         ]
       },
       'total advances': {
-        title: 'Top 5 advances',
-        headers: ['Advance Type', 'Amount'],
+        title: 'Advances by Team Member',
+        headers: ['Team Member', 'Advance Amount'],
         rows: [
-          { label: 'Provider advances', value: '$8,500' },
-          { label: 'ISR advances', value: '$5,200' },
-          { label: 'CE advances', value: '$3,700' },
-          { label: 'SDR advances', value: '$2,650' },
-          { label: 'Marketing advances', value: '$1,250' }
+          { label: 'Dr. Heider', value: '$4,300' },
+          { label: 'Dr. Vanessa', value: '$4,300' },
+          { label: 'Dr. Nancy', value: '$3,900' },
+          { label: 'Dr. Safa', value: '$3,250' },
+          { label: 'Others', value: '$6,550' }
         ]
       },
       'payroll completion': {
@@ -865,6 +1042,10 @@
       if (detailData) {
         document.getElementById('kpiDetailModalDescription').textContent = detailData.title === 'Top 5 production case types'
           ? 'Top 5 case types contributing to production are shown below.'
+          : detailData.title === 'Staff With Incomplete Payroll Items'
+          ? 'Staff who haven\'t finalized their production or time entries for this pay period.'
+          : detailData.title === 'Advances by Team Member'
+          ? 'Advance amounts broken down by team member for this period.'
           : 'Payroll history for the last 6 months is shown below.';
 
         tableTitle.textContent = detailData.title;

@@ -285,13 +285,8 @@
                       <span class="snapshot-value" id="daysStatusText">On track</span>
                     </div>
 
-                    <div class="workday-controls">
-                      <label class="small-label" for="caseEntriesInput">Case entries logged</label>
-                      <div class="workday-inline">
-                        <input class="work-day-input compact" id="caseEntriesInput" type="number" min="0" step="1" value="8">
-                        <button class="btn btn-sm btn-custom-outline" type="button" onclick="applyCaseEntryCount()">Use Entries</button>
-                      </div>
-                      <button class="btn btn-sm btn-custom-green mt-2" type="button" onclick="saveWorkDays()">Save Days</button>
+                    <div class="mt-2">
+                      <button class="btn btn-sm btn-custom-green" type="button" onclick="saveWorkDays()">Save Days</button>
                     </div>
 
                     <div class="snapshot-row">
@@ -399,27 +394,79 @@
         <div id="doctor-view-cosmetic" class="inner-content-pane" style="display:none;">
           <div class="panel-card">
             <div class="panel-card-header">
-              <h3 class="panel-card-title">Cosmetic Production Analytics &amp; Cases</h3>
+              <h3 class="panel-card-title">Cosmetic Production — Case Details</h3>
+              <span class="value-text" style="font-weight:800;font-size:15px;">$14,625</span>
             </div>
-            <div class="panel-card-body">
-              <div class="row-item total-row" style="margin-bottom:10px;"><span class="label-text">Total Veneer &amp;
-                  Crown Cases</span><span></span><span class="value-text">$8,425.00</span></div>
-              <ul class="breakdown-list">
-                <li>
-                  <div class="title-wrapper"><strong>Full Cases (16-20 Units)</strong> — 8 cases completed successfully
-                  </div>
-                  <div class="amt">$7,425.00</div>
-                </li>
-                <li>
-                  <div class="title-wrapper"><strong>Per-Unit Cases</strong> — Extra standalone clinical units allocated
-                  </div>
-                  <div class="amt">$750.00</div>
-                </li>
-                <li>
-                  <div class="title-wrapper"><strong>Mixed Cases</strong> — Combined material configurations</div>
-                  <div class="amt">$250.00</div>
-                </li>
-              </ul>
+            <div class="panel-card-body p-0">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Patient</th>
+                    <th>Material</th>
+                    <th>Units</th>
+                    <th class="text-end">Doctor Pay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000234</a></td>
+                    <td>Sarah Johnson</td>
+                    <td><span class="badge-dept">Composite</span></td>
+                    <td>16</td>
+                    <td class="amt-col">$5,000.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000235</a></td>
+                    <td>Michael Chen</td>
+                    <td><span class="badge-dept">Ceramic</span></td>
+                    <td>12</td>
+                    <td class="amt-col">$800.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000236</a></td>
+                    <td>Emily Rodriguez</td>
+                    <td><span class="badge-dept">Porcelain / Zirconia</span></td>
+                    <td>20</td>
+                    <td class="amt-col">$625.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000237</a></td>
+                    <td>David Kim</td>
+                    <td><span class="badge-dept">Composite</span></td>
+                    <td>18</td>
+                    <td class="amt-col">$4,500.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000238</a></td>
+                    <td>Lisa Thompson</td>
+                    <td><span class="badge-dept">Crown</span></td>
+                    <td>8</td>
+                    <td class="amt-col">$1,200.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000239</a></td>
+                    <td>Robert Davis</td>
+                    <td><span class="badge-dept">Composite</span></td>
+                    <td>10</td>
+                    <td class="amt-col">$750.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000240</a></td>
+                    <td>Jessica Martinez</td>
+                    <td><span class="badge-dept">Ceramic</span></td>
+                    <td>14</td>
+                    <td class="amt-col">$1,500.00</td>
+                  </tr>
+                  <tr>
+                    <td><a href="#" class="text-decoration-none fw-semibold" style="color:var(--green-600);">CASE-2026-000241</a></td>
+                    <td>Thomas Wilson</td>
+                    <td><span class="badge-dept">Mixed</span></td>
+                    <td>20</td>
+                    <td class="amt-col">$250.00</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -427,25 +474,64 @@
         <div id="doctor-view-general" class="inner-content-pane" style="display:none;">
           <div class="panel-card">
             <div class="panel-card-header">
-              <h3 class="panel-card-title">General Production Breakdown</h3>
+              <h3 class="panel-card-title">General Production — Procedure Details</h3>
+              <span class="value-text" style="font-weight:800;font-size:15px;">$1,140.00</span>
             </div>
-            <div class="panel-card-body">
-              <div class="row-item total-row" style="margin-bottom:10px;"><span class="label-text">14 Non-Cosmetic
-                  Procedures Logged</span><span></span><span class="value-text">$1,140.00</span></div>
-              <ul class="breakdown-list">
-                <li>
-                  <div class="title-wrapper"><strong>Restorative Dentistry</strong> (Fillings, Core build-ups)</div>
-                  <div class="amt">$610.00</div>
-                </li>
-                <li>
-                  <div class="title-wrapper"><strong>Endodontics</strong> (Root Canal Treatments)</div>
-                  <div class="amt">$350.00</div>
-                </li>
-                <li>
-                  <div class="title-wrapper"><strong>Other Procedures</strong> (Hygiene, Diagnostics)</div>
-                  <div class="amt">$180.00</div>
-                </li>
-              </ul>
+            <div class="panel-card-body p-0">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Procedure</th>
+                    <th>Qty</th>
+                    <th>Doctor</th>
+                    <th class="text-end">Doctor Pay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Deep Cleaning</td>
+                    <td>2</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$280.00</td>
+                  </tr>
+                  <tr>
+                    <td>Composite Filling</td>
+                    <td>3</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$210.00</td>
+                  </tr>
+                  <tr>
+                    <td>Core Build-Up</td>
+                    <td>1</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$120.00</td>
+                  </tr>
+                  <tr>
+                    <td>Root Canal (Molar)</td>
+                    <td>1</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$250.00</td>
+                  </tr>
+                  <tr>
+                    <td>Root Canal (Pre-Molar)</td>
+                    <td>1</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$100.00</td>
+                  </tr>
+                  <tr>
+                    <td>Scaling &amp; Root Planing</td>
+                    <td>1</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$90.00</td>
+                  </tr>
+                  <tr>
+                    <td>Oral Exam</td>
+                    <td>2</td>
+                    <td>Dr. Heider</td>
+                    <td class="amt-col">$90.00</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

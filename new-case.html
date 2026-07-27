@@ -879,15 +879,29 @@
                   <option>Miami</option>
                 </select>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label class="form-label">Provider</label>
-                <select class="form-select">
+                <select class="form-select" id="providerDoctor" onchange="updateCompensation()">
                   <option>Dr. Heider</option>
                   <option>Dr. Vanessa</option>
                   <option>Dr. Nancy</option>
                   <option>Dr. Safa</option>
                   <option>Dr. Silvina</option>
                 </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Doctor Role</label>
+                <select class="form-select" id="doctorRole" onchange="updateCompensation()">
+                  <option value="Full Doctor">Full Doctor (100%)</option>
+                  <option value="Prep Doctor">Prep Doctor (60%)</option>
+                  <option value="Cement Doctor">Cement Doctor (40%)</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Doctor Pay <span class="text-muted small">(est.)</span></label>
+                <div class="input-group"><span class="input-group-text">$</span>
+                  <input type="text" class="form-control" id="providerPayDisplay" value="5,000.00" disabled>
+                </div>
               </div>
               <div class="col-md-6">
                 <label class="form-label">ISR</label>
@@ -967,13 +981,15 @@
 
             <div class="row g-3 mb-4">
               <div class="col-md-6"><label class="form-label">Prep Doctor</label><select class="form-select"
-                  id="prepDoctor">
+                  id="prepDoctor" onchange="updateCompensation()">
                   <option>Dr. Heider</option>
                   <option>Dr. Vanessa</option>
                   <option>Dr. Nancy</option>
                   <option>Dr. Safa</option>
                   <option>Dr. Silvina</option>
-                </select></div>
+                </select>
+                <small class="text-muted" style="font-size:11px;">Prep Pay (60%): <strong id="prepPayDisplay">$3,000.00</strong></small>
+              </div>
               <div class="col-md-6">
                 <label class="form-label d-block">Cement Doctor</label>
                 <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="sameDoctor" checked
@@ -983,6 +999,7 @@
                   <option>Dr. Heider</option>
                   <option>Dr. Vanessa</option>
                 </select>
+                <small class="text-muted" style="font-size:11px;">Cement Pay (40%): <strong id="cementPayDisplay">$2,000.00</strong></small>
               </div>
             </div>
 
@@ -1002,6 +1019,14 @@
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
                     class="form-control" id="treatmentValue" value="12500" oninput="updateSummary()"></div>
               </div>
+              <div class="col-md-6"><label class="form-label">Base Case Pay <i class="fa-solid fa-circle-info text-muted" title="Base amount used for doctor compensation calculation"></i></label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" id="baseCasePay" value="5000" oninput="updateCompensation()"></div>
+              </div>
+              <div class="col-md-6"><label class="form-label">Quoted Amount</label>
+                <div class="input-group"><span class="input-group-text">$</span><input type="number"
+                    class="form-control" id="quotedAmount" value="1200" oninput="updateSummary()"></div>
+              </div>
               <div class="col-md-6"><label class="form-label">Collected Amount</label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
                     class="form-control" id="collectedAmount" value="12500" oninput="updateSummary()"></div>
@@ -1016,17 +1041,17 @@
                 </select>
               </div>
               <div class="col-md-6"><label class="form-label">Lab Cost <span
-                    class="text-muted">(optional)</span></label>
+                    class="text-muted"></span></label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
                     class="form-control" value="0" oninput="updateSummary()" id="labCost"></div>
               </div>
               <div class="col-md-6"><label class="form-label">Merchant Fee <span
-                    class="text-muted">(optional)</span></label>
+                    class="text-muted"></span></label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
                     class="form-control" value="0" oninput="updateSummary()" id="merchantFee"></div>
               </div>
               <div class="col-md-6"><label class="form-label">Notes <span
-                    class="text-muted">(optional)</span></label><input type="text" class="form-control"
+                    class="text-muted"></span></label><input type="text" class="form-control"
                   placeholder="Add any case notes..."></div>
             </div>
           </div>
@@ -1037,7 +1062,7 @@
             <p class="text-muted small">This is exactly how the case affects payroll. Confirm before saving.</p>
             <div class="panel p-3 mb-3">
               <div class="section-label">Providers</div>
-              <div class="impact-row"><span>Dr. Heider</span><span class="impact-amt">+$1,240.00</span></div>
+              <div class="impact-row" id="reviewProviderPay"><span>Dr. Heider <small class="text-muted">(Full Doctor · 100%)</small></span><span class="impact-amt">+$5,000.00</span></div>
               <div class="section-label mt-3">General Dentistry</div>
               <div class="impact-row"><span>Dr. Heider — Deep Cleaning</span><span class="impact-amt">+$280.00</span>
               </div>
@@ -1094,9 +1119,9 @@
           </div>
 
           <div class="section-label mt-3">Production Summary</div>
-          <div class="payroll-row"><span>Cosmetic Production</span><span>$12,500.00</span></div>
-          <div class="payroll-row"><span>General Production</span><span>$800.00</span></div>
-          <div class="payroll-row total"><span>Total Production</span><span>$13,300.00</span></div>
+          <div class="payroll-row"><span>Cosmetic Production</span><span id="sCosmeticProd">$12,500.00</span></div>
+          <div class="payroll-row"><span>General Production</span><span id="sGeneralProd">$800.00</span></div>
+          <div class="payroll-row total"><span>Total Production</span><span id="sTotalProd">$13,300.00</span></div>
 
           <button class="btn btn-green w-100 mt-3" id="saveCaseBtn" style="display:none;"
             onclick="alert('Case saved. Dashboard, Production, Statements, and Payroll Runs all update automatically.')"><i
@@ -1108,6 +1133,7 @@
 
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="js/compensation-service.js"></script>
 
   <script>
     let currentStep = 1;
@@ -1128,7 +1154,7 @@
       currentStep = n;
       window.scrollTo(0, 0);
     }
-    function nextStep() { if (currentStep < 4) goToStep(currentStep + 1); }
+    function nextStep() { if (currentStep < 4) goToStep(currentStep + 1); updateCompensation(); }
     function prevStep() { if (currentStep > 1) goToStep(currentStep - 1); }
 
     document.querySelectorAll('.material-card').forEach(card => {
@@ -1156,6 +1182,7 @@
       const same = document.getElementById('sameDoctor').checked;
       document.getElementById('cementDoctor').disabled = same;
       if (same) document.getElementById('cementDoctor').value = document.getElementById('prepDoctor').value;
+      updateCompensation();
     }
 
     function addProcedure() {
@@ -1167,12 +1194,78 @@
       div.innerHTML = `
     <div class="row g-2 align-items-end">
       <div class="col-md-4"><label class="form-label">Procedure</label><select class="form-select"><option>Extraction</option><option>Deep Cleaning</option><option>Root Canal</option><option>Bone Graft</option><option>Scaling & Root Planing</option></select></div>
-      <div class="col-md-2"><label class="form-label">Quantity</label><input type="number" class="form-control" value="1"></div>
+      <div class="col-md-2"><label class="form-label">Quantity</label><input type="number" class="form-control" value="1" oninput="updateSummary()"></div>
       <div class="col-md-3"><label class="form-label">Doctor</label><select class="form-select"><option>Dr. Heider</option><option>Dr. Vanessa</option></select></div>
       <div class="col-md-2"><label class="form-label">Doctor Pay</label><input type="text" class="form-control" value="$140.00" disabled></div>
-      <div class="col-md-1"><button class="btn btn-outline-navy" onclick="document.getElementById('${id}').remove()"><i class="fa-solid fa-trash"></i></button></div>
+      <div class="col-md-1"><button class="btn btn-outline-navy" onclick="document.getElementById('${id}').remove(); updateSummary();"><i class="fa-solid fa-trash"></i></button></div>
     </div>`;
       document.getElementById('procedureList').appendChild(div);
+      updateSummary();
+    }
+
+    /** ─── COMPENSATION ENGINE ─── */
+
+    /** Get the current Base Case Pay value */
+    function getBaseCasePay() {
+      return parseFloat(document.getElementById('baseCasePay').value) || 0;
+    }
+
+    /** Get the selected doctor role */
+    function getSelectedRole() {
+      return document.getElementById('doctorRole').value;
+    }
+
+    /** Get the selected provider name */
+    function getProviderName() {
+      return document.getElementById('providerDoctor').value;
+    }
+
+    /**
+     * Calculate and update ALL doctor compensation fields
+     * Uses the reusable CompensationService (js/compensation-service.js)
+     */
+    function updateCompensation() {
+      const basePay = getBaseCasePay();
+      const role = getSelectedRole();
+
+      // ── Provider (main doctor) ──
+      const providerPay = CompensationService.calculateDoctorPay(basePay, role);
+      const rolePct = CompensationService.getRolePercentage(role);
+
+      document.getElementById('providerPayDisplay').value =
+        providerPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+      // ── Prep Doctor (always 60% of Base Case Pay) ──
+      const prepPct = CompensationService.getRolePercentage('Prep Doctor');
+      const prepPay = basePay * (prepPct / 100);
+      document.getElementById('prepPayDisplay').textContent =
+        '$' + prepPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+      // ── Cement Doctor (always 40% of Base Case Pay) ──
+      const cementPct = CompensationService.getRolePercentage('Cement Doctor');
+      const cementPay = basePay * (cementPct / 100);
+      document.getElementById('cementPayDisplay').textContent =
+        '$' + cementPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+      // ── Live Summary Panel ──
+      document.getElementById('sProviderPay').textContent =
+        '$' + providerPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sPrepPay').textContent =
+        '$' + prepPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sCementPay').textContent =
+        '$' + cementPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+      // ── Review Step (Step 4) ──
+      const reviewEl = document.getElementById('reviewProviderPay');
+      if (reviewEl) {
+        const pName = getProviderName();
+        reviewEl.innerHTML =
+          `<span>${pName} <small class="text-muted">(${role} &middot; ${rolePct}%)</small></span>` +
+          `<span class="impact-amt">+$${providerPay.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>`;
+      }
+
+      // Also refresh financial summary
+      updateSummary();
     }
 
     function updateSummary() {
@@ -1182,13 +1275,45 @@
       const fee = parseFloat(document.getElementById('merchantFee').value) || 0;
       const gross = collected - lab;
       const net = gross - fee;
+
+      // ── Financial Summary ──
       document.getElementById('sTreatVal').textContent = '$' + tv.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sCollected').textContent = '$' + collected.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sLabCost').textContent = '$' + lab.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sMerchFee').textContent = '$' + fee.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sGross').textContent = '$' + gross.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sNet').textContent = '$' + net.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+      // ── Production Summary ──
+      // Cosmetic Production = Treatment Value (the main cosmetic case value)
+      const cosmeticProd = tv;
+      // General Production = sum of all procedure doctor pay amounts
+      let generalProd = 0;
+      document.querySelectorAll('#procedureList .dynamic-fields input[type="text"][disabled]').forEach(function (el) {
+        const val = parseFloat(el.value.replace(/[^0-9.]/g, '')) || 0;
+        const qtyInput = el.closest('.row').querySelector('input[type="number"]');
+        const qty = qtyInput ? (parseFloat(qtyInput.value) || 1) : 1;
+        generalProd += val * qty;
+      });
+      // Default to $800 if no procedures exist (for demo)
+      if (generalProd === 0) generalProd = 800;
+      const totalProd = cosmeticProd + generalProd;
+
+      document.getElementById('sCosmeticProd').textContent = '$' + cosmeticProd.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sGeneralProd').textContent = '$' + generalProd.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sTotalProd').textContent = '$' + totalProd.toLocaleString(undefined, { minimumFractionDigits: 2 });
     }
+
+    // ── Auto-run compensation on page load & when base case pay changes ──
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('baseCasePay').addEventListener('input', updateCompensation);
+      document.getElementById('treatmentValue').addEventListener('input', updateSummary);
+      document.getElementById('collectedAmount').addEventListener('input', updateSummary);
+      document.getElementById('labCost').addEventListener('input', updateSummary);
+      document.getElementById('merchantFee').addEventListener('input', updateSummary);
+      // Initial calculation
+      updateCompensation();
+    });
 
     goToStep(1);
   </script>

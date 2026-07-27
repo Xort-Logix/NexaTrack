@@ -418,6 +418,519 @@
       text-align: center;
       cursor: pointer;
       transition: .15s;
+
+    }
+
+    /* ===== PIPELINE / KANBAN BOARD ===== */
+
+    .view-toggle {
+      display: inline-flex;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .view-toggle button {
+      border: none;
+      background: transparent;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: .15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-toggle button.active {
+      background: #fff;
+      color: var(--gray-900);
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+
+    .view-toggle button:hover:not(.active) {
+      color: var(--gray-700);
+    }
+
+    /* Pipeline Board */
+    .pipeline-board {
+      display: flex;
+      gap: 14px;
+      padding: 4px 0 20px;
+      overflow-x: auto;
+      min-height: 500px;
+      align-items: flex-start;
+    }
+
+    .pipeline-stage {
+      flex: 0 0 240px;
+      min-width: 240px;
+      max-width: 260px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 280px);
+    }
+
+    .pipeline-stage-header {
+      padding: 12px 14px;
+      border-radius: 11px 11px 0 0;
+      font-weight: 700;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .pipeline-stage-header .count {
+      background: rgba(255,255,255,.25);
+      border-radius: 12px;
+      padding: 1px 10px;
+      font-size: 11px;
+    }
+
+    /* Stage Colors */
+    .stage-needs-exam .pipeline-stage-header { background: #ef4444; }
+    .stage-consult .pipeline-stage-header { background: #3b82f6; }
+    .stage-treatment .pipeline-stage-header { background: #8b5cf6; }
+    .stage-prep-ready .pipeline-stage-header { background: #f59e0b; }
+    .stage-financial-planning .pipeline-stage-header { background: #06b6d4; }
+    .stage-finished .pipeline-stage-header { background: #10b981; }
+
+    .pipeline-stage-body {
+      padding: 10px;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pipeline-stage-body.drag-over {
+      background: #e0f2fe;
+      border-radius: 0 0 11px 11px;
+    }
+
+    /* Patient Card */
+    .patient-card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1.5px solid var(--gray-200);
+      padding: 12px 14px;
+      cursor: grab;
+      transition: .15s;
+      position: relative;
+      user-select: none;
+    }
+
+    .patient-card:hover {
+      border-color: var(--gray-300);
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
+
+    .patient-card:active {
+      cursor: grabbing;
+    }
+
+    .patient-card.dragging {
+      opacity: .5;
+      transform: rotate(2deg);
+    }
+
+    /* Doctor-based card left border colors */
+    .patient-card[data-doctor="Dr. Heider"] { border-left: 4px solid #3b82f6; }
+    .patient-card[data-doctor="Dr. Vanessa"] { border-left: 4px solid #ec4899; }
+    .patient-card[data-doctor="Dr. Safa"] { border-left: 4px solid #8b5cf6; }
+    .patient-card[data-doctor="Dr. Smith"] { border-left: 4px solid #f59e0b; }
+    .patient-card[data-doctor="Dr. Patel"] { border-left: 4px solid #10b981; }
+    .patient-card[data-doctor="Dr. Garcia"] { border-left: 4px solid #ef4444; }
+
+    /* Patient card doctor color background variation (subtle tint) */
+    .patient-card[data-doctor="Dr. Heider"] { background: linear-gradient(135deg, #eff6ff 0%, #fff 40%); }
+    .patient-card[data-doctor="Dr. Vanessa"] { background: linear-gradient(135deg, #fdf2f8 0%, #fff 40%); }
+    .patient-card[data-doctor="Dr. Safa"] { background: linear-gradient(135deg, #f5f3ff 0%, #fff 40%); }
+    .patient-card[data-doctor="Dr. Smith"] { background: linear-gradient(135deg, #fffbeb 0%, #fff 40%); }
+    .patient-card[data-doctor="Dr. Patel"] { background: linear-gradient(135deg, #ecfdf5 0%, #fff 40%); }
+    .patient-card[data-doctor="Dr. Garcia"] { background: linear-gradient(135deg, #fef2f2 0%, #fff 40%); }
+
+    .patient-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .patient-name {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--gray-900);
+    }
+
+    .patient-case-id {
+      font-size: 10.5px;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    .patient-card-body {
+      font-size: 12px;
+      color: var(--gray-600);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .patient-card-body .row-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .patient-card-body .row-item .label {
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    .patient-card-body .row-item .value {
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    .patient-card-body .treatment-value {
+      color: var(--green-600);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .patient-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    .room-badge {
+      font-size: 10.5px;
+      font-weight: 600;
+      background: var(--gray-100);
+      color: var(--gray-600);
+      padding: 2px 10px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: .12s;
+    }
+
+    .room-badge:hover {
+      background: var(--gray-200);
+    }
+
+    .room-badge.has-room {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .card-actions button {
+      border: none;
+      background: none;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .12s;
+    }
+
+    .btn-escalate {
+      color: #ef4444;
+    }
+
+    .btn-escalate:hover {
+      background: #fef2f2;
+    }
+
+    .btn-complete {
+      color: #10b981;
+    }
+
+    .btn-complete:hover {
+      background: #ecfdf5;
+    }
+
+    /* Escalation Modal */
+    .escalation-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.5);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .escalation-overlay.show {
+      display: flex;
+    }
+
+    .escalation-modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 420px;
+      max-width: 90vw;
+      padding: 28px 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      animation: modalIn .25s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(.92) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .escalation-modal h3 {
+      font-weight: 800;
+      font-size: 18px;
+      margin: 0 0 6px;
+      color: var(--gray-900);
+    }
+
+    .escalation-modal .sub {
+      color: var(--gray-500);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .escalation-modal label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--gray-700);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .escalation-modal select,
+    .escalation-modal textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: .12s;
+      font-family: inherit;
+    }
+
+    .escalation-modal select:focus,
+    .escalation-modal textarea:focus {
+      border-color: var(--green-500);
+    }
+
+    .escalation-modal textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .escalation-modal .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .escalation-modal .modal-actions button {
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      transition: .12s;
+    }
+
+    .escalation-modal .btn-cancel {
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    .escalation-modal .btn-cancel:hover {
+      background: var(--gray-200);
+    }
+
+    .escalation-modal .btn-submit {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .escalation-modal .btn-submit:hover {
+      background: #dc2626;
+    }
+
+    /* Room Assignment Modal */
+    .room-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.5);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .room-overlay.show {
+      display: flex;
+    }
+
+    .room-modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 360px;
+      max-width: 90vw;
+      padding: 28px 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      animation: modalIn .25s ease;
+      text-align: center;
+    }
+
+    .room-modal h3 {
+      font-weight: 800;
+      font-size: 18px;
+      margin: 0 0 6px;
+      color: var(--gray-900);
+    }
+
+    .room-modal .sub {
+      color: var(--gray-500);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .room-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .room-option {
+      padding: 16px 12px;
+      border: 2px solid var(--gray-200);
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: .12s;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--gray-700);
+      background: #fff;
+    }
+
+    .room-option:hover {
+      border-color: var(--green-400);
+      background: var(--green-50);
+    }
+
+    .room-option.selected {
+      border-color: var(--green-500);
+      background: var(--green-50);
+      color: var(--green-700);
+    }
+
+    .room-option .room-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gray-400);
+      display: block;
+      margin-top: 3px;
+    }
+
+    .room-modal .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .room-modal .modal-actions button {
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      transition: .12s;
+    }
+
+    .room-modal .btn-cancel {
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    .room-modal .btn-cancel:hover {
+      background: var(--gray-200);
+    }
+
+    .room-modal .btn-save {
+      background: var(--green-500);
+      color: #fff;
+    }
+
+    .room-modal .btn-save:hover {
+      background: var(--green-600);
+    }
+
+    /* Confetti canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 99999;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .pipeline-stage {
+        flex: 0 0 220px;
+        min-width: 220px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .pipeline-board {
+        flex-direction: column;
+        overflow-x: hidden;
+      }
+      .pipeline-stage {
+        flex: none;
+        max-width: none;
+        max-height: none;
+      }
+      .view-toggle button {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+    }
     }
 
     .material-card:hover {

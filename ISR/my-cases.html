@@ -206,14 +206,16 @@
         </div>
         <div class="panel-header">
             <div class="d-flex gap-2 flex-wrap align-items-center">
-                <div class="input-group" style="width: 280px;">
+                <div class="view-toggle">
+                    <button class="active" onclick="switchView('table', this)"><i class="fa-solid fa-table"></i> Table</button>
+                    <button onclick="switchView('board', this)"><i class="fa-solid fa-columns"></i> Board</button>
+                </div>
+                <div class="input-group" style="width: 240px;">
                     <input type="text" id="daterange" name='date' class="form-control">
                     <span class="input-group-text">
                         <i class="fa-regular fa-calendar"></i>
                     </span>
                 </div>
-
-
                 <select class="form-select form-select-sm-custom" style="width:190px;">
                     <option>All Case Types</option>
                     <option>Composite Veneers</option>
@@ -271,6 +273,11 @@
                         </nav>
                     </div>
                 </div>
+            </div>
+
+            <!-- PIPELINE BOARD VIEW (hidden by default) -->
+            <div id="pipelineBoard" class="pipeline-board" style="display:none; width:100%;">
+                <!-- Stages injected by JavaScript -->
             </div>
 
             <div class="col-lg-3">
@@ -419,11 +426,70 @@
             renderTable();
         </script>
 
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Escalation Modal -->
+    <div class="escalation-overlay" id="escalationOverlay">
+        <div class="escalation-modal">
+            <h3>⚠️ Escalate Case</h3>
+            <div class="sub">Why is this case being escalated?</div>
+            <label for="escalationReason">Reason</label>
+            <select id="escalationReason">
+                <option value="">Select a reason…</option>
+                <option value="Patient not responding">Patient not responding</option>
+                <option value="Insurance issue">Insurance issue</option>
+                <option value="Treatment plan changed">Treatment plan changed</option>
+                <option value="Financial concern">Financial concern</option>
+                <option value="Schedule conflict">Schedule conflict</option>
+                <option value="Requires specialist">Requires specialist</option>
+                <option value="Other">Other (please specify)</option>
+            </select>
+            <label for="escalationNote" style="margin-top:14px;">Additional Notes</label>
+            <textarea id="escalationNote" placeholder="Type details here…"></textarea>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeEscalation()">Cancel</button>
+                <button class="btn-submit" onclick="submitEscalation()">Escalate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Assignment Modal -->
+    <div class="room-overlay" id="roomOverlay">
+        <div class="room-modal">
+            <h3>🦷 Assign Operatory</h3>
+            <div class="sub">Which room is this patient in?</div>
+            <div class="room-options">
+                <div class="room-option" data-room="1" onclick="selectRoom(this)">
+                    Op 1
+                    <span class="room-label">Operatory 1</span>
+                </div>
+                <div class="room-option" data-room="2" onclick="selectRoom(this)">
+                    Op 2
+                    <span class="room-label">Operatory 2</span>
+                </div>
+                <div class="room-option" data-room="3" onclick="selectRoom(this)">
+                    Op 3
+                    <span class="room-label">Operatory 3</span>
+                </div>
+                <div class="room-option" data-room="4" onclick="selectRoom(this)">
+                    Op 4
+                    <span class="room-label">Operatory 4</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeRoomModal()">Cancel</button>
+                <button class="btn-save" onclick="saveRoom()">Assign Room</button>
+            </div>
+        </div>
+    </div>
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
 
 
@@ -443,6 +509,336 @@
         sidebarBtn?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
         backdrop?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
         window.addEventListener('resize', () => { if (window.innerWidth > 991) document.body.classList.remove('sidebar-open'); });
+
+        /* =========================================================
+           PIPELINE / KANBAN BOARD — DATA & LOGIC (ISR View)
+           ========================================================= */
+
+        const STAGES = [
+            { id: 'needs-exam',     label: 'Needs Exam',      css: 'stage-needs-exam' },
+            { id: 'consult',        label: 'Consult',          css: 'stage-consult' },
+            { id: 'treatment',      label: 'Treatment',        css: 'stage-treatment' },
+            { id: 'prep-ready',     label: 'Prep / Ready',     css: 'stage-prep-ready' },
+            { id: 'financial-planning', label: 'Financial Planning', css: 'stage-financial-planning' },
+            { id: 'finished',       label: 'Finished',         css: 'stage-finished' },
+        ];
+
+        const STATUS_TO_STAGE = {
+            'New': 'needs-exam',
+            'Needs Exam': 'needs-exam',
+            'Consult': 'consult',
+            'Treatment': 'treatment',
+            'In Progress': 'treatment',
+            'Prep Complete': 'prep-ready',
+            'Prep / Ready': 'prep-ready',
+            'Financial Planning': 'financial-planning',
+            'Financial': 'financial-planning',
+            'Completed': 'finished',
+            'Finished': 'finished',
+        };
+
+        // Build boardCases from the doctor's cases array
+        const boardCases = doctorCases.map(c => ({
+            id: c[0],
+            patient: c[1],
+            type: c[2],
+            doctor: c[3],
+            value: c[7],
+            status: c[5],
+            stage: STATUS_TO_STAGE[c[5]] || 'needs-exam',
+            room: ''
+        }));
+
+        // Add extra cards for pipeline visibility
+        boardCases.push(
+            { id: 'CASE-20260326-001', patient: 'Kevin Brown',     type: 'Zirconia Veneer',  doctor: doctorName, value: '$10,800', status: 'Prep Complete',  stage: 'prep-ready',          room: '2' },
+            { id: 'CASE-20260326-002', patient: 'Olivia Martinez', type: 'Full Crown',       doctor: doctorName, value: '$6,200',  status: 'Financial',       stage: 'financial-planning',  room: '' },
+            { id: 'CASE-20260325-001', patient: 'William Chen',    type: 'Composite Veneer', doctor: doctorName, value: '$5,800',  status: 'Consult',        stage: 'consult',             room: '' },
+            { id: 'CASE-20260325-002', patient: 'Sophia Lee',      type: 'Porcelain Veneer', doctor: doctorName, value: '$9,400',  status: 'New',            stage: 'needs-exam',          room: '' }
+        );
+
+        let currentEscalationCase = null;
+        let currentRoomCase = null;
+        let currentRoomValue = null;
+
+        function initPipelineBoard() {
+            const board = document.getElementById('pipelineBoard');
+            if (!board) return;
+            board.innerHTML = '';
+            STAGES.forEach(stage => {
+                const col = document.createElement('div');
+                col.className = `pipeline-stage ${stage.css}`;
+                col.dataset.stage = stage.id;
+                const cards = boardCases.filter(c => c.stage === stage.id);
+                col.innerHTML = `
+                    <div class="pipeline-stage-header">
+                        <span>${stage.label}</span>
+                        <span class="count">${cards.length}</span>
+                    </div>
+                    <div class="pipeline-stage-body" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
+                        ${cards.map(c => renderCard(c)).join('')}
+                    </div>
+                `;
+                board.appendChild(col);
+            });
+        }
+
+        function renderCard(c) {
+            const initials = c.patient.split(' ').map(w => w[0]).join('').substring(0, 2);
+            const roomHtml = c.room
+                ? `<span class="room-badge has-room" onclick="openRoomModal('${c.id}')"><i class="fa-solid fa-door-open"></i> Op ${c.room}</span>`
+                : `<span class="room-badge" onclick="openRoomModal('${c.id}')"><i class="fa-solid fa-door-open"></i> Add Room</span>`;
+            const isFinished = c.stage === 'finished';
+
+            return `
+                <div class="patient-card" draggable="true" data-case='${JSON.stringify(c).replace(/'/g, "&#39;")}'
+                     data-doctor="${c.doctor}" data-id="${c.id}" data-stage="${c.stage}"
+                     ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">
+                    <div class="patient-card-header">
+                        <span class="patient-name">${c.patient}</span>
+                        <span class="patient-case-id">${c.id}</span>
+                    </div>
+                    <div class="patient-card-body">
+                        <div class="row-item">
+                            <span class="label">Doctor</span>
+                            <span class="value">${c.doctor}</span>
+                        </div>
+                        <div class="row-item">
+                            <span class="label">Type</span>
+                            <span class="value">${c.type}</span>
+                        </div>
+                        <div class="row-item">
+                            <span class="label">Value</span>
+                            <span class="value treatment-value">${c.value}</span>
+                        </div>
+                    </div>
+                    <div class="patient-card-footer">
+                        ${roomHtml}
+                        <div class="card-actions">
+                            ${!isFinished ? `<button class="btn-escalate" onclick="openEscalation('${c.id}')" title="Escalate"><i class="fa-solid fa-flag"></i></button>` : ''}
+                            ${!isFinished ? `<button class="btn-complete" onclick="markComplete('${c.id}')" title="Mark Complete"><i class="fa-solid fa-check-circle"></i></button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPipelineBoard() {
+            const bodies = document.querySelectorAll('.pipeline-stage-body');
+            bodies.forEach(body => {
+                const stageId = body.closest('.pipeline-stage').dataset.stage;
+                const stageCards = boardCases.filter(c => c.stage === stageId);
+                body.innerHTML = stageCards.map(c => renderCard(c)).join('');
+                const header = body.closest('.pipeline-stage').querySelector('.pipeline-stage-header .count');
+                if (header) header.textContent = stageCards.length;
+            });
+        }
+
+        function switchView(view, btn) {
+            document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const tableCol = document.querySelector('.col-lg-9');
+            const detailCol = document.querySelector('.col-lg-3');
+            const board = document.getElementById('pipelineBoard');
+
+            if (view === 'table') {
+                tableCol.style.display = '';
+                detailCol.style.display = '';
+                board.style.display = 'none';
+            } else {
+                tableCol.style.display = 'none';
+                detailCol.style.display = 'none';
+                board.style.display = 'flex';
+                initPipelineBoard();
+            }
+        }
+
+        let draggedCard = null;
+
+        function onDragStart(e) {
+            draggedCard = e.target.closest('.patient-card');
+            if (!draggedCard) return;
+            draggedCard.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedCard.dataset.id);
+        }
+
+        function onDragEnd(e) {
+            const card = e.target.closest('.patient-card');
+            if (card) card.classList.remove('dragging');
+            document.querySelectorAll('.pipeline-stage-body').forEach(b => b.classList.remove('drag-over'));
+        }
+
+        function onDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const body = e.target.closest('.pipeline-stage-body');
+            if (body) body.classList.add('drag-over');
+        }
+
+        function onDragLeave(e) {
+            const body = e.target.closest('.pipeline-stage-body');
+            if (body) body.classList.remove('drag-over');
+        }
+
+        function onDrop(e) {
+            e.preventDefault();
+            const body = e.target.closest('.pipeline-stage-body');
+            if (!body) return;
+            body.classList.remove('drag-over');
+
+            const caseId = e.dataTransfer.getData('text/plain');
+            const newStage = body.closest('.pipeline-stage').dataset.stage;
+            const caseItem = boardCases.find(c => c.id === caseId);
+            if (!caseItem || caseItem.stage === newStage) return;
+
+            if (newStage === 'finished' && caseItem.stage !== 'finished') {
+                triggerConfetti();
+            }
+
+            caseItem.stage = newStage;
+            const stageObj = STAGES.find(s => s.id === newStage);
+            caseItem.status = stageObj ? stageObj.label : caseItem.status;
+
+            renderPipelineBoard();
+            updateTableData();
+        }
+
+        function openEscalation(caseId) {
+            currentEscalationCase = boardCases.find(c => c.id === caseId);
+            if (!currentEscalationCase) return;
+            document.getElementById('escalationReason').value = '';
+            document.getElementById('escalationNote').value = '';
+            document.getElementById('escalationOverlay').classList.add('show');
+        }
+
+        function closeEscalation() {
+            document.getElementById('escalationOverlay').classList.remove('show');
+            currentEscalationCase = null;
+        }
+
+        function submitEscalation() {
+            const reason = document.getElementById('escalationReason').value;
+            const note = document.getElementById('escalationNote').value.trim();
+            if (!reason) {
+                alert('Please select a reason for escalation.');
+                return;
+            }
+            if (currentEscalationCase) {
+                console.log('Escalated:', currentEscalationCase.id, 'Reason:', reason, 'Note:', note);
+                alert(`Case ${currentEscalationCase.id} escalated.\nReason: ${reason}${note ? '\nNote: ' + note : ''}`);
+                currentEscalationCase.stage = 'needs-exam';
+                currentEscalationCase.status = 'Needs Exam';
+                renderPipelineBoard();
+                updateTableData();
+            }
+            closeEscalation();
+        }
+
+        function openRoomModal(caseId) {
+            currentRoomCase = boardCases.find(c => c.id === caseId);
+            if (!currentRoomCase) return;
+            currentRoomValue = currentRoomCase.room || '';
+            document.querySelectorAll('.room-option').forEach(el => el.classList.remove('selected'));
+            if (currentRoomValue) {
+                const sel = document.querySelector(`.room-option[data-room="${currentRoomValue}"]`);
+                if (sel) sel.classList.add('selected');
+            }
+            document.getElementById('roomOverlay').classList.add('show');
+        }
+
+        function closeRoomModal() {
+            document.getElementById('roomOverlay').classList.remove('show');
+            currentRoomCase = null;
+            currentRoomValue = null;
+        }
+
+        function selectRoom(el) {
+            document.querySelectorAll('.room-option').forEach(e => e.classList.remove('selected'));
+            el.classList.add('selected');
+            currentRoomValue = el.dataset.room;
+        }
+
+        function saveRoom() {
+            if (!currentRoomCase || !currentRoomValue) {
+                alert('Please select an operatory.');
+                return;
+            }
+            currentRoomCase.room = currentRoomValue;
+            renderPipelineBoard();
+            closeRoomModal();
+        }
+
+        function markComplete(caseId) {
+            const caseItem = boardCases.find(c => c.id === caseId);
+            if (!caseItem) return;
+            caseItem.stage = 'finished';
+            caseItem.status = 'Finished';
+            triggerConfetti();
+            renderPipelineBoard();
+            updateTableData();
+        }
+
+        function triggerConfetti() {
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.7 },
+                    colors: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6']
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.7 },
+                    colors: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6']
+                });
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }
+            frame();
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6']
+            });
+        }
+
+        function updateTableData() {
+            cases.forEach(c => {
+                const boardCase = boardCases.find(bc => bc.id === c[0]);
+                if (boardCase) {
+                    const stageObj = STAGES.find(s => s.id === boardCase.stage);
+                    c[5] = stageObj ? stageObj.label : boardCase.status;
+                    if (c[5] === 'Finished' || c[5] === 'Completed') c[6] = 'active';
+                    else if (c[5] === 'Needs Exam' || c[5] === 'New') c[6] = 'inactive';
+                    else c[6] = 'warn';
+                }
+            });
+            const rows = doctorCases.map((c, index) => `
+                <tr class="case-row ${index === 0 ? 'table-active' : ''}" data-index="${index}" onclick="selectCase(${index})">
+                    <td class="fw-semibold">${c[0]}</td>
+                    <td>${c[1]}</td>
+                    <td>${c[2]}</td>
+                    <td>Providers</td>
+                    <td>${c[3]}</td>
+                    <td><span class="badge-status ${c[6]}">${c[5]}</span></td>
+                    <td>${c[7]}</td>
+                    <td>${c[8]}</td>
+                </tr>
+            `).join('');
+            document.getElementById('casesBody').innerHTML = rows;
+            if (doctorCases.length) populateDetail(doctorCases[0]);
+            renderDoctorSummary();
+        }
     </script>
 </body>
 

@@ -603,6 +603,16 @@
       color: var(--gray-900);
     }
 
+    .badge-dept {
+      background: #eef1f5;
+      color: var(--gray-700);
+      font-weight: 600;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
     .total-table-row td {
       background: var(--green-50);
       font-weight: 800;

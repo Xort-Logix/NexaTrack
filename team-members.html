@@ -32,7 +32,7 @@
       <a class="nav-link-item" href="payroll-runs.html"><i class="fa-solid fa-money-check-dollar"></i> Payroll Runs</a>
       <a class="nav-link-item" href="reports.html"><i class="fa-solid fa-chart-line"></i> Reports</a>
       <a class="nav-link-item" href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-         <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      <a class="nav-link-item" href="index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
 
     </div>
     <div class="sidebar-footer">
@@ -81,7 +81,7 @@
 
       <div class="row g-3 mb-3">
         <div class="col-3 kpi-col">
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="openKpiModal('members')">
             <div class="row">
               <div class="col-3">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="col-3 kpi-col">
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="openKpiModal('payroll')">
             <div class="row">
               <div class="col-3">
                 <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><img class="icon-img"
@@ -115,7 +115,7 @@
           </div>
         </div>
         <div class="col-3 kpi-col">
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="openKpiModal('pending')">
             <div class="row">
               <div class='col-3'>
                 <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-regular fa-clock"></i>
@@ -130,7 +130,7 @@
           </div>
         </div>
         <div class="col-3 kpi-col">
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="openKpiModal('departments')">
             <div class="row">
               <div class='col-3'>
                 <div class="kpi-icon" style="background:#fef3c7;color:#78350f;">
@@ -146,7 +146,7 @@
           </div>
         </div>
         <div class="col-3 kpi-col">
-          <div class="kpi-card">
+          <div class="kpi-card" onclick="openKpiModal('compensation')">
             <div class="row">
               <div class='col-3'>
                 <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa fa-cog"
@@ -529,6 +529,167 @@
       </div>
     </div>
 
+    <!-- ═══ KPI Detail Modals ═══ -->
+
+    <!-- Modal: Total Team Members -->
+    <div class="modal fade" id="kpiMembersModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold"><i class="fa-solid fa-user-group me-2 text-success"></i>Total Team Members
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="table-responsive">
+              <table class="kpi-modal-table" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Team Member</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Compensation</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiMembersBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="text-muted small" id="kpiMembersFooter">Showing 8 of 37 team members</span>
+            <button class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Total PayRoll this period -->
+    <div class="modal fade" id="kpiPayrollModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold"><i class="fa-solid fa-sack-dollar me-2 text-success"></i>Payroll This Period
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="table-responsive">
+              <table class="kpi-modal-table" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Team Member</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Engine</th>
+                    <th class="text-end">Earned</th>
+                    <th class="text-end">Net Owed</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiPayrollBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div><span class="fw-bold" id="kpiPayrollTotal">Total: $8,754,574</span></div>
+            <button class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Pending Payroll -->
+    <div class="modal fade" id="kpiPendingModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold"><i class="fa-regular fa-clock me-2 text-warning"></i>Pending Payroll</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="table-responsive">
+              <table class="kpi-modal-table" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Team Member</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th class="text-end">Pending Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiPendingBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="text-muted small" id="kpiPendingFooter">8 members with pending payments</span>
+            <button class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Departments -->
+    <div class="modal fade" id="kpiDeptModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold"><i class="fa-solid fa-building me-2 text-success"></i>Departments</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="table-responsive">
+              <table class="kpi-modal-table" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Department</th>
+                    <th class="text-end">Members</th>
+                    <th class="text-end">Total Payroll</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiDeptBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="text-muted small">8 departments total</span>
+            <button class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Compensation Models -->
+    <div class="modal fade" id="kpiCompModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold"><i class="fa-solid fa-cog me-2 text-primary"></i>Compensation Models</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="table-responsive">
+              <table class="kpi-modal-table" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th class="text-end">Members</th>
+                    <th>Rate Range</th>
+                  </tr>
+                </thead>
+                <tbody id="kpiCompBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span class="text-muted small">6 active compensation models</span>
+            <button class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
@@ -679,17 +840,157 @@
     renderTable();
 
     const dynamicFieldsByType = {
-      production: `<div class="row g-3"><div class="col-md-4"><label class="form-label">Daily Floor</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="650"></div></div><div class="col-md-4"><label class="form-label">Payment Frequency</label><select class="form-select"><option>Bi-Weekly</option><option>Weekly</option><option>Monthly</option></select></div><div class="col-md-4"><label class="form-label">Provider Type</label><select class="form-select"><option>1099 Independent Contractor</option><option>W2 Employee</option></select></div><div class="col-12"><small class="text-muted">Full case, per-unit, and mixed-case pay rates are inherited from Compensation Rules → Doctors plan.</small></div></div>`,
+      production: `<div class="row g-3"><div class="col-md-4"><label class="form-label">Daily Floor</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="650"></div></div><div class="col-md-4"><label class="form-label">Payment Frequency</label><select class="form-select"><option>Bi-Weekly</option><option>Weekly</option><option>Monthly</option></select></div><div class="col-md-4"><label class="form-label">Provider Type</label><select class="form-select"><option>1099 Independent Contractor</option><option>W2 Staff</option></select></div><div class="col-12"><small class="text-muted">Full case, per-unit, and mixed-case pay rates are inherited from Compensation Rules → Doctors plan.</small></div></div>`,
       commission: `<div class="row g-3"><div class="col-md-4"><label class="form-label">Commission %</label><div class="input-group"><input type="number" class="form-control" value="8"><span class="input-group-text">%</span></div></div><div class="col-md-4"><label class="form-label">Team Lead Override</label><div class="input-group"><input type="number" class="form-control" value="2"><span class="input-group-text">%</span></div></div><div class="col-md-4"><label class="form-label">Payment Frequency</label><select class="form-select"><option>Bi-Weekly</option><option>Monthly</option></select></div><div class="col-12"><small class="text-muted">No bonus, chargeback, or override fields — everything rolls up to Commission Earned.</small></div></div>`,
       flat: `<div class="row g-3"><div class="col-md-6"><label class="form-label">Composite — Flat Rate / Case</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="100"></div></div><div class="col-md-6"><label class="form-label">Ceramic — Flat Rate / Case</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="150"></div></div><div class="col-md-6"><label class="form-label">Porcelain/Zirconia — Flat Rate / Case</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="200"></div></div><div class="col-md-6"><label class="form-label">Crown — Flat Rate / Case</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="200"></div></div></div>`,
       hourly: `<div class="row g-3"><div class="col-md-4"><label class="form-label">Hourly Rate</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="15"></div></div><div class="col-md-4"><label class="form-label">Overtime Multiplier</label><div class="input-group"><input type="number" step="0.1" class="form-control" value="1.5"><span class="input-group-text">×</span></div></div><div class="col-md-4"><label class="form-label">Standard Weekly Hours</label><input type="number" class="form-control" value="40"></div><div class="col-12"><small class="text-muted">Bonus fields are hidden by default. Enable role-specific bonuses in Settings → Workflow if needed.</small></div></div>`,
       salary: `<div class="row g-3"><div class="col-md-4"><label class="form-label">Monthly Salary</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="5200"></div></div><div class="col-md-4"><label class="form-label">Overtime Eligible?</label><select class="form-select"><option>No</option><option>Yes</option></select></div><div class="col-md-4"><label class="form-label">Payment Frequency</label><select class="form-select"><option>Monthly</option><option>Bi-Weekly</option></select></div></div>`
     };
-    function renderDynamicFields(type) { document.getElementById('dynamicFields').innerHTML = dynamicFieldsByType[type]; }
-    document.querySelectorAll('.comp-type-card').forEach(card => {
-      card.addEventListener('click', () => { document.querySelectorAll('.comp-type-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); renderDynamicFields(card.dataset.type); });
-    });
-    renderDynamicFields('production');
+    // Guard: dynamicFields only exists on add-member page, skip if absent
+    const dynEl = document.getElementById('dynamicFields');
+    if (dynEl) {
+      window.renderDynamicFields = function (type) { dynEl.innerHTML = dynamicFieldsByType[type]; };
+      document.querySelectorAll('.comp-type-card').forEach(card => {
+        card.addEventListener('click', () => { document.querySelectorAll('.comp-type-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); window.renderDynamicFields(card.dataset.type); });
+      });
+      window.renderDynamicFields('production');
+    }
+
+    // ─── KPI MODAL DATA (declared before functions that use them) ───
+    const pendingData = [
+      { initials: "JM", name: "Jessica Morales", dept: "Sales", role: "ISR Closer", amount: "$4,200", status: "pending", statusLabel: "Pending Review" },
+      { initials: "AK", name: "Alex Kim", dept: "Marketing", role: "Marketing Specialist", amount: "$3,800", status: "pending", statusLabel: "Pending Review" },
+      { initials: "RT", name: "Robert Taylor", dept: "Operations", role: "Client Exp. Lead", amount: "$3,200", status: "pending", statusLabel: "Pending Approval" },
+      { initials: "LW", name: "Lisa Wang", dept: "Providers", role: "Dental Assistant", amount: "$2,750", status: "pending", statusLabel: "Pending Review" },
+      { initials: "MC", name: "Maria Chavez", dept: "Lab", role: "Lab Technician", amount: "$2,400", status: "pending", statusLabel: "Pending Approval" },
+      { initials: "DP", name: "David Park", dept: "Sales", role: "SDR", amount: "$1,850", status: "pending", statusLabel: "Pending Review" },
+      { initials: "SJ", name: "Sarah Jenkins", dept: "Operations", role: "CE", amount: "$1,200", status: "pending", statusLabel: "Pending Approval" },
+      { initials: "TG", name: "Tom Garcia", dept: "Marketing", role: "Social Media", amount: "$600", status: "pending", statusLabel: "Pending Review" }
+    ];
+
+    const deptData = [
+      { name: "Providers", count: 8, payroll: "$24,565" },
+      { name: "Sales", count: 6, payroll: "$21,037" },
+      { name: "Operations", count: 4, payroll: "$8,450" },
+      { name: "Lab", count: 3, payroll: "$5,550" },
+      { name: "Marketing", count: 3, payroll: "$6,250" },
+      { name: "CE", count: 3, payroll: "$4,800" },
+      { name: "QS", count: 2, payroll: "$3,200" },
+      { name: "Social Media", count: 2, payroll: "$1,800" }
+    ];
+
+    const compData = [
+      { name: "Cosmetic Production", count: 2, range: "$650/day floor" },
+      { name: "% Commission", count: 2, range: "8% – 10%" },
+      { name: "Flat Case Pay", count: 1, range: "$100 – $200/case" },
+      { name: "Hourly", count: 3, range: "$15 – $20/hr" },
+      { name: "Salary", count: 1, range: "$5,200/mo" },
+      { name: "Hybrid", count: 1, range: "Base + Commission" }
+    ];
+
+    function openKpiModal(type) {
+      const modalId = {
+        members: 'kpiMembersModal',
+        payroll: 'kpiPayrollModal',
+        pending: 'kpiPendingModal',
+        departments: 'kpiDeptModal',
+        compensation: 'kpiCompModal'
+      }[type];
+
+      if (!modalId) return;
+
+      // Populate data before showing modal
+      switch (type) {
+        case 'members':
+          populateMembersModal();
+          break;
+        case 'payroll':
+          populatePayrollModal();
+          break;
+        case 'pending':
+          populatePendingModal();
+          break;
+        case 'departments':
+          populateDeptModal();
+          break;
+        case 'compensation':
+          populateCompModal();
+          break;
+      }
+
+      const modalEl = document.getElementById(modalId);
+      const bsModal = new bootstrap.Modal(modalEl);
+      bsModal.show();
+    }
+
+    function populateMembersModal() {
+      const tbody = document.getElementById('kpiMembersBody');
+      tbody.innerHTML = members.map(m => `
+        <tr>
+          <td><div class="d-flex align-items-center gap-2"><div class="avatar-sm">${m.initials}</div><div><div class="member-name">${m.name}</div><div class="member-email">${m.role}</div></div></div></td>
+          <td><span class="badge-dept">${m.dept}</span></td>
+          <td>${m.role}</td>
+          <td><span class="badge-comp ${compBadgeClass[m.engine]}">${engineDisplayName(m.engine)}</span></td>
+          <td><span class="badge-status active">Active</span></td>
+        </tr>`).join('');
+      document.getElementById('kpiMembersFooter').textContent = `Showing ${members.length} of 37 team members`;
+    }
+
+    function populatePayrollModal() {
+      const tbody = document.getElementById('kpiPayrollBody');
+      let total = 0;
+      tbody.innerHTML = members.map(m => {
+        const earned = parseFloat(m.earned.replace(/[$,]/g, ''));
+        total += earned;
+        return `
+        <tr>
+          <td><div class="d-flex align-items-center gap-2"><div class="avatar-sm">${m.initials}</div><div><div class="member-name">${m.name}</div><div class="member-email">${m.role}</div></div></div></td>
+          <td><span class="badge-dept">${m.dept}</span></td>
+          <td>${m.role}</td>
+          <td><span class="badge-comp ${compBadgeClass[m.engine]}">${engineDisplayName(m.engine)}</span></td>
+          <td class="text-end fw-semibold">${m.earned}</td>
+          <td class="text-end fw-bold text-success">${m.net}</td>
+        </tr>`;
+      }).join('');
+      document.getElementById('kpiPayrollTotal').textContent = `Total: $${total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function populatePendingModal() {
+      const tbody = document.getElementById('kpiPendingBody');
+      tbody.innerHTML = pendingData.map(p => `
+        <tr>
+          <td><div class="d-flex align-items-center gap-2"><div class="avatar-sm">${p.initials}</div><div><div class="member-name">${p.name}</div><div class="member-email">${p.role}</div></div></div></td>
+          <td><span class="badge-dept">${p.dept}</span></td>
+          <td>${p.role}</td>
+          <td class="text-end fw-semibold text-warning">${p.amount}</td>
+          <td><span class="badge-status warn">${p.statusLabel}</span></td>
+        </tr>`).join('');
+      document.getElementById('kpiPendingFooter').textContent = `${pendingData.length} members with pending payments`;
+    }
+
+    function populateDeptModal() {
+      const tbody = document.getElementById('kpiDeptBody');
+      tbody.innerHTML = deptData.map(d => `
+        <tr>
+          <td><span class="badge-dept" style="font-size:13px;padding:6px 12px;">${d.name}</span></td>
+          <td class="text-end fw-bold">${d.count}</td>
+          <td class="text-end fw-semibold">${d.payroll}</td>
+        </tr>`).join('');
+    }
+
+    function populateCompModal() {
+      const tbody = document.getElementById('kpiCompBody');
+      const badgeMap = { "Cosmetic Production": "production", "% Commission": "commission", "Flat Case Pay": "flat", "Hourly": "hourly", "Salary": "salary", "Hybrid": "commission" };
+      tbody.innerHTML = compData.map(c => `
+        <tr>
+          <td><span class="badge-comp ${badgeMap[c.name] || 'production'}">${c.name}</span></td>
+          <td class="text-end fw-bold">${c.count}</td>
+          <td class="fw-semibold text-muted">${c.range}</td>
+        </tr>`).join('');
+    }
+
+    // Make openKpiModal globally accessible
+    window.openKpiModal = openKpiModal;
   </script>
 
 </body>
