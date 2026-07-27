@@ -12,8 +12,14 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" href="../style/dashborad.css">
   <link rel="stylesheet" href="../style/mainrole.css">
-
-</head>
+  <style>
+    .kpi-card[role="button"] { cursor: pointer; transition: transform .15s ease,box-shadow .15s ease; }
+    .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+    .detail-breakdown-box { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+    .detail-breakdown-row { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+    .detail-breakdown-row:last-child { border-bottom: none; }
+    .detail-breakdown-row.total { font-weight: 700; border-top: 2px solid #e2e8f0; margin-top: -1px; }
+  </style>
 
 <body>
   <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
@@ -26,8 +32,8 @@
       <a class="nav-link-item active" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
 
       <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
-      <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-       <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      <!-- <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a> -->
+      <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
     </div>
     <div class="sidebar-footer">
       <div class="user-chip">
@@ -60,8 +66,8 @@
         <a class="nav-link-item active" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
 
         <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
-        <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-         <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+        <!-- <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a> -->
+        <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
 
 
       </div>
@@ -76,7 +82,7 @@
     </div>
   </div>
   <div class="main">
-      <div class="topbar">
+    <div class="topbar">
 
       <!-- Left: Title -->
       <div>
@@ -91,19 +97,6 @@
         <label for="sidebarToggle" class="btn mobile-menu-btn">
           <i class="fa-solid fa-bars"></i>
         </label>
-
-        <!-- Date picker -->
-        <div class="date-pill">
-          <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
-          <div class="date-meta">
-            <span class="date-label">Pay Period</span>
-            <span class="date-value">
-              <input type="text" id="daterange" name="date" />
-            </span>
-          </div>
-          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
-        </div>
-
         <!-- ── CLOCK WIDGET ── -->
         <div class="clock-widget" id="clockWidget">
 
@@ -134,6 +127,19 @@
 
         </div>
         <!-- /clock-widget -->
+        <!-- Date picker -->
+        <div class="date-pill">
+          <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+          <div class="date-meta">
+            <span class="date-label">Pay Period</span>
+            <span class="date-value">
+              <input type="text" id="daterange" name="date" />
+            </span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+
+
 
       </div>
       <!-- /topbar-actions -->
@@ -141,56 +147,45 @@
     </div>
 
     <div class="kpi-row mb-3">
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" onclick="openQsKpiDetail(0)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
-                class="fa-solid fa-clock"></i></div>
+                class="fa-solid fa-file-invoice"></i></div>
           </div>
           <div class="col-9">
-            <div class="kpi-label">Hours Worked</div>
-            <div class="kpi-value">160.00</div>
-            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 8 hrs avg/day</div>
+            <div class="kpi-label">Quotes Done</div>
+            <div class="kpi-value">245</div>
+            <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 15 avg/day</div>
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" onclick="openQsKpiDetail(1)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i>
             </div>
           </div>
           <div class="col-9">
-            <div class="kpi-label">Hourly Rate</div>
-            <div class="kpi-value">$18.00</div>
+            <div class="kpi-label">Rate Per Quote</div>
+            <div class="kpi-value">$1.00</div>
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" onclick="openQsKpiDetail(2)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-receipt"></i>
             </div>
           </div>
           <div class="col-9">
-            <div class="kpi-label">Regular Pay</div>
-            <div class="kpi-value">$2,880</div>
-            <div class="kpi-delta text-muted">Base hours only</div>
+            <div class="kpi-label">Commission</div>
+            <div class="kpi-value">$245.00</div>
+            <div class="kpi-delta text-muted">Quotes sent × $1.00</div>
           </div>
         </div>
       </div>
-      <div class="kpi-card">
-        <div class="row">
-          <div class="col-3">
-            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-bolt"></i></div>
-          </div>
-          <div class="col-9">
-            <div class="kpi-label">Overtime</div>
-            <div class="kpi-value">$0.00</div>
-          </div>
-        </div>
-      </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" onclick="openQsKpiDetail(3)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -198,7 +193,7 @@
           </div>
           <div class="col-9">
             <div class="kpi-label">Total Pay</div>
-            <div class="kpi-value">$2,880</div>
+            <div class="kpi-value">$245.00</div>
             <div class="progress mt-2" style="height:5px;">
               <div class="progress-bar bg-success" style="width:100%;"></div>
             </div>
@@ -212,8 +207,8 @@
         <div class="panel mb-3">
           <div class="panel-header">
             <div>
-              <h2 class="panel-title">Attendance Overview</h2>
-              <div class="panel-sub">Weekly hours and schedule summary for the assistant</div>
+              <h2 class="panel-title">Quotes Overview</h2>
+              <div class="panel-sub">Quotes sent and commission summary for the period</div>
             </div>
           </div>
           <div class="panel-body">
@@ -221,18 +216,18 @@
               <div class="col-md-6">
                 <div class="panel" style="background:var(--gray-50);">
                   <div class="panel-body">
-                    <div class="small text-muted mb-1">Scheduled Hours</div>
-                    <div class="fw-bold fs-5">40.00 hrs</div>
-                    <div class="small text-success">5 shifts • 8 hrs/day</div>
+                    <div class="small text-muted mb-1">Quotes Target</div>
+                    <div class="fw-bold fs-5">200 / mo</div>
+                    <div class="small text-success">✅ 122% achieved</div>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="panel" style="background:var(--gray-50);">
                   <div class="panel-body">
-                    <div class="small text-muted mb-1">Worked This Week</div>
-                    <div class="fw-bold fs-5">38.50 hrs</div>
-                    <div class="small text-muted">1.50 hrs pending</div>
+                    <div class="small text-muted mb-1">Sent This Week</div>
+                    <div class="fw-bold fs-5">42</div>
+                    <div class="small text-muted">📈 12 pending review</div>
                   </div>
                 </div>
               </div>
@@ -242,10 +237,10 @@
         <div class="panel">
           <div class="panel-header">
             <div>
-              <h2 class="panel-title">Working Hours</h2>
-              <div class="panel-sub">Recent hourly shifts for the selected pay period</div>
+              <h2 class="panel-title">Quotes History</h2>
+              <div class="panel-sub">Recent quotes sent during the selected pay period</div>
             </div>
-            <a href="time-clock.html" class="btn btn-sm btn-outline-navy">View Time Clock</a>
+            <a href="time-clock.html" class="btn btn-sm btn-outline-navy">View All Quotes</a>
           </div>
 
           <div class="table-responsive">
@@ -253,10 +248,9 @@
               <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Shift</th>
-                  <th>Hours</th>
-                  <th>Rate</th>
-                  <th>Total</th>
+                  <th>Type</th>
+                  <th>Client</th>
+                  <th>Commission</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -264,56 +258,50 @@
               <tbody>
                 <tr>
                   <td>Mar 01, 2026</td>
-                  <td>Morning Shift</td>
-                  <td>8.00</td>
-                  <td>$18.00</td>
-                  <td>$144.00</td>
-                  <td><span class="badge-status active">Approved</span></td>
+                  <td>Treatment Plan</td>
+                  <td>John D.</td>
+                  <td>$1.00</td>
+                  <td><span class="badge-status active">Sent</span></td>
                 </tr>
 
                 <tr>
                   <td>Mar 03, 2026</td>
-                  <td>Afternoon Shift</td>
-                  <td>7.50</td>
-                  <td>$18.00</td>
-                  <td>$135.00</td>
-                  <td><span class="badge-status active">Approved</span></td>
+                  <td>Follow-up</td>
+                  <td>Sarah M.</td>
+                  <td>$1.00</td>
+                  <td><span class="badge-status active">Accepted</span></td>
                 </tr>
 
                 <tr>
                   <td>Mar 05, 2026</td>
-                  <td>Morning Shift</td>
-                  <td>8.00</td>
-                  <td>$18.00</td>
-                  <td>$144.00</td>
+                  <td>New Patient</td>
+                  <td>Robert K.</td>
+                  <td>$1.00</td>
                   <td><span class="badge-status warn">Pending</span></td>
                 </tr>
 
                 <tr>
                   <td>Mar 08, 2026</td>
-                  <td>Evening Shift</td>
-                  <td>6.50</td>
-                  <td>$18.00</td>
-                  <td>$117.00</td>
-                  <td><span class="badge-status active">Approved</span></td>
+                  <td>Treatment Plan</td>
+                  <td>Emily R.</td>
+                  <td>$1.00</td>
+                  <td><span class="badge-status active">Sent</span></td>
                 </tr>
 
                 <tr>
                   <td>Mar 10, 2026</td>
-                  <td>Morning Shift</td>
-                  <td>8.00</td>
-                  <td>$18.00</td>
-                  <td>$144.00</td>
-                  <td><span class="badge-status active">Approved</span></td>
+                  <td>Follow-up</td>
+                  <td>Michael P.</td>
+                  <td>$1.00</td>
+                  <td><span class="badge-status active">Accepted</span></td>
                 </tr>
 
                 <tr>
                   <td>Mar 12, 2026</td>
-                  <td>Afternoon Shift</td>
-                  <td>8.00</td>
-                  <td>$18.00</td>
-                  <td>$144.00</td>
-                  <td><span class="badge-status active">Approved</span></td>
+                  <td>New Patient</td>
+                  <td>Lisa W.</td>
+                  <td>$1.00</td>
+                  <td><span class="badge-status active">Sent</span></td>
                 </tr>
               </tbody>
             </table>
@@ -324,39 +312,35 @@
         <div class="panel mb-3">
           <div class="panel-header">
             <div>
-              <h2 class="panel-title">Assistant Payroll</h2>
-              <div class="panel-sub">Compensation model: Hourly • Manual entry for now</div>
+              <h2 class="panel-title">QS Commission</h2>
+              <div class="panel-sub">Compensation model: Commission • $1.00 per quote sent</div>
             </div>
-            <span class="badge-comp hourly">Hourly</span>
+            <span class="badge-comp hourly">Commission</span>
           </div>
           <div class="panel-body">
             <div class="payroll-summary-card">
               <div class="payroll-summary-header">
                 <div>
-                  <div class="small text-muted mb-1">Data source</div>
-                  <div class="fw-semibold">Manual entry for now, with future time clock/timesheet integration.</div>
+                  <div class="small text-muted mb-1">Payout model</div>
+                  <div class="fw-semibold">Flat rate $1.00 per quote sent. Quotes are tracked manually.</div>
                 </div>
               </div>
               <div class="payroll-stat-grid mt-3">
                 <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Hours worked</span>
-                  <span class="payroll-stat-value">160.00</span>
+                  <span class="payroll-stat-label">Quotes sent</span>
+                  <span class="payroll-stat-value">245</span>
                 </div>
                 <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Hourly rate</span>
-                  <span class="payroll-stat-value">$18.00</span>
+                  <span class="payroll-stat-label">Rate per quote</span>
+                  <span class="payroll-stat-value">$1.00</span>
                 </div>
                 <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Regular pay</span>
-                  <span class="payroll-stat-value">$2,880.00</span>
-                </div>
-                <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Overtime</span>
-                  <span class="payroll-stat-value">$0.00</span>
+                  <span class="payroll-stat-label">Total commission</span>
+                  <span class="payroll-stat-value">$245.00</span>
                 </div>
                 <div class="payroll-stat-item total">
-                  <span class="payroll-stat-label">Total</span>
-                  <span class="payroll-stat-value">$2,880.00</span>
+                  <span class="payroll-stat-label">Total Pay</span>
+                  <span class="payroll-stat-value">$245.00</span>
                 </div>
               </div>
             </div>
@@ -366,8 +350,8 @@
         <div class="panel">
           <div class="panel-header">
             <div>
-              <h2 class="panel-title">Attendance Trend</h2>
-              <div class="panel-sub">Hours worked over the last 5 weeks</div>
+              <h2 class="panel-title">Commission Trend</h2>
+              <div class="panel-sub">Commission earned over the last 5 months</div>
             </div>
           </div>
           <div class="panel-body">
@@ -383,8 +367,22 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-     <script src="../js/javescript.js"></script>
-    
+    <script src="../js/javescript.js"></script>
+
+    <!-- ── KPI Detail Modal ── -->
+    <div class="modal fade" id="qsKpiDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border-radius:12px;border:none;">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="qsKpiModalTitle"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="qsKpiModalBody">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       $(function () {
         $('input[name="date"]').daterangepicker({
@@ -420,22 +418,25 @@
       //   }
       // });
 
-      const providerCtx = document.getElementById('providerChart');
-      if (providerCtx) {
-        new Chart(providerCtx, {
+      // Destroy existing chart on this canvas (created by javescript.js)
+      const qsProviderCtx = document.getElementById('providerChart');
+      if (qsProviderCtx) {
+        const existing = Chart.getChart(qsProviderCtx);
+        if (existing) existing.destroy();
+        new Chart(qsProviderCtx, {
           type: 'bar',
           data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
             datasets: [
               {
-                label: 'Production',
-                data: [18000, 21000, 24650, 22800, 25200],
+                label: 'Quotes Sent',
+                data: [180, 210, 246, 228, 245],
                 backgroundColor: '#0d9488',
                 borderRadius: 6
               },
               {
-                label: 'Net Pay',
-                data: [5200, 6100, 7125, 6800, 7400],
+                label: 'Commission',
+                data: [180, 210, 246, 228, 245],
                 backgroundColor: '#4338ca',
                 borderRadius: 6
               }
@@ -445,13 +446,13 @@
             responsive: true,
             plugins: {
               legend: { display: true },
-              tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } }
+              tooltip: { callbacks: { label: (c) => c.dataset.label + ': ' + c.parsed.y.toLocaleString() } }
             },
             scales: {
               x: { grid: { display: false } },
               y: {
                 beginAtZero: true,
-                ticks: { callback: (value) => '$' + (value / 1000) + 'K' }
+                ticks: { callback: (value) => value.toLocaleString() }
               }
             }
           }
@@ -460,6 +461,7 @@
 
       // Payroll Overview grouped bar chart
       const payrollCtx = document.getElementById('payrollChart');
+      if (payrollCtx) {
       new Chart(payrollCtx, {
         type: 'bar',
         data: {
@@ -488,9 +490,11 @@
           }
         }
       });
+      }
 
       // Advances donut chart
       const advCtx = document.getElementById('advancesChart');
+      if (advCtx) {
       new Chart(advCtx, {
         type: 'doughnut',
         data: {
@@ -511,6 +515,109 @@
           }
         }
       });
+      }
+
+      /* ── KPI Detail Modal ── */
+      const qsTitles = ['Quotes Done', 'Rate Per Quote', 'Commission', 'Total Pay'];
+      const qsIcons  = ['fa-file-invoice', 'fa-money-bill-wave', 'fa-receipt', 'fa-circle-check'];
+      const qsColors = ['#059669', '#1e40af', '#6d28d9', '#059669'];
+
+      function openQsKpiDetail(idx) {
+        const title = qsTitles[idx];
+        document.getElementById('qsKpiModalTitle').innerHTML = '<i class="fa-solid ' + qsIcons[idx] + '" style="color:' + qsColors[idx] + ';margin-right:8px;"></i>' + title;
+
+        let body = '';
+        if (idx === 0) {
+          // Quotes Done breakdown
+          body = `
+            <p class="text-muted" style="font-size:13px;">Breakdown of quotes sent this period (Jul 1 – Jul 31, 2026)</p>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📋 Treatment Plans</span><span class="fw-semibold">98</span></div>
+              <div class="detail-breakdown-row"><span>📞 Follow-ups</span><span class="fw-semibold">72</span></div>
+              <div class="detail-breakdown-row"><span>🆕 New Patients</span><span class="fw-semibold">55</span></div>
+              <div class="detail-breakdown-row"><span>📧 Email Quotes</span><span class="fw-semibold">20</span></div>
+              <div class="detail-breakdown-row total"><span>Total Quotes</span><span>245</span></div>
+            </div>
+            <div class="row g-3 mt-3">
+              <div class="col-md-4">
+                <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                  <div class="fw-bold fs-4 text-success">122%</div>
+                  <div class="small text-muted">vs Target (200)</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3" style="background:#eff6ff;border-radius:8px;">
+                  <div class="fw-bold fs-4 text-primary">15</div>
+                  <div class="small text-muted">Avg Quotes / Day</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3" style="background:#fef2f2;border-radius:8px;">
+                  <div class="fw-bold fs-4 text-danger">12</div>
+                  <div class="small text-muted">Pending Review</div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (idx === 1) {
+          // Rate Per Quote
+          body = `
+            <p class="text-muted" style="font-size:13px;">Your compensation rate is a fixed flat fee per quote sent.</p>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>Rate Type</span><span class="fw-semibold">Flat Rate</span></div>
+              <div class="detail-breakdown-row"><span>Per Quote</span><span class="fw-semibold">$1.00</span></div>
+              <div class="detail-breakdown-row"><span>Payment Trigger</span><span class="fw-semibold">Quote Sent</span></div>
+              <div class="detail-breakdown-row total"><span>Effective Earnings</span><span>$1.00 / quote</span></div>
+            </div>
+            <div class="alert alert-info mt-3 mb-0 py-2" style="font-size:13px;background:#eff6ff;border:none;border-radius:8px;">
+              <i class="fa-solid fa-circle-info me-1"></i> 
+              QS positions are commission-based. You earn <strong>$1.00</strong> for every quote you send, regardless of whether the patient accepts.
+            </div>
+          `;
+        } else if (idx === 2) {
+          // Commission breakdown
+          body = `
+            <p class="text-muted" style="font-size:13px;">Commission earned breakdown for the current period</p>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📋 Treatment Plans (98 × $1.00)</span><span class="fw-semibold">$98.00</span></div>
+              <div class="detail-breakdown-row"><span>📞 Follow-ups (72 × $1.00)</span><span class="fw-semibold">$72.00</span></div>
+              <div class="detail-breakdown-row"><span>🆕 New Patients (55 × $1.00)</span><span class="fw-semibold">$55.00</span></div>
+              <div class="detail-breakdown-row"><span>📧 Email Quotes (20 × $1.00)</span><span class="fw-semibold">$20.00</span></div>
+              <div class="detail-breakdown-row total"><span>Total Commission</span><span>$245.00</span></div>
+            </div>
+            <div class="row g-3 mt-3">
+              <div class="col-6">
+                <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                  <div class="fw-bold fs-4 text-success">$245.00</div>
+                  <div class="small text-muted">This Period</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="text-center p-3" style="background:#fefce8;border-radius:8px;">
+                  <div class="fw-bold fs-4 text-warning">$190.00</div>
+                  <div class="small text-muted">Last Period</div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (idx === 3) {
+          // Total Pay
+          body = `
+            <p class="text-muted" style="font-size:13px;">Summary of your total compensation for this pay period</p>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>Commission</span><span class="fw-semibold">$245.00</span></div>
+              <div class="detail-breakdown-row total"><span>Total Pay</span><span>$245.00</span></div>
+            </div>
+            <div class="alert alert-success mt-3 mb-0 py-2" style="font-size:13px;background:#f0fdf4;border:none;border-radius:8px;">
+              <i class="fa-solid fa-circle-check me-1" style="color:#059669;"></i>
+              Your total pay of <strong>$245.00</strong> will be processed on the next payroll run.
+            </div>
+          `;
+        }
+
+        document.getElementById('qsKpiModalBody').innerHTML = body;
+        new bootstrap.Modal(document.getElementById('qsKpiDetailModal')).show();
+      }
     </script>
 
 </body>

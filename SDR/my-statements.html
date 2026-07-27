@@ -62,23 +62,6 @@
                 <label for="sidebarToggle" class="btn mobile-menu-btn">
                     <i class="fa-solid fa-bars"></i>
                 </label>
-                <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-green" onclick="downloadPDF()"><i
-                            class="fa-solid fa-download me-1"></i>Download
-                        PDF</button>
-                </div>
-                <!-- Date picker -->
-                <div class="date-pill">
-                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
-                    <div class="date-meta">
-                        <span class="date-label">Pay Period</span>
-                        <span class="date-value">
-                            <input type="text" id="daterange" name="date" />
-                        </span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
-                </div>
-
                 <!-- ── CLOCK WIDGET ── -->
                 <div class="clock-widget" id="clockWidget">
 
@@ -113,14 +96,67 @@
 
                 </div>
                 <!-- /clock-widget -->
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-green" onclick="downloadPDF()"><i
+                            class="fa-solid fa-download me-1"></i>Download
+                        PDF</button>
+                </div>
+                <!-- Date picker -->
+                <div class="date-pill">
+                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+                    <div class="date-meta">
+                        <span class="date-label">Pay Period</span>
+                        <span class="date-value">
+                            <input type="text" id="daterange" name="date" />
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+                </div>
+
+                
 
             </div>
             <!-- /topbar-actions -->
 
         </div>
 
+        <style>
+            .kpi-card[role="button"] {
+                cursor: pointer;
+                transition: transform 0.15s, box-shadow 0.15s;
+            }
+
+            .kpi-card[role="button"]:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+            }
+
+            .detail-breakdown-box {
+                border: 1px solid #eef2f6;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .detail-breakdown-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 14px;
+                border-bottom: 1px solid #f3f5f9;
+                font-size: 14px;
+            }
+
+            .detail-breakdown-row:last-child {
+                border-bottom: none;
+            }
+
+            .detail-breakdown-row span {
+                color: #6b7280;
+            }
+        </style>
         <div class="kpi-row">
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0"
+                onclick="openSdrStmtKpiDetail(0)">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
                         class="fa-solid fa-wallet"></i></div>
                 <div>
@@ -128,7 +164,8 @@
                     <div class="kpi-value" id="grossKpi">$1,185.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0"
+                onclick="openSdrStmtKpiDetail(1)">
                 <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
                 </div>
                 <div>
@@ -136,7 +173,8 @@
                     <div class="kpi-value" id="hoursKpi">78.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0"
+                onclick="openSdrStmtKpiDetail(2)">
                 <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
@@ -144,7 +182,8 @@
                     <div class="kpi-value" id="otKpi">2.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0"
+                onclick="openSdrStmtKpiDetail(3)">
                 <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
                 </div>
                 <div>
@@ -184,7 +223,8 @@
 
                             <div class="mb-3">
                                 <div class="text-muted"
-                                    style="font-size:11px;text-transform:uppercase;font-weight:700;"> Staff members</div>
+                                    style="font-size:11px;text-transform:uppercase;font-weight:700;"> Staff members
+                                </div>
                                 <div class="fw-bold" style="font-size:15px;">Umair</div>
                                 <div class="text-muted" style="font-size:12px;">SDR</div>
                                 <div class="text-muted" style="font-size:11.5px;">Staff members ID: SDR001 &middot;
@@ -602,8 +642,89 @@
         document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
         document.getElementById('sidebarBackdrop')?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
         window.addEventListener('resize', () => { if (window.innerWidth > 900) document.body.classList.remove('sidebar-open'); });
+
+        /* ==========================================================
+           KPI CARD DETAIL — SDR My Statements
+           ========================================================== */
+        function openSdrStmtKpiDetail(idx) {
+            const titles = ['Gross Pay', 'Total Hours', 'Overtime', 'Deductions'];
+            const icons = ['fa-wallet', 'fa-clock', 'fa-chart-line', 'fa-circle-minus'];
+            const body = document.getElementById('sdrStmtDetailModalBody');
+            const modalTitle = document.querySelector('#sdrStmtDetailModal .modal-title');
+            const modalSubtitle = document.querySelector('#sdrStmtDetailModal .modal-subtitle');
+            if (!body) return;
+            modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+            modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+            const views = [
+                // 0 — Gross Pay
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Gross Pay — $1,185.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>⏱ Regular Hours</span><strong>76.00</strong></div>
+                        <div class="detail-breakdown-row"><span>💰 Rate</span><strong>$15.00/hr</strong></div>
+                        <div class="detail-breakdown-row"><span>⚡ Overtime (2.00 hrs × $22.50)</span><strong>$45.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Gross Pay</span><strong>$1,185.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Regular $1,140.00 + Overtime $45.00</div>
+                </div>`,
+                // 1 — Total Hours
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Total Hours — 78.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📅 Regular Hours</span><strong>76.00</strong></div>
+                        <div class="detail-breakdown-row"><span>⚡ Overtime Hours</span><strong>2.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Hours</span><strong>78.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">9.75 days avg. over the pay period</div>
+                </div>`,
+                // 2 — Overtime
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Overtime — 2.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>⚡ Overtime Hours</span><strong>2.00</strong></div>
+                        <div class="detail-breakdown-row"><span>💰 Overtime Rate</span><strong>$22.50/hr</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Overtime Pay</span><strong>$45.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Overtime rate is 1.5× base rate ($15.00)</div>
+                </div>`,
+                // 3 — Deductions
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Deductions — $200.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📉 Advance Deduction</span><strong>$200.00</strong></div>
+                        <div class="detail-breakdown-row"><span>📉 Other Adjustments</span><strong>$0.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Deductions</span><strong>$200.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Advance repayment of $200.00 this period</div>
+                </div>`
+            ];
+            body.innerHTML = views[idx] || views[0];
+            const modal = new bootstrap.Modal(document.getElementById('sdrStmtDetailModal'));
+            modal.show();
+        }
     </script>
 
+    <!-- SDR Statement KPI Detail Modal -->
+    <div class="modal fade" id="sdrStmtDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold">Statement Detail</h5>
+                        <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="sdrStmtDetailModalBody">
+                    <!-- content inserted by openSdrStmtKpiDetail() -->
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

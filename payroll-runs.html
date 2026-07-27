@@ -182,6 +182,15 @@
       height: 260px !important;
     }
 
+    .kpi-mini-card[role="button"] {
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .kpi-mini-card[role="button"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+    }
+
     .donut-center-lg {
       position: absolute;
       top: 50%;
@@ -297,22 +306,22 @@
       </div>
 
       <div class="kpi-mini-row">
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(1,0)">
           <div class="kpi-mini-label">Current Period</div>
           <div class="kpi-mini-value" style="font-size:15px;">May 1 – May 15, 2026</div>
           <div class="kpi-mini-note">Bi-Weekly</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(1,1)">
           <div class="kpi-mini-label">Staff</div>
           <div class="kpi-mini-value">26</div>
           <div class="kpi-mini-note">Active Staff</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(1,2)">
           <div class="kpi-mini-label">Est. Total Payroll</div>
           <div class="kpi-mini-value">$28,450.00</div>
           <div class="kpi-mini-note">Estimated</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(1,3)">
           <div class="kpi-mini-label">Status</div>
           <div class="kpi-mini-value text-warning" style="font-size:15px;">In Progress</div>
           <div class="kpi-mini-note">Review Required</div>
@@ -446,22 +455,22 @@
       </div>
 
       <div class="kpi-mini-row">
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(2,0)">
           <div class="kpi-mini-label">Staff</div>
           <div class="kpi-mini-value">26</div>
           <div class="kpi-mini-note">Total</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(2,1)">
           <div class="kpi-mini-label">Pending Review</div>
           <div class="kpi-mini-value text-warning" id="pendingCount2">5</div>
           <div class="kpi-mini-note">Staff</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(2,2)">
           <div class="kpi-mini-label">Confirmed</div>
           <div class="kpi-mini-value text-success" id="confirmedCount2">18</div>
           <div class="kpi-mini-note">Staff</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(2,3)">
           <div class="kpi-mini-label">Needs Attention</div>
           <div class="kpi-mini-value" style="color:#dc2626;">1</div>
           <div class="kpi-mini-note">Staff</div>
@@ -634,20 +643,20 @@
       </div>
 
       <div class="kpi-mini-row">
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,0)">
           <div class="kpi-mini-label">Staff</div>
           <div class="kpi-mini-value">26</div>
           <div class="kpi-mini-note">Total</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,1)">
           <div class="kpi-mini-label">Total Gross Payroll</div>
           <div class="kpi-mini-value">$28,450.00</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,2)">
           <div class="kpi-mini-label">Total Deductions</div>
           <div class="kpi-mini-value" style="color:#dc2626;">$1,850.00</div>
         </div>
-        <div class="kpi-mini-card">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,3)">
           <div class="kpi-mini-label">Total Net Payroll</div>
           <div class="kpi-mini-value text-success">$26,600.00</div>
         </div>
@@ -1382,6 +1391,195 @@
     let categoryNavIndex = 0;
     let categoryNavData = null;
 
+    /* ==========================================================
+       KPI CARD CLICK — open detail modal from any KPI card
+       ========================================================== */
+    function openKpiDetail(screenId, cardIdx) {
+      const modalTitle = document.querySelector('#payrollDetailModal .modal-title');
+      const modalSubtitle = document.querySelector('#payrollDetailModal .modal-subtitle');
+      const saveBtn = document.getElementById('savePayrollDetailBtn');
+      const approveBtn = document.getElementById('approvePayrollDetailBtn');
+      if (saveBtn) saveBtn.style.display = 'none';
+      if (approveBtn) approveBtn.style.display = 'none';
+      const body = document.getElementById('payrollDetailModalBody');
+      if (!body) return;
+
+      if (screenId === 1) {
+        const cards = [
+          { title: 'Pay Period', subtitle: 'Current payroll period details' },
+          { title: 'Staff Overview', subtitle: 'Active staff by department' },
+          { title: 'Estimated Payroll', subtitle: 'Estimated payroll breakdown' },
+          { title: 'Workflow Status', subtitle: 'Current payroll run status' }
+        ];
+        const info = cards[cardIdx] || cards[0];
+        modalTitle.innerHTML = '<i class="fa-solid fa-circle-info me-2 text-primary"></i>' + info.title;
+        modalSubtitle.innerText = info.subtitle;
+        if (cardIdx === 0) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3"><i class="fa-regular fa-calendar me-2"></i>May 1 – May 15, 2026</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>Period Start</span><strong>May 1, 2026</strong></div>
+                <div class="detail-breakdown-row"><span>Period End</span><strong>May 15, 2026</strong></div>
+                <div class="detail-breakdown-row"><span>Pay Date</span><strong>May 16, 2026</strong></div>
+                <div class="detail-breakdown-row"><span>Frequency</span><strong>Bi-Weekly</strong></div>
+                <div class="detail-breakdown-row"><span>Fiscal Year</span><strong>2026</strong></div>
+              </div>
+              <div class="text-muted small mt-3">This payroll covers the first half of May 2026. All active staff are included.</div>
+            </div>`;
+        } else if (cardIdx === 1) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Staff by Category</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>8 Staff</strong></div>
+                <div class="detail-breakdown-row"><span>🎧 ISR Representatives</span><strong>4 Staff</strong></div>
+                <div class="detail-breakdown-row"><span>⏱️ Hourly Staff</span><strong>14 Staff</strong></div>
+                <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>26 Staff</strong></div>
+              </div>
+            </div>`;
+        } else if (cardIdx === 2) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Estimated Payroll</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong class="text-success">$15,200.00</strong></div>
+                <div class="detail-breakdown-row"><span>🎧 ISR Representatives</span><strong class="text-success">$5,400.00</strong></div>
+                <div class="detail-breakdown-row"><span>⏱️ Hourly Staff</span><strong class="text-success">$7,850.00</strong></div>
+                <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Estimated</span><strong class="text-success">$28,450.00</strong></div>
+              </div>
+            </div>`;
+        } else if (cardIdx === 3) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Workflow Status</h5>
+              <div class="d-flex align-items-center gap-3 mb-3 p-3 bg-light rounded-3">
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fs-6">⚠️</span>
+                <div><div class="fw-semibold">In Progress</div><div class="text-muted small">Review Required before finalization</div></div>
+              </div>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>📋 Step 1: Generate</span><strong class="text-success">✅ Complete</strong></div>
+                <div class="detail-breakdown-row"><span>🔍 Step 2: Review Center</span><strong class="text-warning">⏳ In Progress</strong></div>
+                <div class="detail-breakdown-row"><span>✅ Step 3: Final Summary</span><strong>⏳ Pending</strong></div>
+              </div>
+            </div>`;
+        }
+      } else if (screenId === 2) {
+        const cards = [
+          { title: 'Staff Overview', subtitle: 'All staff in review' },
+          { title: 'Pending Review', subtitle: 'Staff awaiting confirmation' },
+          { title: 'Confirmed', subtitle: 'Staff already confirmed' },
+          { title: 'Needs Attention', subtitle: 'Staff flagged for attention' }
+        ];
+        const info = cards[cardIdx] || cards[0];
+        modalTitle.innerHTML = '<i class="fa-solid fa-circle-info me-2 text-primary"></i>' + info.title;
+        modalSubtitle.innerText = info.subtitle;
+        const rows = document.querySelectorAll('#reviewTableBody tr');
+        let tableData = [];
+        rows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          if (cells.length < 5) return;
+          const nameDiv = cells[0].querySelector('.d-flex');
+          const name = nameDiv ? nameDiv.textContent.trim().replace(/\s+/g, ' ') : cells[0].textContent.trim();
+          const dept = cells[1].textContent.trim();
+          const type = cells[2].textContent.trim();
+          const pay = cells[3].textContent.trim();
+          const statusEl = cells[4].querySelector('.status-pill-wf');
+          const status = statusEl ? statusEl.textContent.trim() : cells[4].textContent.trim();
+          tableData.push({ name, dept, type, pay, status });
+        });
+        let filterFn;
+        if (cardIdx === 0) filterFn = () => true;
+        else if (cardIdx === 1) filterFn = s => s.status === 'Pending Review';
+        else if (cardIdx === 2) filterFn = s => s.status === 'Confirmed';
+        else if (cardIdx === 3) filterFn = s => s.status === 'Needs Attention' || s.status === 'Flagged';
+        const filtered = tableData.filter(filterFn);
+        let tbodyHtml = filtered.map(s => `
+          <tr><td style="padding:6px 10px;font-weight:500;">${s.name}</td><td style="padding:6px 10px;">${s.dept}</td><td style="padding:6px 10px;">${s.type}</td><td style="padding:6px 10px;font-weight:600;color:#059669;">${s.pay}</td><td style="padding:6px 10px;"><span class="status-pill-wf ${s.status === 'Confirmed' ? 'confirmed' : s.status === 'Needs Attention' ? 'attention' : ''}">${s.status}</span></td></tr>
+        `).join('');
+        body.innerHTML = `
+          <div class="panel" style="border:none;box-shadow:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold mb-0">${info.title}</h5>
+              <span class="badge bg-light text-dark px-3 py-2 rounded-pill fs-6">${filtered.length} Staff</span>
+            </div>
+            <div class="table-responsive" style="max-height:400px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:10px;">
+              <table class="wf-table mb-0">
+                <thead style="position:sticky;top:0;background:#fff;z-index:2;">
+                  <tr><th>Staff</th><th>Department</th><th>Type</th><th>Pay</th><th>Status</th></tr>
+                </thead>
+                <tbody>${tbodyHtml || '<tr><td colspan="5" class="text-center text-muted py-4">No staff in this category.</td></tr>'}</tbody>
+              </table>
+            </div>
+          </div>`;
+      } else if (screenId === 3) {
+        const cards = [
+          { title: 'Staff Overview', subtitle: 'Final staff summary' },
+          { title: 'Gross Payroll Detail', subtitle: 'Gross pay breakdown by department' },
+          { title: 'Deductions Breakdown', subtitle: 'All deductions this period' },
+          { title: 'Net Payroll Summary', subtitle: 'Net pay by department' }
+        ];
+        const info = cards[cardIdx] || cards[0];
+        modalTitle.innerHTML = '<i class="fa-solid fa-circle-info me-2 text-primary"></i>' + info.title;
+        modalSubtitle.innerText = info.subtitle;
+        if (cardIdx === 0) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Final Staff Summary</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>8 Staff</strong></div>
+                <div class="detail-breakdown-row"><span>🎧 ISR Representatives</span><strong>4 Staff</strong></div>
+                <div class="detail-breakdown-row"><span>⏱️ Hourly Staff</span><strong>14 Staff</strong></div>
+                <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>26 Staff</strong></div>
+              </div>
+            </div>`;
+        } else if (cardIdx === 1) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Gross Payroll by Category</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong class="text-success">$15,200.00</strong></div>
+                <div class="detail-breakdown-row"><span>🎧 ISR Representatives</span><strong class="text-success">$5,400.00</strong></div>
+                <div class="detail-breakdown-row"><span>⏱️ Hourly Staff</span><strong class="text-success">$7,850.00</strong></div>
+                <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Gross</span><strong class="text-success">$28,450.00</strong></div>
+              </div>
+            </div>`;
+        } else if (cardIdx === 2) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Deductions This Period</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>Federal Tax (12%)</span><strong style="color:#dc2626;">$3,414.00</strong></div>
+                <div class="detail-breakdown-row"><span>State Tax (5%)</span><strong style="color:#dc2626;">$1,422.50</strong></div>
+                <div class="detail-breakdown-row"><span>Social Security (6.2%)</span><strong style="color:#dc2626;">$1,763.90</strong></div>
+                <div class="detail-breakdown-row"><span>Medicare (1.45%)</span><strong style="color:#dc2626;">$412.53</strong></div>
+                <div class="detail-breakdown-row"><span>401(k) Deductions</span><strong style="color:#dc2626;">$837.07</strong></div>
+                <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Deductions</span><strong style="color:#dc2626;">$7,850.00</strong></div>
+              </div>
+              <div class="text-muted small mt-2">Deduction rates are estimates based on standard filing.</div>
+            </div>`;
+        } else if (cardIdx === 3) {
+          body.innerHTML = `
+            <div class="panel" style="border:none;box-shadow:none;">
+              <h5 class="fw-bold mb-3">Net Payroll by Category</h5>
+              <div class="detail-breakdown-box">
+                <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong class="text-success">$14,440.00</strong></div>
+                <div class="detail-breakdown-row"><span>🎧 ISR Representatives</span><strong class="text-success">$5,130.00</strong></div>
+                <div class="detail-breakdown-row"><span>⏱️ Hourly Staff</span><strong class="text-success">$7,030.00</strong></div>
+                <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Net</span><strong class="text-success">$26,600.00</strong></div>
+              </div>
+              <div class="mt-3 p-3 bg-light rounded-3">
+                <div class="d-flex justify-content-between"><span class="text-muted">Gross Payroll</span><strong>$28,450.00</strong></div>
+                <div class="d-flex justify-content-between"><span class="text-muted">Total Deductions</span><strong style="color:#dc2626;">-$1,850.00</strong></div>
+                <div class="d-flex justify-content-between border-top pt-2 mt-1"><span class="fw-bold">Net Payroll</span><strong class="text-success">$26,600.00</strong></div>
+              </div>
+            </div>`;
+        }
+      }
+      const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
+      modal.show();
+    }
+
     function openCategoryBreakdown(categoryKey) {
       const cat = categoryEmployees[categoryKey];
       if (!cat) return;
@@ -1489,12 +1687,15 @@
                 <div class="detail-breakdown-row"><span>Current Pay</span><strong>${formatCurrency(profile.totalPay)}</strong></div>
                 <div class="detail-breakdown-row"><span>Review Status</span><strong>${profile.status}</strong></div>
                 <div class="detail-breakdown-row"><span>Pay Method</span><strong>${profile.paymentMethod}</strong></div>
+
+                
               </div>
             </div>
           </div>
           <div class="col-lg-7">
             <div class="detail-edit-card">
               <div class="detail-section-title">Calculation Breakdown</div>
+             
               <div class="detail-calc-list">
                 ${profile.formulaRows.map(row => `
                   <div class="detail-calc-row">
@@ -1503,6 +1704,63 @@
                   </div>
                 `).join('')}
               </div>
+
+              ${profile.cases ? `
+              <div class="detail-section-title mt-3">Case-by-Case Breakdown
+                <span class="text-muted" style="font-weight:400;font-size:11px;">May 1 - May 15, 2026 · ${profile.cases.length} cases</span>
+              </div>
+              <div class="cases-breakdown-table" style="max-height:300px;overflow-y:auto;border:1px solid #eef2f6;border-radius:8px;margin-bottom:12px;">
+                <table style="width:100%;font-size:11.5px;border-collapse:collapse;">
+                  <thead style="position:sticky;top:0;background:#f8fafc;z-index:1;">
+                    <tr>
+                      <th style="padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Case ID</th>
+                      <th style="padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Patient</th>
+                      <th style="padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Type</th>
+                      <th style="padding:6px 8px;text-align:center;border-bottom:1px solid #e5e7eb;font-weight:600;">Status</th>
+                      <th style="padding:6px 8px;text-align:right;border-bottom:1px solid #e5e7eb;font-weight:600;">Production</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${profile.cases.map(c => `
+                      <tr>
+                        <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-family:monospace;font-size:10.5px;color:#6b7280;">${c.id}</td>
+                        <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-weight:500;">${c.patient}</td>
+                        <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;">${c.type}</td>
+                        <td style="padding:5px 8px;text-align:center;border-bottom:1px solid #f1f4f9;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;background:${c.status === 'Completed' || c.status === 'Closed' ? '#ecfdf5' : '#fffbeb'};color:${c.status === 'Completed' || c.status === 'Closed' ? '#059669' : '#d97706'};">${c.status}</span></td>
+                        <td style="padding:5px 8px;text-align:right;border-bottom:1px solid #f1f4f9;font-weight:600;color:#059669;">${c.value}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+              ` : ''}
+
+              ${profile.dailyEntries ? `
+              <div class="detail-section-title mt-3">Daily Time Log <span class="text-muted" style="font-weight:400;font-size:11px;">May 1 - May 15, 2026</span></div>
+              <div class="daily-time-table" style="max-height:260px;overflow-y:auto;border:1px solid #eef2f6;border-radius:8px;margin-bottom:12px;">
+                <table style="width:100%;font-size:12px;border-collapse:collapse;">
+                  <thead style="position:sticky;top:0;background:#f8fafc;z-index:1;">
+                    <tr>
+                      <th style="padding:7px 10px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Day</th>
+                      <th style="padding:7px 10px;text-align:center;border-bottom:1px solid #e5e7eb;font-weight:600;">Clock In</th>
+                      <th style="padding:7px 10px;text-align:center;border-bottom:1px solid #e5e7eb;font-weight:600;">Clock Out</th>
+                      <th style="padding:7px 10px;text-align:center;border-bottom:1px solid #e5e7eb;font-weight:600;">Duration</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${profile.dailyEntries.map(entry => `
+                      <tr>
+                        <td style="padding:6px 10px;border-bottom:1px solid #f1f4f9;font-size:11px;">${entry.date}</td>
+                        <td style="padding:6px 10px;text-align:center;border-bottom:1px solid #f1f4f9;">${entry.clockIn}</td>
+                        <td style="padding:6px 10px;text-align:center;border-bottom:1px solid #f1f4f9;">${entry.clockOut}</td>
+                        <td style="padding:6px 10px;text-align:center;border-bottom:1px solid #f1f4f9;font-weight:600;">${entry.duration}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+              ` : ''}
+
               <div class="detail-section-title mt-3">Editable Inputs</div>
               <div class="detail-edit-grid">
                 ${profile.editFields.map(field => `
@@ -1518,6 +1776,155 @@
       `;
       const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
       modal.show();
+    }
+
+    /* ==========================================================
+       DOCTOR CASES — per-provider case breakdown
+       ========================================================== */
+    const doctorCaseData = {
+      'Dr. Nancy Rose': [
+        { id: 'CASE-20260501-001', patient: 'Emily Johnson',   type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
+        { id: 'CASE-20260502-002', patient: 'Michael Torres',  type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
+        { id: 'CASE-20260503-003', patient: 'Sophia Adams',    type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
+        { id: 'CASE-20260504-004', patient: 'David Kim',       type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
+        { id: 'CASE-20260505-005', patient: 'Lisa Brown',      type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260506-006', patient: 'James Wilson',    type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260507-007', patient: 'Anna Martinez',   type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
+        { id: 'CASE-20260508-008', patient: 'Robert Chen',     type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260509-009', patient: 'Jessica Lee',     type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
+        { id: 'CASE-20260510-010', patient: 'Daniel Garcia',   type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260511-011', patient: 'Sarah Williams',  type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
+        { id: 'CASE-20260512-012', patient: 'Thomas Anderson', type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260513-013', patient: 'Mia Thompson',    type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
+        { id: 'CASE-20260514-014', patient: 'William Davis',   type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
+        { id: 'CASE-20260515-015', patient: 'Olivia White',    type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 }
+      ],
+      'Dr. Miguel Ortiz': [
+        { id: 'CASE-20260501-016', patient: 'Ethan Moore',     type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260502-017', patient: 'Ava Taylor',      type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
+        { id: 'CASE-20260503-018', patient: 'Noah Jackson',    type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260504-019', patient: 'Isabella Harris', type: 'Ortho Braces',     status: 'Treatment', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260505-020', patient: 'Lucas Martin',    type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
+        { id: 'CASE-20260506-021', patient: 'Mia Robinson',    type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260507-022', patient: 'Alexander Clark', type: 'Ortho Braces',     status: 'Treatment', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260508-023', patient: 'Charlotte Lewis', type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
+        { id: 'CASE-20260509-024', patient: 'Benjamin Hall',   type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260510-025', patient: 'Amelia Allen',    type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
+        { id: 'CASE-20260511-026', patient: 'Henry Young',     type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
+        { id: 'CASE-20260512-027', patient: 'Evelyn King',     type: 'Ortho Braces',     status: 'Treatment', value: '$2,800',  productionValue: 2800 }
+      ],
+      'Dr. Amina Shah': [
+        { id: 'CASE-20260501-028', patient: 'Oliver Scott',    type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
+        { id: 'CASE-20260502-029', patient: 'Emma Green',      type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
+        { id: 'CASE-20260503-030', patient: 'Liam Baker',      type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
+        { id: 'CASE-20260504-031', patient: 'Sophia Nelson',   type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
+        { id: 'CASE-20260505-032', patient: 'Mason Carter',    type: 'Pediatric Filling',status: 'Treatment', value: '$600',    productionValue: 600 },
+        { id: 'CASE-20260506-033', patient: 'Isabella Rivera', type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
+        { id: 'CASE-20260507-034', patient: 'Logan Mitchell',  type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
+        { id: 'CASE-20260508-035', patient: 'Mia Roberts',     type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
+        { id: 'CASE-20260509-036', patient: 'Lucas Turner',    type: 'Pediatric Crown',  status: 'Treatment', value: '$1,100',  productionValue: 1100 },
+        { id: 'CASE-20260510-037', patient: 'Aria Phillips',   type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
+        { id: 'CASE-20260511-038', patient: 'Ethan Campbell',  type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
+        { id: 'CASE-20260512-039', patient: 'Harper Evans',    type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
+        { id: 'CASE-20260513-040', patient: 'Jackson Ward',    type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
+        { id: 'CASE-20260514-041', patient: 'Ella Collins',    type: 'Pediatric Filling',status: 'Treatment', value: '$600',    productionValue: 600 },
+        { id: 'CASE-20260515-042', patient: 'Aiden Stewart',   type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
+        { id: 'CASE-20260516-043', patient: 'Scarlett Morris', type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
+        { id: 'CASE-20260517-044', patient: 'Henry Rogers',    type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
+        { id: 'CASE-20260518-045', patient: 'Luna Reed',       type: 'Pediatric Crown',  status: 'Treatment', value: '$1,100',  productionValue: 1100 }
+      ],
+      'Dr. James Wilson': [
+        { id: 'CASE-20260501-046', patient: 'Jack Cooper',     type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260502-047', patient: 'Lily Adams',      type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
+        { id: 'CASE-20260503-048', patient: 'Dylan Murphy',    type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260504-049', patient: 'Chloe Foster',    type: 'General Cleaning', status: 'Completed', value: '$300',    productionValue: 300 },
+        { id: 'CASE-20260505-050', patient: 'Owen Price',      type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260506-051', patient: 'Hannah Wood',     type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
+        { id: 'CASE-20260507-052', patient: 'Samuel Brooks',   type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 }
+      ],
+      'Dr. Sarah Chen': [
+        { id: 'CASE-20260501-053', patient: 'Grace Bennett',   type: 'Root Canal Molar', status: 'Completed', value: '$2,400',  productionValue: 2400 },
+        { id: 'CASE-20260502-054', patient: 'Nathan Gray',     type: 'Root Canal Premolar',status: 'Completed',value: '$1,800',  productionValue: 1800 },
+        { id: 'CASE-20260503-055', patient: 'Victoria James',  type: 'Root Canal Molar', status: 'Treatment', value: '$2,400',  productionValue: 2400 },
+        { id: 'CASE-20260504-056', patient: 'Ryan Cooper',     type: 'Root Canal Incisor',status: 'Completed',value: '$1,200',  productionValue: 1200 },
+        { id: 'CASE-20260505-057', patient: 'Zoe Peterson',    type: 'Root Canal Molar', status: 'Completed', value: '$2,400',  productionValue: 2400 }
+      ],
+      'Dr. Robert Kim': [
+        { id: 'CASE-20260501-058', patient: 'Aaron Bailey',    type: 'Wisdom Extraction',status: 'Completed', value: '$1,500',  productionValue: 1500 },
+        { id: 'CASE-20260502-059', patient: 'Natalie Brooks',  type: 'Impacted Canine',  status: 'Completed', value: '$2,200',  productionValue: 2200 },
+        { id: 'CASE-20260503-060', patient: 'Tyler Coleman',   type: 'Wisdom Extraction',status: 'Treatment', value: '$1,500',  productionValue: 1500 }
+      ],
+      'Dr. Maria Garcia': [
+        { id: 'CASE-20260501-061', patient: 'Katherine Hayes', type: 'Scaling & Root Plan',status:'Completed', value: '$1,800',  productionValue: 1800 },
+        { id: 'CASE-20260502-062', patient: 'Brendan Fox',     type: 'Periodontal Maint', status: 'Completed', value: '$750',    productionValue: 750 }
+      ],
+      'Dr. David Park': [
+        { id: 'CASE-20260501-063', patient: 'Rebecca Stone',   type: 'Full Denture',     status: 'Completed', value: '$3,500',  productionValue: 3500 }
+      ]
+    };
+
+    function getDoctorCases(doctorName) {
+      return doctorCaseData[doctorName] || [];
+    }
+
+    /* ==========================================================
+       ISR CASES — per-representative closed cases
+       ========================================================== */
+    const isrCaseData = {
+      'Mike Anderson': [
+        { id: 'CASE-20260501-101', patient: 'John Peterson',  type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
+        { id: 'CASE-20260502-102', patient: 'Maria Sanchez',  type: 'Treatment Coordination', status: 'Closed', value: '$450', productionValue: 450 },
+        { id: 'CASE-20260503-103', patient: 'Robert Blake',   type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
+        { id: 'CASE-20260504-104', patient: 'Jennifer Lee',   type: 'Financial Arrangement', status: 'Closed', value: '$180', productionValue: 180 },
+        { id: 'CASE-20260505-105', patient: 'William Chen',   type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
+        { id: 'CASE-20260506-106', patient: 'Amanda Torres',  type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260507-107', patient: 'David Kim',      type: 'Insurance Verification', status: 'Closed', value: '$290', productionValue: 290 },
+        { id: 'CASE-20260508-108', patient: 'Sophia Brown',   type: 'Treatment Coordination', status: 'Closed', value: '$480', productionValue: 480 },
+        { id: 'CASE-20260509-109', patient: 'James Wilson',   type: 'Financial Arrangement', status: 'Closed', value: '$200', productionValue: 200 },
+        { id: 'CASE-20260510-110', patient: 'Olivia Davis',   type: 'Insurance Verification', status: 'Closed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260511-111', patient: 'Ethan Moore',    type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
+        { id: 'CASE-20260512-112', patient: 'Mia Garcia',     type: 'Insurance Verification', status: 'Closed', value: '$300', productionValue: 300 },
+        { id: 'CASE-20260513-113', patient: 'Lucas Martinez', type: 'Financial Arrangement', status: 'Closed', value: '$190', productionValue: 190 },
+        { id: 'CASE-20260514-114', patient: 'Ava Thompson',   type: 'Insurance Verification', status: 'Closed', value: '$330', productionValue: 330 }
+      ],
+      'Laura Kim': [
+        { id: 'CASE-20260501-201', patient: 'Charlotte White',  type: 'Treatment Coordination', status: 'Closed', value: '$430', productionValue: 430 },
+        { id: 'CASE-20260502-202', patient: 'Henry Jackson',    type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260503-203', patient: 'Ella Harris',      type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
+        { id: 'CASE-20260504-204', patient: 'Alexander Clark',  type: 'Financial Arrangement', status: 'Closed', value: '$195', productionValue: 195 },
+        { id: 'CASE-20260505-205', patient: 'Scarlett Lewis',   type: 'Treatment Coordination', status: 'Closed', value: '$460', productionValue: 460 },
+        { id: 'CASE-20260506-206', patient: 'Benjamin Hall',    type: 'Insurance Verification', status: 'Closed', value: '$340', productionValue: 340 },
+        { id: 'CASE-20260507-207', patient: 'Amelia Young',     type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
+        { id: 'CASE-20260508-208', patient: 'Lucas King',       type: 'Insurance Verification', status: 'Closed', value: '$300', productionValue: 300 },
+        { id: 'CASE-20260509-209', patient: 'Harper Wright',    type: 'Financial Arrangement', status: 'Closed', value: '$185', productionValue: 185 },
+        { id: 'CASE-20260510-210', patient: 'Evelyn Lopez',     type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
+        { id: 'CASE-20260511-211', patient: 'Logan Green',      type: 'Treatment Coordination', status: 'Closed', value: '$450', productionValue: 450 }
+      ],
+      'Reggie Hart': [
+        { id: 'CASE-20260501-301', patient: 'Aria Nelson',      type: 'Insurance Verification', status: 'Closed', value: '$290', productionValue: 290 },
+        { id: 'CASE-20260502-302', patient: 'Mason Carter',     type: 'Treatment Coordination', status: 'Closed', value: '$410', productionValue: 410 },
+        { id: 'CASE-20260503-303', patient: 'Ella Mitchell',    type: 'Insurance Verification', status: 'Closed', value: '$270', productionValue: 270 },
+        { id: 'CASE-20260504-304', patient: 'Oliver Adams',     type: 'Financial Arrangement', status: 'Closed', value: '$175', productionValue: 175 },
+        { id: 'CASE-20260505-305', patient: 'Sophia Roberts',   type: 'Insurance Verification', status: 'Closed', value: '$330', productionValue: 330 },
+        { id: 'CASE-20260506-306', patient: 'Jack Turner',      type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
+        { id: 'CASE-20260507-307', patient: 'Lily Phillips',    type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260508-308', patient: 'Dylan Campbell',   type: 'Insurance Verification', status: 'Closed', value: '$285', productionValue: 285 },
+        { id: 'CASE-20260509-309', patient: 'Chloe Evans',      type: 'Financial Arrangement', status: 'Closed', value: '$180', productionValue: 180 }
+      ],
+      'Sarah Mitchell': [
+        { id: 'CASE-20260501-401', patient: 'Nathan Baker',     type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260502-402', patient: 'Grace Collins',    type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
+        { id: 'CASE-20260503-403', patient: 'Samuel Ward',      type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
+        { id: 'CASE-20260504-404', patient: 'Victoria Rivera',  type: 'Insurance Verification', status: 'Closed', value: '$295', productionValue: 295 },
+        { id: 'CASE-20260505-405', patient: 'Ryan Cooper',      type: 'Financial Arrangement', status: 'Closed', value: '$185', productionValue: 185 },
+        { id: 'CASE-20260506-406', patient: 'Zoe Patterson',   type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
+        { id: 'CASE-20260507-407', patient: 'Aaron Bailey',     type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
+        { id: 'CASE-20260508-408', patient: 'Natalie Foster',   type: 'Insurance Verification', status: 'Closed', value: '$305', productionValue: 305 }
+      ]
+    };
+
+    function getISRCases(repName) {
+      return isrCaseData[repName] || [];
     }
 
     function getPayrollProfile(name, employeeType, currentPay, profileKey) {
@@ -1536,29 +1943,38 @@
         base.department = 'Provider';
         base.status = 'Confirmed';
         base.paymentMethod = 'Case-based provider production';
+        base.cases = getDoctorCases(name);
+        const caseSummary = base.cases.reduce((acc, c) => {
+          acc.cosmetic += c.type.toLowerCase().includes('cosmetic') || c.type.toLowerCase().includes('veneer') ? 1 : 0;
+          acc.general += !(c.type.toLowerCase().includes('cosmetic') || c.type.toLowerCase().includes('veneer')) ? 1 : 0;
+          acc.production += c.productionValue;
+          return acc;
+        }, { cosmetic: 0, general: 0, production: 0 });
         base.formulaRows = [
-          { label: 'Cosmetic cases', value: '8 cases × $350' },
-          { label: 'General cases', value: '7 cases × $150' },
+          { label: 'Cosmetic cases', value: `${caseSummary.cosmetic} cases × $350` },
+          { label: 'General cases', value: `${caseSummary.general} cases × $150` },
           { label: 'Production bonus', value: '$500.00' },
           { label: 'Total', value: formatCurrency(currentPay) }
         ];
         base.editFields = [
-          { label: 'Cosmetic case count', key: 'cosmeticCases', value: 8 },
-          { label: 'General case count', key: 'generalCases', value: 7 },
+          { label: 'Cosmetic case count', key: 'cosmeticCases', value: caseSummary.cosmetic || 8 },
+          { label: 'General case count', key: 'generalCases', value: caseSummary.general || 7 },
           { label: 'Bonus amount', key: 'bonus', value: 500 }
         ];
       } else if (profileKey === 'commission') {
         base.department = 'ISR';
         base.status = 'Needs Attention';
         base.paymentMethod = 'Commission plan';
+        base.cases = getISRCases(name);
+        const closedCount = base.cases.length || 14;
         base.formulaRows = [
-          { label: 'Cases closed', value: '14 cases' },
+          { label: 'Cases closed', value: `${closedCount} cases` },
           { label: 'Commission rate', value: '8.5%' },
           { label: 'Base commission', value: formatCurrency(currentPay) },
           { label: 'Total', value: formatCurrency(currentPay) }
         ];
         base.editFields = [
-          { label: 'Cases closed', key: 'casesClosed', value: 14 },
+          { label: 'Cases closed', key: 'casesClosed', value: closedCount },
           { label: 'Commission rate (%)', key: 'commissionRate', value: 8.5 },
           { label: 'Adjustment', key: 'adjustment', value: 0 }
         ];
@@ -1578,6 +1994,7 @@
         base.department = 'Operations';
         base.status = 'Pending Review';
         base.paymentMethod = 'Hourly attendance';
+        base.dailyEntries = generateDailyEntries(name);
         base.formulaRows = [
           { label: 'Regular hours', value: '38.5 hrs' },
           { label: 'Hourly rate', value: formatCurrency(29.75) },
@@ -1675,6 +2092,7 @@
 
       const profile = doctorProfiles[name] || { specialty: department, cases: 0, production: pay };
       const payPct = profile.production > 0 ? (pay / profile.production * 100) : 0;
+      const doctorCases = getDoctorCases(name);
 
       body.innerHTML = `
         <div class="row g-4">
@@ -1709,6 +2127,37 @@
                   <strong class="text-success">${formatCurrency(pay)}</strong>
                 </div>
               </div>
+
+              ${doctorCases.length ? `
+              <div class="detail-section-title mt-3">Case-by-Case Breakdown
+                <span class="text-muted" style="font-weight:400;font-size:11px;">May 1 - May 15, 2026 · ${doctorCases.length} cases</span>
+              </div>
+              <div class="cases-breakdown-table" style="max-height:280px;overflow-y:auto;border:1px solid #eef2f6;border-radius:8px;margin-bottom:12px;">
+                <table style="width:100%;font-size:11.5px;border-collapse:collapse;">
+                  <thead style="position:sticky;top:0;background:#f8fafc;z-index:1;">
+                    <tr>
+                      <th style="padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Case ID</th>
+                      <th style="padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Patient</th>
+                      <th style="padding:6px 8px;text-align:left;border-bottom:1px solid #e5e7eb;font-weight:600;">Type</th>
+                      <th style="padding:6px 8px;text-align:center;border-bottom:1px solid #e5e7eb;font-weight:600;">Status</th>
+                      <th style="padding:6px 8px;text-align:right;border-bottom:1px solid #e5e7eb;font-weight:600;">Production</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${doctorCases.map(c => `
+                      <tr>
+                        <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-family:monospace;font-size:10.5px;color:#6b7280;">${c.id}</td>
+                        <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-weight:500;">${c.patient}</td>
+                        <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;">${c.type}</td>
+                        <td style="padding:5px 8px;text-align:center;border-bottom:1px solid #f1f4f9;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;background:${c.status === 'Completed' || c.status === 'Closed' ? '#ecfdf5' : '#fffbeb'};color:${c.status === 'Completed' || c.status === 'Closed' ? '#059669' : '#d97706'};">${c.status}</span></td>
+                        <td style="padding:5px 8px;text-align:right;border-bottom:1px solid #f1f4f9;font-weight:600;color:#059669;">${c.value}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+              ` : ''}
+
               <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
                 <div class="d-flex gap-2">
                   <button class="btn btn-sm btn-outline-navy" onclick="openCategoryBreakdown('provider')">
@@ -1735,6 +2184,63 @@
 
       const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
       modal.show();
+    }
+
+    function generateDailyEntries(staffName) {
+      const days = [
+        { date: 'May 1', day: 'Fri' },
+        { date: 'May 4', day: 'Mon' },
+        { date: 'May 5', day: 'Tue' },
+        { date: 'May 6', day: 'Wed' },
+        { date: 'May 7', day: 'Thu' },
+        { date: 'May 8', day: 'Fri' },
+        { date: 'May 11', day: 'Mon' },
+        { date: 'May 12', day: 'Tue' },
+        { date: 'May 13', day: 'Wed' },
+        { date: 'May 14', day: 'Thu' },
+        { date: 'May 15', day: 'Fri' }
+      ];
+
+      const schedules = [
+        { in: '8:00 AM', out: '5:00 PM', dur: '9h 00m' },
+        { in: '8:05 AM', out: '5:10 PM', dur: '9h 05m' },
+        { in: '8:15 AM', out: '5:20 PM', dur: '9h 05m' },
+        { in: '7:55 AM', out: '5:00 PM', dur: '9h 05m' },
+        { in: '8:10 AM', out: '5:05 PM', dur: '8h 55m' },
+        { in: '8:00 AM', out: '5:15 PM', dur: '9h 15m' },
+        { in: '8:20 AM', out: '5:30 PM', dur: '9h 10m' },
+        { in: '7:50 AM', out: '4:55 PM', dur: '9h 05m' },
+        { in: '8:05 AM', out: '5:00 PM', dur: '8h 55m' },
+        { in: '8:00 AM', out: '4:50 PM', dur: '8h 50m' },
+        { in: '8:10 AM', out: '5:10 PM', dur: '9h 00m' }
+      ];
+
+      let offset = 0;
+      if (staffName) {
+        if (staffName.includes('Sarah')) offset = 1;
+        else if (staffName.includes('Chris')) offset = 2;
+        else if (staffName.includes('Emma')) offset = 3;
+        else if (staffName.includes('Daniel')) offset = 4;
+        else if (staffName.includes('Jessica')) offset = 5;
+        else if (staffName.includes('Ryan')) offset = 6;
+        else if (staffName.includes('Amanda')) offset = 7;
+        else if (staffName.includes('Kevin')) offset = 8;
+        else if (staffName.includes('Rachel')) offset = 9;
+        else if (staffName.includes('Tom')) offset = 10;
+        else if (staffName.includes('Lisa')) offset = 11;
+        else if (staffName.includes('Jason')) offset = 12;
+        else if (staffName.includes('Michelle')) offset = 13;
+      }
+
+      return days.map(function (d, i) {
+        var s = schedules[(i + offset) % schedules.length];
+        return {
+          date: d.date + ' ' + d.day,
+          clockIn: s.in,
+          clockOut: s.out,
+          duration: s.dur
+        };
+      });
     }
 
     function formatCurrency(value) {

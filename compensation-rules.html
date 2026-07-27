@@ -108,9 +108,17 @@
       </div>
     </div>
 
+    <style>
+      .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+      .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+      .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+      .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+      .detail-breakdown-row:last-child { border-bottom:none; }
+      .detail-breakdown-row span { color:#6b7280; }
+    </style>
     <div class="row g-3 mb-3">
       <div class="col-6 col-md-3 col-12">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCompKpiDetail(0)">
           <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
               class="fa-solid fa-clipboard-list"></i></div>
           <div>
@@ -121,7 +129,7 @@
         </div>
       </div>
       <div class="col-6 col-md-3 col-12">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCompKpiDetail(1)">
           <div class="kpi-icon" style="background:#f3e8ff;color:#7e22ce;"><i class="fa-solid fa-user-group"></i></div>
           <div>
             <div class="kpi-label">Total Team Members</div>
@@ -131,7 +139,7 @@
         </div>
       </div>
       <div class="col-6 col-md-3 col-12">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCompKpiDetail(2)">
           <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-solid fa-sack-dollar"></i></div>
           <div>
             <div class="kpi-label">Monthly Payout (Est.)</div>
@@ -141,7 +149,7 @@
         </div>
       </div>
       <div class="col-6 col-md-3 col-12">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCompKpiDetail(3)">
           <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-chart-simple"></i></div>
           <div>
             <div class="kpi-label">Avg Payout / Member</div>
@@ -638,7 +646,108 @@
           closeSidebar();
         }
       });
+
+      /* ==========================================================
+         KPI CARD DETAIL — Compensation Rules
+         ========================================================== */
+      function openCompKpiDetail(idx) {
+        const titles = ['Active Comp Plans', 'Total Team Members', 'Monthly Payout (Est.)', 'Avg Payout / Member'];
+        const icons = ['fa-clipboard-list', 'fa-user-group', 'fa-sack-dollar', 'fa-chart-simple'];
+        const body = document.getElementById('compDetailModalBody');
+        const modalTitle = document.querySelector('#compDetailModal .modal-title');
+        const modalSubtitle = document.querySelector('#compDetailModal .modal-subtitle');
+        if (!body) return;
+        modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+        modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+        const views = [
+          // 0 — Active Comp Plans
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Active Comp Plans — 7</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>👨‍⚕️ Doctors (Cosmetic & Gen)</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Commission)</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Flat Pay)</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 SDR</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 CE</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Active Plans</span><strong>7</strong></div>
+            </div>
+            <div class="text-muted small mt-2">All roles have an active compensation plan</div>
+          </div>`,
+          // 1 — Total Team Members
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Total Team Members — 37</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>👨‍⚕️ Doctors</span><strong>8</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Commission)</span><strong>14</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Flat Pay)</span><strong>6</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 SDR</span><strong>5</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 CE</span><strong>4</strong></div>
+              <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>4</strong></div>
+              <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>1</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Members</span><strong>37</strong></div>
+            </div>
+            <div class="text-muted small mt-2">All covered by active compensation plans</div>
+          </div>`,
+          // 2 — Monthly Payout
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Monthly Payout (Est.) — $186,450</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>👨‍⚕️ Doctors</span><strong>$92,400</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Commission)</span><strong>$44,800</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Flat Pay)</span><strong>$18,000</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 SDR</span><strong>$12,750</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 CE</span><strong>$9,500</strong></div>
+              <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>$6,000</strong></div>
+              <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>$3,000</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Estimated Payout</span><strong>$186,450</strong></div>
+            </div>
+            <div class="text-muted small mt-2">Based on current production numbers</div>
+          </div>`,
+          // 3 — Avg Payout / Member
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Average Payout / Member — $5,039</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>👨‍⚕️ Doctors Avg</span><strong>$11,550</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Commission) Avg</span><strong>$3,200</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR (Flat Pay) Avg</span><strong>$3,000</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 SDR Avg</span><strong>$2,550</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 CE Avg</span><strong>$2,375</strong></div>
+              <div class="detail-breakdown-row"><span>🔬 Lab Avg</span><strong>$1,500</strong></div>
+              <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>$3,000</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Overall Average</span><strong>$5,039</strong></div>
+            </div>
+            <div class="text-muted small mt-2">This month estimated average per member</div>
+          </div>`
+        ];
+        body.innerHTML = views[idx] || views[0];
+        const modal = new bootstrap.Modal(document.getElementById('compDetailModal'));
+        modal.show();
+      }
     </script>
+
+    <!-- Comp KPI Detail Modal -->
+    <div class="modal fade" id="compDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold">Compensation Detail</h5>
+              <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="compDetailModalBody">
+            <!-- content inserted by openCompKpiDetail() -->
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 

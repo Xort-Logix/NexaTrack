@@ -99,9 +99,17 @@
                 <a href="new-case.html" class="btn btn-green"><i class="fa-solid fa-plus me-1"></i>Add Case</a> -->
             </div>
         </div>
+        <style>
+            .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+            .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+            .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+            .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+            .detail-breakdown-row:last-child { border-bottom:none; }
+            .detail-breakdown-row span { color:#6b7280; }
+        </style>
         <div class="row g-3 mb-3">
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" tabindex="0" onclick="openDocCaseKpiDetail(0)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -116,7 +124,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" tabindex="0" onclick="openDocCaseKpiDetail(1)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i
@@ -131,7 +139,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" tabindex="0" onclick="openDocCaseKpiDetail(2)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i
@@ -147,7 +155,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" tabindex="0" onclick="openDocCaseKpiDetail(3)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i
@@ -155,24 +163,24 @@
                             </div>
                         </div>
                         <div class="col-9 col-sm-8 col-xl-9">
-                            <div class="kpi-label">Cases Started</div>
-                            <div class="kpi-value">98</div>
+                            <div class="kpi-label">Average Units Per Case</div>
+                            <div class="kpi-value">20</div>
                             <div class="kpi-delta text-success">+14 vs Feb</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" tabindex="0" onclick="openDocCaseKpiDetail(4)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
-                            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
-                                    class="fa-solid fa-circle-check"></i></div>
+                            <div class="kpi-icon" style="background:#e0e7ff;color:#3730a3;"><i
+                                    class="fa-solid fa-layer-group"></i></div>
                         </div>
                         <div class="col-9 col-sm-8 col-xl-9">
-                            <div class="kpi-label">Cases Completed</div>
-                            <div class="kpi-value">52</div>
-                            <div class="kpi-delta text-success">+5 vs Feb</div>
+                            <div class="kpi-label">Case Type</div>
+                            <div class="kpi-value">23</div>
+                            <div class="kpi-delta text-muted" style="font-size:12px;">Composite 8 · Ceramic 3 · Porcelain 12</div>
                         </div>
                     </div>
                 </div>
@@ -327,9 +335,9 @@
                     <div class="impact-row"><span>Provider (Dr. Heider)</span><span class="impact-amt"
                             id="impactProvider">$1,000.00</span>
                     </div>
-                    <div class="impact-row"><span>Prep (Assistant)</span><span class="impact-amt"
+                    <div class="impact-row"><span>Assistant Pay</span><span class="impact-amt"
                             id="impactPrep">$200.00</span></div>
-                    <div class="impact-row"><span>Cement (Assistant)</span><span class="impact-amt"
+                    <div class="impact-row"><span>ISR pay</span><span class="impact-amt"
                             id="impactCement">$200.00</span></div>
                     <div class="impact-row" style="border-top:1px solid; color:var(--green-600); font-weight:800;">
                         <span>Total
@@ -340,6 +348,77 @@
         </div>
 
         <script>
+            /* ==========================================================
+               KPI CARD DETAIL — Doctor My Cases
+               ========================================================== */
+            function openDocCaseKpiDetail(idx) {
+                const titles = ['Total Cases', 'Total Treatment Value', 'Average Case Value', 'Average Units Per Case', 'Case Type'];
+                const icons = ['fa-clipboard-list', 'fa-tooth', 'fa-sack-dollar', 'fa-hourglass-half', 'fa-layer-group'];
+                const body = document.getElementById('docCaseDetailModalBody');
+                const modalTitle = document.querySelector('#docCaseDetailModal .modal-title');
+                const modalSubtitle = document.querySelector('#docCaseDetailModal .modal-subtitle');
+                if (!body) return;
+                modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+                modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+                const views = [
+                    // 0 — Total Cases
+                    `<div class="panel" style="border:none;box-shadow:none;">
+                        <h5 class="fw-bold mb-3">Total Cases — 126</h5>
+                        <div class="detail-breakdown-box">
+                            <div class="detail-breakdown-row"><span>📅 This Period</span><strong>126</strong></div>
+                            <div class="detail-breakdown-row"><span>📅 Previous Period</span><strong>108</strong></div>
+                            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Change</span><strong class="text-success">+18</strong></div>
+                        </div>
+                        <div class="text-success small mt-2">+16.7% vs previous period</div>
+                    </div>`,
+                    // 1 — Total Treatment Value
+                    `<div class="panel" style="border:none;box-shadow:none;">
+                        <h5 class="fw-bold mb-3">Total Treatment Value — $874,250</h5>
+                        <div class="detail-breakdown-box">
+                            <div class="detail-breakdown-row"><span>🦷 Cosmetic Cases</span><strong>$724,350</strong></div>
+                            <div class="detail-breakdown-row"><span>🦷 General Dentistry</span><strong>$149,900</strong></div>
+                            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>$874,250</strong></div>
+                        </div>
+                        <div class="text-success small mt-2">+12.4% vs previous period</div>
+                    </div>`,
+                    // 2 — Average Case Value
+                    `<div class="panel" style="border:none;box-shadow:none;">
+                        <h5 class="fw-bold mb-3">Average Case Value — $6,939</h5>
+                        <div class="detail-breakdown-box">
+                            <div class="detail-breakdown-row"><span>📊 This Period</span><strong>$6,939</strong></div>
+                            <div class="detail-breakdown-row"><span>📊 Previous Period</span><strong>$6,698</strong></div>
+                            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Change</span><strong class="text-success">+3.6%</strong></div>
+                        </div>
+                        <div class="text-success small mt-2">Average case value increased by $241</div>
+                    </div>`,
+                    // 3 — Average Units Per Case
+                    `<div class="panel" style="border:none;box-shadow:none;">
+                        <h5 class="fw-bold mb-3">Average Units Per Case — 20</h5>
+                        <div class="detail-breakdown-box">
+                            <div class="detail-breakdown-row"><span>📦 Total Units</span><strong>2,520</strong></div>
+                            <div class="detail-breakdown-row"><span>🦷 Total Cases</span><strong>126</strong></div>
+                            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Avg Units / Case</span><strong>20</strong></div>
+                        </div>
+                        <div class="text-success small mt-2">+14 units vs previous period</div>
+                    </div>`,
+                    // 4 — Case Type
+                    `<div class="panel" style="border:none;box-shadow:none;">
+                        <h5 class="fw-bold mb-3">Case Type — 23 Total</h5>
+                        <div class="detail-breakdown-box">
+                            <div class="detail-breakdown-row"><span>🦷 Composite</span><strong>8 cases</strong></div>
+                            <div class="detail-breakdown-row"><span>🦷 Ceramic</span><strong>3 cases</strong></div>
+                            <div class="detail-breakdown-row"><span>🦷 Porcelain / Zirconia</span><strong>12 cases</strong></div>
+                            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>23</strong></div>
+                        </div>
+                        <div class="text-muted small mt-2">Composite 34.8% · Ceramic 13% · Porcelain 52.2%</div>
+                    </div>`
+                ];
+                body.innerHTML = views[idx] || views[0];
+                const modal = new bootstrap.Modal(document.getElementById('docCaseDetailModal'));
+                modal.show();
+            }
+
             const doctorName = 'Dr. Heider';
             const cases = [
                 ["CASE-20260331-001", "Maria Garcia", "Zirconia Veneer Case", "Dr. Heider", "provider", "Completed", "active", "$14,050.00", "2023-03-31"],
@@ -839,6 +918,27 @@
             renderDoctorSummary();
         }
     </script>
+
+    <!-- Doctor My Cases KPI Detail Modal -->
+    <div class="modal fade" id="docCaseDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold">Case Detail</h5>
+                        <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="docCaseDetailModalBody">
+                    <!-- content inserted by openDocCaseKpiDetail() -->
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

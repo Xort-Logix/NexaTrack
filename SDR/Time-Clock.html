@@ -141,8 +141,16 @@
 
         </div>
 
+        <style>
+            .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+            .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+            .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+            .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+            .detail-breakdown-row:last-child { border-bottom:none; }
+            .detail-breakdown-row span { color:#6b7280; }
+        </style>
         <div class="kpi-row mb-3">
-            <div class="kpi-card">
+            <div class="kpi-card" role="button" tabindex="0" onclick="openSdrTimeKpiDetail(0)">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -154,7 +162,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" role="button" tabindex="0" onclick="openSdrTimeKpiDetail(1)">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i
@@ -166,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" role="button" tabindex="0" onclick="openSdrTimeKpiDetail(2)">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i
@@ -178,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" role="button" tabindex="0" onclick="openSdrTimeKpiDetail(3)">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i
@@ -190,7 +198,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" role="button" tabindex="0" onclick="openSdrTimeKpiDetail(4)">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -365,7 +373,100 @@
         sidebarBtn?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
         backdrop?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
         window.addEventListener('resize', () => { if (window.innerWidth > 991) document.body.classList.remove('sidebar-open'); });
+
+        /* ==========================================================
+           KPI CARD DETAIL — SDR Time Clock
+           ========================================================== */
+        function openSdrTimeKpiDetail(idx) {
+            const titles = ['Hours Today', 'Weekly Hours', 'Pay Period', 'Daily Earnings', 'Pay Period Earnings'];
+            const icons = ['fa-clock', 'fa-calendar-week', 'fa-hourglass-half', 'fa-dollar-sign', 'fa-wallet'];
+            const body = document.getElementById('sdrTimeDetailModalBody');
+            const modalTitle = document.querySelector('#sdrTimeDetailModal .modal-title');
+            const modalSubtitle = document.querySelector('#sdrTimeDetailModal .modal-subtitle');
+            if (!body) return;
+            modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+            modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+            const views = [
+                // 0 — Hours Today
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Hours Today — 0.0</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>⏱ Clocked In</span><strong>0.0 hrs</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Today</span><strong>0.0 hrs</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">No clock-in recorded for today yet</div>
+                </div>`,
+                // 1 — Weekly Hours
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Weekly Hours — 36.5</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📅 Mon</span><strong>8.0</strong></div>
+                        <div class="detail-breakdown-row"><span>📅 Tue</span><strong>8.5</strong></div>
+                        <div class="detail-breakdown-row"><span>📅 Wed</span><strong>8.0</strong></div>
+                        <div class="detail-breakdown-row"><span>📅 Thu</span><strong>7.5</strong></div>
+                        <div class="detail-breakdown-row"><span>📅 Fri</span><strong>4.5</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total This Week</span><strong>36.5 hrs</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">3.5 hrs remaining to reach 40-hr week</div>
+                </div>`,
+                // 2 — Pay Period
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Pay Period — 74.0</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📅 Week 1</span><strong>38.0 hrs</strong></div>
+                        <div class="detail-breakdown-row"><span>📅 Week 2</span><strong>36.0 hrs</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Pay Period</span><strong>74.0 hrs</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Pay period spans Jul 1 – Jul 15, 2026</div>
+                </div>`,
+                // 3 — Daily Earnings
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Daily Earnings — $185</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>⏱ Hours Today</span><strong>0.0</strong></div>
+                        <div class="detail-breakdown-row"><span>💰 Effective Rate</span><strong>$18.00/hr</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Today's Earnings</span><strong>$0.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Based on current day's clocked hours</div>
+                </div>`,
+                // 4 — Pay Period Earnings
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Pay Period Earnings — $1,845</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>💰 Regular Pay (74 hrs × $18)</span><strong>$1,332.00</strong></div>
+                        <div class="detail-breakdown-row"><span>⚡ Overtime Pay</span><strong>$0.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Period Earnings</span><strong>$1,845.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Includes all hours and overtime this pay period</div>
+                </div>`
+            ];
+            body.innerHTML = views[idx] || views[0];
+            const modal = new bootstrap.Modal(document.getElementById('sdrTimeDetailModal'));
+            modal.show();
+        }
     </script>
+
+    <!-- SDR Time Clock KPI Detail Modal -->
+    <div class="modal fade" id="sdrTimeDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold">Time Clock Detail</h5>
+                        <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="sdrTimeDetailModalBody">
+                    <!-- content inserted by openSdrTimeKpiDetail() -->
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

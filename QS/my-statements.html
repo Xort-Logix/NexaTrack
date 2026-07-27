@@ -25,7 +25,7 @@
             <!-- <a class="nav-link-item" href="my-cases.html"><i class="fa-solid fa-users"></i>My Cases</a> -->
             <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
                 Statements</a>
-            <a class="nav-link-item " href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
+            <!-- <a class="nav-link-item " href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a> -->
             <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
         </div>
         <div class="sidebar-footer">
@@ -62,23 +62,6 @@
                 <label for="sidebarToggle" class="btn mobile-menu-btn">
                     <i class="fa-solid fa-bars"></i>
                 </label>
-                <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-green" onclick="downloadPDF()"><i
-                            class="fa-solid fa-download me-1"></i>Download
-                        PDF</button>
-                </div>
-                <!-- Date picker -->
-                <div class="date-pill">
-                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
-                    <div class="date-meta">
-                        <span class="date-label">Pay Period</span>
-                        <span class="date-value">
-                            <input type="text" id="daterange" name="date" />
-                        </span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
-                </div>
-
                 <!-- ── CLOCK WIDGET ── -->
                 <div class="clock-widget" id="clockWidget">
 
@@ -113,6 +96,24 @@
 
                 </div>
                 <!-- /clock-widget -->
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-green" onclick="downloadPDF()"><i
+                            class="fa-solid fa-download me-1"></i>Download
+                        PDF</button>
+                </div>
+                <!-- Date picker -->
+                <div class="date-pill">
+                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+                    <div class="date-meta">
+                        <span class="date-label">Pay Period</span>
+                        <span class="date-value">
+                            <input type="text" id="daterange" name="date" />
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+                </div>
+
+
 
             </div>
             <!-- /topbar-actions -->
@@ -120,31 +121,31 @@
         </div>
 
         <div class="kpi-row">
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" onclick="openStatementsKpiDetail(0)">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
-                        class="fa-solid fa-wallet"></i></div>
+                        class="fa-solid fa-file-lines"></i></div>
                 <div>
-                    <div class="kpi-label">Gross Pay</div>
-                    <div class="kpi-value" id="grossKpi">$1,185.00</div>
+                    <div class="kpi-label">Quotes Sent</div>
+                    <div class="kpi-value" id="quotesKpi">245</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
-                <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" onclick="openStatementsKpiDetail(1)">
+                <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-dollar-sign"></i>
                 </div>
                 <div>
-                    <div class="kpi-label">Total Hours</div>
-                    <div class="kpi-value" id="hoursKpi">78.00</div>
+                    <div class="kpi-label">Commission</div>
+                    <div class="kpi-value" id="commissionKpi">$245.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
-                <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" onclick="openStatementsKpiDetail(2)">
+                <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-tag"></i>
                 </div>
                 <div>
-                    <div class="kpi-label">Overtime</div>
-                    <div class="kpi-value" id="otKpi">2.00</div>
+                    <div class="kpi-label">Rate Per Quote</div>
+                    <div class="kpi-value" id="rateKpi">$1.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" onclick="openStatementsKpiDetail(3)">
                 <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
                 </div>
                 <div>
@@ -188,7 +189,7 @@
                                 <div class="fw-bold" style="font-size:15px;">M.Asghar</div>
                                 <div class="text-muted" style="font-size:12px;">Quote Specialist (QS)</div>
                                 <div class="text-muted" style="font-size:11.5px;">Staff members ID: DA001 &middot;
-                                    Compensation Type: Hourly</div>
+                                    Compensation Type: Commission</div>
                             </div>
 
                             <div class="check-preview mb-3">
@@ -200,7 +201,7 @@
                                     </div>
                                     <div class="amount-box">
                                         <div class="lbl">Amount</div>
-                                        <div class="amt" id="stubAmount">$985.00</div>
+                                        <div class="amt" id="stubAmount">$45.00</div>
                                     </div>
                                 </div>
                             </div>
@@ -209,29 +210,29 @@
                                 <div class="col-md-6">
                                     <div class="fw-bold mb-2"
                                         style="font-size:11.5px;text-transform:uppercase;color:var(--gray-500);">
-                                        Earnings</div>
+                                        Commission</div>
                                     <table class="earnings-table">
                                         <thead>
                                             <tr>
                                                 <th>Description</th>
-                                                <th class="text-end">Hrs</th>
+                                                <th class="text-end">Qty</th>
                                                 <th class="text-end">Rate</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Regular Hours</td>
-                                                <td class="text-end" id="stubRegHrs">76.00</td>
-                                                <td class="text-end">$15.00</td>
+                                                <td>Quotes Completed</td>
+                                                <td class="text-end" id="stubQuotes">245</td>
+                                                <td class="text-end">$1.00</td>
                                             </tr>
                                             <tr>
-                                                <td>Overtime Hours</td>
-                                                <td class="text-end" id="stubOtHrs">2.00</td>
-                                                <td class="text-end">$22.50</td>
+                                                <td>Bonus</td>
+                                                <td class="text-end" id="stubBonus">—</td>
+                                                <td class="text-end">$0.00</td>
                                             </tr>
                                             <tr class="fw-bold">
-                                                <td colspan="2">Total Earnings</td>
-                                                <td class="text-end" id="stubTotalEarnings">$1,185.00</td>
+                                                <td colspan="2">Total Commission</td>
+                                                <td class="text-end" id="stubTotalEarnings">$245.00</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -266,7 +267,7 @@
                             </div>
 
                             <div class="stub-total-bar"><span class="lbl">Total Pay (Net)</span><span class="amt"
-                                    id="stubTotalPay">$985.00</span></div>
+                                    id="stubTotalPay">$45.00</span></div>
 
                             <div class="text-center text-muted mt-3" style="font-size:12.5px;">Thank you for your hard
                                 work!</div>
@@ -274,7 +275,7 @@
                             <div class="text-center mt-3 d-flex justify-content-center gap-2">
                                 <button class="btn btn-outline-navy"
                                     onclick="showPane('review', document.querySelectorAll('.toggle-tab-btn')[1])"><i
-                                        class="fa-regular fa-pen-to-square me-1"></i>Review &amp; Edit My Hours</button>
+                                        class="fa-regular fa-pen-to-square me-1"></i>Review &amp; Edit My Commissions</button>
                                 <button class="btn btn-red-outline" data-bs-toggle="modal"
                                     data-bs-target="#flagPayrollModal"><i class="fa-solid fa-flag me-1"></i>Flag
                                     Payroll</button>
@@ -349,10 +350,10 @@
                             <div class="fw-semibold">Jan 10, 2025</div>
                         </div>
                         <div class="small mb-2"><span class="summary-label">Pay Type</span>
-                            <div class="fw-semibold">Hourly</div>
+                            <div class="fw-semibold">Commission</div>
                         </div>
                         <div class="small mb-2"><span class="summary-label">Rate</span>
-                            <div class="fw-semibold">$15.00/hr</div>
+                            <div class="fw-semibold">$1.00/quote</div>
                         </div>
                         <div class="small mb-3"><span class="summary-label">Pay Period</span>
                             <div class="fw-semibold">May 1 – May 15, 2026</div>
@@ -369,8 +370,8 @@
                     <div class="panel">
                         <div class="panel-header">
                             <div>
-                                <h2 class="panel-title">Earnings Breakdown</h2>
-                                <div class="panel-sub">Adjust hours and deductions — totals recalculate instantly.</div>
+                                <h2 class="panel-title">Commission Breakdown</h2>
+                                <div class="panel-sub">Adjust quotes and deductions — totals recalculate instantly.</div>
                             </div>
                             <button class="btn btn-outline-navy btn-sm"
                                 onclick="showPane('statement', document.querySelectorAll('.toggle-tab-btn')[0])"><i
@@ -382,25 +383,25 @@
                                     <thead>
                                         <tr>
                                             <th>Description</th>
-                                            <th>Hours</th>
+                                            <th>Qty</th>
                                             <th>Rate</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Regular Hours</td>
-                                            <td><input id="reg" type="number" step="0.5" value="76"
+                                            <td>Quotes Completed</td>
+                                            <td><input id="quotes" type="number" step="1" value="245"
                                                     class="form-control"></td>
-                                            <td>$15.00</td>
-                                            <td id="regAmt" class="fw-semibold">$1,140.00</td>
+                                            <td>$1.00</td>
+                                            <td id="quotesAmt" class="fw-semibold">$245.00</td>
                                         </tr>
                                         <tr>
-                                            <td>Overtime</td>
-                                            <td><input id="ot" type="number" step="0.5" value="2" class="form-control">
+                                            <td>Bonus</td>
+                                            <td><input id="bonus" type="number" step="1" value="0" class="form-control">
                                             </td>
-                                            <td>$22.50</td>
-                                            <td id="otAmt" class="fw-semibold">$45.00</td>
+                                            <td>$0.00</td>
+                                            <td id="bonusAmt" class="fw-semibold">$0.00</td>
                                         </tr>
                                         <tr>
                                             <td>Advance</td>
@@ -420,7 +421,7 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="3" class="fw-bold">Total Pay</td>
-                                            <td id="total" class="fw-bold" style="color:var(--green-600);">$985.00</td>
+                                            <td id="total" class="fw-bold" style="color:var(--green-600);">$45.00</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -428,18 +429,18 @@
 
                             <div class="row mt-3 g-3">
                                 <div class="col-md-4">
-                                    <label class="form-label">Regular Hours</label>
-                                    <input class="form-control" id="regDisplay" value="76.00" disabled
+                                    <label class="form-label">Quotes Completed</label>
+                                    <input class="form-control" id="quotesDisplay" value="245" disabled
                                         style="background:var(--gray-50);">
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label">Overtime</label>
-                                    <input class="form-control" id="otDisplay" value="2.00" disabled
+                                    <label class="form-label">Commission Rate</label>
+                                    <input class="form-control" id="rateDisplay" value="$1.00" disabled
                                         style="background:var(--gray-50);">
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label">Total Hours</label>
-                                    <input class="form-control" id="th" value="78.00" disabled
+                                    <label class="form-label">Total Commission</label>
+                                    <input class="form-control" id="totalCommissionDisplay" value="$245.00" disabled
                                         style="background:var(--gray-50);">
                                 </div>
                             </div>
@@ -447,7 +448,7 @@
                             <div class="mt-3">
                                 <label class="form-label">Notes for your Office Manager</label>
                                 <textarea class="form-control" rows="3" id="reviewNotes"
-                                    placeholder="e.g. I worked 11.5 hours on Tuesday but only 10.5 hours are showing."></textarea>
+                                    placeholder="e.g. I completed 30 quotes on Tuesday but only 25 are showing."></textarea>
                             </div>
 
                             <div class="text-end mt-4">
@@ -457,6 +458,20 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── KPI DETAIL MODAL ── -->
+    <div class="modal fade" id="statementsKpiModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius:12px;border:none;">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="statementsKpiModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="statementsKpiModalBody">
                 </div>
             </div>
         </div>
@@ -475,7 +490,7 @@
                         15, 2026 statement. Your Office Manager will review and respond.</p>
                     <label class="form-label">Reason</label>
                     <div class="flag-modal-reason selected" onclick="selectReason(this)"><input type="radio"
-                            name="flagReason" checked>Missing hours</div>
+                            name="flagReason" checked>Missing quotes</div>
                     <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
                             name="flagReason">Incorrect compensation</div>
                     <div class="flag-modal-reason" onclick="selectReason(this)"><input type="radio"
@@ -488,7 +503,7 @@
                             name="flagReason">Other</div>
                     <label class="form-label mt-2">Notes</label>
                     <textarea class="form-control" rows="3"
-                        placeholder="e.g. I worked 11.5 hours on Tuesday but only 10.5 hours are showing.">I worked 11.5 hours on Tuesday but only 10.5 hours are showing.</textarea>
+                        placeholder="e.g. I completed 30 quotes but only 25 are showing.">I completed 30 quotes but only 25 are showing.</textarea>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
@@ -526,31 +541,30 @@
 
         /* ---------- Live recalculation ---------- */
         function calc() {
-            const r = parseFloat(document.getElementById('reg').value) || 0;
-            const o = parseFloat(document.getElementById('ot').value) || 0;
+            const q = parseFloat(document.getElementById('quotes').value) || 0;
+            const b = parseFloat(document.getElementById('bonus').value) || 0;
             const a = parseFloat(document.getElementById('adv').value) || 0;
             const d = parseFloat(document.getElementById('adj').value) || 0;
 
-            const ra = r * 15;
-            const oa = o * 22.5;
-            const totalEarnings = ra + oa;
+            const commission = q * 1;
+            const totalEarnings = commission + b;
             const totalDeductions = a + d;
             const total = totalEarnings - totalDeductions;
 
-            document.getElementById('regAmt').innerText = '$' + ra.toLocaleString(undefined, { minimumFractionDigits: 2 });
-            document.getElementById('otAmt').innerText = '$' + oa.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('quotesAmt').innerText = '$' + commission.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('bonusAmt').innerText = '$' + b.toLocaleString(undefined, { minimumFractionDigits: 2 });
             document.getElementById('total').innerText = '$' + total.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-            document.getElementById('regDisplay').value = r.toFixed(2);
-            document.getElementById('otDisplay').value = o.toFixed(2);
-            document.getElementById('th').value = (r + o).toFixed(2);
+            document.getElementById('quotesDisplay').value = q.toString();
+            document.getElementById('rateDisplay').value = '$1.00';
+            document.getElementById('totalCommissionDisplay').value = '$' + commission.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
-            document.getElementById('grossKpi').innerText = '$' + totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2 });
-            document.getElementById('hoursKpi').innerText = (r + o).toFixed(2);
-            document.getElementById('otKpi').innerText = o.toFixed(2);
+            document.getElementById('quotesKpi').innerText = q.toString();
+            document.getElementById('commissionKpi').innerText = '$' + totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById('rateKpi').innerText = '$1.00';
             document.getElementById('adjKpi').innerText = '$' + totalDeductions.toLocaleString(undefined, { minimumFractionDigits: 2 });
         }
-        ['reg', 'ot', 'adv', 'adj'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+        ['quotes', 'bonus', 'adv', 'adj'].forEach(id => document.getElementById(id).addEventListener('input', calc));
         calc();
 
         function confirmPayroll() {
@@ -562,9 +576,11 @@
 
         function saveReview() {
             // push edited numbers into the read-only statement view
-            document.getElementById('stubRegHrs').innerText = document.getElementById('regDisplay').value;
-            document.getElementById('stubOtHrs').innerText = document.getElementById('otDisplay').value;
-            document.getElementById('stubTotalEarnings').innerText = document.getElementById('grossKpi').innerText;
+            document.getElementById('stubQuotes').innerText = document.getElementById('quotesDisplay').value;
+            const commission = (parseFloat(document.getElementById('quotes').value) || 0) * 1;
+            const bonus = parseFloat(document.getElementById('bonus').value) || 0;
+            document.getElementById('stubBonus').innerText = bonus > 0 ? '$' + bonus.toFixed(2) : '—';
+            document.getElementById('stubTotalEarnings').innerText = document.getElementById('commissionKpi').innerText;
             const adv = parseFloat(document.getElementById('adv').value) || 0;
             const adj = parseFloat(document.getElementById('adj').value) || 0;
             document.getElementById('stubAdvance').innerText = '($' + adv.toLocaleString(undefined, { minimumFractionDigits: 2 }) + ')';
@@ -597,6 +613,109 @@
                 locale: { format: 'MM/DD/YYYY' }
             });
         });
+
+        /* ---------- KPI Detail Modal ---------- */
+        const statementsKpiTitles = ['Quotes Sent', 'Commission', 'Rate Per Quote', 'Deductions'];
+        const statementsKpiIcons = ['fa-file-lines', 'fa-dollar-sign', 'fa-tag', 'fa-circle-minus'];
+        const statementsKpiColors = ['#059669', '#1e40af', '#6d28d9', '#c2410c'];
+
+        function openStatementsKpiDetail(idx) {
+            const title = statementsKpiTitles[idx];
+            document.getElementById('statementsKpiModalTitle').innerHTML = '<i class="fa-solid ' + statementsKpiIcons[idx] + '" style="color:' + statementsKpiColors[idx] + ';margin-right:8px;"></i>' + title;
+
+            let body = '';
+            if (idx === 0) {
+                // Quotes Sent breakdown
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Breakdown of quotes sent this pay period (May 1 – May 15, 2026)</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📋 Treatment Plans</span><span class="fw-semibold">98</span></div>
+                        <div class="detail-breakdown-row"><span>📞 Follow-ups</span><span class="fw-semibold">72</span></div>
+                        <div class="detail-breakdown-row"><span>🆕 New Patients</span><span class="fw-semibold">55</span></div>
+                        <div class="detail-breakdown-row"><span>📧 Email Quotes</span><span class="fw-semibold">20</span></div>
+                        <div class="detail-breakdown-row total"><span>Total Quotes</span><span>245</span></div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-success">122%</div>
+                                <div class="small text-muted">vs Target (200)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background:#eff6ff;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-primary">15</div>
+                                <div class="small text-muted">Avg Quotes / Day</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background:#fef2f2;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-danger">12</div>
+                                <div class="small text-muted">Pending Review</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (idx === 1) {
+                // Commission breakdown
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Commission earned breakdown for this pay period</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📋 Treatment Plans (98 × $1.00)</span><span class="fw-semibold">$98.00</span></div>
+                        <div class="detail-breakdown-row"><span>📞 Follow-ups (72 × $1.00)</span><span class="fw-semibold">$72.00</span></div>
+                        <div class="detail-breakdown-row"><span>🆕 New Patients (55 × $1.00)</span><span class="fw-semibold">$55.00</span></div>
+                        <div class="detail-breakdown-row"><span>📧 Email Quotes (20 × $1.00)</span><span class="fw-semibold">$20.00</span></div>
+                        <div class="detail-breakdown-row total"><span>Total Commission</span><span>$245.00</span></div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-6">
+                            <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-success">$245.00</div>
+                                <div class="small text-muted">This Period</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center p-3" style="background:#fefce8;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-warning">$190.00</div>
+                                <div class="small text-muted">Last Period</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (idx === 2) {
+                // Rate Per Quote
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Your compensation rate is a fixed flat fee per quote sent.</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>Rate Type</span><span class="fw-semibold">Flat Rate</span></div>
+                        <div class="detail-breakdown-row"><span>Per Quote</span><span class="fw-semibold">$1.00</span></div>
+                        <div class="detail-breakdown-row"><span>Payment Trigger</span><span class="fw-semibold">Quote Sent</span></div>
+                        <div class="detail-breakdown-row total"><span>Effective Earnings</span><span>$1.00 / quote</span></div>
+                    </div>
+                    <div class="alert alert-info mt-3 mb-0 py-2" style="font-size:13px;background:#eff6ff;border:none;border-radius:8px;">
+                        <i class="fa-solid fa-circle-info me-1"></i> 
+                        QS positions are commission-based. You earn <strong>$1.00</strong> for every quote you send, regardless of whether the patient accepts.
+                    </div>
+                `;
+            } else if (idx === 3) {
+                // Deductions breakdown
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Deductions and adjustments applied this pay period</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>💰 Advance Repayment</span><span class="fw-semibold">$200.00</span></div>
+                        <div class="detail-breakdown-row"><span>📝 Other Adjustment</span><span class="fw-semibold">$0.00</span></div>
+                        <div class="detail-breakdown-row total"><span>Total Deductions</span><span>$200.00</span></div>
+                    </div>
+                    <div class="alert alert-warning mt-3 mb-0 py-2" style="font-size:13px;background:#fffbeb;border:none;border-radius:8px;">
+                        <i class="fa-solid fa-circle-exclamation me-1"></i>
+                        Deductions reduce your total commission. Review the breakdown in the <strong>Review &amp; Edit</strong> tab.
+                    </div>
+                `;
+            }
+
+            document.getElementById('statementsKpiModalBody').innerHTML = body;
+            new bootstrap.Modal(document.getElementById('statementsKpiModal')).show();
+        }
 
         /* ---------- Mobile sidebar toggle ---------- */
         document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));

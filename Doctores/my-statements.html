@@ -69,24 +69,25 @@
             </div>
         </div>
 
+        <style>
+            .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+            .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+            .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+            .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+            .detail-breakdown-row:last-child { border-bottom:none; }
+            .detail-breakdown-row span { color:#6b7280; }
+        </style>
         <div class="kpi-row">
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0" onclick="openStatementKpiDetail(0)">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
                         class="fa-solid fa-wallet"></i></div>
                 <div>
-                    <div class="kpi-label">Gross Pay</div>
+                    <div class="kpi-label">Cosmetic Production </div>
                     <div class="kpi-value" id="grossKpi">$1,185.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
-                <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
-                </div>
-                <div>
-                    <div class="kpi-label">Total Cases</div>
-                    <div class="kpi-value" id="hoursKpi">78.00</div>
-                </div>
-            </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+           
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0" onclick="openStatementKpiDetail(1)">
                 <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
@@ -94,12 +95,20 @@
                     <div class="kpi-value" id="otKpi">2.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+             <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0" onclick="openStatementKpiDetail(2)">
+                <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
+                </div>
+                <div>
+                    <div class="kpi-label">Advances </div>
+                    <div class="kpi-value" id="hoursKpi">$7,833.00</div>
+                </div>
+            </div>
+            <div class="kpi-card d-flex align-items-center gap-3" role="button" tabindex="0" onclick="openStatementKpiDetail(3)">
                 <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
                 </div>
                 <div>
-                    <div class="kpi-label">Deductions</div>
-                    <div class="kpi-value" id="adjKpi">$200.00</div>
+                    <div class="kpi-label">Net</div>
+                    <div class="kpi-value" id="adjKpi">$2,400.00</div>
                 </div>
             </div>
         </div>
@@ -553,8 +562,89 @@
         document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
         document.getElementById('sidebarBackdrop')?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
         window.addEventListener('resize', () => { if (window.innerWidth > 900) document.body.classList.remove('sidebar-open'); });
+
+        /* ==========================================================
+           KPI CARD DETAIL — My Statements
+           ========================================================== */
+        function openStatementKpiDetail(idx) {
+            const titles = ['Cosmetic Production', 'General Production', 'Advances', 'Net'];
+            const icons = ['fa-wallet', 'fa-chart-line', 'fa-clock', 'fa-circle-minus'];
+            const body = document.getElementById('statementDetailModalBody');
+            const modalTitle = document.querySelector('#statementDetailModal .modal-title');
+            const modalSubtitle = document.querySelector('#statementDetailModal .modal-subtitle');
+            if (!body) return;
+            modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+            modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+            const views = [
+                // 0 — Cosmetic Production
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Cosmetic Production — $1,185.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📦 Units</span><strong>76.00</strong></div>
+                        <div class="detail-breakdown-row"><span>💰 Rate per Unit</span><strong>$15.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Cosmetic Production</span><strong>$1,140.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Cosmetic cases contribution: 96.2% of total earnings</div>
+                </div>`,
+                // 1 — General Production
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">General Production — 2.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>📦 Units</span><strong>2.00</strong></div>
+                        <div class="detail-breakdown-row"><span>💰 Rate per Unit</span><strong>$22.50</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total General Production</span><strong>$45.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">General cases contribution: 3.8% of total earnings</div>
+                </div>`,
+                // 2 — Advances
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Advances — $7,833.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>💰 Advance Taken This Period</span><strong>$200.00</strong></div>
+                        <div class="detail-breakdown-row"><span>📅 Total Outstanding</span><strong>$7,833.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Advances</span><strong>$7,833.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">$200.00 deducted this period toward advance repayment</div>
+                </div>`,
+                // 3 — Net
+                `<div class="panel" style="border:none;box-shadow:none;">
+                    <h5 class="fw-bold mb-3">Net Pay — $2,400.00</h5>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>💰 Total Earnings</span><strong>$1,185.00</strong></div>
+                        <div class="detail-breakdown-row"><span>📉 Advance Deduction</span><strong class="text-danger">-$200.00</strong></div>
+                        <div class="detail-breakdown-row"><span>📉 Other Adjustments</span><strong>$0.00</strong></div>
+                        <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Net Pay</span><strong>$985.00</strong></div>
+                    </div>
+                    <div class="text-muted small mt-2">Net pay after all deductions</div>
+                </div>`
+            ];
+            body.innerHTML = views[idx] || views[0];
+            const modal = new bootstrap.Modal(document.getElementById('statementDetailModal'));
+            modal.show();
+        }
     </script>
 
+    <!-- Statement KPI Detail Modal -->
+    <div class="modal fade" id="statementDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h5 class="modal-title fw-bold">Statement Detail</h5>
+                        <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="statementDetailModalBody">
+                    <!-- content inserted by openStatementKpiDetail() -->
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

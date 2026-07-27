@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
+    <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
     <div class="sidebar">
         <div class="brand">
             <div class="brand-mark">N</div>
@@ -26,7 +26,7 @@
             <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
                 Statements</a>
             <a class="nav-link-item " href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-             <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+            <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
         </div>
         <div class="sidebar-footer">
             <div class="user-chip">
@@ -56,7 +56,8 @@
             <div class="nav-section">
                 <a class="nav-link-item" href="Empdahshabord.html"><i class="fa-solid fa-grip"></i>My Dashboard</a>
                 <!-- <a class="nav-link-item" href="my-cases.html"><i class="fa-solid fa-users"></i>My Cases</a> -->
-                <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
+                <a class="nav-link-item active" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My
+                    Statements</a>
                 <a class="nav-link-item" href="Time-Clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
                 <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
             </div>
@@ -78,7 +79,7 @@
     </div>
 
     <div class="main">
-          <div class="topbar">
+        <div class="topbar">
 
             <!-- Left: Title -->
             <div>
@@ -92,23 +93,6 @@
 
             <!-- Right: Actions -->
             <div class="topbar-actions">
-
-                <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-green" onclick="downloadPDF()"><i
-                            class="fa-solid fa-download me-1"></i>Download
-                        PDF</button>
-                </div>
-                <!-- Date picker -->
-                <div class="date-pill">
-                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
-                    <div class="date-meta">
-                        <span class="date-label">Pay Period</span>
-                        <span class="date-value">
-                            <input type="text" id="daterange" name="date" />
-                        </span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
-                </div>
 
                 <!-- ── CLOCK WIDGET ── -->
                 <div class="clock-widget" id="clockWidget">
@@ -144,6 +128,24 @@
 
                 </div>
                 <!-- /clock-widget -->
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-green" onclick="downloadPDF()"><i
+                            class="fa-solid fa-download me-1"></i>Download
+                        PDF</button>
+                </div>
+                <!-- Date picker -->
+                <div class="date-pill">
+                    <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+                    <div class="date-meta">
+                        <span class="date-label">Pay Period</span>
+                        <span class="date-value">
+                            <input type="text" id="daterange" name="date" />
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+                </div>
+
+
 
             </div>
             <!-- /topbar-actions -->
@@ -215,7 +217,8 @@
 
                             <div class="mb-3">
                                 <div class="text-muted"
-                                    style="font-size:11px;text-transform:uppercase;font-weight:700;"> Staff members</div>
+                                    style="font-size:11px;text-transform:uppercase;font-weight:700;"> Staff members
+                                </div>
                                 <div class="fw-bold" style="font-size:15px;">M.Ahsan</div>
                                 <div class="text-muted" style="font-size:12px;">Social Media</div>
                                 <div class="text-muted" style="font-size:11.5px;">Staff members ID: DA001 &middot;
@@ -534,7 +537,7 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-     <script src="../js/javescript.js"></script>
+    <script src="../js/javescript.js"></script>
     <script>
         /* ---------- Statement / Review tab switcher ---------- */
         function showPane(key, btn) {

@@ -110,9 +110,17 @@
       </div>
     </div>
 
+    <style>
+      .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+      .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+      .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+      .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+      .detail-breakdown-row:last-child { border-bottom:none; }
+      .detail-breakdown-row span { color:#6b7280; }
+    </style>
     <div class="row g-3 mb-3">
       <div class="col-12 col-sm-6 col-md-4 col-lg">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCaseKpiDetail(0)">
           <div class="row">
             <div class="col-4">
               <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -127,7 +135,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCaseKpiDetail(1)">
           <div class="row">
             <div class="col-4">
               <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-tooth"></i></div>
@@ -141,7 +149,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCaseKpiDetail(2)">
           <div class="row">
             <div class="col-4">
               <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i class="fa-solid fa-sack-dollar"></i>
@@ -156,7 +164,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCaseKpiDetail(3)">
           <div class="row">
             <div class="col-4">
               <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-hourglass-half"></i>
@@ -171,7 +179,7 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openCaseKpiDetail(4)">
           <div class="row">
             <div class="col-4">
               <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -321,8 +329,8 @@
               class="fw-semibold">null</span></div>
           <div class="section-label" style="margin-top:0;">Compensation Impact</div>
           <div class="impact-row"><span>Provider (Dr. Heider)</span><span class="impact-amt">$1,000.00</span></div>
-          <div class="impact-row"><span>Prep (Assistant)</span><span class="impact-amt">$200.00</span></div>
-          <div class="impact-row"><span>Cement (Assistant)</span><span class="impact-amt">$200.00</span></div>
+          <div class="impact-row"><span>Assistant pay</span><span class="impact-amt">$200.00</span></div>
+          <div class="impact-row"><span>ISR pay</span><span class="impact-amt">$200.00</span></div>
           <div class="impact-row" style="border-top:1px solid; color:var(--green-600); font-weight:800;"><span>Total
               Compensation</span><span class="impact-amt">$1,400.00</span></div>
         </div>
@@ -787,7 +795,106 @@
         </tr>
       `).join('');
     }
+
+    /* ==========================================================
+       KPI CARD DETAIL — Cases Overview
+       ========================================================== */
+    function openCaseKpiDetail(idx) {
+      const titles = ['Total Cases', 'Total Treatment Value', 'Average Case Value', 'Cases Started', 'Cases Completed'];
+      const icons = ['fa-clipboard-list', 'fa-tooth', 'fa-sack-dollar', 'fa-hourglass-half', 'fa-circle-check'];
+      const body = document.getElementById('caseDetailModalBody');
+      const modalTitle = document.querySelector('#caseDetailModal .modal-title');
+      const modalSubtitle = document.querySelector('#caseDetailModal .modal-subtitle');
+      if (!body) return;
+      modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+      modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+      const views = [
+        // 0 — Total Cases
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Cases by Department</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>82</strong></div>
+            <div class="detail-breakdown-row"><span>🎧 ISR</span><strong>28</strong></div>
+            <div class="detail-breakdown-row"><span>🏢 Other</span><strong>16</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>126</strong></div>
+          </div>
+          <h5 class="fw-bold mt-4 mb-3">By Status</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>✅ Completed</span><strong>52</strong></div>
+            <div class="detail-breakdown-row"><span>🔄 In Progress / Started</span><strong>46</strong></div>
+            <div class="detail-breakdown-row"><span>📋 New / Consult</span><strong>28</strong></div>
+          </div>
+        </div>`,
+        // 1 — Total Treatment Value
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Treatment Value by Category</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>🦷 Cosmetic Veneers</span><strong>$452,300</strong></div>
+            <div class="detail-breakdown-row"><span>🦷 Crowns & Restorations</span><strong>$198,750</strong></div>
+            <div class="detail-breakdown-row"><span>🦷 General Dentistry</span><strong>$223,200</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>$874,250</strong></div>
+          </div>
+          <div class="text-muted small mt-3">Monthly run-rate: ~$98,500 avg over last 6 months</div>
+        </div>`,
+        // 2 — Average Case Value
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Average Case Value Trend</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>📊 This Period</span><strong>$6,939</strong></div>
+            <div class="detail-breakdown-row"><span>📊 Previous Period</span><strong>$6,698</strong></div>
+            <div class="detail-breakdown-row"><span>📈 Change</span><strong class="text-success">+3.6%</strong></div>
+          </div>
+          <div class="text-muted small mt-3">Cosmetic cases avg $9,450 • General cases avg $2,180</div>
+        </div>`,
+        // 3 — Cases Started
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Cases Started Breakdown</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>🆕 New (this month)</span><strong>28</strong></div>
+            <div class="detail-breakdown-row"><span>🔍 In Consult</span><strong>12</strong></div>
+            <div class="detail-breakdown-row"><span>🛠️ In Treatment</span><strong>34</strong></div>
+            <div class="detail-breakdown-row"><span>✅ Prep / Ready</span><span>24</span></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Started</span><strong>98</strong></div>
+          </div>
+          <div class="text-success small mt-2">+14 started vs previous period</div>
+        </div>`,
+        // 4 — Cases Completed
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Completed Cases</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>✅ Completed This Period</span><strong>52</strong></div>
+            <div class="detail-breakdown-row"><span>📈 Completion Rate</span><strong>53%</strong></div>
+            <div class="detail-breakdown-row"><span>⏱️ Avg. Completion Time</span><strong>14 days</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Value Completed</span><strong>$387,400</strong></div>
+          </div>
+          <div class="text-success small mt-2">+5 completed vs previous period</div>
+        </div>`
+      ];
+      body.innerHTML = views[idx] || views[0];
+      const modal = new bootstrap.Modal(document.getElementById('caseDetailModal'));
+      modal.show();
+    }
   </script>
+
+  <!-- Case Detail Modal -->
+  <div class="modal fade" id="caseDetailModal" tabindex="-1" aria-labelledby="caseDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="caseDetailModalLabel"><i class="fa-solid fa-briefcase-medical me-2 text-success"></i>Case Detail</h5>
+            <div class="modal-subtitle">Detailed breakdown of case metrics.</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="caseDetailModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

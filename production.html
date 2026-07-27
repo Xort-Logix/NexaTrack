@@ -159,9 +159,17 @@
     </div>
     </div>
 
+    <style>
+      .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+      .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+      .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+      .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+      .detail-breakdown-row:last-child { border-bottom:none; }
+      .detail-breakdown-row span { color:#6b7280; }
+    </style>
     <div class="row g-3 mb-3">
       <div class="col-6 col-sm-4 col-md">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(0)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -176,7 +184,7 @@
         </div>
       </div>
       <div class="col-6 col-sm-4 col-md">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(1)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-tooth"></i></div>
@@ -190,7 +198,7 @@
         </div>
       </div>
       <div class="col-6 col-sm-4 col-md">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(2)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i
@@ -206,7 +214,7 @@
         </div>
       </div>
       <div class="col-6 col-sm-6 col-md">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(3)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-file-lines"></i>
@@ -221,7 +229,7 @@
         </div>
       </div>
       <div class="col-6 col-sm-6 col-md">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(4)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
               <div class="kpi-icon" style="background:#e0e7ff;color:#3730a3;"><i class="fa-solid fa-user-group"></i>
@@ -956,7 +964,103 @@
           closeSidebar();
         }
       });
+
+      /* ==========================================================
+         KPI CARD DETAIL — Production Overview
+         ========================================================== */
+      function openProdKpiDetail(idx) {
+        const titles = ['Total Production', 'Cosmetic Production', 'General Production', 'Total Cases', 'Total Units'];
+        const icons = ['fa-chart-column', 'fa-tooth', 'fa-briefcase-medical', 'fa-file-lines', 'fa-user-group'];
+        const body = document.getElementById('prodDetailModalBody');
+        const modalTitle = document.querySelector('#prodDetailModal .modal-title');
+        const modalSubtitle = document.querySelector('#prodDetailModal .modal-subtitle');
+        if (!body) return;
+        modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+        modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+        const views = [
+          // 0 — Total Production
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Total Production — $874,250</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>🦷 Cosmetic Production</span><strong>$724,350</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 General Production</span><strong>$149,900</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Production</span><strong>$874,250</strong></div>
+            </div>
+            <div class="text-success small mt-2">+12.4% increase vs previous period</div>
+          </div>`,
+          // 1 — Cosmetic Production
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Cosmetic Production — $724,350</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📊 Percentage of Total</span><strong>82.9%</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Veneers</span><strong>$312,000</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Crowns (Cosmetic)</span><strong>$245,800</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Invisalign / Ortho</span><strong>$166,550</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Cosmetic</span><strong>$724,350</strong></div>
+            </div>
+            <div class="text-muted small mt-2">82.9% of total production comes from cosmetic cases</div>
+          </div>`,
+          // 2 — General Production
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">General Production — $149,900</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📊 Percentage of Total</span><strong>17.1%</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Fillings & Restorations</span><strong>$62,400</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Cleanings & Exams</span><strong>$48,200</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Extractions</span><strong>$39,300</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total General</span><strong>$149,900</strong></div>
+            </div>
+            <div class="text-muted small mt-2">17.1% of total production from general dentistry</div>
+          </div>`,
+          // 3 — Total Cases
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Total Cases — 126</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>82 cases</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR</span><strong>28 cases</strong></div>
+              <div class="detail-breakdown-row"><span>🏢 Other</span><strong>16 cases</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>126</strong></div>
+            </div>
+            <div class="text-success small mt-2">+18 vs previous period</div>
+          </div>`,
+          // 4 — Total Units
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Total Units — 662</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📦 Cosmetic Units</span><strong>412</strong></div>
+              <div class="detail-breakdown-row"><span>📦 General Units</span><strong>250</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Units</span><strong>662</strong></div>
+            </div>
+            <div class="text-success small mt-2">+74 vs previous period</div>
+          </div>`
+        ];
+        body.innerHTML = views[idx] || views[0];
+        const modal = new bootstrap.Modal(document.getElementById('prodDetailModal'));
+        modal.show();
+      }
     </script>
+
+    <!-- Production KPI Detail Modal -->
+    <div class="modal fade" id="prodDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold">Production Detail</h5>
+              <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="prodDetailModalBody">
+            <!-- content inserted by openProdKpiDetail() -->
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>

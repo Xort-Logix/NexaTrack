@@ -14,6 +14,40 @@
   <link rel="stylesheet" href="../style/mainrole.css">
 
 </head>
+<style>
+  .kpi-card[role="button"] {
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .kpi-card[role="button"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+  }
+
+  .detail-breakdown-box {
+    border: 1px solid #eef2f6;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .detail-breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f3f5f9;
+    font-size: 14px;
+  }
+
+  .detail-breakdown-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-breakdown-row span {
+    color: #6b7280;
+  }
+</style>
 
 <body>
   <input type="checkbox" id="sidebarToggle" class="sidebar-toggle-checkbox">
@@ -27,7 +61,7 @@
 
       <a class="nav-link-item" href="my-statements.html"><i class="fa-solid fa-file-invoice"></i>My Statements</a>
       <a class="nav-link-item" href="time-clock.html"><i class="fa-solid fa-clock"></i>Time Clock</a>
-       <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
+      <a class="nav-link-item" href="./../index.html"><i class="fa-solid fa-file-invoice"></i> Logout</a>
     </div>
     <div class="sidebar-footer">
       <div class="user-chip">
@@ -90,20 +124,6 @@
         <label for="sidebarToggle" class="btn mobile-menu-btn">
           <i class="fa-solid fa-bars"></i>
         </label>
-
-        <!-- Date picker -->
-        <div class="date-pill">
-          <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
-          <div class="date-meta">
-            <span class="date-label">Pay Period</span>
-            <span class="date-value">
-              <input type="text" id="daterange" name="date" />
-            </span>
-          </div>
-          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
-        </div>
-
-        <!-- ── CLOCK WIDGET ── -->
         <div class="clock-widget" id="clockWidget">
 
           <!-- Status -->
@@ -133,14 +153,29 @@
 
         </div>
         <!-- /clock-widget -->
+        <!-- Date picker -->
+        <div class="date-pill">
+          <i class="fa-regular fa-calendar me-1 text-muted" style="font-size:13px;"></i>
+          <div class="date-meta">
+            <span class="date-label">Pay Period</span>
+            <span class="date-value">
+              <input type="text" id="daterange" name="date" />
+            </span>
+          </div>
+          <i class="fa-solid fa-chevron-down text-muted" style="font-size:10px;"></i>
+        </div>
+
+        <!-- ── CLOCK WIDGET ── -->
+
 
       </div>
       <!-- /topbar-actions -->
 
     </div>
 
+
     <div class="kpi-row mb-3">
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openSdrDashKpiDetail(0)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -153,7 +188,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openSdrDashKpiDetail(1)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i>
@@ -165,7 +200,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openSdrDashKpiDetail(2)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-receipt"></i>
@@ -178,7 +213,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <!-- <div class="kpi-card">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-bolt"></i></div>
@@ -188,8 +223,8 @@
             <div class="kpi-value">$0.00</div>
           </div>
         </div>
-      </div>
-      <div class="kpi-card">
+      </div> -->
+      <div class="kpi-card" role="button" tabindex="0" onclick="openSdrDashKpiDetail(3)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -349,10 +384,10 @@
                   <span class="payroll-stat-label">Regular pay</span>
                   <span class="payroll-stat-value">$2,880.00</span>
                 </div>
-                <div class="payroll-stat-item">
+                <!-- <div class="payroll-stat-item">
                   <span class="payroll-stat-label">Overtime</span>
                   <span class="payroll-stat-value">$0.00</span>
-                </div>
+                </div> -->
                 <div class="payroll-stat-item total">
                   <span class="payroll-stat-label">Total</span>
                   <span class="payroll-stat-value">$2,880.00</span>
@@ -382,7 +417,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-     <script src="../js/javescript.js"></script>
+    <script src="../js/javescript.js"></script>
     <script>
       $(function () {
         $('input[name="date"]').daterangepicker({
@@ -418,99 +453,191 @@
       //   }
       // });
 
-      const providerCtx = document.getElementById('providerChart');
-      if (providerCtx) {
-        new Chart(providerCtx, {
-          type: 'bar',
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-            datasets: [
-              {
-                label: 'Production',
-                data: [18000, 21000, 24650, 22800, 25200],
-                backgroundColor: '#0d9488',
-                borderRadius: 6
-              },
-              {
-                label: 'Net Pay',
-                data: [5200, 6100, 7125, 6800, 7400],
-                backgroundColor: '#4338ca',
-                borderRadius: 6
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { display: true },
-              tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } }
+      /* ════════════════════════════════════════════
+         CHARTS — scoped block to avoid redeclaration
+         conflicts with javescript.js
+         ════════════════════════════════════════════ */
+      {
+        const pc = document.getElementById('providerChart');
+        if (pc) {
+          new Chart(pc, {
+            type: 'bar',
+            data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+              datasets: [
+                {
+                  label: 'Production',
+                  data: [18000, 21000, 24650, 22800, 25200],
+                  backgroundColor: '#0d9488',
+                  borderRadius: 6
+                },
+                {
+                  label: 'Net Pay',
+                  data: [5200, 6100, 7125, 6800, 7400],
+                  backgroundColor: '#4338ca',
+                  borderRadius: 6
+                }
+              ]
             },
-            scales: {
-              x: { grid: { display: false } },
-              y: {
-                beginAtZero: true,
-                ticks: { callback: (value) => '$' + (value / 1000) + 'K' }
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: true },
+                tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } }
+              },
+              scales: {
+                x: { grid: { display: false } },
+                y: {
+                  beginAtZero: true,
+                  ticks: { callback: (value) => '$' + (value / 1000) + 'K' }
+                }
               }
             }
-          }
-        });
+          });
+        }
+
+        // Payroll Overview grouped bar chart
+        const payrollCtx = document.getElementById('payrollChart');
+        if (payrollCtx) {
+          new Chart(payrollCtx, {
+            type: 'bar',
+            data: {
+              labels: ['Earned', 'Advances', 'Net Owed'],
+              datasets: [
+                { label: 'Providers', data: [19625, 2600, 17025], backgroundColor: '#10b981', borderRadius: 4 },
+                { label: 'ISR (Commission)', data: [12450, 0, 12450], backgroundColor: '#3b82f6', borderRadius: 4 },
+                { label: 'ISR (Flat)', data: [6000, 0, 6000], backgroundColor: '#f59e0b', borderRadius: 4 },
+                { label: 'DA', data: [2400, 0, 2400], backgroundColor: '#a855f7', borderRadius: 4 },
+                { label: 'CE', data: [2000, 0, 2000], backgroundColor: '#0d9488', borderRadius: 4 },
+                { label: 'Other', data: [4850, 0, 4850], backgroundColor: '#9ca3af', borderRadius: 4 }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } } },
+              scales: {
+                x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12, weight: 600 }, color: '#374151' } },
+                y: {
+                  grid: { color: '#eef1f5' },
+                  ticks: {
+                    callback: (v) => v === 0 ? '$0' : '$' + (v / 1000) + 'K',
+                    font: { family: 'Inter', size: 11 }, color: '#6b7280'
+                  }
+                }
+              }
+            }
+          });
+        }
+
+        // Advances donut chart
+        const advCtx = document.getElementById('advancesChart');
+        if (advCtx) {
+          new Chart(advCtx, {
+            type: 'doughnut',
+            data: {
+              labels: ['Dr. Heider', 'Dr. Vanessa', 'Dr. Nancy', 'Dr. Safa', 'Others'],
+              datasets: [{
+                data: [4300, 4300, 3900, 3250, 6550],
+                backgroundColor: ['#0d9488', '#3b82f6', '#a855f7', '#f59e0b', '#9ca3af'],
+                borderWidth: 0
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              cutout: '72%',
+              plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: (c) => c.label + ': $' + c.parsed.toLocaleString() } }
+              }
+            }
+          });
+        }
       }
 
-      // Payroll Overview grouped bar chart
-      const payrollCtx = document.getElementById('payrollChart');
-      new Chart(payrollCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Earned', 'Advances', 'Net Owed'],
-          datasets: [
-            { label: 'Providers', data: [19625, 2600, 17025], backgroundColor: '#10b981', borderRadius: 4 },
-            { label: 'ISR (Commission)', data: [12450, 0, 12450], backgroundColor: '#3b82f6', borderRadius: 4 },
-            { label: 'ISR (Flat)', data: [6000, 0, 6000], backgroundColor: '#f59e0b', borderRadius: 4 },
-            { label: 'DA', data: [2400, 0, 2400], backgroundColor: '#a855f7', borderRadius: 4 },
-            { label: 'CE', data: [2000, 0, 2000], backgroundColor: '#0d9488', borderRadius: 4 },
-            { label: 'Other', data: [4850, 0, 4850], backgroundColor: '#9ca3af', borderRadius: 4 }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } } },
-          scales: {
-            x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12, weight: 600 }, color: '#374151' } },
-            y: {
-              grid: { color: '#eef1f5' },
-              ticks: {
-                callback: (v) => v === 0 ? '$0' : '$' + (v / 1000) + 'K',
-                font: { family: 'Inter', size: 11 }, color: '#6b7280'
-              }
-            }
-          }
-        }
-      });
+      /* ==========================================================
+         KPI CARD DETAIL — SDR Dashboard
+         ========================================================== */
+      function openSdrDashKpiDetail(idx) {
+        const titles = ['Hours Worked', 'Hourly Rate', 'Regular Pay', 'Total Pay'];
+        const icons = ['fa-clock', 'fa-money-bill-wave', 'fa-receipt', 'fa-circle-check'];
+        const body = document.getElementById('sdrDashDetailModalBody');
+        const modalTitle = document.querySelector('#sdrDashDetailModal .modal-title');
+        const modalSubtitle = document.querySelector('#sdrDashDetailModal .modal-subtitle');
+        if (!body) return;
+        modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+        modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
 
-      // Advances donut chart
-      const advCtx = document.getElementById('advancesChart');
-      new Chart(advCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Dr. Heider', 'Dr. Vanessa', 'Dr. Nancy', 'Dr. Safa', 'Others'],
-          datasets: [{
-            data: [4300, 4300, 3900, 3250, 6550],
-            backgroundColor: ['#0d9488', '#3b82f6', '#a855f7', '#f59e0b', '#9ca3af'],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          cutout: '72%',
-          plugins: {
-            legend: { display: false },
-            tooltip: { callbacks: { label: (c) => c.label + ': $' + c.parsed.toLocaleString() } }
-          }
-        }
-      });
+        const views = [
+          // 0 — Hours Worked
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Hours Worked — 160.00</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📅 Total Days</span><strong>20</strong></div>
+              <div class="detail-breakdown-row"><span>⏱ Avg Hours/Day</span><strong>8.0</strong></div>
+              <div class="detail-breakdown-row"><span>📊 Scheduled Hours</span><strong>160.00</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Hours Worked</span><strong>160.00</strong></div>
+            </div>
+            <div class="text-muted small mt-2">Full attendance with no absences this period</div>
+          </div>`,
+          // 1 — Hourly Rate
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Hourly Rate — $18.00</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>💰 Base Rate</span><strong>$18.00/hr</strong></div>
+              
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Current Hourly Rate</span><strong>$18.00</strong></div>
+            </div>
+           
+          </div>`,
+          // 2 — Regular Pay
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Regular Pay — $2,880</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>⏱ Regular Hours</span><strong>160.00</strong></div>
+              <div class="detail-breakdown-row"><span>💰 Hourly Rate</span><strong>$18.00</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Regular Pay</span><strong>$2,880.00</strong></div>
+            </div>
+          
+          </div>`,
+          // 3 — Total Pay
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Total Pay — $2,880</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>💰 Regular Pay</span><strong>$2,880.00</strong></div>
+              <div class="detail-breakdown-row"><span>⚡ Overtime</span><strong>$0.00</strong></div>
+              <div class="detail-breakdown-row"><span>📉 Deductions</span><strong>$0.00</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Pay</span><strong>$2,880.00</strong></div>
+            </div>
+            <div class="text-muted small mt-2">100% of base pay achieved this period</div>
+          </div>`
+        ];
+        body.innerHTML = views[idx] || views[0];
+        const modal = new bootstrap.Modal(document.getElementById('sdrDashDetailModal'));
+        modal.show();
+      }
     </script>
 
+    <!-- SDR Dashboard KPI Detail Modal -->
+    <div class="modal fade" id="sdrDashDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold">SDR Dashboard Detail</h5>
+              <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="sdrDashDetailModalBody">
+            <!-- content inserted by openSdrDashKpiDetail() -->
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>

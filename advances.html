@@ -119,10 +119,18 @@
       </div>
     </div>
 
+    <style>
+      .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+      .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+      .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+      .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+      .detail-breakdown-row:last-child { border-bottom:none; }
+      .detail-breakdown-row span { color:#6b7280; }
+    </style>
     <!-- KPI Grid Layout -->
     <div class="row g-3 mb-4">
       <div class="col" style="flex:1;">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openAdvanceKpiDetail(0)">
           <div class="row">
             <div class="col-3">
               <div class="kpi-icon" style="background:#e6f7f3;color:#00a878;"><i class="fa-solid fa-wallet"></i></div>
@@ -138,7 +146,7 @@
         </div>
       </div>
       <div class="col" style="flex:1;">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openAdvanceKpiDetail(1)">
           <div class="row">
             <div class="col-3">
               <div class="kpi-icon" style="background:#eff6ff;color:#2563eb;"><i
@@ -155,7 +163,7 @@
         </div>
       </div>
       <div class="col" style="flex:1;">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openAdvanceKpiDetail(2)">
           <div class="row">
             <div class="col-3">
               <div class="kpi-icon" style="background:#fff7ed;color:#ea580c;"><i class="fa-solid fa-lock"></i></div>
@@ -172,7 +180,7 @@
         </div>
       </div>
       <div class="col" style="flex:1;">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openAdvanceKpiDetail(3)">
           <div class="row">
             <div class="col-3">
               <div class="kpi-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="fa-solid fa-users"></i></div>
@@ -186,7 +194,7 @@
         </div>
       </div>
       <div class="col" style="flex:1;">
-        <div class="kpi-card">
+        <div class="kpi-card" role="button" tabindex="0" onclick="openAdvanceKpiDetail(4)">
           <div class="row">
             <div class="col-3">
               <div class="kpi-icon" style="background:#ecfeff;color:#0891b2;"><i class="fa-solid fa-calculator"></i>
@@ -906,7 +914,149 @@
         }
       });
     });
+
+    /* ==========================================================
+       KPI CARD DETAIL — Advances Overview
+       ========================================================== */
+    function openAdvanceKpiDetail(idx) {
+      const titles = ['Total Advances', 'Total Repaid', 'Outstanding Balance', 'Active Advances', 'Avg. Advance Amount'];
+      const icons = ['fa-wallet', 'fa-arrow-rotate-left', 'fa-lock', 'fa-users', 'fa-calculator'];
+      const body = document.getElementById('advanceDetailModalBody');
+      const modalTitle = document.querySelector('#advanceDetailModal .modal-title');
+      const modalSubtitle = document.querySelector('#advanceDetailModal .modal-subtitle');
+      if (!body) return;
+      modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+      modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+      const views = [
+        // 0 — Total Advances (with Provider logic explanation)
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Total Advances — $42,350.00</h5>
+          <div class="alert alert-info d-flex align-items-start gap-3 p-3 mb-3" role="alert" style="font-size:13px;border-radius:10px;">
+            <i class="fa-solid fa-lightbulb mt-1" style="color:#2563eb;"></i>
+            <div>
+              <strong>How Provider Advances Work:</strong><br>
+              Providers are fronted <strong>$650/day</strong> for their scheduled days. For example, if a provider is scheduled 3 days per bi-weekly period:
+              <div class="mt-2 p-2 bg-white rounded-2" style="font-size:12.5px;">
+                <div class="d-flex justify-content-between"><span>Scheduled Days</span><strong>3</strong></div>
+                <div class="d-flex justify-content-between"><span>Daily Rate</span><strong>$650</strong></div>
+                <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-bold"><span>Bi-Weekly Advance</span><strong>$1,950</strong></div>
+                <div class="d-flex justify-content-between fw-bold text-primary"><span>Monthly Advance (×2)</span><strong>$3,900</strong></div>
+              </div>
+            </div>
+          </div>
+          <h5 class="fw-bold mb-3">By Department</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>$15,500.00</strong></div>
+            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong>$6,100.00</strong></div>
+            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong>$500.00</strong></div>
+            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>$800.00</strong></div>
+            <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>$750.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>$23,650.00</strong></div>
+          </div>
+          <div class="text-muted small mt-2">*Main table shows $42,350 total (includes prior period carry-over). Department summary reflects current period only.</div>
+        </div>`,
+        // 1 — Total Repaid
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Total Repaid — $28,150.00</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>$10,200.00</strong></div>
+            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong>$4,050.00</strong></div>
+            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong>$0.00</strong></div>
+            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>$400.00</strong></div>
+            <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>$750.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Repaid</span><strong>$15,400.00</strong></div>
+          </div>
+          <div class="text-success small mt-2">Repayment rate: 65.1% of total advances repaid</div>
+        </div>`,
+        // 2 — Outstanding Balance (with Provider reconciliation logic)
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Outstanding Balance — $14,200.00</h5>
+          <div class="alert alert-warning d-flex align-items-start gap-3 p-3 mb-3" role="alert" style="font-size:13px;border-radius:10px;">
+            <i class="fa-solid fa-calculator mt-1" style="color:#d97706;"></i>
+            <div>
+              <strong>Reconciliation Logic (Providers):</strong><br>
+              At month-end, we reconcile case production vs. advances fronted.
+              <div class="mt-2 p-2 bg-white rounded-2" style="font-size:12.5px;">
+                <div class="d-flex justify-content-between"><span>Total Advanced (Month)</span><strong style="color:#ea580c;">$3,900.00</strong></div>
+                <div class="d-flex justify-content-between"><span>Case Pay + General Work Earned</span><strong style="color:#059669;">$7,500.00</strong></div>
+                <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-bold" style="border-top-color:#059669!important;"><span>Extra Owed to Provider</span><strong style="color:#059669;">$3,600.00 ✅</strong></div>
+              </div>
+              <div class="mt-2 p-2 bg-white rounded-2" style="font-size:12.5px;">
+                <div class="d-flex justify-content-between"><span>Total Advanced</span><strong style="color:#ea580c;">$3,900.00</strong></div>
+                <div class="d-flex justify-content-between"><span>Production Earned</span><strong style="color:#059669;">$2,800.00</strong></div>
+                <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-bold"><span>Status</span><strong style="color:#d97706;">$1,100 Away from Caught Up</strong></div>
+              </div>
+              <div class="mt-2 text-muted fst-italic">If production > advances → extra money owed. If advances > production → still catching up.</div>
+            </div>
+          </div>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong style="color:#ea580c;">$5,300.00</strong></div>
+            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong style="color:#ea580c;">$2,050.00</strong></div>
+            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong style="color:#ea580c;">$500.00</strong></div>
+            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong style="color:#ea580c;">$400.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Outstanding</span><strong style="color:#ea580c;">$8,250.00</strong></div>
+          </div>
+        </div>`,
+        // 3 — Active Advances
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Active Advances — 18 Team Members</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>6 advances</strong></div>
+            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong>5 advances</strong></div>
+            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong>1 advance</strong></div>
+            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>1 advance</strong></div>
+            <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>1 advance</strong></div>
+          </div>
+          <div class="mt-3 p-3 bg-light rounded-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span>🟢 Fully Repaid</span><strong>3</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span>🟡 Partially Repaid</span><strong>4</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>🔴 Active (No Repayment Yet)</span><strong>1</strong>
+            </div>
+          </div>
+        </div>`,
+        // 4 — Avg. Advance Amount
+        `<div class="panel" style="border:none;box-shadow:none;">
+          <h5 class="fw-bold mb-3">Average Advance Detail</h5>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>💰 Avg. Advance Amount</span><strong>$785.19</strong></div>
+            <div class="detail-breakdown-row"><span>📊 Median Advance</span><strong>$750.00</strong></div>
+            <div class="detail-breakdown-row"><span>📈 Highest Advance</span><strong>$3,000.00</strong></div>
+            <div class="detail-breakdown-row"><span>📉 Lowest Advance</span><strong>$300.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Advances (Count)</span><strong>54</strong></div>
+          </div>
+          <div class="text-muted small mt-2">Provider avg: $1,550 • Sales/ISR avg: $750 • Other avg: $450</div>
+        </div>`
+      ];
+      body.innerHTML = views[idx] || views[0];
+      const modal = new bootstrap.Modal(document.getElementById('advanceDetailModal'));
+      modal.show();
+    }
   </script>
+
+  <!-- Advance Detail Modal -->
+  <div class="modal fade" id="advanceDetailModal" tabindex="-1" aria-labelledby="advanceDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="advanceDetailModalLabel"><i class="fa-solid fa-hand-holding-dollar me-2 text-success"></i>Advance Detail</h5>
+            <div class="modal-subtitle">Detailed breakdown of advance metrics.</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="advanceDetailModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

@@ -148,11 +148,11 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
-                                class="fa-solid fa-clock"></i></div>
+                                class="fa-solid fa-file-lines"></i></div>
                     </div>
                     <div class="col-9">
-                        <div class="kpi-label">Hours Today</div>
-                        <div class="kpi-value" id="today">0.0</div>
+                        <div class="kpi-label">Quotes Today</div>
+                        <div class="kpi-value" id="today">0</div>
                     </div>
                 </div>
             </div>
@@ -163,8 +163,8 @@
                                 class="fa-solid fa-calendar-week"></i></div>
                     </div>
                     <div class="col-9">
-                        <div class="kpi-label">Weekly Hours</div>
-                        <div class="kpi-value">36.5</div>
+                        <div class="kpi-label">Weekly Quotes</div>
+                        <div class="kpi-value">42</div>
                     </div>
                 </div>
             </div>
@@ -172,11 +172,11 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i
-                                class="fa-solid fa-hourglass-half"></i></div>
+                                class="fa-solid fa-chart-simple"></i></div>
                     </div>
                     <div class="col-9">
-                        <div class="kpi-label">Pay Period</div>
-                        <div class="kpi-value">74.0</div>
+                        <div class="kpi-label">Period Quotes</div>
+                        <div class="kpi-value">245</div>
                     </div>
                 </div>
             </div>
@@ -187,8 +187,8 @@
                                 class="fa-solid fa-dollar-sign"></i></div>
                     </div>
                     <div class="col-9">
-                        <div class="kpi-label">Daily Earnings</div>
-                        <div class="kpi-value">$185</div>
+                        <div class="kpi-label">Today's Commission</div>
+                        <div class="kpi-value" id="dailyCommission">$0</div>
                     </div>
                 </div>
             </div>
@@ -199,8 +199,8 @@
                                 class="fa-solid fa-wallet"></i></div>
                     </div>
                     <div class="col-9">
-                        <div class="kpi-label">Pay Period Earnings</div>
-                        <div class="kpi-value">$1,845</div>
+                        <div class="kpi-label">Period Commission</div>
+                        <div class="kpi-value">$245</div>
                     </div>
                 </div>
             </div>
@@ -211,8 +211,8 @@
                 <div class="panel mb-3">
                     <div class="panel-header">
                         <div>
-                            <h2 class="panel-title">Time Clock Actions</h2>
-                            <div class="panel-sub">Punch in, take lunch, and close out your shift.</div>
+                            <h2 class="panel-title">Quote Tracking</h2>
+                            <div class="panel-sub">Track your time and quotes completed per shift.</div>
                         </div>
                         <span class="badge-status active" id="status">Clocked Out</span>
                     </div>
@@ -254,28 +254,28 @@
                         <table class="nexa-table" style="font-size:13px;">
                             <tbody>
                                 <tr>
-                                    <td>Hours Worked</td>
-                                    <td class="fw-semibold text-end" id="worked">0.0 hrs</td>
+                                    <td>Quotes Today</td>
+                                    <td class="fw-semibold text-end" id="worked">0</td>
                                 </tr>
                                 <tr>
-                                    <td>Regular Hours</td>
-                                    <td class="fw-semibold text-end">8.0 hrs</td>
+                                    <td>Quotes Completed</td>
+                                    <td class="fw-semibold text-end">245</td>
                                 </tr>
                                 <tr>
-                                    <td>Overtime</td>
-                                    <td class="fw-semibold text-end">0.0 hrs</td>
+                                    <td>Commission Rate</td>
+                                    <td class="fw-semibold text-end">$1.00/quote</td>
                                 </tr>
                                 <tr>
-                                    <td>Daily Earnings</td>
-                                    <td class="fw-semibold text-end">$185</td>
+                                    <td>Today's Commission</td>
+                                    <td class="fw-semibold text-end" id="dailyEarn">$0</td>
                                 </tr>
                                 <tr>
-                                    <td>Weekly Earnings</td>
-                                    <td class="fw-semibold text-end">$920</td>
+                                    <td>Weekly Commission</td>
+                                    <td class="fw-semibold text-end">$42</td>
                                 </tr>
                                 <tr>
-                                    <td>Pay Period Earnings</td>
-                                    <td class="fw-semibold text-end">$1,845</td>
+                                    <td>Period Commission</td>
+                                    <td class="fw-semibold text-end">$245</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -287,8 +287,8 @@
         <div class="panel mt-3">
             <div class="panel-header">
                 <div>
-                    <h2 class="panel-title">Recent Time Logs</h2>
-                    <div class="panel-sub">Last few shifts from your work history.</div>
+                    <h2 class="panel-title">Recent Activity</h2>
+                    <div class="panel-sub">Last few shifts and quotes from your work history.</div>
                 </div>
             </div>
             <div class="table-responsive">
@@ -299,7 +299,7 @@
                             <th>Clock In</th>
                             <th>Lunch</th>
                             <th>Clock Out</th>
-                            <th>Hours</th>
+                            <th>Quotes</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -309,7 +309,7 @@
                             <td>08:00 AM</td>
                             <td>12:00–12:30</td>
                             <td>05:00 PM</td>
-                            <td>8.5</td>
+                            <td>12</td>
                             <td><span class="badge-status active">Complete</span></td>
                         </tr>
                         <tr>
@@ -317,7 +317,7 @@
                             <td>08:10 AM</td>
                             <td>12:15–12:45</td>
                             <td>05:10 PM</td>
-                            <td>8.3</td>
+                            <td>10</td>
                             <td><span class="badge-status active">Complete</span></td>
                         </tr>
                     </tbody>
@@ -331,7 +331,7 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="../js/javescript.js"></script>
     <script>
-        let hours = 0;
+        let quotesToday = 0;
 
         function logEvent(name) {
             const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
@@ -345,11 +345,13 @@
             if (name === 'End Lunch') document.getElementById('status').innerText = 'Working';
             if (name === 'Clock Out') {
                 document.getElementById('status').innerText = 'Clocked Out';
-                hours = 8.5;
+                quotesToday = 12;
             }
 
-            document.getElementById('today').innerText = hours.toFixed(1);
-            document.getElementById('worked').innerText = hours.toFixed(1) + ' hrs';
+            document.getElementById('today').innerText = quotesToday.toString();
+            document.getElementById('worked').innerText = quotesToday.toString();
+            document.getElementById('dailyCommission').innerText = '$' + (quotesToday * 1);
+            document.getElementById('dailyEarn').innerText = '$' + (quotesToday * 1);
         }
 
         $(function () {

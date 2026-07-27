@@ -102,7 +102,7 @@
 
         <div class="row g-3 mb-3">
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" onclick="openCasesKpiDetail(0)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -117,14 +117,14 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" onclick="openCasesKpiDetail(1)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i
-                                    class="fa-solid fa-tooth"></i></div>
+                                    class="fa-solid fa-file-invoice-dollar"></i></div>
                         </div>
                         <div class="col-9 col-sm-8 col-xl-9">
-                            <div class="kpi-label">Total Treatment Value</div>
+                            <div class="kpi-label">Total Quoted Rev</div>
                             <div class="kpi-value">$874,250</div>
                             <div class="kpi-delta text-success">+12.4% vs Feb</div>
                         </div>
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" onclick="openCasesKpiDetail(2)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
+                <div class="kpi-card" role="button" onclick="openCasesKpiDetail(3)">
                     <div class="row g-2 align-items-center">
                         <div class="col-3 col-sm-4 col-xl-3">
                             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i
@@ -159,21 +159,6 @@
                             <div class="kpi-label">Cases Started</div>
                             <div class="kpi-value">98</div>
                             <div class="kpi-delta text-success">+14 vs Feb</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg mb-2 mb-sm-0">
-                <div class="kpi-card">
-                    <div class="row g-2 align-items-center">
-                        <div class="col-3 col-sm-4 col-xl-3">
-                            <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
-                                    class="fa-solid fa-circle-check"></i></div>
-                        </div>
-                        <div class="col-9 col-sm-8 col-xl-9">
-                            <div class="kpi-label">Cases Completed</div>
-                            <div class="kpi-value">52</div>
-                            <div class="kpi-delta text-success">+5 vs Feb</div>
                         </div>
                     </div>
                 </div>
@@ -310,12 +295,8 @@
                     </div>
                     <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Case
                             Type</span><span class="fw-semibold" id="detailCaseType">Zirconia Veneer Case</span></div>
-                    <div class="d-flex justify-content-between mb-2 small"><span
-                            class="text-muted">Department</span><span class="fw-semibold">Providers</span></div>
-                    <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Provider</span><span
-                            class="fw-semibold" id="detailProvider">Dr. Heider</span></div>
-                    <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Treatment
-                            Value</span><span class="fw-semibold" id="detailValue">$14,050.00</span></div>
+                  
+                   
                     <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Units</span><span
                             class="fw-semibold" id="detailUnits">20</span></div>
                     <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Material</span><span
@@ -324,17 +305,11 @@
                             class="fw-semibold" id="detailLocation">lofrim's</span></div>
                     <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Note</span><span
                             class="fw-semibold" id="detailNote">null</span></div>
-                    <div class="section-label" style="margin-top:0;">Compensation Impact</div>
-                    <div class="impact-row"><span>Provider (Dr. Heider)</span><span class="impact-amt"
-                            id="impactProvider">$1,000.00</span>
-                    </div>
-                    <div class="impact-row"><span>Prep (Assistant)</span><span class="impact-amt"
-                            id="impactPrep">$200.00</span></div>
-                    <div class="impact-row"><span>Cement (Assistant)</span><span class="impact-amt"
-                            id="impactCement">$200.00</span></div>
+                    <div class="section-label" style="margin-top:0;">Your Compensation</div>
+                    <div class="impact-row"><span>ISR Pay</span><span class="impact-amt"
+                            id="impactIsr">$200.00</span></div>
                     <div class="impact-row" style="border-top:1px solid; color:var(--green-600); font-weight:800;">
-                        <span>Total
-                            Compensation</span><span class="impact-amt" id="impactTotal">$1,400.00</span>
+                        <span>Total</span><span class="impact-amt" id="impactTotal">$200.00</span>
                     </div>
                 </div>
             </div>
@@ -385,10 +360,8 @@
                 document.getElementById('detailMaterial').textContent = caseType.includes('Zirconia') ? 'Zirconia' : 'Composite';
                 document.getElementById('detailLocation').textContent = 'lofrim\'s';
                 document.getElementById('detailNote').textContent = 'Active follow-up';
-                document.getElementById('impactProvider').textContent = '$1,000.00';
-                document.getElementById('impactPrep').textContent = '$200.00';
-                document.getElementById('impactCement').textContent = '$200.00';
-                document.getElementById('impactTotal').textContent = '$1,400.00';
+                document.getElementById('impactIsr').textContent = '$200.00';
+                document.getElementById('impactTotal').textContent = '$200.00';
 
                 const statusEl = document.getElementById('detailStatus');
                 statusEl.textContent = status;
@@ -428,6 +401,20 @@
 
     <!-- Confetti Canvas -->
     <canvas id="confetti-canvas"></canvas>
+
+    <!-- ── KPI Detail Modal ── -->
+    <div class="modal fade" id="casesKpiModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border-radius:12px;border:none;">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="casesKpiModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="casesKpiModalBody">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Escalation Modal -->
     <div class="escalation-overlay" id="escalationOverlay">
@@ -492,6 +479,122 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
 
+
+        /* ── KPI Detail Modal ── */
+        const casesKpiTitles = ['Total Cases', 'Total Quoted Rev', 'Average Case Value', 'Cases Started'];
+        const casesKpiIcons  = ['fa-clipboard-list', 'fa-file-invoice-dollar', 'fa-sack-dollar', 'fa-hourglass-half'];
+        const casesKpiColors = ['#059669', '#4338ca', '#92400e', '#1e40af'];
+
+        function openCasesKpiDetail(idx) {
+            const title = casesKpiTitles[idx];
+            document.getElementById('casesKpiModalTitle').innerHTML = '<i class="fa-solid ' + casesKpiIcons[idx] + '" style="color:' + casesKpiColors[idx] + ';margin-right:8px;"></i>' + title;
+
+            let body = '';
+            if (idx === 0) {
+                body = `
+                    <p class="text-muted" style="font-size:13px;">All cases across the organization this period</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>🦷 Zirconia Veneers</span><span class="fw-semibold">38</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Composite Veneers</span><span class="fw-semibold">29</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Full Crowns</span><span class="fw-semibold">22</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Implant Restorations</span><span class="fw-semibold">18</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Whitening / Other</span><span class="fw-semibold">19</span></div>
+                        <div class="detail-breakdown-row total"><span>Total Cases</span><span>126</span></div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-success">126</div>
+                                <div class="small text-muted">This Period</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background:#eff6ff;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-primary">108</div>
+                                <div class="small text-muted">Last Period</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background:#fef2f2;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-danger">+18</div>
+                                <div class="small text-muted">Growth</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (idx === 1) {
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Total quoted revenue by case category</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>🦷 Zirconia Veneers</span><span class="fw-semibold">$312,400</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Composite Veneers</span><span class="fw-semibold">$198,750</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Full Crowns</span><span class="fw-semibold">$165,200</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Implant Restorations</span><span class="fw-semibold">$142,600</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Whitening / Other</span><span class="fw-semibold">$55,300</span></div>
+                        <div class="detail-breakdown-row total"><span>Total Quoted Rev</span><span>$874,250</span></div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-success">$874,250</div>
+                                <div class="small text-muted">This Period</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center p-3" style="background:#fefce8;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-warning">$777,600</div>
+                                <div class="small text-muted">Last Period</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (idx === 2) {
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Average revenue per case across all types</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>🦷 Zirconia Veneers</span><span class="fw-semibold">$8,221</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Composite Veneers</span><span class="fw-semibold">$6,853</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Full Crowns</span><span class="fw-semibold">$7,509</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Implant Restorations</span><span class="fw-semibold">$7,922</span></div>
+                        <div class="detail-breakdown-row"><span>🦷 Whitening / Other</span><span class="fw-semibold">$2,911</span></div>
+                        <div class="detail-breakdown-row total"><span>Overall Average</span><span>$6,939</span></div>
+                    </div>
+                    <div class="alert alert-info mt-3 mb-0 py-2" style="font-size:13px;background:#eff6ff;border:none;border-radius:8px;">
+                        <i class="fa-solid fa-circle-info me-1"></i>
+                        Average case value is <strong>$6,939</strong>, up <strong>3.6%</strong> from last period.
+                    </div>
+                `;
+            } else if (idx === 3) {
+                body = `
+                    <p class="text-muted" style="font-size:13px;">Cases started (in progress) this period</p>
+                    <div class="detail-breakdown-box">
+                        <div class="detail-breakdown-row"><span>🚀 New Cases (This Period)</span><span class="fw-semibold">98</span></div>
+                        <div class="detail-breakdown-row"><span>🔧 In Treatment</span><span class="fw-semibold">42</span></div>
+                        <div class="detail-breakdown-row"><span>📋 Needs Exam / Consult</span><span class="fw-semibold">28</span></div>
+                        <div class="detail-breakdown-row"><span>💰 Financial Planning</span><span class="fw-semibold">18</span></div>
+                        <div class="detail-breakdown-row"><span>✅ Prep / Ready</span><span class="fw-semibold">10</span></div>
+                        <div class="detail-breakdown-row total"><span>Total Started</span><span>98</span></div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <div class="text-center p-3" style="background:#f0fdf4;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-success">98</div>
+                                <div class="small text-muted">This Period</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center p-3" style="background:#eff6ff;border-radius:8px;">
+                                <div class="fw-bold fs-4 text-primary">84</div>
+                                <div class="small text-muted">Last Period</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('casesKpiModalBody').innerHTML = body;
+            new bootstrap.Modal(document.getElementById('casesKpiModal')).show();
+        }
 
         $(function () {
             $('input[name="date"]').daterangepicker({

@@ -163,8 +163,16 @@
       <button class="report-tab-btn" data-tab="kpi" onclick="showReportTab('kpi', this)">KPI Reports</button>
     </div>
 
+    <style>
+      .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+      .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
+      .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
+      .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
+      .detail-breakdown-row:last-child { border-bottom:none; }
+      .detail-breakdown-row span { color:#6b7280; }
+    </style>
     <div class="kpi-row">
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openReportKpiDetail(0)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -179,7 +187,7 @@
 
 
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openReportKpiDetail(1)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#eef2ff;color:#4338ca;"><i class="fa-solid fa-chart-line"></i></div>
@@ -191,19 +199,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
-        <div class="row">
-          <div class="col-3">
-            <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-user-group"></i></div>
-          </div>
-          <div class="col-9">
-            <div class="kpi-label">New Hot Leads</div>
-            <div class="kpi-value">662</div>
-            <div class="kpi-delta text-success">+74 vs Feb 1 – Feb 28</div>
-          </div>
-        </div>
-      </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openReportKpiDetail(2)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-percent"></i></div>
@@ -215,7 +211,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openReportKpiDetail(3)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-coins"></i></div>
@@ -227,7 +223,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" role="button" tabindex="0" onclick="openReportKpiDetail(4)">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#fce7f3;color:#9d174d;"><i class="fa-solid fa-bullseye"></i></div>
@@ -4042,6 +4038,80 @@
         downloadFile(html, getActivePaneName() + '.xls', 'application/vnd.ms-excel');
       }
 
+      /* ==========================================================
+         KPI CARD DETAIL — Reports Overview
+         ========================================================== */
+      function openReportKpiDetail(idx) {
+        const titles = ['Booked Revenue', 'Cases Booked', 'Show Rate', 'Avg Case Value', 'Close Rate'];
+        const icons = ['fa-sack-dollar', 'fa-chart-line', 'fa-percent', 'fa-coins', 'fa-bullseye'];      
+        const body = document.getElementById('reportDetailModalBody');
+        const modalTitle = document.querySelector('#reportDetailModal .modal-title');
+        const modalSubtitle = document.querySelector('#reportDetailModal .modal-subtitle');
+        if (!body) return;
+        modalTitle.innerHTML = '<i class="fa-solid ' + icons[idx] + ' me-2 text-primary"></i>' + titles[idx];
+        modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
+
+        const views = [
+          // 0 — Booked Revenue
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Booked Revenue — $874,250.00</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>🦷 Cosmetic Cases</span><strong>$452,300.00</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Crowns & Restorations</span><strong>$198,750.00</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 General Dentistry</span><strong>$223,200.00</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Revenue</span><strong>$874,250.00</strong></div>
+            </div>
+            <div class="text-success small mt-2">+12.4% increase vs previous period</div>
+          </div>`,
+          // 1 — Cases Booked
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Cases Booked — 126</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>82 cases</strong></div>
+              <div class="detail-breakdown-row"><span>🎧 ISR</span><strong>28 cases</strong></div>
+              <div class="detail-breakdown-row"><span>🏢 Other</span><strong>16 cases</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>126</strong></div>
+            </div>
+            <div class="text-success small mt-2">+18 vs previous period</div>
+          </div>`,
+          // 2 — Show Rate
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Show Rate — 68.2%</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📅 Scheduled Appointments</span><strong>970</strong></div>
+              <div class="detail-breakdown-row"><span>✅ Showed Up</span><strong>662</strong></div>
+              <div class="detail-breakdown-row"><span>❌ No-Shows / Cancelled</span><strong>308</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Show Rate</span><strong>68.2%</strong></div>
+            </div>
+            <div class="text-success small mt-2">+6.1% improvement vs previous period</div>
+          </div>`,
+          // 3 — Avg Case Value
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Average Case Value — $6,939.29</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📊 Current Period</span><strong>$6,939.29</strong></div>
+              <div class="detail-breakdown-row"><span>📊 Previous Period</span><strong>$6,698.00</strong></div>
+              <div class="detail-breakdown-row"><span>📈 Change</span><strong class="text-success">+3.6%</strong></div>
+            </div>
+            <div class="text-muted small mt-2">Cosmetic cases avg $9,450 • General cases avg $2,180</div>
+          </div>`,
+          // 4 — Close Rate
+          `<div class="panel" style="border:none;box-shadow:none;">
+            <h5 class="fw-bold mb-3">Close Rate — 18.7%</h5>
+            <div class="detail-breakdown-box">
+              <div class="detail-breakdown-row"><span>📋 Total Quotes Given</span><strong>674</strong></div>
+              <div class="detail-breakdown-row"><span>✅ Converted to Booked</span><strong>126</strong></div>
+              <div class="detail-breakdown-row"><span>❌ Not Converted</span><strong>548</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Close Rate</span><strong>18.7%</strong></div>
+            </div>
+            <div class="text-success small mt-2">+2.3% improvement vs previous period</div>
+          </div>`
+        ];
+        body.innerHTML = views[idx] || views[0];
+        const modal = new bootstrap.Modal(document.getElementById('reportDetailModal'));
+        modal.show();
+      }
+
       /* PDF Export — opens print dialog with a Print CSS hint */
       function exportPDF() {
         window.print();
@@ -4064,6 +4134,27 @@
         URL.revokeObjectURL(link.href);
       }
     </script>
+
+    <!-- Report KPI Detail Modal -->
+    <div class="modal fade" id="reportDetailModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold">Report Detail</h5>
+              <p class="modal-subtitle text-muted small mb-0" style="margin-top:2px;">Detailed breakdown</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="reportDetailModalBody">
+            <!-- content inserted by openReportKpiDetail() -->
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 

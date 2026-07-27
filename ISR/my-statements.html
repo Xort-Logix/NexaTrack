@@ -87,14 +87,7 @@
                     <div class="kpi-value" id="hoursKpi">78.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
-                <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
-                </div>
-                <div>
-                    <div class="kpi-label">General Production</div>
-                    <div class="kpi-value" id="otKpi">2.00</div>
-                </div>
-            </div>
+            
             <div class="kpi-card d-flex align-items-center gap-3">
                 <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
                 </div>
@@ -175,11 +168,7 @@
                                                 <td class="text-end" id="stubRegHrs">76.00</td>
                                                 <td class="text-end">$15.00</td>
                                             </tr>
-                                            <tr>
-                                                <td>General Production Hours</td>
-                                                <td class="text-end" id="stubOtHrs">2.00</td>
-                                                <td class="text-end">$22.50</td>
-                                            </tr>
+                                            
                                             <tr class="fw-bold">
                                                 <td colspan="2">Total Earnings</td>
                                                 <td class="text-end" id="stubTotalEarnings">$1,185.00</td>
@@ -486,7 +475,6 @@
 
             document.getElementById('grossKpi').innerText = '$' + totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2 });
             document.getElementById('hoursKpi').innerText = (r + o).toFixed(2);
-            document.getElementById('otKpi').innerText = o.toFixed(2);
             document.getElementById('adjKpi').innerText = '$' + totalDeductions.toLocaleString(undefined, { minimumFractionDigits: 2 });
         }
         ['reg', 'ot', 'adv', 'adj'].forEach(id => document.getElementById(id).addEventListener('input', calc));
