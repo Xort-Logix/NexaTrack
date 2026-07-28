@@ -207,7 +207,7 @@
             </div>
           </div>
           <div class="col-9">
-            <div class="kpi-label">Regular Pay</div>
+            <div class="kpi-label">Spiffs</div>
             <div class="kpi-value">$2,880</div>
             <div class="kpi-delta text-muted">Base hours only</div>
           </div>
@@ -359,7 +359,7 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">Assistant Payroll</h2>
-              <div class="panel-sub">Compensation model: Hourly • Manual entry for now</div>
+              <div class="panel-sub">Compensation model: Hourly • Live from Time Clock</div>
             </div>
             <span class="badge-comp hourly">Hourly</span>
           </div>
@@ -368,29 +368,25 @@
               <div class="payroll-summary-header">
                 <div>
                   <div class="small text-muted mb-1">Data source</div>
-                  <div class="fw-semibold">Manual entry for now, with future time clock/timesheet integration.</div>
+                  <div class="fw-semibold"><i class="fa-solid fa-clock text-success me-1"></i> Time Clock integration — live data from your punches.</div>
                 </div>
               </div>
               <div class="payroll-stat-grid mt-3">
                 <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Hours worked</span>
-                  <span class="payroll-stat-value">160.00</span>
+                  <span class="payroll-stat-label">Today's Hours</span>
+                  <span class="payroll-stat-value" id="payrollTodayHours">0.00</span>
                 </div>
                 <div class="payroll-stat-item">
                   <span class="payroll-stat-label">Hourly rate</span>
                   <span class="payroll-stat-value">$18.00</span>
                 </div>
                 <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Regular pay</span>
-                  <span class="payroll-stat-value">$2,880.00</span>
+                  <span class="payroll-stat-label">Today's Pay</span>
+                  <span class="payroll-stat-value" id="payrollTodayPay">$0.00</span>
                 </div>
-                <!-- <div class="payroll-stat-item">
-                  <span class="payroll-stat-label">Overtime</span>
-                  <span class="payroll-stat-value">$0.00</span>
-                </div> -->
                 <div class="payroll-stat-item total">
-                  <span class="payroll-stat-label">Total</span>
-                  <span class="payroll-stat-value">$2,880.00</span>
+                  <span class="payroll-stat-label">Period Total</span>
+                  <span class="payroll-stat-value" id="payrollPeriodTotal">$1,845.00</span>
                 </div>
               </div>
             </div>
@@ -554,6 +550,34 @@
           });
         }
       }
+
+      /* ── Live Payroll Panel: sync with clock widget ── */
+      function updatePayrollFromClock() {
+        const rate = 18.00;
+        const sec = typeof clockState !== 'undefined' ? clockState.elapsedSeconds : 0;
+        const hoursToday = sec / 3600;
+        const payToday = hoursToday * rate;
+
+        const hoursEl = document.getElementById('payrollTodayHours');
+        const payEl = document.getElementById('payrollTodayPay');
+        if (hoursEl) hoursEl.textContent = hoursToday.toFixed(2);
+        if (payEl) payEl.textContent = '$' + payToday.toFixed(2);
+      }
+
+      // Patch into existing clock updateUI so payroll updates on every action
+      const origUpdateUI = window.updateUI;
+      if (typeof updateUI === 'function') {
+        const patched = function () {
+          origUpdateUI.call(this);
+          updatePayrollFromClock();
+        };
+        window.updateUI = patched;
+      }
+
+      // Also poll every 5 seconds while clock is running
+      setInterval(updatePayrollFromClock, 5000);
+      // Initial call
+      setTimeout(updatePayrollFromClock, 300);
 
       /* ==========================================================
          KPI CARD DETAIL — SDR Dashboard
