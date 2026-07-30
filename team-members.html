@@ -80,25 +80,39 @@
       </div>
 
       <div class="row g-3 mb-3">
-        <div class="col-3 kpi-col">
-          <div class="kpi-card" onclick="openKpiModal('members')">
+        <div class="col-lg-2 col-md-4 col-sm-6 kpi-col">
+          <div class="kpi-card" onclick="openKpiModal('active')">
             <div class="row">
               <div class="col-3">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
-                    class="fa-solid fa-user-group"></i>
+                    class="fa-solid fa-user-check"></i>
                 </div>
-
               </div>
               <div class="col-9">
-                <div class="kpi-label">Total Team Members</div>
-                <div class="kpi-value">37</div>
-                <div class="kpi-delta text-success">2 inactive</div>
+                <div class="kpi-label">Active Members</div>
+                <div class="kpi-value" id="activeMemberCount">35</div>
+                <div class="kpi-delta text-success"><i class="fa-solid fa-circle-check"></i> Active</div>
               </div>
             </div>
-
           </div>
         </div>
-        <div class="col-3 kpi-col">
+        <div class="col-lg-2 col-md-4 col-sm-6 kpi-col">
+          <div class="kpi-card" onclick="openKpiModal('inactive')">
+            <div class="row">
+              <div class="col-3">
+                <div class="kpi-icon" style="background:#fef3c7;color:#92400e;"><i
+                    class="fa-solid fa-user-clock"></i>
+                </div>
+              </div>
+              <div class="col-9">
+                <div class="kpi-label">Inactive Members</div>
+                <div class="kpi-value" id="inactiveMemberCount">2</div>
+                <div class="kpi-delta text-muted"><i class="fa-solid fa-circle-xmark"></i> Inactive</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 kpi-col">
           <div class="kpi-card" onclick="openKpiModal('payroll')">
             <div class="row">
               <div class="col-3">
@@ -114,7 +128,7 @@
 
           </div>
         </div>
-        <div class="col-3 kpi-col">
+        <div class="col-lg-2 col-md-4 col-sm-6 kpi-col">
           <div class="kpi-card" onclick="openKpiModal('pending')">
             <div class="row">
               <div class='col-3'>
@@ -129,7 +143,7 @@
             </div>
           </div>
         </div>
-        <div class="col-3 kpi-col">
+        <div class="col-lg-2 col-md-4 col-sm-6 kpi-col">
           <div class="kpi-card" onclick="openKpiModal('departments')">
             <div class="row">
               <div class='col-3'>
@@ -145,7 +159,7 @@
             </div>
           </div>
         </div>
-        <div class="col-3 kpi-col">
+        <div class="col-lg-2 col-md-4 col-sm-6 kpi-col">
           <div class="kpi-card" onclick="openKpiModal('compensation')">
             <div class="row">
               <div class='col-3'>
@@ -256,8 +270,18 @@
         <div class="avatar-lg" id="pAvatar">DH</div>
         <div class="flex-grow-1">
           <h2 class="profile-name" id="pName">Dr. Heider</h2>
-          <div class="profile-role"><span id="pRole">Provider · Providers</span> &nbsp;•&nbsp; <span
-              class="badge-status active">Active</span></div>
+          <div class="profile-role"><span id="pRole">Provider · Providers</span> &nbsp;•&nbsp;
+            <div class="btn-group" style="vertical-align:middle;">
+              <span class="badge-status active" id="pStatusBadge" style="cursor:default;">Active</span>
+              <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split py-0 px-1" style="border:none;background:transparent;font-size:10px;line-height:1;" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" style="min-width:120px;">
+                <li><a class="dropdown-item" href="#" onclick="changeMemberStatus('active')"><i class="fa-solid fa-circle-check text-success me-1"></i>Active</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeMemberStatus('inactive')"><i class="fa-solid fa-circle-xmark text-danger me-1"></i>Inactive</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="d-flex">
           <div class="profile-stat" style="border-left:none;">
@@ -756,7 +780,7 @@
         earned: "$12,450.00", net: "$12,450.00", engineLabel: "% Commission"
       },
       {
-        initials: "JL", name: "Joshua Lee", dept: "Sales", role: "ISR Representative", engine: "flat", rateLabel: "Comp $100 · Cer $150", status: "active",
+        initials: "JL", name: "Joshua Lee", dept: "Sales", role: "ISR Representative", engine: "flat", rateLabel: "Comp $100 · Cer $150", status: "inactive",
         stats: [{ icon: "fa-check-double", label: "Cases Closed", value: "16" }, { icon: "fa-tags", label: "Flat Rate / Case", value: "$100–$200" }, { icon: "fa-list-check", label: "Cases Eligible", value: "16" }, { icon: "fa-sack-dollar", label: "Flat Pay Earned", value: "$6,000" }],
         payroll: [{ label: "Cases Closed", value: "16" }, { label: "Blended Flat Rate", value: "$375.00 avg" }, { label: "Flat Pay Earned", value: "$6,000.00", total: true }],
         earned: "$6,000.00", net: "$6,000.00", engineLabel: "Flat Case Pay"
@@ -774,7 +798,7 @@
         earned: "$2,000.00", net: "$2,000.00", engineLabel: "Hourly"
       },
       {
-        initials: "LT", name: "Lab Tech Team", dept: "Lab", role: "Lab Technician", engine: "hourly", rateLabel: "$20.00 / hr", status: "active",
+        initials: "LT", name: "Lab Tech Team", dept: "Lab", role: "Lab Technician", engine: "hourly", rateLabel: "$20.00 / hr", status: "inactive",
         stats: [{ icon: "fa-business-time", label: "Hours Worked", value: "92.50" }, { icon: "fa-money-bill", label: "Hourly Rate", value: "$20.00" }, { icon: "fa-calendar-check", label: "Regular Pay", value: "$1,850.00" }, { icon: "fa-clock-rotate-left", label: "Overtime", value: "$0.00" }],
         payroll: [{ label: "Regular Pay", value: "$1,850.00" }, { label: "Overtime Pay", value: "$0.00" }, { label: "Gross Pay", value: "$1,850.00", total: true }],
         earned: "$1,850.00", net: "$1,850.00", engineLabel: "Hourly"
@@ -802,13 +826,42 @@
       <td>${m.role}</td>
       <td><span class="badge-comp ${compBadgeClass[m.engine]}">${engineDisplayName(m.engine)}</span></td>
       <td>${m.rateLabel}</td>
-      <td><span class="badge-status active">Active</span></td>
+      <td><span class="badge-status ${m.status}">${m.status.charAt(0).toUpperCase() + m.status.slice(1)}</span></td>
       <td>Jan 10, 2024</td>
       <td><button class="btn btn-sm btn-outline-navy"><i class="fa-solid fa-ellipsis-vertical"></i></button></td>
       <td class="text-end"><i class="fa-solid fa-chevron-right text-muted"></i></td>
     </tr>`).join('');
     }
+    let currentMemberIndex = -1;
+
+    function updateProfileStatus() {
+      const m = members[currentMemberIndex];
+      if (!m) return;
+      const badge = document.getElementById('pStatusBadge');
+      const label = m.status.charAt(0).toUpperCase() + m.status.slice(1);
+      badge.textContent = label;
+      badge.className = 'badge-status ' + (m.status === 'active' ? 'active' : 'deactive');
+    }
+
+    function changeMemberStatus(newStatus) {
+      if (currentMemberIndex < 0) return;
+      members[currentMemberIndex].status = newStatus;
+      updateProfileStatus();
+      renderTable();
+      updateKpiCounts();
+    }
+
+    function updateKpiCounts() {
+      const active = members.filter(m => m.status === 'active').length + 29;
+      const inactive = members.filter(m => m.status === 'inactive').length;
+      const el1 = document.getElementById('activeMemberCount');
+      const el2 = document.getElementById('inactiveMemberCount');
+      if (el1) el1.textContent = active;
+      if (el2) el2.textContent = inactive;
+    }
+
     function openProfile(i) {
+      currentMemberIndex = i;
       const m = members[i];
       document.getElementById('listView').style.display = 'none';
       document.getElementById('profileView').style.display = 'block';
@@ -819,6 +872,7 @@
       document.getElementById('pEarned').textContent = m.earned;
       document.getElementById('pNetOwed').textContent = m.net;
       document.getElementById('uDept').textContent = m.dept;
+      updateProfileStatus();
       document.getElementById('statsGrid').innerHTML = m.stats.map(s => `
     <div class="col-6 col-md-3"><div class="stat-box"><i class="fa-solid ${s.icon}"></i><div class="stat-box-label">${s.label}</div><div class="stat-box-value">${s.value}</div></div></div>`).join('');
       document.getElementById('payrollBreakdown').innerHTML = m.payroll.map(p => `
@@ -838,6 +892,7 @@
       btn.classList.add('active');
     }
     renderTable();
+    updateKpiCounts();
 
     const dynamicFieldsByType = {
       production: `<div class="row g-3"><div class="col-md-4"><label class="form-label">Daily Floor</label><div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" value="650"></div></div><div class="col-md-4"><label class="form-label">Payment Frequency</label><select class="form-select"><option>Bi-Weekly</option><option>Weekly</option><option>Monthly</option></select></div><div class="col-md-4"><label class="form-label">Provider Type</label><select class="form-select"><option>1099 Independent Contractor</option><option>W2 Staff</option></select></div><div class="col-12"><small class="text-muted">Full case, per-unit, and mixed-case pay rates are inherited from Compensation Rules → Doctors plan.</small></div></div>`,
@@ -891,6 +946,8 @@
     function openKpiModal(type) {
       const modalId = {
         members: 'kpiMembersModal',
+        active: 'kpiMembersModal',
+        inactive: 'kpiMembersModal',
         payroll: 'kpiPayrollModal',
         pending: 'kpiPendingModal',
         departments: 'kpiDeptModal',
@@ -899,10 +956,24 @@
 
       if (!modalId) return;
 
+      // Update modal title based on type
+      const titleEl = document.querySelector('#kpiMembersModal .modal-title');
+      if (titleEl) {
+        if (type === 'active') {
+          titleEl.innerHTML = '<i class="fa-solid fa-user-check me-2 text-success"></i>Active Members';
+        } else if (type === 'inactive') {
+          titleEl.innerHTML = '<i class="fa-solid fa-user-clock me-2 text-muted"></i>Inactive Members';
+        } else if (type === 'members') {
+          titleEl.innerHTML = '<i class="fa-solid fa-user-group me-2 text-success"></i>Total Team Members';
+        }
+      }
+
       // Populate data before showing modal
       switch (type) {
         case 'members':
-          populateMembersModal();
+        case 'active':
+        case 'inactive':
+          populateMembersModal(type);
           break;
         case 'payroll':
           populatePayrollModal();
@@ -923,17 +994,19 @@
       bsModal.show();
     }
 
-    function populateMembersModal() {
+    function populateMembersModal(filter) {
+      const filtered = filter === 'active' ? members.filter(m => m.status === 'active') : filter === 'inactive' ? members.filter(m => m.status === 'inactive') : members;
       const tbody = document.getElementById('kpiMembersBody');
-      tbody.innerHTML = members.map(m => `
+      tbody.innerHTML = filtered.map(m => `
         <tr>
           <td><div class="d-flex align-items-center gap-2"><div class="avatar-sm">${m.initials}</div><div><div class="member-name">${m.name}</div><div class="member-email">${m.role}</div></div></div></td>
           <td><span class="badge-dept">${m.dept}</span></td>
           <td>${m.role}</td>
           <td><span class="badge-comp ${compBadgeClass[m.engine]}">${engineDisplayName(m.engine)}</span></td>
-          <td><span class="badge-status active">Active</span></td>
+          <td><span class="badge-status ${m.status}">${m.status.charAt(0).toUpperCase() + m.status.slice(1)}</span></td>
         </tr>`).join('');
-      document.getElementById('kpiMembersFooter').textContent = `Showing ${members.length} of 37 team members`;
+      const shownCount = filter === 'active' ? members.filter(m => m.status === 'active').length : filter === 'inactive' ? members.filter(m => m.status === 'inactive').length : members.length;
+      document.getElementById('kpiMembersFooter').textContent = `Showing ${shownCount} of ${members.length} team members`;
     }
 
     function populatePayrollModal() {

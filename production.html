@@ -168,7 +168,7 @@
       .detail-breakdown-row span { color:#6b7280; }
     </style>
     <div class="row g-3 mb-3">
-      <div class="col-6 col-sm-4 col-md">
+      <div class="col-lg-2 col-md-4 col-sm-6 col-12">
         <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(0)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
@@ -183,7 +183,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-sm-4 col-md">
+      <div class="col-lg-2 col-md-4 col-sm-6 col-12">
         <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(1)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
@@ -197,7 +197,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-sm-4 col-md">
+      <div class="col-lg-2 col-md-4 col-sm-6 col-12">
         <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(2)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
@@ -213,7 +213,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-sm-6 col-md">
+      <div class="col-lg-2 col-md-4 col-sm-6 col-12">
         <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(3)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
@@ -228,7 +228,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-sm-6 col-md">
+      <div class="col-lg-2 col-md-4 col-sm-6 col-12">
         <div class="kpi-card" role="button" tabindex="0" onclick="openProdKpiDetail(4)">
           <div class="row g-2 align-items-center">
             <div class="col-3 col-sm-4 col-xl-3">
@@ -270,76 +270,49 @@
           </div>
         </div>
 
-        <!-- Donut: Production by Department -->
-        <div class="col-lg-3">
-          <div class="chart-card text-center">
-            <h2 class="panel-title mb-3 text-start">Production by Department</h2>
-            <div class="prod-donut-wrap">
-              <div class="prod-donut"
-                style="background:conic-gradient(#059669 0% 68.4%, #f59e0b 68.4% 86.3%, #3b82f6 86.3% 94.6%, #a855f7 94.6% 100%);">
-                <div class="prod-donut-hole">
-                  <div class="amt">$874,250</div>
-                  <div class="lbl">Total Production</div>
-                </div>
-              </div>
-              <div class="prod-legend-stack">
-                <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
-                      style="background:#059669;"></span> Providers</span><span class="fw-semibold">$598,450
-                    (68.4%)</span></div>
-                <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
-                      style="background:#f59e0b;"></span> ISR (Commission)</span><span class="fw-semibold">$156,250
-                    (17.9%)</span></div>
-                <div class="d-flex justify-content-between mb-2"><span><span class="prod-legend-dot"
-                      style="background:#3b82f6;"></span> ISR (Flat Pay)</span><span class="fw-semibold">$72,800
-                    (8.3%)</span></div>
-                <div class="d-flex justify-content-between"><span><span class="prod-legend-dot"
-                      style="background:#a855f7;"></span> Other (SDR, CE, Lab, Mkt)</span><span
-                    class="fw-semibold">$46,750 (5.4%)</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Top Producers -->
-        <div class="col-lg-3">
+        <!-- Top ISR Producers -->
+        <div class="col-lg-6">
           <div class="chart-card">
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <h2 class="panel-title mb-0">Top Producers (By Production)</h2>
+              <h2 class="panel-title mb-0">Top ISR Producers (By Production)</h2>
             </div>
             <div>
               <div class="d-flex align-items-center justify-content-between py-2"
                 style="border-bottom:1px solid #f1f3f5;">
                 <div class="d-flex align-items-center gap-2"><span class="text-muted small">1</span>
-                  <div class="avatar-sm">DH</div><span class="small fw-semibold">Dr. Heider</span>
-                </div><span class="small fw-bold">$228,450.00</span>
-              </div>
-              <div class="d-flex align-items-center justify-content-between py-2"
-                style="border-bottom:1px solid #f1f3f5;">
-                <div class="d-flex align-items-center gap-2"><span class="text-muted small">2</span>
-                  <div class="avatar-sm">DV</div><span class="small fw-semibold">Dr. Vanessa</span>
-                </div><span class="small fw-bold">$198,300.00</span>
-              </div>
-              <div class="d-flex align-items-center justify-content-between py-2"
-                style="border-bottom:1px solid #f1f3f5;">
-                <div class="d-flex align-items-center gap-2"><span class="text-muted small">3</span>
                   <div class="avatar-sm">JS</div><span class="small fw-semibold">Jeremiah Smith</span>
                 </div><span class="small fw-bold">$156,250.00</span>
               </div>
               <div class="d-flex align-items-center justify-content-between py-2"
                 style="border-bottom:1px solid #f1f3f5;">
-                <div class="d-flex align-items-center gap-2"><span class="text-muted small">4</span>
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">2</span>
                   <div class="avatar-sm">JL</div><span class="small fw-semibold">Joshua Lee</span>
                 </div><span class="small fw-bold">$94,600.00</span>
               </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">3</span>
+                  <div class="avatar-sm">ME</div><span class="small fw-semibold">Michael Evans</span>
+                </div><span class="small fw-bold">$72,800.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">4</span>
+                  <div class="avatar-sm">TR</div><span class="small fw-semibold">Tanya Ross</span>
+                </div><span class="small fw-bold">$44,200.00</span>
+              </div>
               <div class="d-flex align-items-center justify-content-between py-2">
                 <div class="d-flex align-items-center gap-2"><span class="text-muted small">5</span>
-                  <div class="avatar-sm">DS</div><span class="small fw-semibold">Dr. Safa</span>
-                </div><span class="small fw-bold">$87,700.00</span>
+                  <div class="avatar-sm">AM</div><span class="small fw-semibold">Alex Mendoza</span>
+                </div><span class="small fw-bold">$38,500.00</span>
               </div>
             </div>
-            <button class="btn btn-sm btn-outline-navy w-100 mt-2">View All Producers</button>
+            <button class="btn btn-sm btn-outline-navy w-100 mt-2">View All ISR Producers</button>
           </div>
         </div>
+
+        <!-- Top Producers (Doctors / ISR Toggle) -->
+    
       </div>
 
       <!-- Row 2: Case Type table + Team Member table + Snapshot -->
@@ -523,12 +496,12 @@
                 Case</span><span>5.25</span></div>
             <div class="snapshot-row"><span><i class="fa-solid fa-tooth me-2 text-success"></i>Cosmetic
                 %</span><span>82.9%</span></div>
-            <div class="snapshot-row"><span><i class="fa-solid fa-stethoscope me-2 text-success"></i>General
+            <!-- <div class="snapshot-row"><span><i class="fa-solid fa-stethoscope me-2 text-success"></i>General
                 %</span><span>17.1%</span></div>
             <div class="snapshot-row"><span><i class="fa-solid fa-circle-check me-2 text-success"></i>Case Acceptance
                 Rate</span><span>58.6%</span></div>
             <div class="snapshot-row"><span><i class="fa-solid fa-arrow-trend-up me-2 text-success"></i>Upgrade Rate (16
-                → 20)</span><span>22.4%</span></div>
+                → 20)</span><span>22.4%</span></div> -->
             <div class="status-chip"><i class="fa-solid fa-circle-check"></i> Data is up to date<br><small
                 style="font-weight:500;">Last synced: Apr 2, 2026 9:15 AM</small></div>
           </div>
@@ -584,7 +557,7 @@
               <td>64.3%</td>
               <td><span class="badge-status warn">87%</span></td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td>SDR</td>
               <td>$16,150.00</td>
               <td>1.8%</td>
@@ -607,7 +580,7 @@
               <td>1</td>
               <td>-</td>
               <td>-</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
         </div>
@@ -966,6 +939,34 @@
       });
 
       /* ==========================================================
+         TOP PRODUCERS TOGGLE — Doctors / ISR Agents
+         ========================================================== */
+      function switchTopProd(type) {
+        const doctorsBtn = document.getElementById('topProdDoctorsBtn');
+        const isrBtn = document.getElementById('topProdIsrBtn');
+        const doctorsList = document.getElementById('topProdDoctors');
+        const isrList = document.getElementById('topProdIsr');
+        const viewAllBtn = document.getElementById('topProdViewAllBtn');
+        if (type === 'doctors') {
+          doctorsBtn.style.background = 'var(--green-500)';
+          doctorsBtn.style.color = '#fff';
+          isrBtn.style.background = 'transparent';
+          isrBtn.style.color = '#6b7280';
+          doctorsList.style.display = '';
+          isrList.style.display = 'none';
+          viewAllBtn.textContent = 'View All Producers';
+        } else {
+          isrBtn.style.background = 'var(--green-500)';
+          isrBtn.style.color = '#fff';
+          doctorsBtn.style.background = 'transparent';
+          doctorsBtn.style.color = '#6b7280';
+          isrList.style.display = '';
+          doctorsList.style.display = 'none';
+          viewAllBtn.textContent = 'View All ISR Producers';
+        }
+      }
+
+      /* ==========================================================
          KPI CARD DETAIL — Production Overview
          ========================================================== */
       function openProdKpiDetail(idx) {
@@ -1013,23 +1014,30 @@
             </div>
             <div class="text-muted small mt-2">17.1% of total production from general dentistry</div>
           </div>`,
-          // 3 — Total Cases
+          // 3 — Total Cases (by Case Type)
           `<div class="panel" style="border:none;box-shadow:none;">
             <h5 class="fw-bold mb-3">Total Cases — 126</h5>
             <div class="detail-breakdown-box">
-              <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>82 cases</strong></div>
-              <div class="detail-breakdown-row"><span>🎧 ISR</span><strong>28 cases</strong></div>
-              <div class="detail-breakdown-row"><span>🏢 Other</span><strong>16 cases</strong></div>
-              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>126</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Porcelain / Zirconia Veneers</span><strong>38</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Ceramic Veneers</span><strong>22</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Composite Veneers</span><strong>15</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Crowns</span><strong>28</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Bridges</span><strong>12</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Others</span><strong>11</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Cases</span><strong>126</strong></div>
             </div>
             <div class="text-success small mt-2">+18 vs previous period</div>
           </div>`,
-          // 4 — Total Units
+          // 4 — Total Units (by Unit Type)
           `<div class="panel" style="border:none;box-shadow:none;">
             <h5 class="fw-bold mb-3">Total Units — 662</h5>
             <div class="detail-breakdown-box">
-              <div class="detail-breakdown-row"><span>📦 Cosmetic Units</span><strong>412</strong></div>
-              <div class="detail-breakdown-row"><span>📦 General Units</span><strong>250</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Zirconia Veneers</span><strong>185</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Porcelain Veneers</span><strong>120</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Composite Veneers</span><strong>95</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Crowns</span><strong>142</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Partials</span><strong>68</strong></div>
+              <div class="detail-breakdown-row"><span>🦷 Dentures</span><strong>52</strong></div>
               <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Units</span><strong>662</strong></div>
             </div>
             <div class="text-success small mt-2">+74 vs previous period</div>

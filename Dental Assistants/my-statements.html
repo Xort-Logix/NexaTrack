@@ -150,7 +150,7 @@
         </div>
 
         <div class="kpi-row">
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('gross')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
                         class="fa-solid fa-wallet"></i></div>
                 <div>
@@ -158,7 +158,7 @@
                     <div class="kpi-value" id="grossKpi">$1,185.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('hours')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
                 </div>
                 <div>
@@ -166,7 +166,7 @@
                     <div class="kpi-value" id="hoursKpi">78.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('overtime')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
@@ -174,7 +174,7 @@
                     <div class="kpi-value" id="otKpi">2.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('deductions')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
                 </div>
                 <div>
@@ -528,6 +528,34 @@
         </div>
     </div>
 
+    <!-- ─── STATEMENT DETAIL MODAL ─── -->
+    <div class="modal fade" id="statementDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius:14px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+                <div class="modal-header" style="border-bottom:1px solid var(--gray-100);padding:20px 24px;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="kpi-icon" id="stmtModalIcon" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                            <i class="fa-solid" id="stmtModalIconTag" style="font-size:18px;"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title fw-bold" id="stmtModalLabel" style="font-size:16px;margin:0;">Title</h5>
+                            <div class="text-muted" style="font-size:12px;">Payroll Statement Detail</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding:24px;">
+                    <div id="stmtModalBody">
+                        <!-- Dynamic content loaded by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:1px solid var(--gray-100);padding:16px 24px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background:var(--gray-100);color:var(--gray-700);border:none;font-weight:600;padding:8px 20px;border-radius:8px;font-size:13px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -640,6 +668,89 @@
                 document.getElementById('sidebarToggle').checked = false;
             }
         });
+
+        /* ─── STATEMENT DETAIL MODAL ─── */
+        function openStatementModal(type) {
+            const data = {
+                'gross': { icon: 'fa-wallet', bg: 'var(--green-50)', color: 'var(--green-600)', label: 'Gross Pay', value: '$1,185.00' },
+                'hours': { icon: 'fa-clock', bg: '#dbeafe', color: '#1e40af', label: 'Total Hours', value: '78.00' },
+                'overtime': { icon: 'fa-chart-line', bg: '#ede9fe', color: '#6d28d9', label: 'Overtime', value: '2.00 hrs' },
+                'deductions': { icon: 'fa-circle-minus', bg: '#ffedd5', color: '#c2410c', label: 'Deductions', value: '$200.00' }
+            };
+            const d = data[type];
+
+            document.getElementById('stmtModalLabel').textContent = d.label;
+            const iconContainer = document.getElementById('stmtModalIcon');
+            iconContainer.style.background = d.bg;
+            iconContainer.style.color = d.color;
+            const iconTag = document.getElementById('stmtModalIconTag');
+            iconTag.className = 'fa-regular ' + d.icon;
+            iconTag.style.color = d.color;
+
+            let html = '';
+            if (type === 'gross') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Gross Pay</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">$1,185.00</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Type</th><th class="text-end">Hours</th><th class="text-end">Rate</th><th class="text-end">Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td>Regular Pay</td><td class="text-end">76.00</td><td class="text-end">$15.00</td><td class="text-end">$1,140.00</td></tr>
+                            <tr><td>Overtime</td><td class="text-end">2.00</td><td class="text-end">$22.50</td><td class="text-end">$45.00</td></tr>
+                            <tr class="fw-bold"><td colspan="3">Total Gross Pay</td><td class="text-end">$1,185.00</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'hours') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Hours</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">78.00 Hours</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Day</th><th class="text-end">Regular</th><th class="text-end">Overtime</th><th class="text-end">Total</th></tr></thead>
+                        <tbody>
+                            <tr><td>Week 1</td><td class="text-end">40.00</td><td class="text-end">0.00</td><td class="text-end">40.00</td></tr>
+                            <tr><td>Week 2</td><td class="text-end">36.00</td><td class="text-end">2.00</td><td class="text-end">38.00</td></tr>
+                            <tr class="fw-bold"><td>Total</td><td class="text-end">76.00</td><td class="text-end">2.00</td><td class="text-end">78.00</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'overtime') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Overtime Summary</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">2.00 Hours</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Date</th><th class="text-end">OT Hours</th><th class="text-end">Rate</th><th class="text-end">Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td>May 12, 2026</td><td class="text-end">1.00</td><td class="text-end">$22.50</td><td class="text-end">$22.50</td></tr>
+                            <tr><td>May 14, 2026</td><td class="text-end">1.00</td><td class="text-end">$22.50</td><td class="text-end">$22.50</td></tr>
+                            <tr class="fw-bold"><td>Total</td><td class="text-end">2.00</td><td class="text-end">$22.50/hr</td><td class="text-end">$45.00</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'deductions') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Deductions</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">$200.00</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Type</th><th class="text-end">Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td>Advances</td><td class="text-end">$200.00</td></tr>
+                            <tr><td>Other Adjustments</td><td class="text-end">$0.00</td></tr>
+                            <tr class="fw-bold"><td>Total Deductions</td><td class="text-end fw-bold" style="color:#dc2626;">$200.00</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="text-muted mt-2" style="font-size:12.5px;">* Net pay is calculated as Gross Pay minus total Deductions.</div>`;
+            }
+
+            document.getElementById('stmtModalBody').innerHTML = html;
+            const modal = new bootstrap.Modal(document.getElementById('statementDetailModal'));
+            modal.show();
+        }
     </script>
 
 </body>

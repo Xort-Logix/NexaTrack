@@ -645,6 +645,14 @@
       font-weight: 700;
     }
 
+    .material-card .rate-hint {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
     .stepper {
       display: flex;
       align-items: center;
@@ -779,6 +787,57 @@
       padding: 5px 16px;
     }
 
+    .repeat-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .repeat-row .flex-grow-1 {
+      flex: 1 1 auto;
+    }
+
+    .repeat-row .btn-remove-row {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      padding: 0;
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      color: #dc2626;
+    }
+
+    .repeat-row .btn-remove-row:hover {
+      background: #fee2e2;
+    }
+
+    .rate-note {
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-top: 6px;
+    }
+
+    .basis-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+    }
+
+    .basis-badge.flat {
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .basis-badge.per-unit {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
     @media(max-width:900px) {
       .sidebar {
         transform: translateX(-100%);
@@ -879,7 +938,7 @@
                   <option>Miami</option>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <label class="form-label">Provider</label>
                 <select class="form-select" id="providerDoctor" onchange="updateCompensation()">
                   <option>Dr. Heider</option>
@@ -889,19 +948,14 @@
                   <option>Dr. Silvina</option>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <label class="form-label">Doctor Role</label>
                 <select class="form-select" id="doctorRole" onchange="updateCompensation()">
                   <option value="Full Doctor">Full Doctor (100%)</option>
                   <option value="Prep Doctor">Prep Doctor (60%)</option>
                   <option value="Cement Doctor">Cement Doctor (40%)</option>
                 </select>
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Doctor Pay <span class="text-muted small">(est.)</span></label>
-                <div class="input-group"><span class="input-group-text">$</span>
-                  <input type="text" class="form-control" id="providerPayDisplay" value="5,000.00" disabled>
-                </div>
+                <div class="rate-note"><i class="fa-solid fa-circle-info me-1"></i>Doctor pay isn't shown here — it depends on the material and unit count entered in the Treatment step.</div>
               </div>
               <div class="col-md-6">
                 <label class="form-label">ISR</label>
@@ -927,23 +981,35 @@
           <div class="wizard-step" id="wstep-2" style="display:none;">
             <h2 class="panel-title mb-3">Treatment</h2>
             <div class="section-label">Cosmetic — Material</div>
-            <div class="row g-2 mb-3">
+            <div class="row g-2 mb-2">
               <div class="col-3">
-                <div class="material-card selected" data-material="composite"><i
-                    class="fa-solid fa-circle-half-stroke"></i><span>Composite</span></div>
-              </div>
-              <div class="col-3">
-                <div class="material-card" data-material="ceramic"><i class="fa-solid fa-gem"></i><span>Ceramic</span>
+                <div class="material-card selected" data-material="composite" onclick="selectMaterial('composite')">
+                  <i class="fa-solid fa-circle-half-stroke"></i><span>Composite</span>
+                  <small class="rate-hint" data-rate-hint="composite"></small>
                 </div>
               </div>
               <div class="col-3">
-                <div class="material-card" data-material="porcelain"><i class="fa-solid fa-tooth"></i><span>Porcelain /
-                    Zirconia</span></div>
+                <div class="material-card" data-material="ceramic" onclick="selectMaterial('ceramic')">
+                  <i class="fa-solid fa-gem"></i><span>Ceramic</span>
+                  <small class="rate-hint" data-rate-hint="ceramic"></small>
+                </div>
               </div>
               <div class="col-3">
-                <div class="material-card" data-material="crown"><i class="fa-solid fa-crown"></i><span>Full Crown
-                    Case</span></div>
+                <div class="material-card" data-material="porcelain" onclick="selectMaterial('porcelain')">
+                  <i class="fa-solid fa-tooth"></i><span>Porcelain / Zirconia</span>
+                  <small class="rate-hint" data-rate-hint="porcelain"></small>
+                </div>
               </div>
+              <div class="col-3">
+                <div class="material-card" data-material="crown" onclick="selectMaterial('crown')">
+                  <i class="fa-solid fa-crown"></i><span>Full Crown Case</span>
+                  <small class="rate-hint" data-rate-hint="crown"></small>
+                </div>
+              </div>
+            </div>
+            <div class="rate-note mb-3">
+              <i class="fa-solid fa-circle-info me-1"></i>Flat case pay applies only when all units are the same material and the count falls in the 16–20 flat-rate range.
+              <span id="payBasisBadge" class="basis-badge flat">FLAT RATE</span>
             </div>
 
             <div class="row g-3 align-items-end mb-3">
@@ -969,14 +1035,15 @@
             <div id="mixedFields" style="display:none;" class="dynamic-fields mb-3">
               <div class="row g-3">
                 <div class="col-6 col-md-3"><label class="form-label">Composite Units</label><input type="number"
-                    class="form-control" value="0"></div>
+                    class="form-control mixed-unit-input" data-material="composite" value="0" oninput="updateCompensation()"></div>
                 <div class="col-6 col-md-3"><label class="form-label">Ceramic Units</label><input type="number"
-                    class="form-control" value="0"></div>
+                    class="form-control mixed-unit-input" data-material="ceramic" value="0" oninput="updateCompensation()"></div>
                 <div class="col-6 col-md-3"><label class="form-label">Porcelain Units</label><input type="number"
-                    class="form-control" value="0"></div>
+                    class="form-control mixed-unit-input" data-material="porcelain" value="0" oninput="updateCompensation()"></div>
                 <div class="col-6 col-md-3"><label class="form-label">Crown Units</label><input type="number"
-                    class="form-control" value="0"></div>
+                    class="form-control mixed-unit-input" data-material="crown" value="0" oninput="updateCompensation()"></div>
               </div>
+              <div class="rate-note mb-0"><i class="fa-solid fa-circle-info me-1"></i>Mixed case: each unit is paid at its own material's per-unit rate — the flat rate does not apply.</div>
             </div>
 
             <div class="row g-3 mb-4">
@@ -988,7 +1055,7 @@
                   <option>Dr. Safa</option>
                   <option>Dr. Silvina</option>
                 </select>
-                <small class="text-muted" style="font-size:11px;">Prep Pay (60%): <strong id="prepPayDisplay">$3,000.00</strong></small>
+                <small class="text-muted" style="font-size:11px;">Prep Pay (60%): <strong id="prepPayDisplay">$0.00</strong></small>
               </div>
               <div class="col-md-6">
                 <label class="form-label d-block">Cement Doctor</label>
@@ -999,7 +1066,7 @@
                   <option>Dr. Heider</option>
                   <option>Dr. Vanessa</option>
                 </select>
-                <small class="text-muted" style="font-size:11px;">Cement Pay (40%): <strong id="cementPayDisplay">$2,000.00</strong></small>
+                <small class="text-muted" style="font-size:11px;">Cement Pay (40%): <strong id="cementPayDisplay">$0.00</strong></small>
               </div>
             </div>
 
@@ -1019,38 +1086,43 @@
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
                     class="form-control" id="treatmentValue" value="12500" oninput="updateSummary()"></div>
               </div>
-              <div class="col-md-6"><label class="form-label">Base Case Pay <i class="fa-solid fa-circle-info text-muted" title="Base amount used for doctor compensation calculation"></i></label>
+              <div class="col-md-6"><label class="form-label">Base Case Pay <i class="fa-solid fa-circle-info text-muted" title="Auto-calculated from material and units in the Treatment step. Override here if needed."></i></label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
-                    class="form-control" id="baseCasePay" value="5000" oninput="updateCompensation()"></div>
+                    class="form-control" id="baseCasePay" value="0" oninput="onBaseCasePayOverride()"></div>
+                <div class="rate-note mb-0" id="baseCasePaySource">Auto-calculated from Treatment step</div>
               </div>
-              <div class="col-md-6"><label class="form-label">Quoted Amount</label>
-                <div class="input-group"><span class="input-group-text">$</span><input type="number"
-                    class="form-control" id="quotedAmount" value="1200" oninput="updateSummary()"></div>
+
+              <div class="col-12">
+                <label class="form-label d-block">Quoted Amount</label>
+                <div class="input-group mb-2"><span class="input-group-text">$</span>
+                  <input type="number" class="form-control" id="quotedAmount" value="1200" oninput="updateSummary()">
+                </div>
               </div>
-              <div class="col-md-6"><label class="form-label">Collected Amount</label>
-                <div class="input-group"><span class="input-group-text">$</span><input type="number"
-                    class="form-control" id="collectedAmount" value="12500" oninput="updateSummary()"></div>
+
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label class="form-label mb-2">Payment Types <span class="text-muted fw-normal">— Collected Amount</span></label>
+                  <button type="button" class="btn btn-sm btn-outline-navy" onclick="addPaymentType()"><i class="fa-solid fa-plus me-1"></i>Add Another</button>
+                </div>
+                <div id="paymentTypeList"></div>
+                <div class="rate-note mb-0">Collected Amount = sum of all payment type entries below.</div>
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Financing Used</label>
-                <select class="form-select">
-                  <option>Cash</option>
-                  <option>HFD</option>
-                  <option>CareCredit</option>
-                  <option>Other</option>
-                </select>
-              </div>
+
               <div class="col-md-6"><label class="form-label">Lab Cost <span
                     class="text-muted"></span></label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number"
                     class="form-control" value="0" oninput="updateSummary()" id="labCost"></div>
               </div>
-              <div class="col-md-6"><label class="form-label">Merchant Fee <span
-                    class="text-muted"></span></label>
-                <div class="input-group"><span class="input-group-text">$</span><input type="number"
-                    class="form-control" value="0" oninput="updateSummary()" id="merchantFee"></div>
+
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label class="form-label mb-2">Fees <span class="text-muted fw-normal">— Merchant / Financing</span></label>
+                  <button type="button" class="btn btn-sm btn-outline-navy" onclick="addFeeEntry()"><i class="fa-solid fa-plus me-1"></i>Add Another</button>
+                </div>
+                <div id="feeList"></div>
               </div>
-              <div class="col-md-6"><label class="form-label">Notes <span
+
+              <div class="col-md-12"><label class="form-label">Notes <span
                     class="text-muted"></span></label><input type="text" class="form-control"
                   placeholder="Add any case notes..."></div>
             </div>
@@ -1102,20 +1174,20 @@
           <h2 class="panel-title mb-3">Live Summary</h2>
 
           <div class="section-label">Compensation Summary</div>
-          <div class="payroll-row"><span>Provider Pay</span><span id="sProviderPay">$1,240.00</span></div>
-          <div class="payroll-row"><span>Prep Pay</span><span id="sPrepPay">$800.00</span></div>
+          <div class="payroll-row"><span>Provider Pay</span><span id="sProviderPay">$0.00</span></div>
+          <div class="payroll-row"><span>Prep Pay</span><span id="sPrepPay">$0.00</span></div>
           <div class="payroll-row"><span>Cement Pay</span><span id="sCementPay">$0.00</span></div>
-          <div class="payroll-row"><span>General Dentistry Pay</span><span id="sGenPay">$280.00</span></div>
+          <div class="payroll-row"><span>General Dentistry Pay</span><span id="sGenPay">$0.00</span></div>
           <div class="payroll-row"><span>ISR Commission</span><span id="sIsrComm">$960.00</span></div>
           <!-- <div class="payroll-row"><span>Flat ISR Pay</span><span id="sFlatIsr">$200.00</span></div> -->
 
           <div class="section-label mt-3">Financial Summary</div>
           <div class="payroll-row"><span>Treatment Value</span><span id="sTreatVal">$12,500.00</span></div>
-          <div class="payroll-row"><span>Collected</span><span id="sCollected">$12,500.00</span></div>
+          <div class="payroll-row"><span>Collected</span><span id="sCollected">$0.00</span></div>
           <div class="payroll-row"><span>Lab Cost</span><span id="sLabCost">$0.00</span></div>
-          <div class="payroll-row"><span>Merchant Fee</span><span id="sMerchFee">$0.00</span></div>
-          <div class="payroll-row"><span>Gross Profit</span><span id="sGross">$12,500.00</span></div>
-          <div class="payroll-row total"><span>Net Profit</span><span id="sNet" class="text-success">$12,500.00</span>
+          <div class="payroll-row"><span>Fees (Merchant + Financing)</span><span id="sMerchFee">$0.00</span></div>
+          <div class="payroll-row"><span>Gross Profit</span><span id="sGross">$0.00</span></div>
+          <div class="payroll-row total"><span>Net Profit</span><span id="sNet" class="text-success">$0.00</span>
           </div>
 
           <div class="section-label mt-3">Production Summary</div>
@@ -1139,6 +1211,27 @@
     let currentStep = 1;
     let unitCount = 16;
     let procCount = 0;
+    let paymentTypeCount = 0;
+    let feeCount = 0;
+    let baseCasePayOverridden = false;
+    let selectedMaterial = 'composite';
+    let isMixed = false;
+
+    /**
+     * ─── COSMETIC MATERIAL RATE TABLE ───
+     * NOTE: placeholder figures — replace with the real GDG Smiles rate table
+     * (ideally sourced from CompensationService / compensation-rules.html so
+     * there's a single source of truth). perUnit = per-unit rate used for
+     * mixed cases or unit counts outside the flat range. flat = flat case
+     * pay used only when ALL units are this material AND unitCount is
+     * within flatRange (inclusive).
+     */
+    const MATERIAL_RATES = {
+      composite: { label: 'Composite', perUnit: 150, flat: 2500, flatRange: [16, 20] },
+      ceramic: { label: 'Ceramic', perUnit: 200, flat: 3400, flatRange: [16, 20] },
+      porcelain: { label: 'Porcelain / Zirconia', perUnit: 250, flat: 4400, flatRange: [16, 20] },
+      crown: { label: 'Full Crown Case', perUnit: 300, flat: 5400, flatRange: [16, 20] }
+    };
 
     function goToStep(n) {
       document.querySelectorAll('.wizard-step').forEach(s => s.style.display = 'none');
@@ -1157,24 +1250,32 @@
     function nextStep() { if (currentStep < 4) goToStep(currentStep + 1); updateCompensation(); }
     function prevStep() { if (currentStep > 1) goToStep(currentStep - 1); }
 
-    document.querySelectorAll('.material-card').forEach(card => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-      });
+    function selectMaterial(material) {
+      selectedMaterial = material;
+      document.querySelectorAll('.material-card').forEach(c => c.classList.remove('selected'));
+      document.querySelector('.material-card[data-material="' + material + '"]').classList.add('selected');
+      updateCompensation();
+    }
+
+    document.querySelectorAll('[data-rate-hint]').forEach(el => {
+      const rate = MATERIAL_RATES[el.getAttribute('data-rate-hint')];
+      if (rate) el.textContent = '$' + rate.perUnit + '/unit';
     });
 
     function stepUnits(delta) {
       unitCount = Math.max(0, unitCount + delta);
       document.getElementById('unitsInput').value = unitCount;
+      updateCompensation();
     }
 
     function toggleMixed(isYes) {
+      isMixed = isYes;
       document.getElementById('mixedFields').style.display = isYes ? 'block' : 'none';
       document.getElementById('mixedNo').classList.toggle('btn-green', !isYes);
       document.getElementById('mixedNo').classList.toggle('btn-outline-navy', isYes);
       document.getElementById('mixedYes').classList.toggle('btn-green', isYes);
       document.getElementById('mixedYes').classList.toggle('btn-outline-navy', !isYes);
+      updateCompensation();
     }
     toggleMixed(false);
 
@@ -1203,9 +1304,105 @@
       updateSummary();
     }
 
+    /** ─── PAYMENT TYPES (Financial step) ─── */
+    function addPaymentType() {
+      paymentTypeCount++;
+      const id = 'pay-' + paymentTypeCount;
+      const div = document.createElement('div');
+      div.className = 'repeat-row';
+      div.id = id;
+      div.innerHTML = `
+        <div style="width:180px;">
+          <label class="form-label">Type</label>
+          <select class="form-select payment-type-select" onchange="onPaymentTypeChange('${id}')">
+            <option>Cash</option>
+            <option>HFD</option>
+            <option>CareCredit</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="flex-grow-1 payment-type-other" id="${id}-other" style="display:none;">
+          <label class="form-label">Specify</label>
+          <input type="text" class="form-control" placeholder="Payment type name...">
+        </div>
+        <div class="flex-grow-1">
+          <label class="form-label">Amount</label>
+          <div class="input-group"><span class="input-group-text">$</span>
+            <input type="number" class="form-control payment-amount-input" value="0" oninput="updateSummary()"></div>
+        </div>
+        <button type="button" class="btn-remove-row" onclick="document.getElementById('${id}').remove(); updateSummary();"><i class="fa-solid fa-trash"></i></button>`;
+      document.getElementById('paymentTypeList').appendChild(div);
+      updateSummary();
+    }
+
+    function onPaymentTypeChange(rowId) {
+      const row = document.getElementById(rowId);
+      const type = row.querySelector('.payment-type-select').value;
+      row.querySelector('.payment-type-other').style.display = type === 'Other' ? 'block' : 'none';
+      updateSummary();
+    }
+
+    /** ─── FEES: Merchant Fee / Financing Fee (Financial step) ─── */
+    function addFeeEntry() {
+      feeCount++;
+      const id = 'fee-' + feeCount;
+      const div = document.createElement('div');
+      div.className = 'repeat-row';
+      div.id = id;
+      div.innerHTML = `
+        <div style="width:200px;">
+          <label class="form-label">Fee Type</label>
+          <select class="form-select fee-type-select">
+            <option value="Merchant Fee">Merchant Fee</option>
+            <option value="Financing Fee">Financing Fee</option>
+          </select>
+        </div>
+        <div class="flex-grow-1">
+          <label class="form-label">Amount</label>
+          <div class="input-group"><span class="input-group-text">$</span>
+            <input type="number" class="form-control fee-amount-input" value="0" oninput="updateSummary()"></div>
+        </div>
+        <button type="button" class="btn-remove-row" onclick="document.getElementById('${id}').remove(); updateSummary();"><i class="fa-solid fa-trash"></i></button>`;
+      document.getElementById('feeList').appendChild(div);
+      updateSummary();
+    }
+
     /** ─── COMPENSATION ENGINE ─── */
 
-    /** Get the current Base Case Pay value */
+    /**
+     * Compute the cosmetic case's Base Case Pay from the selected material(s)
+     * and unit counts. Flat rate applies only when every unit is the same
+     * material AND the unit count is within that material's flat-rate range.
+     * Otherwise (mixed materials, or unit count outside the flat range),
+     * per-unit pay is used instead.
+     */
+    function computeBaseCasePayFromTreatment() {
+      const badge = document.getElementById('payBasisBadge');
+
+      if (isMixed) {
+        let total = 0;
+        document.querySelectorAll('.mixed-unit-input').forEach(input => {
+          const material = input.getAttribute('data-material');
+          const units = parseFloat(input.value) || 0;
+          const rate = MATERIAL_RATES[material];
+          if (rate) total += units * rate.perUnit;
+        });
+        if (badge) { badge.textContent = 'PER-UNIT (MIXED)'; badge.className = 'basis-badge per-unit'; }
+        return total;
+      }
+
+      const rate = MATERIAL_RATES[selectedMaterial];
+      if (!rate) return 0;
+      const [min, max] = rate.flatRange;
+      if (unitCount >= min && unitCount <= max) {
+        if (badge) { badge.textContent = 'FLAT RATE'; badge.className = 'basis-badge flat'; }
+        return rate.flat;
+      }
+      if (badge) { badge.textContent = 'PER-UNIT (OUTSIDE 16–20)'; badge.className = 'basis-badge per-unit'; }
+      return unitCount * rate.perUnit;
+    }
+
+    /** Get the current Base Case Pay value (auto-calculated, unless manually overridden) */
     function getBaseCasePay() {
       return parseFloat(document.getElementById('baseCasePay').value) || 0;
     }
@@ -1220,20 +1417,31 @@
       return document.getElementById('providerDoctor').value;
     }
 
+    /** Called when the user manually edits Base Case Pay directly in Step 3 */
+    function onBaseCasePayOverride() {
+      baseCasePayOverridden = true;
+      document.getElementById('baseCasePaySource').textContent = 'Manually overridden';
+      updateCompensation();
+    }
+
     /**
-     * Calculate and update ALL doctor compensation fields
-     * Uses the reusable CompensationService (js/compensation-service.js)
+     * Calculate and update ALL doctor compensation fields.
+     * Base Case Pay is auto-derived from the material/units picked in the
+     * Treatment step (computeBaseCasePayFromTreatment) unless the user has
+     * manually overridden it in the Financial step.
      */
     function updateCompensation() {
+      const autoBasePay = computeBaseCasePayFromTreatment();
+      if (!baseCasePayOverridden) {
+        document.getElementById('baseCasePay').value = autoBasePay.toFixed(2);
+        document.getElementById('baseCasePaySource').textContent = 'Auto-calculated from Treatment step';
+      }
       const basePay = getBaseCasePay();
       const role = getSelectedRole();
 
       // ── Provider (main doctor) ──
       const providerPay = CompensationService.calculateDoctorPay(basePay, role);
       const rolePct = CompensationService.getRolePercentage(role);
-
-      document.getElementById('providerPayDisplay').value =
-        providerPay.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
       // ── Prep Doctor (always 60% of Base Case Pay) ──
       const prepPct = CompensationService.getRolePercentage('Prep Doctor');
@@ -1270,17 +1478,28 @@
 
     function updateSummary() {
       const tv = parseFloat(document.getElementById('treatmentValue').value) || 0;
-      const collected = parseFloat(document.getElementById('collectedAmount').value) || 0;
       const lab = parseFloat(document.getElementById('labCost').value) || 0;
-      const fee = parseFloat(document.getElementById('merchantFee').value) || 0;
+
+      // ── Collected Amount = sum of all Payment Type entries ──
+      let collected = 0;
+      document.querySelectorAll('.payment-amount-input').forEach(el => {
+        collected += parseFloat(el.value) || 0;
+      });
+
+      // ── Fees = sum of all Fee entries (Merchant Fee + Financing Fee) ──
+      let totalFees = 0;
+      document.querySelectorAll('.fee-amount-input').forEach(el => {
+        totalFees += parseFloat(el.value) || 0;
+      });
+
       const gross = collected - lab;
-      const net = gross - fee;
+      const net = gross - totalFees;
 
       // ── Financial Summary ──
       document.getElementById('sTreatVal').textContent = '$' + tv.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sCollected').textContent = '$' + collected.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sLabCost').textContent = '$' + lab.toLocaleString(undefined, { minimumFractionDigits: 2 });
-      document.getElementById('sMerchFee').textContent = '$' + fee.toLocaleString(undefined, { minimumFractionDigits: 2 });
+      document.getElementById('sMerchFee').textContent = '$' + totalFees.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sGross').textContent = '$' + gross.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sNet').textContent = '$' + net.toLocaleString(undefined, { minimumFractionDigits: 2 });
 
@@ -1306,11 +1525,14 @@
 
     // ── Auto-run compensation on page load & when base case pay changes ──
     document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('baseCasePay').addEventListener('input', updateCompensation);
       document.getElementById('treatmentValue').addEventListener('input', updateSummary);
-      document.getElementById('collectedAmount').addEventListener('input', updateSummary);
       document.getElementById('labCost').addEventListener('input', updateSummary);
-      document.getElementById('merchantFee').addEventListener('input', updateSummary);
+
+      // Seed one payment type row and one fee row by default
+      addPaymentType();
+      document.querySelector('#paymentTypeList .payment-amount-input').value = 12500;
+      addFeeEntry();
+
       // Initial calculation
       updateCompensation();
     });

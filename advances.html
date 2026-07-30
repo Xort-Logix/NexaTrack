@@ -14,6 +14,28 @@
 </head>
 
 <body>
+  <script>
+    // ── Role-based access: Provider & Office Manager roles only ──
+    // (Advances is a doctor/provider-only section — everyone else is redirected.)
+    (function() {
+      var allowedRoles = ['Provider', 'Office Manager'];
+      var userRole = localStorage.getItem('nexaUserRole');
+      if (allowedRoles.indexOf(userRole) === -1) {
+        var roleRedirects = {
+          'Social Media': 'SocialMedia/Empdahshabord.html',
+          'QS': 'QS/Empdahshabord.html',
+          'ISR': 'ISR/Empdahshabord.html',
+          'CE': 'CE/Empdahshabord.html',
+          'SDR': 'SDR/Empdahshabord.html',
+          'Marketing': 'Marketing/Empdahshabord.html',
+          'Dental Assistant': 'Dental Assistants/Empdahshabord.html'
+        };
+        window.location.replace(roleRedirects[userRole] || 'index.html');
+      } else {
+        window.__nexaUserRole = userRole;
+      }
+    })();
+  </script>
   <input type="checkbox" id="sidebarToggle" hidden>
   <!-- Sidebar Section -->
   <div class="sidebar">
@@ -96,7 +118,7 @@
     <div class="topbar">
       <div>
         <h1 class="page-title">Advances</h1>
-        <div class="page-sub">Manage and track all payroll advances for team members.</div>
+        <div class="page-sub">Manage and track payroll advances for providers.</div>
       </div>
       <label for="sidebarToggle" class="btn btn-outline-navy mobile-menu-btn">
         <i class="fa-solid fa-bars"></i>
@@ -126,6 +148,13 @@
       .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
       .detail-breakdown-row:last-child { border-bottom:none; }
       .detail-breakdown-row span { color:#6b7280; }
+      .recon-table input { font-size:12.5px; padding:4px 8px; height:32px; }
+      .recon-table th { font-size:10.5px; }
+      .recon-table td { vertical-align:middle; }
+      .net-owed { color:#00a878; font-weight:700; }
+      .net-outstanding { color:#ea580c; font-weight:700; }
+      .formula-strip { background:#f7f8fa; border:1px dashed #dbe1e8; border-radius:9px; padding:12px 14px; font-size:12.5px; color:#475569; }
+      .formula-strip code { background:#fff; border:1px solid #e2e6ed; border-radius:6px; padding:1px 6px; color:#111827; }
     </style>
     <!-- KPI Grid Layout -->
     <div class="row g-3 mb-4">
@@ -137,8 +166,8 @@
             </div>
             <div class="col-9">
               <div class="kpi-label">Total Advances</div>
-              <div class="kpi-value">$42,350.00</div>
-              <div class="kpi-delta text-success"><span style="color:#00a878;">+$3,250</span> <span
+              <div class="kpi-value">$15,500.00</div>
+              <div class="kpi-delta text-success"><span style="color:#00a878;">+$650</span> <span
                   style="color:var(--gray-400)">vs Feb 1 – Feb 28</span></div>
             </div>
           </div>
@@ -155,8 +184,8 @@
             </div>
             <div class="col-9">
               <div class="kpi-label">Total Repaid</div>
-              <div class="kpi-value">$28,150.00</div>
-              <div class="kpi-delta text-success"><span style="color:#00a878;">+$2,100</span> <span
+              <div class="kpi-value">$10,200.00</div>
+              <div class="kpi-delta text-success"><span style="color:#00a878;">+$500</span> <span
                   style="color:var(--gray-400)">vs Feb 1 – Feb 28</span></div>
             </div>
           </div>
@@ -170,8 +199,8 @@
             </div>
             <div class="col-9">
               <div class="kpi-label">Outstanding Balance</div>
-              <div class="kpi-value">$14,200.00</div>
-              <div class="kpi-delta text-danger"><span style="color:#ef4444;">+$1,150</span> <span
+              <div class="kpi-value">$5,300.00</div>
+              <div class="kpi-delta text-danger"><span style="color:#ef4444;">+$150</span> <span
                   style="color:var(--gray-400)">vs Feb 1 – Feb 28</span></div>
             </div>
           </div>
@@ -183,12 +212,12 @@
         <div class="kpi-card" role="button" tabindex="0" onclick="openAdvanceKpiDetail(3)">
           <div class="row">
             <div class="col-3">
-              <div class="kpi-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="fa-solid fa-users"></i></div>
+              <div class="kpi-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="fa-solid fa-user-doctor"></i></div>
             </div>
             <div class="col-9">
               <div class="kpi-label">Active Advances</div>
-              <div class="kpi-value">18</div>
-              <div class="kpi-delta text-muted" style="color:var(--gray-400) !important;">Team Members</div>
+              <div class="kpi-value">5</div>
+              <div class="kpi-delta text-muted" style="color:var(--gray-400) !important;">Providers</div>
             </div>
           </div>
         </div>
@@ -202,8 +231,8 @@
             </div>
             <div class="col-9">
               <div class="kpi-label">Avg. Advance Amount</div>
-              <div class="kpi-value">$785.19</div>
-              <div class="kpi-delta text-muted" style="color:var(--gray-400) !important;">Per Advance</div>
+              <div class="kpi-value">$3,100.00</div>
+              <div class="kpi-delta text-muted" style="color:var(--gray-400) !important;">Per Provider</div>
             </div>
           </div>
         </div>
@@ -216,6 +245,7 @@
         <a class="engine-tab-item active" onclick="showAdvanceTab('ledger', this)">Advances Ledger</a>
         <a class="engine-tab-item" onclick="showAdvanceTab('active', this)">Active Advances</a>
         <a class="engine-tab-item" onclick="showAdvanceTab('repaid', this)">Repaid Advances</a>
+        <a class="engine-tab-item" onclick="showAdvanceTab('reconciliation', this)">Reconciliation</a>
         <a class="engine-tab-item" onclick="showAdvanceTab('settings', this)">Advance Settings</a>
       </div>
 
@@ -225,22 +255,21 @@
             <i class="fa-solid fa-magnifying-glass position-absolute text-muted"
               style="left:12px;top:11px;font-size:12px;"></i>
             <input type="text" class="form-control form-search-custom ps-5"
-              placeholder="Search by name or Staff ID...">
+              placeholder="Search by provider or Staff ID...">
           </div>
           <select class="form-select form-select-custom" style="width:160px;">
-            <option>All Departments</option>
-            <option>Providers</option>
-            <option>Sales</option>
-            <option>Operations</option>
-            <option>Lab</option>
+            <option>All Locations</option>
+            <option>Fort Lauderdale</option>
+            <option>Boca Raton</option>
+            <option>Miami</option>
           </select>
           <select class="form-select form-select-custom" style="width:160px;">
-            <option>All Team Members</option>
+            <option>All Providers</option>
             <option>Dr. Heider</option>
             <option>Dr. Vanessa</option>
-            <option>Dr. Michael</option>
-            <option>Dr. Sophia</option>
-
+            <option>Dr. Nancy</option>
+            <option>Dr. Safa</option>
+            <option>Dr. Silvina</option>
           </select>
           <select class="form-select form-select-custom" style="width:140px;">
             <option>All Statuses</option>
@@ -263,8 +292,8 @@
           <table class="nexa-table">
             <thead>
               <tr>
-                <th>Staff</th>
-                <th>Department</th>
+                <th>Provider</th>
+                <th>Location</th>
                 <th>Advance Date</th>
                 <th>Advance Amount</th>
                 <th>Repaid Amount</th>
@@ -283,7 +312,7 @@
                     <div><span class="emp-name">Dr. Heider</span><small class="emp-id">PROV-001</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept providers">Providers</span></td>
+                <td><span class="badge-dept">Fort Lauderdale</span></td>
                 <td>Mar 1, 2026</td>
                 <td class="fw-semibold">$3,000.00</td>
                 <td>$1,500.00</td>
@@ -300,7 +329,7 @@
                     <div><span class="emp-name">Dr. Vanessa</span><small class="emp-id">PROV-002</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept providers">Providers</span></td>
+                <td><span class="badge-dept">Boca Raton</span></td>
                 <td>Mar 1, 2026</td>
                 <td class="fw-semibold">$3,000.00</td>
                 <td>$3,000.00</td>
@@ -312,32 +341,32 @@
               </tr>
               <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Jeremiah Smith</span><small class="emp-id">ISR-001</small></div>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="avatar-initial">DN</div>
+                    <div><span class="emp-name">Dr. Nancy</span><small class="emp-id">PROV-003</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept sales">Sales</span></td>
+                <td><span class="badge-dept">Miami</span></td>
                 <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$1,500.00</td>
-                <td>$750.00</td>
-                <td class="fw-semibold" style="color:#ea580c;">$750.00</td>
+                <td class="fw-semibold">$2,800.00</td>
+                <td>$1,400.00</td>
+                <td class="fw-semibold" style="color:#ea580c;">$1,400.00</td>
                 <td><span class="badge-status partial">Partially Repaid</span></td>
                 <td>Mar 15, 2026</td>
-                <td class="text-muted">Bi-weekly advance</td>
+                <td class="text-muted">Monthly advance</td>
                 <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
               </tr>
               <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Joshua Lee</span><small class="emp-id">ISR-002</small></div>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="avatar-initial">DS</div>
+                    <div><span class="emp-name">Dr. Safa</span><small class="emp-id">PROV-004</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept sales">Sales</span></td>
+                <td><span class="badge-dept">Fort Lauderdale</span></td>
                 <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$1,500.00</td>
-                <td>$1,500.00</td>
+                <td class="fw-semibold">$3,200.00</td>
+                <td>$3,200.00</td>
                 <td class="fw-semibold" style="color:#00a878;">$0.00</td>
                 <td><span class="badge-status repaid">Repaid</span></td>
                 <td>Mar 15, 2026</td>
@@ -346,70 +375,19 @@
               </tr>
               <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Bianca Torres</span><small class="emp-id">SDR-001</small></div>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="avatar-initial">DS</div>
+                    <div><span class="emp-name">Dr. Silvina</span><small class="emp-id">PROV-005</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept sales">Sales</span></td>
+                <td><span class="badge-dept">Boca Raton</span></td>
                 <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$800.00</td>
-                <td>$300.00</td>
-                <td class="fw-semibold" style="color:#ea580c;">$500.00</td>
+                <td class="fw-semibold">$3,500.00</td>
+                <td>$1,100.00</td>
+                <td class="fw-semibold" style="color:#ea580c;">$2,400.00</td>
                 <td><span class="badge-status partial">Partially Repaid</span></td>
                 <td>Mar 15, 2026</td>
-                <td class="text-muted">Starter advance</td>
-                <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Nancy Johnson</span><small class="emp-id">CE-001</small></div>
-                  </div>
-                </td>
-                <td><span class="badge-dept operations">Operations</span></td>
-                <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$500.00</td>
-                <td>$0.00</td>
-                <td class="fw-semibold" style="color:#ea580c;">$500.00</td>
-                <td><span class="badge-status active">Active</span></td>
-                <td>—</td>
-                <td class="text-muted">New hire advance</td>
-                <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center gap-2">
-                    <div class="avatar-initial">JL</div>
-                    <div><span class="emp-name">Lab Tech Team</span><small class="emp-id">LAB-001</small></div>
-                  </div>
-                </td>
-                <td><span class="badge-dept lab">Lab</span></td>
-                <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$800.00</td>
-                <td>$400.00</td>
-                <td class="fw-semibold" style="color:#ea580c;">$400.00</td>
-                <td><span class="badge-status partial">Partially Repaid</span></td>
-                <td>Mar 15, 2026</td>
-                <td class="text-muted">Team advance</td>
-                <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center gap-2">
-                    <div class="avatar-initial">CR</div>
-                    <div><span class="emp-name">Carlos Ramirez</span><small class="emp-id">MKT-001</small></div>
-                  </div>
-                </td>
-                <td><span class="badge-dept marketing">Marketing</span></td>
-                <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$750.00</td>
-                <td>$750.00</td>
-                <td class="fw-semibold" style="color:#00a878;">$0.00</td>
-                <td><span class="badge-status repaid">Repaid</span></td>
-                <td>Mar 15, 2026</td>
-                <td class="text-muted">—</td>
+                <td class="text-muted">Monthly advance</td>
                 <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
               </tr>
             </tbody>
@@ -417,14 +395,14 @@
         </div>
       </div>
 
-      <!-- Active Advances Tab -->
+      <!-- Active Advances Tab (outstanding balance > $0) -->
       <div id="atab-active" style="display:none;">
         <div class="table-responsive">
           <table class="nexa-table">
             <thead>
               <tr>
-                <th>Staff</th>
-                <th>Department</th>
+                <th>Provider</th>
+                <th>Location</th>
                 <th>Advance Date</th>
                 <th>Advance Amount</th>
                 <th>Repaid Amount</th>
@@ -443,7 +421,7 @@
                     <div><span class="emp-name">Dr. Heider</span><small class="emp-id">PROV-001</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept providers">Providers</span></td>
+                <td><span class="badge-dept">Fort Lauderdale</span></td>
                 <td>Mar 1, 2026</td>
                 <td class="fw-semibold">$3,000.00</td>
                 <td>$1,500.00</td>
@@ -455,36 +433,36 @@
               </tr>
               <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Nancy Johnson</span><small class="emp-id">CE-001</small></div>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="avatar-initial">DN</div>
+                    <div><span class="emp-name">Dr. Nancy</span><small class="emp-id">PROV-003</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept operations">Operations</span></td>
+                <td><span class="badge-dept">Miami</span></td>
                 <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$500.00</td>
-                <td>$0.00</td>
-                <td class="fw-semibold" style="color:#ea580c;">$500.00</td>
-                <td><span class="badge-status active">Active</span></td>
-                <td>—</td>
-                <td class="text-muted">New hire advance</td>
+                <td class="fw-semibold">$2,800.00</td>
+                <td>$1,400.00</td>
+                <td class="fw-semibold" style="color:#ea580c;">$1,400.00</td>
+                <td><span class="badge-status partial">Partially Repaid</span></td>
+                <td>Mar 15, 2026</td>
+                <td class="text-muted">Monthly advance</td>
                 <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
               </tr>
               <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Bianca Torres</span><small class="emp-id">SDR-001</small></div>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="avatar-initial">DS</div>
+                    <div><span class="emp-name">Dr. Silvina</span><small class="emp-id">PROV-005</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept sales">Sales</span></td>
+                <td><span class="badge-dept">Boca Raton</span></td>
                 <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$800.00</td>
-                <td>$300.00</td>
-                <td class="fw-semibold" style="color:#ea580c;">$500.00</td>
+                <td class="fw-semibold">$3,500.00</td>
+                <td>$1,100.00</td>
+                <td class="fw-semibold" style="color:#ea580c;">$2,400.00</td>
                 <td><span class="badge-status partial">Partially Repaid</span></td>
                 <td>Mar 15, 2026</td>
-                <td class="text-muted">Starter advance</td>
+                <td class="text-muted">Monthly advance</td>
                 <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
               </tr>
             </tbody>
@@ -498,8 +476,8 @@
           <table class="nexa-table">
             <thead>
               <tr>
-                <th>Staff</th>
-                <th>Department</th>
+                <th>Provider</th>
+                <th>Location</th>
                 <th>Advance Date</th>
                 <th>Advance Amount</th>
                 <th>Repaid Amount</th>
@@ -518,7 +496,7 @@
                     <div><span class="emp-name">Dr. Vanessa</span><small class="emp-id">PROV-002</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept providers">Providers</span></td>
+                <td><span class="badge-dept">Boca Raton</span></td>
                 <td>Mar 1, 2026</td>
                 <td class="fw-semibold">$3,000.00</td>
                 <td>$3,000.00</td>
@@ -530,32 +508,15 @@
               </tr>
               <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2"><img class="avatar-sm"
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80">
-                    <div><span class="emp-name">Joshua Lee</span><small class="emp-id">ISR-002</small></div>
-                  </div>
-                </td>
-                <td><span class="badge-dept sales">Sales</span></td>
-                <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$1,500.00</td>
-                <td>$1,500.00</td>
-                <td class="fw-semibold" style="color:#00a878;">$0.00</td>
-                <td><span class="badge-status repaid">Repaid</span></td>
-                <td>Mar 15, 2026</td>
-                <td class="text-muted">—</td>
-                <td class="text-end"><i class="fa-solid fa-ellipsis-vertical action-dot"></i></td>
-              </tr>
-              <tr>
-                <td>
                   <div class="d-flex align-items-center gap-2">
-                    <div class="avatar-initial">CR</div>
-                    <div><span class="emp-name">Carlos Ramirez</span><small class="emp-id">MKT-001</small></div>
+                    <div class="avatar-initial">DS</div>
+                    <div><span class="emp-name">Dr. Safa</span><small class="emp-id">PROV-004</small></div>
                   </div>
                 </td>
-                <td><span class="badge-dept marketing">Marketing</span></td>
+                <td><span class="badge-dept">Fort Lauderdale</span></td>
                 <td>Mar 1, 2026</td>
-                <td class="fw-semibold">$750.00</td>
-                <td>$750.00</td>
+                <td class="fw-semibold">$3,200.00</td>
+                <td>$3,200.00</td>
                 <td class="fw-semibold" style="color:#00a878;">$0.00</td>
                 <td><span class="badge-status repaid">Repaid</span></td>
                 <td>Mar 15, 2026</td>
@@ -564,6 +525,41 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- Reconciliation Tab -->
+      <div id="atab-reconciliation" style="display:none;">
+        <div class="p-4">
+          <div class="formula-strip mb-3">
+            <i class="fa-solid fa-circle-info me-1"></i>
+            <code>Advance Amount = Daily Advance Rate &times; Clinical Days &times; Pay Periods</code>
+            &nbsp;compared against&nbsp;
+            <code>Production Earned = Cosmetic Case Pay + General Dentistry Earned</code>.
+            If Production Earned exceeds the Advance Amount, the provider is <span class="net-owed">owed the difference</span>.
+            If the Advance Amount exceeds Production Earned, the remainder stays <span class="net-outstanding">outstanding</span>.
+          </div>
+          <div class="table-responsive">
+            <table class="nexa-table recon-table">
+              <thead>
+                <tr>
+                  <th>Provider</th>
+                  <th>Daily Rate</th>
+                  <th>Clinical Days</th>
+                  <th>Pay Periods</th>
+                  <th>Advance Amount</th>
+                  <th>Cosmetic Case Pay</th>
+                  <th>Gen. Dentistry Earned</th>
+                  <th>Production Earned</th>
+                  <th>Net</th>
+                </tr>
+              </thead>
+              <tbody id="reconTableBody"></tbody>
+            </table>
+          </div>
+          <div class="rate-note text-muted mt-2" style="font-size:11.5px;">
+            Sample figures — enter each provider's actual clinical days, daily advance rate, and case pay for the pay period being reconciled. Cosmetic Case Pay and Gen. Dentistry Earned come from the doctor's cases in that period (see Cases / Production).
+          </div>
         </div>
       </div>
 
@@ -588,6 +584,14 @@
                   <option>Weekly</option>
                 </select>
               </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Default Daily Advance Rate</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" value="650">
+                </div>
+                <div class="rate-note text-muted" style="font-size:11px;">Used as the starting Daily Rate on the Reconciliation tab. Per-provider rates can still be overridden there.</div>
+              </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
@@ -601,6 +605,10 @@
                   <label class="form-check-label" for="partialRepay">Yes</label>
                 </div>
               </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Default Pay Periods per Month</label>
+                <input type="number" class="form-control" value="2">
+              </div>
             </div>
           </div>
           <button class="btn btn-green">Save Settings</button>
@@ -610,7 +618,7 @@
       <!-- Unified High-Fidelity Pagination Bar -->
       <div class="d-flex justify-content-between align-items-center p-3 border-top"
         style="font-size:13px;color:var(--gray-500);">
-        <span>Showing 1 to 8 of 18 advances</span>
+        <span>Showing 1 to 5 of 5 advances</span>
         <div class="d-flex align-items-center gap-3">
           <div class="d-flex align-items-center gap-2">
             <span>10 per page</span>
@@ -620,10 +628,7 @@
             <ul class="pagination pagination-sm mb-0 align-items-center gap-1">
               <li class="page-item disabled"><a class="page-link border-0 bg-transparent text-muted">‹</a></li>
               <li class="page-item"><a class="page-link border-0 rounded-2 bg-light text-dark fw-bold px-3">1</a></li>
-
-              <li class="page-item disabled"><span class="px-1 text-muted">...</span></li>
-
-              <li class="page-item"><a class="page-link border-0 bg-transparent text-muted">›</a></li>
+              <li class="page-item disabled"><a class="page-link border-0 bg-transparent text-muted">›</a></li>
             </ul>
           </nav>
         </div>
@@ -634,12 +639,12 @@
     <div class="row g-4">
       <div class="col-lg-6">
         <div class="panel p-4" style="min-height:330px;">
-          <h2 class="bottom-panel-title">Advance Summary by Department</h2>
+          <h2 class="bottom-panel-title">Advance Summary by Location</h2>
           <div class="table-responsive">
             <table class="nexa-table summary-table">
               <thead>
                 <tr>
-                  <th>Department</th>
+                  <th>Location</th>
                   <th class="text-end">Total Advanced</th>
                   <th class="text-end">Repaid</th>
                   <th class="text-end">Outstanding</th>
@@ -648,46 +653,32 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><span class="badge-dept providers">Providers</span></td>
-                  <td class="text-end fw-semibold">$15,500.00</td>
-                  <td class="text-end">$10,200.00</td>
-                  <td class="text-end fw-semibold" style="color:#ea580c;">$5,300.00</td>
-                  <td class="text-end">6</td>
+                  <td><span class="badge-dept">Fort Lauderdale</span></td>
+                  <td class="text-end fw-semibold">$6,200.00</td>
+                  <td class="text-end">$4,700.00</td>
+                  <td class="text-end fw-semibold" style="color:#ea580c;">$1,500.00</td>
+                  <td class="text-end">2</td>
                 </tr>
                 <tr>
-                  <td><span class="badge-dept sales">Sales</span></td>
-                  <td class="text-end fw-semibold">$6,100.00</td>
-                  <td class="text-end">$4,050.00</td>
-                  <td class="text-end fw-semibold" style="color:#ea580c;">$2,050.00</td>
-                  <td class="text-end">5</td>
+                  <td><span class="badge-dept">Boca Raton</span></td>
+                  <td class="text-end fw-semibold">$6,500.00</td>
+                  <td class="text-end">$4,100.00</td>
+                  <td class="text-end fw-semibold" style="color:#ea580c;">$2,400.00</td>
+                  <td class="text-end">2</td>
                 </tr>
                 <tr>
-                  <td><span class="badge-dept operations">Operations</span></td>
-                  <td class="text-end fw-semibold">$500.00</td>
-                  <td class="text-end">$0.00</td>
-                  <td class="text-end fw-semibold" style="color:#ea580c;">$500.00</td>
-                  <td class="text-end">1</td>
-                </tr>
-                <tr>
-                  <td><span class="badge-dept lab">Lab</span></td>
-                  <td class="text-end fw-semibold">$800.00</td>
-                  <td class="text-end">$400.00</td>
-                  <td class="text-end fw-semibold" style="color:#ea580c;">$400.00</td>
-                  <td class="text-end">1</td>
-                </tr>
-                <tr>
-                  <td><span class="badge-dept marketing">Marketing</span></td>
-                  <td class="text-end fw-semibold">$750.00</td>
-                  <td class="text-end">$750.00</td>
-                  <td class="text-end fw-semibold" style="color:#00a878;">$0.00</td>
+                  <td><span class="badge-dept">Miami</span></td>
+                  <td class="text-end fw-semibold">$2,800.00</td>
+                  <td class="text-end">$1,400.00</td>
+                  <td class="text-end fw-semibold" style="color:#ea580c;">$1,400.00</td>
                   <td class="text-end">1</td>
                 </tr>
                 <tr class="border-top" style="background:#fafafa;">
                   <td class="fw-bold text-uppercase" style="font-size:11px;">Total</td>
-                  <td class="text-end fw-bold text-success" style="color:#00a878;">$23,650.00</td>
-                  <td class="text-end fw-bold text-success" style="color:#00a878;">$15,400.00</td>
-                  <td class="text-end fw-bold text-success" style="color:#00a878;">$8,250.00</td>
-                  <td class="text-end fw-bold text-success" style="color:#00a878;">14</td>
+                  <td class="text-end fw-bold text-success" style="color:#00a878;">$15,500.00</td>
+                  <td class="text-end fw-bold text-success" style="color:#00a878;">$10,200.00</td>
+                  <td class="text-end fw-bold text-success" style="color:#00a878;">$5,300.00</td>
+                  <td class="text-end fw-bold text-success" style="color:#00a878;">5</td>
                 </tr>
               </tbody>
             </table>
@@ -702,7 +693,7 @@
             <table class="nexa-table summary-table align-middle">
               <thead>
                 <tr>
-                  <th>Staff</th>
+                  <th>Provider</th>
                   <th>Activity Type</th>
                   <th class="text-end">Amount</th>
                   <th class="text-end">Date &amp; Time</th>
@@ -719,49 +710,46 @@
                   </td>
                   <td><span class="badge-status repaid" style="font-size:10.5px; padding:2px 8px;">Advance Repaid</span>
                   </td>
-                  <td class="text-end fw-bold" style="color:var(--gray-900);">$1,500.00</td>
+                  <td class="text-end fw-bold" style="color:var(--gray-900);">$3,000.00</td>
                   <td class="text-end text-muted" style="font-size:11.5px;">Apr 2, 2026 <span class="ms-1"
                       style="font-size:10.5px; opacity:0.7;">9:15 AM</span></td>
                 </tr>
                 <tr>
                   <td>
                     <div class="d-flex align-items-center gap-2">
-                      <img class="avatar-sm" style="width:24px; height:24px;"
-                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80">
-                      <span class="fw-semibold" style="color:var(--gray-900);">Jeremiah Smith</span>
+                      <div class="avatar-initial" style="width:24px;height:24px;font-size:10px;">DS</div>
+                      <span class="fw-semibold" style="color:var(--gray-900);">Dr. Safa</span>
                     </div>
                   </td>
-                  <td><span class="badge-status partial" style="font-size:10.5px; padding:2px 8px;">Partial
-                      Repayment</span></td>
-                  <td class="text-end fw-bold" style="color:var(--gray-900);">$375.00</td>
+                  <td><span class="badge-status repaid" style="font-size:10.5px; padding:2px 8px;">Advance Repaid</span>
+                  </td>
+                  <td class="text-end fw-bold" style="color:var(--gray-900);">$3,200.00</td>
                   <td class="text-end text-muted" style="font-size:11.5px;">Apr 2, 2026 <span class="ms-1"
                       style="font-size:10.5px; opacity:0.7;">9:10 AM</span></td>
                 </tr>
                 <tr>
                   <td>
                     <div class="d-flex align-items-center gap-2">
-                      <img class="avatar-sm" style="width:24px; height:24px;"
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80">
-                      <span class="fw-semibold" style="color:var(--gray-900);">Nancy Johnson</span>
+                      <div class="avatar-initial" style="width:24px;height:24px;font-size:10px;">DN</div>
+                      <span class="fw-semibold" style="color:var(--gray-900);">Dr. Nancy</span>
                     </div>
                   </td>
-                  <td><span class="badge-status active" style="font-size:10.5px; padding:2px 8px;">Advance
-                      Created</span></td>
-                  <td class="text-end fw-bold" style="color:var(--gray-900);">$500.00</td>
+                  <td><span class="badge-status partial" style="font-size:10.5px; padding:2px 8px;">Partial
+                      Repayment</span></td>
+                  <td class="text-end fw-bold" style="color:var(--gray-900);">$700.00</td>
                   <td class="text-end text-muted" style="font-size:11.5px;">Apr 1, 2026 <span class="ms-1"
                       style="font-size:10.5px; opacity:0.7;">4:22 PM</span></td>
                 </tr>
                 <tr>
                   <td>
                     <div class="d-flex align-items-center gap-2">
-                      <img class="avatar-sm" style="width:24px; height:24px;"
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80">
-                      <span class="fw-semibold" style="color:var(--gray-900);">Joshua Lee</span>
+                      <div class="avatar-initial" style="width:24px;height:24px;font-size:10px;">DS</div>
+                      <span class="fw-semibold" style="color:var(--gray-900);">Dr. Silvina</span>
                     </div>
                   </td>
-                  <td><span class="badge-status repaid" style="font-size:10.5px; padding:2px 8px;">Advance Repaid</span>
-                  </td>
-                  <td class="text-end fw-bold" style="color:var(--gray-900);">$1,500.00</td>
+                  <td><span class="badge-status partial" style="font-size:10.5px; padding:2px 8px;">Partial
+                      Repayment</span></td>
+                  <td class="text-end fw-bold" style="color:var(--gray-900);">$600.00</td>
                   <td class="text-end text-muted" style="font-size:11.5px;">Apr 1, 2026 <span class="ms-1"
                       style="font-size:10.5px; opacity:0.7;">4:20 PM</span></td>
                 </tr>
@@ -802,24 +790,21 @@
           <form id="addAdvanceForm">
             <div class="row g-3">
               <div class="col-md-6">
-                <label class="form-label">Staff</label>
+                <label class="form-label">Provider</label>
                 <select class="form-select" id="advanceEmployee">
                   <option>Dr. Heider</option>
                   <option>Dr. Vanessa</option>
-                  <option>Jeremiah Smith</option>
-                  <option>Joshua Lee</option>
-                  <option>Nancy Johnson</option>
-                  <option>Bianca Torres</option>
+                  <option>Dr. Nancy</option>
+                  <option>Dr. Safa</option>
+                  <option>Dr. Silvina</option>
                 </select>
               </div>
               <div class="col-md-6">
-                <label class="form-label">Department</label>
-                <select class="form-select" id="advanceDepartment">
-                  <option>Providers</option>
-                  <option>Sales</option>
-                  <option>Operations</option>
-                  <option>Lab</option>
-                  <option>Marketing</option>
+                <label class="form-label">Location</label>
+                <select class="form-select" id="advanceLocation">
+                  <option>Fort Lauderdale</option>
+                  <option>Boca Raton</option>
+                  <option>Miami</option>
                 </select>
               </div>
               <div class="col-md-6">
@@ -830,6 +815,30 @@
                 <label class="form-label">Advance Amount</label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" id="advanceAmount" value="0"></div>
               </div>
+
+              <div class="col-12">
+                <button type="button" class="btn btn-sm btn-outline-navy" id="toggleCalcBtn" onclick="toggleAdvanceCalc()">
+                  <i class="fa-solid fa-calculator me-1"></i>Calculate from Daily Rate &times; Clinical Days
+                </button>
+              </div>
+              <div class="col-12 dynamic-fields" id="advanceCalcFields" style="display:none;background:#f7f8fa;border:1px dashed #dbe1e8;border-radius:9px;padding:14px;">
+                <div class="row g-2 align-items-end">
+                  <div class="col-4">
+                    <label class="form-label">Daily Rate</label>
+                    <div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" id="calcDailyRate" value="650" oninput="recalcAdvanceAmount()"></div>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label">Clinical Days</label>
+                    <input type="number" class="form-control" id="calcClinicalDays" value="3" oninput="recalcAdvanceAmount()">
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label">Pay Periods</label>
+                    <input type="number" class="form-control" id="calcPayPeriods" value="2" oninput="recalcAdvanceAmount()">
+                  </div>
+                </div>
+                <div class="rate-note text-muted mt-2" style="font-size:11px;">Advance Amount = Daily Rate &times; Clinical Days &times; Pay Periods. Updates the field above automatically.</div>
+              </div>
+
               <div class="col-md-6">
                 <label class="form-label">Repaid Amount</label>
                 <div class="input-group"><span class="input-group-text">$</span><input type="number" class="form-control" id="advanceRepaid" value="0"></div>
@@ -869,9 +878,23 @@
       el.classList.add('active');
     }
 
+    // ── Add Advance modal: optional Daily Rate × Clinical Days × Pay Periods calculator ──
+    function toggleAdvanceCalc() {
+      const box = document.getElementById('advanceCalcFields');
+      const show = box.style.display === 'none';
+      box.style.display = show ? 'block' : 'none';
+      if (show) recalcAdvanceAmount();
+    }
+    function recalcAdvanceAmount() {
+      const rate = parseFloat(document.getElementById('calcDailyRate').value) || 0;
+      const days = parseFloat(document.getElementById('calcClinicalDays').value) || 0;
+      const periods = parseFloat(document.getElementById('calcPayPeriods').value) || 0;
+      document.getElementById('advanceAmount').value = (rate * days * periods).toFixed(2);
+    }
+
     document.getElementById('saveAdvanceBtn')?.addEventListener('click', () => {
       const employee = document.getElementById('advanceEmployee').value;
-      const department = document.getElementById('advanceDepartment').value;
+      const location = document.getElementById('advanceLocation').value;
       const date = document.getElementById('advanceDate').value;
       const amount = parseFloat(document.getElementById('advanceAmount').value) || 0;
       const repaid = parseFloat(document.getElementById('advanceRepaid').value) || 0;
@@ -886,10 +909,10 @@
       row.innerHTML = `
         <td>
           <div class="d-flex align-items-center gap-2"><div class="avatar-sm"></div>
-            <div><span class="emp-name">${employee}</span><small class="emp-id">${department.substring(0, 3).toUpperCase()}-NEW</small></div>
+            <div><span class="emp-name">${employee}</span><small class="emp-id">PROV-NEW</small></div>
           </div>
         </td>
-        <td><span class="badge-dept ${department.toLowerCase()}">${department}</span></td>
+        <td><span class="badge-dept">${location}</span></td>
         <td>${moment(date).format('MMM D, YYYY')}</td>
         <td class="fw-semibold">$${amount.toFixed(2)}</td>
         <td>$${repaid.toFixed(2)}</td>
@@ -902,6 +925,7 @@
       tbody.prepend(row);
       bootstrap.Modal.getInstance(document.getElementById('addAdvanceModal')).hide();
       document.getElementById('addAdvanceForm').reset();
+      document.getElementById('advanceCalcFields').style.display = 'none';
     });
 
     $(function () {
@@ -916,11 +940,74 @@
     });
 
     /* ==========================================================
+       RECONCILIATION TAB
+       Advance Amount = Daily Rate × Clinical Days × Pay Periods
+       Production Earned = Cosmetic Case Pay + General Dentistry Earned
+       Net = Production Earned − Advance Amount
+         Net ≥ 0 → owed to provider ; Net < 0 → still outstanding
+       ========================================================== */
+    const RECON_PROVIDERS = [
+      { name: 'Dr. Heider', id: 'r1', dailyRate: 650, clinicalDays: 3, payPeriods: 2, cosmeticPay: 5000, genDentistry: 560 },
+      { name: 'Dr. Vanessa', id: 'r2', dailyRate: 650, clinicalDays: 4, payPeriods: 2, cosmeticPay: 4200, genDentistry: 300 },
+      { name: 'Dr. Nancy', id: 'r3', dailyRate: 600, clinicalDays: 3, payPeriods: 2, cosmeticPay: 3800, genDentistry: 250 },
+      { name: 'Dr. Safa', id: 'r4', dailyRate: 650, clinicalDays: 2, payPeriods: 2, cosmeticPay: 2600, genDentistry: 180 },
+      { name: 'Dr. Silvina', id: 'r5', dailyRate: 650, clinicalDays: 3, payPeriods: 2, cosmeticPay: 3000, genDentistry: 220 }
+    ];
+
+    function fmt(n) {
+      return '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function renderReconTable() {
+      const body = document.getElementById('reconTableBody');
+      if (!body) return;
+      body.innerHTML = RECON_PROVIDERS.map(p => `
+        <tr>
+          <td class="fw-semibold">${p.name}</td>
+          <td><div class="input-group input-group-sm" style="width:100px;"><span class="input-group-text">$</span>
+            <input type="number" class="form-control" id="${p.id}-rate" value="${p.dailyRate}" oninput="recalcReconRow('${p.id}')"></div></td>
+          <td><input type="number" class="form-control" style="width:70px;" id="${p.id}-days" value="${p.clinicalDays}" oninput="recalcReconRow('${p.id}')"></td>
+          <td><input type="number" class="form-control" style="width:70px;" id="${p.id}-periods" value="${p.payPeriods}" oninput="recalcReconRow('${p.id}')"></td>
+          <td class="fw-bold" id="${p.id}-advance">—</td>
+          <td><div class="input-group input-group-sm" style="width:110px;"><span class="input-group-text">$</span>
+            <input type="number" class="form-control" id="${p.id}-cosmetic" value="${p.cosmeticPay}" oninput="recalcReconRow('${p.id}')"></div></td>
+          <td><div class="input-group input-group-sm" style="width:100px;"><span class="input-group-text">$</span>
+            <input type="number" class="form-control" id="${p.id}-gendent" value="${p.genDentistry}" oninput="recalcReconRow('${p.id}')"></div></td>
+          <td class="fw-bold" id="${p.id}-production">—</td>
+          <td id="${p.id}-net">—</td>
+        </tr>
+      `).join('');
+      RECON_PROVIDERS.forEach(p => recalcReconRow(p.id));
+    }
+
+    function recalcReconRow(id) {
+      const rate = parseFloat(document.getElementById(id + '-rate').value) || 0;
+      const days = parseFloat(document.getElementById(id + '-days').value) || 0;
+      const periods = parseFloat(document.getElementById(id + '-periods').value) || 0;
+      const cosmetic = parseFloat(document.getElementById(id + '-cosmetic').value) || 0;
+      const gendent = parseFloat(document.getElementById(id + '-gendent').value) || 0;
+
+      const advance = rate * days * periods;
+      const production = cosmetic + gendent;
+      const net = production - advance;
+
+      document.getElementById(id + '-advance').textContent = fmt(advance);
+      document.getElementById(id + '-production').textContent = fmt(production);
+
+      const netEl = document.getElementById(id + '-net');
+      if (net >= 0) {
+        netEl.innerHTML = `<span class="net-owed">+${fmt(net)} owed</span>`;
+      } else {
+        netEl.innerHTML = `<span class="net-outstanding">${fmt(Math.abs(net))} outstanding</span>`;
+      }
+    }
+
+    /* ==========================================================
        KPI CARD DETAIL — Advances Overview
        ========================================================== */
     function openAdvanceKpiDetail(idx) {
       const titles = ['Total Advances', 'Total Repaid', 'Outstanding Balance', 'Active Advances', 'Avg. Advance Amount'];
-      const icons = ['fa-wallet', 'fa-arrow-rotate-left', 'fa-lock', 'fa-users', 'fa-calculator'];
+      const icons = ['fa-wallet', 'fa-arrow-rotate-left', 'fa-lock', 'fa-user-doctor', 'fa-calculator'];
       const body = document.getElementById('advanceDetailModalBody');
       const modalTitle = document.querySelector('#advanceDetailModal .modal-title');
       const modalSubtitle = document.querySelector('#advanceDetailModal .modal-subtitle');
@@ -929,94 +1016,74 @@
       modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
 
       const views = [
-        // 0 — Total Advances (with Provider logic explanation)
+        // 0 — Total Advances
         `<div class="panel" style="border:none;box-shadow:none;">
-          <h5 class="fw-bold mb-3">Total Advances — $42,350.00</h5>
+          <h5 class="fw-bold mb-3">Total Advances — $15,500.00</h5>
           <div class="alert alert-info d-flex align-items-start gap-3 p-3 mb-3" role="alert" style="font-size:13px;border-radius:10px;">
             <i class="fa-solid fa-lightbulb mt-1" style="color:#2563eb;"></i>
             <div>
               <strong>How Provider Advances Work:</strong><br>
-              Providers are fronted <strong>$650/day</strong> for their scheduled days. For example, if a provider is scheduled 3 days per bi-weekly period:
+              Providers are fronted a daily advance for their scheduled clinical days. For example, if a provider is scheduled 3 days per bi-weekly pay period at $650/day:
               <div class="mt-2 p-2 bg-white rounded-2" style="font-size:12.5px;">
-                <div class="d-flex justify-content-between"><span>Scheduled Days</span><strong>3</strong></div>
+                <div class="d-flex justify-content-between"><span>Clinical Days</span><strong>3</strong></div>
                 <div class="d-flex justify-content-between"><span>Daily Rate</span><strong>$650</strong></div>
                 <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-bold"><span>Bi-Weekly Advance</span><strong>$1,950</strong></div>
-                <div class="d-flex justify-content-between fw-bold text-primary"><span>Monthly Advance (×2)</span><strong>$3,900</strong></div>
+                <div class="d-flex justify-content-between fw-bold text-primary"><span>Monthly Advance (×2 pay periods)</span><strong>$3,900</strong></div>
               </div>
             </div>
           </div>
-          <h5 class="fw-bold mb-3">By Department</h5>
+          <h5 class="fw-bold mb-3">By Location</h5>
           <div class="detail-breakdown-box">
-            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>$15,500.00</strong></div>
-            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong>$6,100.00</strong></div>
-            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong>$500.00</strong></div>
-            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>$800.00</strong></div>
-            <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>$750.00</strong></div>
-            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>$23,650.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Fort Lauderdale</span><strong>$6,200.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Boca Raton</span><strong>$6,500.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Miami</span><strong>$2,800.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>$15,500.00</strong></div>
           </div>
-          <div class="text-muted small mt-2">*Main table shows $42,350 total (includes prior period carry-over). Department summary reflects current period only.</div>
         </div>`,
         // 1 — Total Repaid
         `<div class="panel" style="border:none;box-shadow:none;">
-          <h5 class="fw-bold mb-3">Total Repaid — $28,150.00</h5>
+          <h5 class="fw-bold mb-3">Total Repaid — $10,200.00</h5>
           <div class="detail-breakdown-box">
-            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>$10,200.00</strong></div>
-            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong>$4,050.00</strong></div>
-            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong>$0.00</strong></div>
-            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>$400.00</strong></div>
-            <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>$750.00</strong></div>
-            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Repaid</span><strong>$15,400.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Fort Lauderdale</span><strong>$4,700.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Boca Raton</span><strong>$4,100.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Miami</span><strong>$1,400.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Repaid</span><strong>$10,200.00</strong></div>
           </div>
-          <div class="text-success small mt-2">Repayment rate: 65.1% of total advances repaid</div>
+          <div class="text-success small mt-2">Repayment rate: 65.8% of total advances repaid</div>
         </div>`,
-        // 2 — Outstanding Balance (with Provider reconciliation logic)
+        // 2 — Outstanding Balance
         `<div class="panel" style="border:none;box-shadow:none;">
-          <h5 class="fw-bold mb-3">Outstanding Balance — $14,200.00</h5>
+          <h5 class="fw-bold mb-3">Outstanding Balance — $5,300.00</h5>
           <div class="alert alert-warning d-flex align-items-start gap-3 p-3 mb-3" role="alert" style="font-size:13px;border-radius:10px;">
             <i class="fa-solid fa-calculator mt-1" style="color:#d97706;"></i>
             <div>
-              <strong>Reconciliation Logic (Providers):</strong><br>
-              At month-end, we reconcile case production vs. advances fronted.
-              <div class="mt-2 p-2 bg-white rounded-2" style="font-size:12.5px;">
-                <div class="d-flex justify-content-between"><span>Total Advanced (Month)</span><strong style="color:#ea580c;">$3,900.00</strong></div>
-                <div class="d-flex justify-content-between"><span>Case Pay + General Work Earned</span><strong style="color:#059669;">$7,500.00</strong></div>
-                <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-bold" style="border-top-color:#059669!important;"><span>Extra Owed to Provider</span><strong style="color:#059669;">$3,600.00 ✅</strong></div>
-              </div>
-              <div class="mt-2 p-2 bg-white rounded-2" style="font-size:12.5px;">
-                <div class="d-flex justify-content-between"><span>Total Advanced</span><strong style="color:#ea580c;">$3,900.00</strong></div>
-                <div class="d-flex justify-content-between"><span>Production Earned</span><strong style="color:#059669;">$2,800.00</strong></div>
-                <div class="d-flex justify-content-between border-top pt-1 mt-1 fw-bold"><span>Status</span><strong style="color:#d97706;">$1,100 Away from Caught Up</strong></div>
-              </div>
-              <div class="mt-2 text-muted fst-italic">If production > advances → extra money owed. If advances > production → still catching up.</div>
+              <strong>Reconciliation Logic:</strong><br>
+              Advance Amount = Daily Advance Rate &times; Clinical Days &times; Pay Periods, compared against Production Earned (Cosmetic Case Pay + General Dentistry Earned).
+              If production exceeds the advance, the difference is <span class="net-owed">owed to the provider</span>. If the advance exceeds production, the remainder stays <span class="net-outstanding">outstanding</span>.
+              See the full per-provider breakdown on the <strong>Reconciliation</strong> tab.
             </div>
           </div>
           <div class="detail-breakdown-box">
-            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong style="color:#ea580c;">$5,300.00</strong></div>
-            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong style="color:#ea580c;">$2,050.00</strong></div>
-            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong style="color:#ea580c;">$500.00</strong></div>
-            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong style="color:#ea580c;">$400.00</strong></div>
-            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Outstanding</span><strong style="color:#ea580c;">$8,250.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Fort Lauderdale</span><strong style="color:#ea580c;">$1,500.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Boca Raton</span><strong style="color:#ea580c;">$2,400.00</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Miami</span><strong style="color:#ea580c;">$1,400.00</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Outstanding</span><strong style="color:#ea580c;">$5,300.00</strong></div>
           </div>
         </div>`,
         // 3 — Active Advances
         `<div class="panel" style="border:none;box-shadow:none;">
-          <h5 class="fw-bold mb-3">Active Advances — 18 Team Members</h5>
+          <h5 class="fw-bold mb-3">Active Advances — 5 Providers</h5>
           <div class="detail-breakdown-box">
-            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>6 advances</strong></div>
-            <div class="detail-breakdown-row"><span>🎧 Sales / ISR</span><strong>5 advances</strong></div>
-            <div class="detail-breakdown-row"><span>🏢 Operations</span><strong>1 advance</strong></div>
-            <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>1 advance</strong></div>
-            <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>1 advance</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Fort Lauderdale</span><strong>2 providers</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Boca Raton</span><strong>2 providers</strong></div>
+            <div class="detail-breakdown-row"><span>📍 Miami</span><strong>1 provider</strong></div>
           </div>
           <div class="mt-3 p-3 bg-light rounded-3">
             <div class="d-flex justify-content-between mb-1">
-              <span>🟢 Fully Repaid</span><strong>3</strong>
-            </div>
-            <div class="d-flex justify-content-between mb-1">
-              <span>🟡 Partially Repaid</span><strong>4</strong>
+              <span>🟢 Fully Repaid</span><strong>2</strong>
             </div>
             <div class="d-flex justify-content-between">
-              <span>🔴 Active (No Repayment Yet)</span><strong>1</strong>
+              <span>🟡 Partially Repaid</span><strong>3</strong>
             </div>
           </div>
         </div>`,
@@ -1024,19 +1091,21 @@
         `<div class="panel" style="border:none;box-shadow:none;">
           <h5 class="fw-bold mb-3">Average Advance Detail</h5>
           <div class="detail-breakdown-box">
-            <div class="detail-breakdown-row"><span>💰 Avg. Advance Amount</span><strong>$785.19</strong></div>
-            <div class="detail-breakdown-row"><span>📊 Median Advance</span><strong>$750.00</strong></div>
-            <div class="detail-breakdown-row"><span>📈 Highest Advance</span><strong>$3,000.00</strong></div>
-            <div class="detail-breakdown-row"><span>📉 Lowest Advance</span><strong>$300.00</strong></div>
-            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Advances (Count)</span><strong>54</strong></div>
+            <div class="detail-breakdown-row"><span>💰 Avg. Advance Amount</span><strong>$3,100.00</strong></div>
+            <div class="detail-breakdown-row"><span>📊 Median Advance</span><strong>$3,000.00</strong></div>
+            <div class="detail-breakdown-row"><span>📈 Highest Advance</span><strong>$3,500.00 (Dr. Silvina)</strong></div>
+            <div class="detail-breakdown-row"><span>📉 Lowest Advance</span><strong>$2,800.00 (Dr. Nancy)</strong></div>
+            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Advances (Count)</span><strong>5</strong></div>
           </div>
-          <div class="text-muted small mt-2">Provider avg: $1,550 • Sales/ISR avg: $750 • Other avg: $450</div>
+          <div class="text-muted small mt-2">Based on the 5 active provider advances this period.</div>
         </div>`
       ];
       body.innerHTML = views[idx] || views[0];
       const modal = new bootstrap.Modal(document.getElementById('advanceDetailModal'));
       modal.show();
     }
+
+    document.addEventListener('DOMContentLoaded', renderReconTable);
   </script>
 
   <!-- Advance Detail Modal -->

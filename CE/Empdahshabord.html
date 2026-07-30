@@ -150,7 +150,7 @@
 
     <!-- ═══ KPI ROW ═══ -->
     <div class="kpi-row mb-3">
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Hourly Rate', '$18.00', 'Your current hourly pay rate. This is the base rate used to calculate regular pay before any overtime or bonuses.', 'fa-money-bill-wave', '#dbeafe', '#1e40af')" style="cursor:pointer;">
         <div class="row g-0 align-items-center">
           <div class="col-3">
             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i>
@@ -162,7 +162,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Regular Pay', '$2,880', 'Your total earnings based on base hours worked (160 hrs × $18.00/hr). Excludes overtime and adjustments.', 'fa-receipt', '#ede9fe', '#6d28d9')" style="cursor:pointer;">
         <div class="row g-0 align-items-center">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-receipt"></i></div>
@@ -174,18 +174,18 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('spiffs', '$0.00', 'Special incentives or bonuses awarded for meeting certain performance criteria.', 'fa-gift', '#f0f9ff', '#0ea5e9')" style="cursor:pointer;">
         <div class="row g-0 align-items-center">
           <div class="col-3">
-            <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-bolt"></i></div>
+            <div class="kpi-icon" style="background:#f0f9ff;color:#0ea5e9;"><i class="fa-solid fa-gift"></i></div>
           </div>
           <div class="col-9">
-            <div class="kpi-label">Overtime</div>
+            <div class="kpi-label">spiffs</div>
             <div class="kpi-value">$0.00</div>
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Total Pay', '$2,880', 'Your total compensation for this pay period including regular pay, overtime, and any adjustments.', 'fa-circle-check', '#ecfdf5', '#059669')" style="cursor:pointer;">
         <div class="row g-0 align-items-center">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -319,7 +319,7 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">Assistant Payroll</h2>
-              <div class="panel-sub">Compensation model: Hourly • Manual entry for now</div>
+              <div class="panel-sub">Compensation model: Hourly </div>
             </div>
             <span class="badge-comp hourly">Hourly</span>
           </div>
@@ -328,7 +328,7 @@
               <div class="payroll-summary-header">
                 <div>
                   <div class="small text-muted mb-1">Data source</div>
-                  <div class="fw-semibold">Manual entry for now, with future time clock/timesheet integration.</div>
+                  <!-- <div class="fw-semibold">Manual entry for now, with future time clock/timesheet integration.</div> -->
                 </div>
               </div>
               <div class="payroll-stat-grid mt-3">
@@ -375,6 +375,39 @@
   </div>
   <!-- /main -->
 
+  <!-- ─── KPI DETAIL MODAL ─── -->
+  <div class="modal fade" id="kpiDetailModal" tabindex="-1" aria-labelledby="kpiModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius:14px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+        <div class="modal-header" style="border-bottom:1px solid var(--gray-100);padding:20px 24px;">
+          <div class="d-flex align-items-center gap-3">
+            <div class="kpi-icon" id="kpiModalIcon" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid" id="kpiModalIconTag" style="font-size:18px;"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold" id="kpiModalLabel" style="font-size:16px;margin:0;">Title</h5>
+              <div class="text-muted" style="font-size:12px;">KPI Detail</div>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="padding:24px;">
+          <div class="mb-4">
+            <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Current Value</div>
+            <div class="fw-bold" id="kpiModalValue" style="font-size:32px;color:var(--navy-900);">$0.00</div>
+          </div>
+          <div>
+            <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Description</div>
+            <p id="kpiModalDesc" style="font-size:14px;color:var(--gray-700);line-height:1.6;margin:0;">Description here</p>
+          </div>
+        </div>
+        <div class="modal-footer" style="border-top:1px solid var(--gray-100);padding:16px 24px;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background:var(--gray-100);color:var(--gray-700);border:none;font-weight:600;padding:8px 20px;border-radius:8px;font-size:13px;">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ─── SCRIPTS ─── -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js">
   </script>
@@ -387,10 +420,25 @@
 
   <script src="../js/javescript.js"></script>
 
-  <!-- <script>
-    // ─── DATE RANGE PICKER ───
-  
-  </script> -->
+  <script>
+    // ─── KPI MODAL ───
+    function openKPIModal(title, value, description, icon, bgColor, iconColor) {
+      document.getElementById('kpiModalLabel').textContent = title;
+      document.getElementById('kpiModalValue').textContent = value;
+      document.getElementById('kpiModalDesc').textContent = description;
+
+      const iconContainer = document.getElementById('kpiModalIcon');
+      iconContainer.style.background = bgColor;
+      iconContainer.style.color = iconColor;
+
+      const iconTag = document.getElementById('kpiModalIconTag');
+      iconTag.className = 'fa-solid ' + icon;
+      iconTag.style.color = iconColor;
+
+      const modal = new bootstrap.Modal(document.getElementById('kpiDetailModal'));
+      modal.show();
+    }
+  </script>
 
 </body>
 

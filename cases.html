@@ -286,53 +286,23 @@
       </div>
 
       <div class="col-lg-3">
-
-
-        <div class="panel panel-body" id="caseDetail">
-          <div class="row">
-            <div class="col-6">
-              <div class="section-label">Case Details</div>
-            </div>
-            <div class="col-6 text-end"><i class="fa fa-close" aria-hidden="true"></i></div>
-          </div><span class="badge-status active mb-1 d-inline-block">Completed</span>
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <div>
-              <h3 style="font-size:16px;font-weight:800;margin:0;">CASE-20260331-001</h3>
-            </div>
-            <a href="new-case.html" class="btn btn-sm btn-outline-navy">View Full</a>
+        <div class="panel panel-body" id="caseDetail" style="max-height:80vh;overflow-y:auto;position:sticky;top:20px;">
+          <div id="caseDetailPlaceholder" style="text-align:center;padding:40px 16px;color:var(--gray-500);">
+            <i class="fa-solid fa-hand-pointer" style="font-size:32px;display:block;margin-bottom:12px;opacity:0.4;"></i>
+            <div style="font-weight:600;">Select a Case</div>
+            <div style="font-size:12px;">Click any row in the table to view its details.</div>
           </div>
-
-          <div class="d-flex align-items-end gap-2 mb-3">
-            <div class="avatar-sm">MG</div>
-            <div>
-              <div class="fw-semibold small">Maria Garcia</div>
-              <!-- <div class="text-muted" style="font-size:11px;">(954) 555-1122</div> -->
+          <div id="caseDetailContent" style="display:none;">
+            <div class="row mb-2">
+              <div class="col-6">
+                <div class="section-label">Case Details</div>
+              </div>
+              <div class="col-6 text-end">
+                <i class="fa fa-close" onclick="closeCaseDetail()" style="cursor:pointer;color:var(--gray-500);" aria-hidden="true"></i>
+              </div>
             </div>
-            <div class="text-semibold small" style="font-size:11px;">Created: 03/31/2023</div>
-            <div class="text-semibold small" style="font-size:11px;">Completed: 04/15/2023</div>
+            <div id="caseDetailBody"></div>
           </div>
-          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Case Type</span><span
-              class="fw-semibold">Zirconia Veneer Case</span></div>
-          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Department</span><span
-              class="fw-semibold">Providers</span></div>
-          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Provider</span><span
-              class="fw-semibold">Dr. Heider</span></div>
-          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Treatment Value</span><span
-              class="fw-semibold">$14,050.00</span></div>
-          <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Units</span><span
-              class="fw-semibold">20</span></div>
-          <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Material</span><span
-              class="fw-semibold">Zirconia</span></div>
-          <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Location</span><span
-              class="fw-semibold">lofrim's</span></div>
-          <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Note</span><span
-              class="fw-semibold">null</span></div>
-          <div class="section-label" style="margin-top:0;">Compensation Impact</div>
-          <div class="impact-row"><span>Provider (Dr. Heider)</span><span class="impact-amt">$1,000.00</span></div>
-          <div class="impact-row"><span>Assistant pay</span><span class="impact-amt">$200.00</span></div>
-          <div class="impact-row"><span>ISR pay</span><span class="impact-amt">$200.00</span></div>
-          <div class="impact-row" style="border-top:1px solid; color:var(--green-600); font-weight:800;"><span>Total
-              Compensation</span><span class="impact-amt">$1,400.00</span></div>
         </div>
       </div>
     </div>
@@ -350,8 +320,9 @@
         ["CASE-20260327-001", "David Lee", "Crown (Single)", "Dr. Vanessa", "provider", "Consult", "warn", "$1,250.00", "2023-03-27"],
         ["CASE-20260327-002", "Samantha Green", "Composite Veneer Case", "Dr. Heider", "provider", "New", "inactive", "$5,200.00", "2023-03-27"],
       ];
-      document.getElementById('casesBody').innerHTML = cases.map(c => `
-  <tr>
+      function renderCasesTable() {
+        document.getElementById('casesBody').innerHTML = cases.map((c, i) => `
+  <tr onclick="showCaseDetail(${i})" style="cursor:pointer;">
     <td class="fw-semibold">${c[0]}</td>
     <td>${c[1]}</td>
     <td>${c[2]}</td>
@@ -362,6 +333,8 @@
     <td>${c[8]}</td>
   </tr>
 `).join('');
+      }
+      renderCasesTable();
     </script>
 
   </div>
@@ -782,8 +755,8 @@
           else c[6] = 'warn';
         }
       });
-      document.getElementById('casesBody').innerHTML = cases.map(c => `
-        <tr>
+      document.getElementById('casesBody').innerHTML = cases.map((c, i) => `
+        <tr onclick="showCaseDetail(${i})" style="cursor:pointer;">
           <td class="fw-semibold">${c[0]}</td>
           <td>${c[1]}</td>
           <td>${c[2]}</td>
@@ -796,8 +769,75 @@
       `).join('');
     }
 
-    /* ==========================================================
-       KPI CARD DETAIL — Cases Overview
+    /* ==========================================================       CASE DETAIL PANEL — Click row to view details on right
+       ========================================================= */
+    function showCaseDetail(idx) {
+      const c = cases[idx];
+      if (!c) return;
+      const bc = boardCases.find(b => b.id === c[0]);
+      const initials = c[1].split(' ').map(w => w[0]).join('').substring(0, 2);
+      const statusBadgeClass = c[6] || 'warn';
+      const statusText = c[5] || 'N/A';
+      // Derive a few extra fields for a richer view
+      const units = Math.floor(Math.random() * 15) + 5; // placeholder — real data would come from backend
+      const material = c[2].includes('Zirconia') ? 'Zirconia' : c[2].includes('Porcelain') ? 'Porcelain' : c[2].includes('Ceramic') ? 'Ceramic' : c[2].includes('Composite') ? 'Composite' : 'Various';
+      const location = 'Main Office';
+      const note = '—';
+
+      document.getElementById('caseDetailPlaceholder').style.display = 'none';
+      document.getElementById('caseDetailContent').style.display = '';
+
+      document.getElementById('caseDetailBody').innerHTML = `
+        <span class="badge-status ${statusBadgeClass} mb-1 d-inline-block">${statusText}</span>
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h3 style="font-size:16px;font-weight:800;margin:0;">${c[0]}</h3>
+          </div>
+          <div class="d-flex gap-1">
+            <button class="btn btn-sm btn-outline-navy" onclick="viewFullCase('${c[0]}')"><i class="fa-regular fa-eye"></i> View Full</button>
+            <button class="btn btn-sm btn-green" onclick="editCase('${c[0]}')" style="background:var(--green-500);border-color:var(--green-500);color:#fff;font-weight:600;font-size:12px;border-radius:6px;padding:4px 10px;"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div class="avatar-sm">${initials}</div>
+          <div>
+            <div class="fw-semibold small">${c[1]}</div>
+          </div>
+          <div class="text-muted small" style="font-size:11px;">Created: ${c[8]}</div>
+        </div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Case Type</span><span class="fw-semibold">${c[2]}</span></div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Department</span><span class="fw-semibold">Providers</span></div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Provider</span><span class="fw-semibold">${c[3]}</span></div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Treatment Value</span><span class="fw-semibold">${c[7]}</span></div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Units</span><span class="fw-semibold">${units}</span></div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Material</span><span class="fw-semibold">${material}</span></div>
+        <div class="d-flex justify-content-between mb-2 small"><span class="text-muted">Location</span><span class="fw-semibold">${location}</span></div>
+        <div class="d-flex justify-content-between mb-3 small"><span class="text-muted">Note</span><span class="fw-semibold">${note}</span></div>
+        <div class="section-label" style="margin-top:0;">Compensation Impact</div>
+        <div class="impact-row"><span>Provider (${c[3]})</span><span class="impact-amt">$1,000.00</span></div>
+    
+        <div class="impact-row" style="border-top:1px solid; color:var(--green-600); font-weight:800;"><span>Total Compensation</span><span class="impact-amt">$1,400.00</span></div>
+      `;
+    }
+
+    function closeCaseDetail() {
+      document.getElementById('caseDetailContent').style.display = 'none';
+      document.getElementById('caseDetailPlaceholder').style.display = '';
+    }
+
+    function viewFullCase(caseId) {
+      // Open a modal with full case details — re-use existing KPI modal approach or navigate
+      const bc = boardCases.find(b => b.id === caseId);
+      if (bc) {
+        alert('Viewing full details for: ' + caseId + ' — ' + bc.patient);
+      }
+    }
+
+    function editCase(caseId) {
+      window.location.href = 'new-case.html?edit=' + encodeURIComponent(caseId);
+    }
+
+    /* =========================================================       KPI CARD DETAIL — Cases Overview
        ========================================================== */
     function openCaseKpiDetail(idx) {
       const titles = ['Total Cases', 'Total Treatment Value', 'Average Case Value', 'Cases Started', 'Cases Completed'];
@@ -812,14 +852,8 @@
       const views = [
         // 0 — Total Cases
         `<div class="panel" style="border:none;box-shadow:none;">
-          <h5 class="fw-bold mb-3">Cases by Department</h5>
-          <div class="detail-breakdown-box">
-            <div class="detail-breakdown-row"><span>👨‍⚕️ Providers</span><strong>82</strong></div>
-            <div class="detail-breakdown-row"><span>🎧 ISR</span><strong>28</strong></div>
-            <div class="detail-breakdown-row"><span>🏢 Other</span><strong>16</strong></div>
-            <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total</span><strong>126</strong></div>
-          </div>
-          <h5 class="fw-bold mt-4 mb-3">By Status</h5>
+          
+          <h5 class="fw-bold mb-3">By Status</h5>
           <div class="detail-breakdown-box">
             <div class="detail-breakdown-row"><span>✅ Completed</span><strong>52</strong></div>
             <div class="detail-breakdown-row"><span>🔄 In Progress / Started</span><strong>46</strong></div>

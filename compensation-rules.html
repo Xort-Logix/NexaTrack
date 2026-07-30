@@ -124,17 +124,17 @@
           <div>
             <div class="kpi-label">Active Comp Plans</div>
             <div class="kpi-value">7</div>
-            <div class="kpi-delta">Across all roles</div>
+            <div class="kpi-delta">Click a plan to edit</div>
           </div>
         </div>
       </div>
       <div class="col-6 col-md-3 col-12">
-        <div class="kpi-card" role="button" tabindex="0" onclick="openCompKpiDetail(1)">
+        <div class="kpi-card" role="button" tabindex="0" onclick="window.location.href='team-members.html'">
           <div class="kpi-icon" style="background:#f3e8ff;color:#7e22ce;"><i class="fa-solid fa-user-group"></i></div>
           <div>
             <div class="kpi-label">Total Team Members</div>
             <div class="kpi-value">37</div>
-            <div class="kpi-delta">Covered by comp plans</div>
+            <div class="kpi-delta">Click to view all members →</div>
           </div>
         </div>
       </div>
@@ -650,6 +650,19 @@
       /* ==========================================================
          KPI CARD DETAIL — Compensation Rules
          ========================================================== */
+      function editPlanFromDetail(planId) {
+        const detailModal = bootstrap.Modal.getInstance(document.getElementById('compDetailModal'));
+        if (detailModal) detailModal.hide();
+        // Scroll the plan list into view
+        const planList = document.getElementById('planList');
+        if (planList) planList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Open the edit plan modal after a brief delay
+        setTimeout(() => {
+          const editModal = new bootstrap.Modal(document.getElementById('editPlanModal'));
+          editModal.show();
+        }, 350);
+      }
+
       function openCompKpiDetail(idx) {
         const titles = ['Active Comp Plans', 'Total Team Members', 'Monthly Payout (Est.)', 'Avg Payout / Member'];
         const icons = ['fa-clipboard-list', 'fa-user-group', 'fa-sack-dollar', 'fa-chart-simple'];
@@ -661,22 +674,22 @@
         modalSubtitle.innerText = 'Detailed breakdown of ' + titles[idx].toLowerCase();
 
         const views = [
-          // 0 — Active Comp Plans
+          // 0 — Active Comp Plans (clickable rows)
           `<div class="panel" style="border:none;box-shadow:none;">
             <h5 class="fw-bold mb-3">Active Comp Plans — 7</h5>
             <div class="detail-breakdown-box">
-              <div class="detail-breakdown-row"><span>👨‍⚕️ Doctors (Cosmetic & Gen)</span><strong>1 Plan</strong></div>
-              <div class="detail-breakdown-row"><span>🎧 ISR (Commission)</span><strong>1 Plan</strong></div>
-              <div class="detail-breakdown-row"><span>🎧 ISR (Flat Pay)</span><strong>1 Plan</strong></div>
-              <div class="detail-breakdown-row"><span>🎧 SDR</span><strong>1 Plan</strong></div>
-              <div class="detail-breakdown-row"><span>🎧 CE</span><strong>1 Plan</strong></div>
-              <div class="detail-breakdown-row"><span>🔬 Lab</span><strong>1 Plan</strong></div>
-              <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>1 Plan</strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('doctors')" title="Click to edit this plan"><span>👨‍⚕️ Doctors (Cosmetic & Gen)</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('isr-commission')" title="Click to edit this plan"><span>🎧 ISR (Commission)</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('isr-flat')" title="Click to edit this plan"><span>🎧 ISR (Flat Pay)</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('sdr')" title="Click to edit this plan"><span>🎧 SDR</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('ce')" title="Click to edit this plan"><span>🎧 CE</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('lab')" title="Click to edit this plan"><span>🔬 Lab</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
+              <div class="detail-breakdown-row" style="cursor:pointer;" onclick="editPlanFromDetail('marketing')" title="Click to edit this plan"><span>📢 Marketing</span><strong style="color:var(--green-600);">1 Plan <i class="fa-solid fa-pen-to-square ms-1" style="font-size:11px;"></i></strong></div>
               <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Active Plans</span><strong>7</strong></div>
             </div>
-            <div class="text-muted small mt-2">All roles have an active compensation plan</div>
+            <div class="text-muted small mt-2">Click any plan above to open and edit its details</div>
           </div>`,
-          // 1 — Total Team Members
+          // 1 — Total Team Members (inline now, KPI card redirects to team-members.html)
           `<div class="panel" style="border:none;box-shadow:none;">
             <h5 class="fw-bold mb-3">Total Team Members — 37</h5>
             <div class="detail-breakdown-box">
@@ -689,7 +702,7 @@
               <div class="detail-breakdown-row"><span>📢 Marketing</span><strong>1</strong></div>
               <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Total Members</span><strong>37</strong></div>
             </div>
-            <div class="text-muted small mt-2">All covered by active compensation plans</div>
+            <div class="text-muted small mt-2"><a href="team-members.html" class="text-decoration-none fw-semibold"><i class="fa-solid fa-arrow-right me-1"></i>View all team members</a></div>
           </div>`,
           // 2 — Monthly Payout
           `<div class="panel" style="border:none;box-shadow:none;">

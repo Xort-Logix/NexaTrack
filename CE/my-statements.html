@@ -147,7 +147,7 @@
 
         </div>
         <div class="kpi-row">
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('gross')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
                         class="fa-solid fa-wallet"></i></div>
                 <div>
@@ -155,7 +155,7 @@
                     <div class="kpi-value" id="grossKpi">$1,185.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('hours')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-regular fa-clock"></i>
                 </div>
                 <div>
@@ -163,7 +163,7 @@
                     <div class="kpi-value" id="hoursKpi">78.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('overtime')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
@@ -171,7 +171,7 @@
                     <div class="kpi-value" id="otKpi">2.00</div>
                 </div>
             </div>
-            <div class="kpi-card d-flex align-items-center gap-3">
+            <div class="kpi-card d-flex align-items-center gap-3" onclick="openStatementModal('deductions')" style="cursor:pointer;">
                 <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-circle-minus"></i>
                 </div>
                 <div>
@@ -490,6 +490,34 @@
         </div>
     </div>
 
+    <!-- ─── STATEMENT DETAIL MODAL ─── -->
+    <div class="modal fade" id="statementDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius:14px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+                <div class="modal-header" style="border-bottom:1px solid var(--gray-100);padding:20px 24px;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="kpi-icon" id="stmtModalIcon" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                            <i class="fa-solid" id="stmtModalIconTag" style="font-size:18px;"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title fw-bold" id="stmtModalLabel" style="font-size:16px;margin:0;">Title</h5>
+                            <div class="text-muted" style="font-size:12px;">Pay Period: May 1 – May 15, 2026</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding:24px;">
+                    <div class="table-responsive" id="stmtModalBody">
+                        <!-- Dynamic content loaded by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:1px solid var(--gray-100);padding:16px 24px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background:var(--gray-100);color:var(--gray-700);border:none;font-weight:600;padding:8px 20px;border-radius:8px;font-size:13px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FLAG PAYROLL MODAL -->
     <div class="modal fade" id="flagPayrollModal" tabindex="-1">
         <div class="modal-dialog">
@@ -525,6 +553,102 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // ─── STATEMENT DETAIL MODAL ───
+        function openStatementModal(type) {
+            const iconMap = {
+                gross: { icon: 'fa-wallet', bg: '#ecfdf5', color: '#059669', label: 'Gross Pay', value: '$1,185.00' },
+                hours: { icon: 'fa-clock', bg: '#dbeafe', color: '#1e40af', label: 'Total Hours', value: '78.00' },
+                overtime: { icon: 'fa-chart-line', bg: '#ede9fe', color: '#6d28d9', label: 'Overtime', value: '2.00' },
+                deductions: { icon: 'fa-circle-minus', bg: '#ffedd5', color: '#c2410c', label: 'Deductions', value: '$200.00' }
+            };
+
+            const data = iconMap[type];
+
+            // Set icon & title
+            document.getElementById('stmtModalLabel').textContent = data.label;
+            const iconContainer = document.getElementById('stmtModalIcon');
+            iconContainer.style.background = data.bg;
+            iconContainer.style.color = data.color;
+            const iconTag = document.getElementById('stmtModalIconTag');
+            iconTag.className = 'fa-solid ' + data.icon;
+            iconTag.style.color = data.color;
+
+            // Build table content
+            let html = '';
+
+            if (type === 'gross') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Gross Pay</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">$${data.value}</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead>
+                            <tr><th>Description</th><th class="text-end">Hrs</th><th class="text-end">Rate</th><th class="text-end">Amount</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Regular Hours</td><td class="text-end">76.00</td><td class="text-end">$15.00</td><td class="text-end fw-semibold">$1,140.00</td></tr>
+                            <tr><td>Overtime Hours</td><td class="text-end">2.00</td><td class="text-end">$22.50</td><td class="text-end fw-semibold">$45.00</td></tr>
+                            <tr class="fw-bold"><td colspan="3">Total Earnings</td><td class="text-end">$1,185.00</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'hours') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Hours Breakdown</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">${data.value} hrs</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead>
+                            <tr><th>Type</th><th class="text-end">Hours</th><th class="text-end">Rate</th><th class="text-end">Amount</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Regular Hours</td><td class="text-end">76.00</td><td class="text-end">$15.00</td><td class="text-end fw-semibold">$1,140.00</td></tr>
+                            <tr><td>Overtime</td><td class="text-end">2.00</td><td class="text-end">$22.50</td><td class="text-end fw-semibold">$45.00</td></tr>
+                            <tr class="fw-bold"><td colspan="3">Total</td><td class="text-end">78.00 hrs</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'overtime') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Overtime Details</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">${data.value} hrs</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead>
+                            <tr><th>Description</th><th class="text-end">Hours</th><th class="text-end">Rate</th><th class="text-end">Amount</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Overtime Hours</td><td class="text-end">2.00</td><td class="text-end">$22.50</td><td class="text-end fw-semibold">$45.00</td></tr>
+                            <tr class="fw-bold"><td colspan="3">Total Overtime Pay</td><td class="text-end">$45.00</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'deductions') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Deductions / Adjustments</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">${data.value}</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead>
+                            <tr><th>Description</th><th class="text-end">Amount</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Advance</td><td class="text-end neg-amt">($200.00)</td></tr>
+                            <tr><td>Other Adjustment</td><td class="text-end">$0.00</td></tr>
+                            <tr class="fw-bold"><td>Total Deductions</td><td class="text-end neg-amt">($200.00)</td></tr>
+                        </tbody>
+                    </table>`;
+            }
+
+            document.getElementById('stmtModalBody').innerHTML = html;
+
+            const modal = new bootstrap.Modal(document.getElementById('statementDetailModal'));
+            modal.show();
+        }
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

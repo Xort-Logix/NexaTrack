@@ -38,10 +38,17 @@
       margin-top: 4px;
     }
 
-    .kpicard {
-      flex: 0 0 20%;
-      max-width: 20%;
+    .kpi-card .row {
+      margin-left: 0;
+      margin-right: 0;
     }
+
+    /* .kpi-card .col-3,
+    .kpi-card .col-9 {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      min-width: 75% !important;
+    } */
 
     .panel {
       background: #fff;

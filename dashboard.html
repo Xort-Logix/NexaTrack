@@ -15,11 +15,13 @@
 
 
   <style>
-    #recentCasesTable tbody tr {
+    #recentCasesTable tbody tr,
+    #compSummaryTable tbody tr {
       cursor: pointer;
     }
 
-    #recentCasesTable tbody tr:hover {
+    #recentCasesTable tbody tr:hover,
+    #compSummaryTable tbody tr:hover {
       background: #f8fafc;
     }
 
@@ -147,7 +149,8 @@
 
           <i class="fa-solid fa-chevron-down trailing"></i>
         </div>
-        <button class="btn btn-outline-navy" data-bs-toggle="modal" data-bs-target="#newPayrollModal"><i class="fa-regular fa-file-lines me-1"></i>Generate Payroll</button>
+        <button class="btn btn-outline-navy" data-bs-toggle="modal" data-bs-target="#newPayrollModal"><i
+            class="fa-regular fa-file-lines me-1"></i>Generate Payroll</button>
         <a href="new-case.html" class="btn btn-green"><i class="fa-solid fa-plus me-1"></i>New Entry</a>
       </div>
     </div>
@@ -187,7 +190,8 @@
           <div class="col-9">
             <div class="kpi-label">Pending Payroll</div>
             <div class="kpi-value">$18,420</div>
-            <div class="kpi-delta text-muted">8 Staff</div>
+            <div class="kpi-delta text-muted"><span class="staff-count-link"
+                style="cursor:pointer;text-decoration:underline;color:#1e40af;">8 Staff</span></div>
             <div class="mt-2" style="font-size:11px;color:var(--gray-500);">
               <div class="d-flex align-items-center gap-1 mb-1">
                 <span class="badge-status warn" style="font-size:9px;padding:2px 6px;">2 Case-based</span>
@@ -321,7 +325,7 @@
             <a href="team-members.html" class="btn btn-sm btn-outline-navy">View All</a>
           </div>
           <div class="table-responsive">
-            <table class="nexa-table">
+            <table class="nexa-table" id="compSummaryTable">
               <thead>
                 <tr>
                   <th>Team Member</th>
@@ -347,7 +351,7 @@
                   <td>$8,425.00</td>
                   <td>$1,300.00</td>
                   <td class="fw-bold">$7,125.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -362,7 +366,7 @@
                   <td>$4,600.00</td>
                   <td>$1,300.00</td>
                   <td class="fw-bold">$3,300.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -377,7 +381,7 @@
                   <td>$12,450.00</td>
                   <td>$0.00</td>
                   <td class="fw-bold">$12,450.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -392,7 +396,7 @@
                   <td>$6,000.00</td>
                   <td>$0.00</td>
                   <td class="fw-bold">$6,000.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status deactive">deactive</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -407,7 +411,7 @@
                   <td>$2,400.00</td>
                   <td>$0.00</td>
                   <td class="fw-bold">$2,400.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -422,7 +426,7 @@
                   <td>$2,000.00</td>
                   <td>$0.00</td>
                   <td class="fw-bold">$2,000.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -437,7 +441,7 @@
                   <td>$3,000.00</td>
                   <td>$0.00</td>
                   <td class="fw-bold">$3,000.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
                 <tr>
@@ -452,7 +456,7 @@
                   <td>$1,850.00</td>
                   <td>$0.00</td>
                   <td class="fw-bold">$1,850.00</td>
-                  <td><span class="badge-status active">Clean</span></td>
+                  <td><span class="badge-status active">active</span></td>
                   <td><i class="fa-solid fa-chevron-right row-chevron"></i></td>
                 </tr>
               </tbody>
@@ -793,7 +797,7 @@
           <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
           <!-- <button type="button" class="btn btn-green" onclick="createPayrollRun()"><i
               class="fa-solid fa-check me-1"></i>Create Payroll Run</button> -->
-              <a href="payroll-runs.html" class="btn btn-green"><i class="fa-solid fa-check me-1"></i>Create Payroll Run</a>
+          <a href="payroll-runs.html" class="btn btn-green"><i class="fa-solid fa-check me-1"></i>Create Payroll Run</a>
         </div>
       </div>
     </div>
@@ -822,6 +826,96 @@
       </div>
     </div>
   </div>
+
+  <!-- Employee Production Detail Modal -->
+  <div class="modal fade" id="employeeProductionModal" tabindex="-1" aria-labelledby="employeeProductionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="employeeProductionModalLabel"><i class="fa-solid fa-chart-column me-2 text-success"></i>Employee Production</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center gap-3 mb-3" id="empProdHeader">
+            <div class="avatar-lg" id="empProdAvatar" style="width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;">DH</div>
+            <div>
+              <h5 class="mb-0" id="empProdName">Dr. Heider</h5>
+              <small class="text-muted" id="empProdRole">Provider &mdash; Providers</small>
+            </div>
+          </div>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <div class="border rounded-3 p-3 text-center bg-light">
+                <div class="text-muted small" id="empStatLabel1">Total Production</div>
+                <div class="fw-bold fs-5" id="empStatValue1">$8,425.00</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="border rounded-3 p-3 text-center bg-light">
+                <div class="text-muted small" id="empStatLabel2">Cases Completed</div>
+                <div class="fw-bold fs-5" id="empStatValue2">24</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="border rounded-3 p-3 text-center bg-light">
+                <div class="text-muted small" id="empStatLabel3">Total Units</div>
+                <div class="fw-bold fs-5" id="empStatValue3">142</div>
+              </div>
+            </div>
+          </div>
+          <div class="small text-muted mb-2" id="empTableTitle">Recent Production Details</div>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr id="empTableHeader">
+                  <th>Date</th>
+                  <th>Patient</th>
+                  <th>Case Type</th>
+                  <th>Units</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="empProdTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staff Breakdown Modal -->
+  <!-- <div class="modal fade" id="staffBreakdownModal" tabindex="-1" aria-labelledby="staffBreakdownModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staffBreakdownModalLabel"><i class="fa-solid fa-users me-2 text-primary"></i>Pending Payroll Staff</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="table-responsive">
+            <table class="nexa-table mb-0" id="staffBreakdownTable">
+              <thead>
+                <tr>
+                  <th>Team Member</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody id="staffBreakdownBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -968,42 +1062,38 @@
 
     const kpiDetailModalTableData = {
       'total production': {
-        title: 'Top 5 production case types',
-        headers: ['Case Type', 'Value'],
+        title: 'Production by Team',
+        headers: ['Team Name', 'Amount'],
         rows: [
-          { label: 'Zirconia Veneer Case', value: '$112,000' },
-          { label: 'Full Crown Case', value: '$98,500' },
-          { label: 'Composite Veneer Case', value: '$65,200' },
-          { label: 'Implant Restoration Case', value: '$42,300' },
-          { label: 'Smile Design Case', value: '$34,500' }
+          { label: 'Providers', value: '$196,250' },
+          { label: 'ISR (Commission)', value: '$124,500' },
+          { label: 'ISR (Flat)', value: '$60,000' },
+          { label: 'SDR', value: '$24,000' },
+          { label: 'CE', value: '$20,000' },
+          { label: 'Other Departments', value: '$48,500' }
         ]
       },
       'total payroll': {
-        title: 'Last 6 months payroll',
-        headers: ['Month', 'Payroll'],
+        title: 'Payroll by Team',
+        headers: ['Team Name', 'Amount'],
         rows: [
-          { label: 'Nov 2025', value: '$69,200' },
-          { label: 'Dec 2025', value: '$72,800' },
-          { label: 'Jan 2026', value: '$75,400' },
-          { label: 'Feb 2026', value: '$78,650' },
-          { label: 'Mar 2026', value: '$80,100' },
-          { label: 'Apr 2026', value: '$82,000' }
+          { label: 'Providers', value: '$78,650' },
+          { label: 'ISR (Commission)', value: '$12,450' },
+          { label: 'ISR (Flat)', value: '$6,000' },
+          { label: 'SDR', value: '$2,400' },
+          { label: 'CE', value: '$2,000' },
+          { label: 'Marketing', value: '$3,000' },
+          { label: 'Lab', value: '$1,850' }
         ]
       },
       'pending payroll': {
-        title: 'Staff With Incomplete Payroll Items',
-        headers: ['Team Member', 'Status / Action Needed'],
-        rows: [
-          { label: 'Dr. Vanessa \u2014 Provider', value: '\ud83d\udfe0 Cases Pending \u2014 Production not submitted' },
-          { label: 'Bianca \u2014 SDR', value: '\ud83d\udd34 Missed \u2014 Not clocked in today' },
-          { label: 'Carlos \u2014 Marketing', value: '\ud83d\udfe1 Clocked In \u2014 Needs to clock out' },
-          { label: 'Lab Tech Team \u2014 Lab', value: '\ud83d\udd34 Missed \u2014 Not clocked in today' },
-          { label: 'Nancy \u2014 CE', value: '\ud83d\udfe2 Pending Approval \u2014 Awaiting review' }
-        ]
+        title: 'Pending Payroll by Team Member',
+        headers: ['Team Name', 'Amount', 'Action'],
+        rows: []
       },
       'total advances': {
         title: 'Advances by Team Member',
-        headers: ['Team Member', 'Advance Amount'],
+        headers: ['Team Name', 'Amount'],
         rows: [
           { label: 'Dr. Heider', value: '$4,300' },
           { label: 'Dr. Vanessa', value: '$4,300' },
@@ -1013,17 +1103,47 @@
         ]
       },
       'payroll completion': {
-        title: 'Top 5 completed payrolls',
-        headers: ['Payroll Run', 'Completion Rate'],
+        title: 'Payroll Completion by Team',
+        headers: ['Team Name', 'Amount'],
         rows: [
-          { label: 'Apr 2026', value: '98%' },
-          { label: 'Mar 2026', value: '96%' },
-          { label: 'Feb 2026', value: '95%' },
-          { label: 'Jan 2026', value: '94%' },
-          { label: 'Dec 2025', value: '93%' }
+          { label: 'Providers', value: '98%' },
+          { label: 'ISR (Commission)', value: '96%' },
+          { label: 'ISR (Flat)', value: '95%' },
+          { label: 'SDR', value: '94%' },
+          { label: 'CE', value: '93%' },
+          { label: 'Marketing', value: '91%' },
+          { label: 'Lab', value: '89%' }
         ]
       }
     };
+
+    function renderPendingPayrollTable() {
+      const unpaid = pendingPayrollStaff.filter(s => !s.paid);
+      const detailBody = document.getElementById('kpiDetailModalDetailBody');
+      const tableHeader = document.getElementById('kpiDetailModalTableHeader');
+      const description = document.getElementById('kpiDetailModalDescription');
+
+      description.textContent = unpaid.length > 0
+        ? 'These staff members have not received their payment yet. Click "Confirm Payment" once the check is handed over or payment is confirmed.'
+        : 'All staff members have been paid. No pending payments.';
+      tableHeader.innerHTML = '<th>Team Name</th><th>Amount</th><th class="text-center">Action</th>';
+
+      if (unpaid.length > 0) {
+        detailBody.innerHTML = unpaid.map(s => `
+          <tr>
+            <td>${s.name} &mdash; ${s.dept}</td>
+            <td class="text-end fw-semibold">${s.amount}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-success" onclick="confirmPayment(${s.id})">
+                <i class="fa-solid fa-check me-1"></i>Confirm Payment
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } else {
+        detailBody.innerHTML = '<tr><td colspan="3" class="text-center text-muted py-3"><i class="fa-solid fa-circle-check me-1 text-success"></i>All payments completed!</td></tr>';
+      }
+    }
 
     function openKpiCardModal(card) {
       const title = card.querySelector('.kpi-label')?.textContent.trim() || 'KPI Detail';
@@ -1039,14 +1159,39 @@
       document.getElementById('kpiDetailModalValue').textContent = value;
       document.getElementById('kpiDetailModalDelta').innerHTML = delta;
 
-      if (detailData) {
-        document.getElementById('kpiDetailModalDescription').textContent = detailData.title === 'Top 5 production case types'
-          ? 'Top 5 case types contributing to production are shown below.'
-          : detailData.title === 'Staff With Incomplete Payroll Items'
-          ? 'Staff who haven\'t finalized their production or time entries for this pay period.'
+      if (title.toLowerCase() === 'pending payroll') {
+        document.getElementById('kpiDetailModalDescription').textContent = '';
+        tableTitle.textContent = 'Pending Payroll by Team Member';
+        renderPendingPayrollTable();
+        detailContainer.classList.remove('d-none');
+      } else if (title.toLowerCase() === 'total payroll') {
+        const paid = pendingPayrollStaff.filter(s => s.paid);
+        document.getElementById('kpiDetailModalDescription').textContent =
+          paid.length > 0
+            ? 'Team-wise payroll breakdown below. Staff who have been paid are marked with a checkmark.'
+            : 'Team-wise payroll breakdown for the current period.';
+        tableTitle.textContent = detailData ? detailData.title : 'Payroll by Team';
+        tableHeader.innerHTML = '<th>Team Name</th><th>Amount</th>';
+
+        let allRows = detailData ? [...detailData.rows] : [];
+        if (paid.length > 0) {
+          paid.forEach(s => {
+            allRows.push({ label: '&#10003; ' + s.name + ' &mdash; ' + s.dept + ' <span class="badge bg-success-subtle text-success ms-1">Paid</span>', value: s.amount });
+          });
+        }
+        detailBody.innerHTML = allRows.map((row) => `
+          <tr>
+            <td>${row.label}</td>
+            <td class="text-end">${row.value}</td>
+          </tr>
+        `).join('');
+        detailContainer.classList.remove('d-none');
+      } else if (detailData) {
+        document.getElementById('kpiDetailModalDescription').textContent = detailData.title === 'Production by Team'
+          ? 'Production amounts broken down by team for the current period.'
           : detailData.title === 'Advances by Team Member'
-          ? 'Advance amounts broken down by team member for this period.'
-          : 'Payroll history for the last 6 months is shown below.';
+            ? 'Advance amounts broken down by team member for this period.'
+            : 'Payroll and completion data broken down by team for the current period.';
 
         tableTitle.textContent = detailData.title;
         tableHeader.innerHTML = detailData.headers.map((heading) => `<th>${heading}</th>`).join('');
@@ -1069,6 +1214,227 @@
     document.querySelectorAll('.kpi-row .kpi-card').forEach((card) => {
       card.addEventListener('click', () => openKpiCardModal(card));
     });
+ 
+    // ---- Employee production data for Compensation Summary clicks ----
+    const employeeProductionData = [
+      {
+        id: 'DH', name: 'Dr. Heider', role: 'Provider', dept: 'Providers',
+        color: '#4338ca', isHourly: false, compType: 'Cosmetic Production',
+        totalProduction: '$8,425.00', casesCompleted: 24, totalUnits: 142,
+        recentCases: [
+          { date: 'Mar 31, 2026', patient: 'Maria Garcia', caseType: 'Zirconia Veneer Case', units: 20, amount: '$4,200.00', status: 'Completed' },
+          { date: 'Mar 28, 2026', patient: 'Robert Kim', caseType: 'Full Crown Case', units: 8, amount: '$1,600.00', status: 'Completed' },
+          { date: 'Mar 25, 2026', patient: 'Sarah Lee', caseType: 'Composite Veneer Case', units: 16, amount: '$2,625.00', status: 'Verified' }
+        ]
+      },
+      {
+        id: 'DV', name: 'Dr. Vanessa', role: 'Provider', dept: 'Providers',
+        color: '#0d9488', isHourly: false, compType: 'Cosmetic Production',
+        totalProduction: '$4,600.00', casesCompleted: 15, totalUnits: 88,
+        recentCases: [
+          { date: 'Mar 31, 2026', patient: 'James Wilson', caseType: 'Full Crown Case', units: 1, amount: '$200.00', status: 'Completed' },
+          { date: 'Mar 30, 2026', patient: 'Linda Brown', caseType: 'Composite Veneer Case', units: 16, amount: '$2,800.00', status: 'Verified' },
+          { date: 'Mar 26, 2026', patient: 'David Chen', caseType: 'Zirconia Veneer Case', units: 8, amount: '$1,600.00', status: 'Completed' }
+        ]
+      },
+      {
+        id: 'JR', name: 'Jeremiah', role: 'ISR', dept: 'Sales',
+        color: '#f59e0b', isHourly: false, compType: '% Commission',
+        totalProduction: '$12,450.00', casesCompleted: 42, totalUnits: 210,
+        recentCases: [
+          { date: 'Mar 30, 2026', patient: 'Emily Davis', caseType: 'Smile Design Case', units: 10, amount: '$3,200.00', status: 'Completed' },
+          { date: 'Mar 27, 2026', patient: 'Michael Brown', caseType: 'Implant Restoration Case', units: 6, amount: '$5,250.00', status: 'Completed' },
+          { date: 'Mar 22, 2026', patient: 'Anna White', caseType: 'Full Crown Case', units: 4, amount: '$800.00', status: 'Verified' }
+        ]
+      },
+      {
+        id: 'JS', name: 'Joshua', role: 'ISR', dept: 'Sales',
+        color: '#f59e0b', isHourly: false, compType: 'Flat Case Pay',
+        totalProduction: '$6,000.00', casesCompleted: 18, totalUnits: 95,
+        recentCases: [
+          { date: 'Mar 29, 2026', patient: 'Yorie Gouboth', caseType: 'Composite Veneer Case', units: 16, amount: '$3,200.00', status: 'Pre-Completed' },
+          { date: 'Mar 24, 2026', patient: 'Kevin Park', caseType: 'Zirconia Veneer Case', units: 6, amount: '$1,800.00', status: 'Completed' },
+          { date: 'Mar 20, 2026', patient: 'Lisa Ray', caseType: 'Full Crown Case', units: 2, amount: '$1,000.00', status: 'Completed' }
+        ]
+      },
+      {
+        id: 'BT', name: 'Bianca', role: 'SDR', dept: 'Sales',
+        color: '#3b82f6', isHourly: true, compType: 'Hourly',
+        totalEarned: '$2,400.00', hoursWorked: 120, hourlyRate: '$20.00/hr',
+        timeEntries: [
+          { date: 'Mar 28, 2026', clockIn: '08:15 AM', clockOut: '05:00 PM', hours: 8.0, amount: '$160.00', status: 'Approved' },
+          { date: 'Mar 27, 2026', clockIn: '08:20 AM', clockOut: '05:10 PM', hours: 7.75, amount: '$155.00', status: 'Approved' },
+          { date: 'Mar 26, 2026', clockIn: '08:00 AM', clockOut: '04:45 PM', hours: 8.0, amount: '$160.00', status: 'Approved' },
+          { date: 'Mar 25, 2026', clockIn: '08:10 AM', clockOut: '05:00 PM', hours: 8.0, amount: '$160.00', status: 'Approved' }
+        ]
+      },
+      {
+        id: 'NJ', name: 'Nancy', role: 'CE', dept: 'Operations',
+        color: '#10b981', isHourly: true, compType: 'Hourly',
+        totalEarned: '$2,000.00', hoursWorked: 100, hourlyRate: '$20.00/hr',
+        timeEntries: [
+          { date: 'Mar 27, 2026', clockIn: '09:00 AM', clockOut: '05:00 PM', hours: 7.5, amount: '$150.00', status: 'Approved' },
+          { date: 'Mar 26, 2026', clockIn: '08:45 AM', clockOut: '05:00 PM', hours: 7.75, amount: '$155.00', status: 'Approved' },
+          { date: 'Mar 25, 2026', clockIn: '09:00 AM', clockOut: '04:30 PM', hours: 7.0, amount: '$140.00', status: 'Approved' }
+        ]
+      },
+      {
+        id: 'CM', name: 'Carlos', role: 'Marketing', dept: 'Marketing',
+        color: '#a855f7', isHourly: true, compType: 'Hourly',
+        totalEarned: '$3,000.00', hoursWorked: 150, hourlyRate: '$20.00/hr',
+        timeEntries: [
+          { date: 'Mar 29, 2026', clockIn: '08:30 AM', clockOut: '05:15 PM', hours: 8.0, amount: '$160.00', status: 'Approved' },
+          { date: 'Mar 28, 2026', clockIn: '08:15 AM', clockOut: '05:00 PM', hours: 8.0, amount: '$160.00', status: 'Approved' },
+          { date: 'Mar 27, 2026', clockIn: '08:45 AM', clockOut: '04:45 PM', hours: 7.5, amount: '$150.00', status: 'Pending' },
+          { date: 'Mar 26, 2026', clockIn: '09:00 AM', clockOut: '05:30 PM', hours: 8.0, amount: '$160.00', status: 'Approved' },
+          { date: 'Mar 25, 2026', clockIn: '08:00 AM', clockOut: '04:30 PM', hours: 8.0, amount: '$160.00', status: 'Approved' }
+        ]
+      },
+      {
+        id: 'LT', name: 'Lab Tech Team', role: 'Lab', dept: 'Lab',
+        color: '#6b7280', isHourly: true, compType: 'Hourly',
+        totalEarned: '$1,850.00', hoursWorked: 98, hourlyRate: '$18.87/hr',
+        timeEntries: [
+          { date: 'Mar 26, 2026', clockIn: '07:30 AM', clockOut: '04:00 PM', hours: 8.0, amount: '$151.00', status: 'Approved' },
+          { date: 'Mar 25, 2026', clockIn: '07:45 AM', clockOut: '03:45 PM', hours: 7.5, amount: '$141.50', status: 'Approved' },
+          { date: 'Mar 24, 2026', clockIn: '08:00 AM', clockOut: '04:30 PM', hours: 8.0, amount: '$151.00', status: 'Approved' },
+          { date: 'Mar 21, 2026', clockIn: '08:00 AM', clockOut: '05:00 PM', hours: 8.0, amount: '$151.00', status: 'Approved' }
+        ]
+      }
+    ];
+
+    // ---- Employee Production Modal Logic ----
+    const empProdModalEl = document.getElementById('employeeProductionModal');
+    const empProdModal = empProdModalEl ? new bootstrap.Modal(empProdModalEl) : null;
+
+    function openEmployeeProduction(initials) {
+      const emp = employeeProductionData.find(e => e.id === initials);
+      if (!emp || !empProdModal) return;
+
+      document.getElementById('empProdAvatar').textContent = emp.id;
+      document.getElementById('empProdAvatar').style.background = emp.color;
+      document.getElementById('empProdName').textContent = emp.name;
+      document.getElementById('empProdRole').innerHTML = emp.role + ' &mdash; ' + emp.dept;
+
+      const tbody = document.getElementById('empProdTableBody');
+      const tableTitle = document.getElementById('empTableTitle');
+      const tableHeader = document.getElementById('empTableHeader');
+
+      if (emp.isHourly) {
+        // ---- Hourly employee rendering ----
+        document.getElementById('empStatLabel1').textContent = 'Total Earnings';
+        document.getElementById('empStatValue1').textContent = emp.totalEarned;
+        document.getElementById('empStatLabel2').textContent = 'Hours Worked';
+        document.getElementById('empStatValue2').textContent = emp.hoursWorked + ' hrs';
+        document.getElementById('empStatLabel3').textContent = 'Hourly Rate';
+        document.getElementById('empStatValue3').textContent = emp.hourlyRate;
+
+        tableTitle.textContent = 'Recent Time Entries';
+        tableHeader.innerHTML = '<th>Date</th><th>Clock In</th><th>Clock Out</th><th>Hours</th><th>Amount</th><th>Status</th>';
+        tbody.innerHTML = emp.timeEntries.map(t => `
+          <tr>
+            <td>${t.date}</td>
+            <td>${t.clockIn}</td>
+            <td>${t.clockOut}</td>
+            <td>${t.hours}</td>
+            <td>${t.amount}</td>
+            <td><span class="badge-status ${t.status === 'Approved' ? 'active' : 'warn'}">${t.status}</span></td>
+          </tr>
+        `).join('');
+
+        document.getElementById('employeeProductionModalLabel').innerHTML = '<i class="fa-regular fa-clock me-2 text-success"></i>Employee Time &amp; Earnings &mdash; ' + emp.name;
+      } else {
+        // ---- Production-based employee rendering ----
+        document.getElementById('empStatLabel1').textContent = 'Total Production';
+        document.getElementById('empStatValue1').textContent = emp.totalProduction;
+        document.getElementById('empStatLabel2').textContent = 'Cases Completed';
+        document.getElementById('empStatValue2').textContent = emp.casesCompleted;
+        document.getElementById('empStatLabel3').textContent = 'Total Units';
+        document.getElementById('empStatValue3').textContent = emp.totalUnits;
+
+        tableTitle.textContent = 'Recent Production Details';
+        tableHeader.innerHTML = '<th>Date</th><th>Patient</th><th>Case Type</th><th>Units</th><th>Amount</th><th>Status</th>';
+        tbody.innerHTML = emp.recentCases.map(c => `
+          <tr>
+            <td>${c.date}</td>
+            <td>${c.patient}</td>
+            <td>${c.caseType}</td>
+            <td>${c.units}</td>
+            <td>${c.amount}</td>
+            <td><span class="badge-status ${c.status === 'Completed' ? 'active' : c.status === 'Verified' || c.status === 'Pre-Completed' ? 'warn' : ''}">${c.status}</span></td>
+          </tr>
+        `).join('');
+
+        document.getElementById('employeeProductionModalLabel').innerHTML = '<i class="fa-solid fa-chart-column me-2 text-success"></i>Employee Production &mdash; ' + emp.name;
+      }
+
+      empProdModal.show();
+    }
+
+    // ---- Click handler for Compensation Summary rows ----
+    document.getElementById('compSummaryTable')?.querySelectorAll('tbody tr').forEach(row => {
+      row.addEventListener('click', () => {
+        const avatarEl = row.querySelector('.avatar-sm');
+        if (avatarEl) {
+          openEmployeeProduction(avatarEl.textContent.trim());
+        }
+      });
+    });
+
+    // ---- Staff breakdown for Pending Payroll card ----
+    const pendingPayrollStaff = [
+      { id: 1, name: 'Dr. Vanessa', dept: 'Providers', status: 'Cases Pending', amount: '$4,600.00', paid: false },
+      { id: 2, name: 'Bianca', dept: 'SDR', status: 'Missed', amount: '$2,400.00', paid: false },
+      { id: 3, name: 'Carlos', dept: 'Marketing', status: 'Clocked In', amount: '$3,000.00', paid: false },
+      { id: 4, name: 'Lab Tech Team', dept: 'Lab', status: 'Missed', amount: '$1,850.00', paid: false },
+      { id: 5, name: 'Nancy', dept: 'CE', status: 'Pending Approval', amount: '$2,000.00', paid: false },
+      { id: 6, name: 'Dr. Heider', dept: 'Providers', status: 'Cases Pending', amount: '$1,825.00', paid: false },
+      { id: 7, name: 'Jeremiah', dept: 'ISR', status: 'Pending Review', amount: '$1,745.00', paid: false },
+      { id: 8, name: 'Joshua', dept: 'ISR', status: 'Pending Review', amount: '$1,000.00', paid: false }
+    ];
+
+    const staffBreakdownModalEl = document.getElementById('staffBreakdownModal');
+    if (staffBreakdownModalEl) {
+      const staffBreakdownModal = new bootstrap.Modal(staffBreakdownModalEl);
+      const staffBreakdownBody = document.getElementById('staffBreakdownBody');
+
+      document.querySelector('.staff-count-link')?.addEventListener('click', function (e) {
+        e.stopPropagation();
+        staffBreakdownBody.innerHTML = pendingPayrollStaff.map(s => `
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="avatar-sm" style="background:#dbeafe;color:#1e40af;width:28px;height:28px;font-size:11px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:600;">
+                  ${s.name.split(' ').map(w => w[0]).slice(0, 2).join('')}
+                </div>
+                <span class="member-name" style="font-size:13px;">${s.name}</span>
+              </div>
+            </td>
+            <td><span class="badge-dept badge">${s.dept}</span></td>
+            <td><span class="badge-status ${s.status === 'Missed' ? 'danger' : s.status === 'Cases Pending' || s.status === 'Pending Review' || s.status === 'Pending Approval' ? 'warn' : 'active'}">${s.status}</span></td>
+            <td class="fw-semibold">${s.amount}</td>
+          </tr>
+        `).join('');
+        staffBreakdownModal.show();
+      });
+    }
+
+    function confirmPayment(staffId) {
+      const staff = pendingPayrollStaff.find(s => s.id === staffId);
+      if (!staff || staff.paid) return;
+
+      staff.paid = true;
+
+      // Re-render the pending payroll table in the modal
+      renderPendingPayrollTable();
+
+      // Show confirmation feedback in the modal value area
+      const modalValue = document.getElementById('kpiDetailModalValue');
+      modalValue.innerHTML = `<span class="text-success"><i class="fa-solid fa-check-circle me-1"></i>${staff.name} payment confirmed!</span>`;
+      setTimeout(() => {
+        modalValue.textContent = document.querySelector('.kpi-card .kpi-value')?.textContent.trim() || '';
+      }, 2500);
+    }
   </script>
 
 </body>

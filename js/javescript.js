@@ -31,20 +31,22 @@ window.addEventListener('resize', () => {
       });
     });
 
-    // ─── CLOCK STATE ───
-    let clockState = {
-      status: 'clocked-out', // 'clocked-out' | 'clocked-in' | 'on-lunch'
-      startTime: null,
-      timerInterval: null,
-      elapsedSeconds: 0
-    };
-
+    // ─── CLOCK STATE ─── (only if clock widget exists on page)
     const statusDot = document.getElementById('statusDot');
     const statusLabel = document.getElementById('statusLabel');
     const statusTimer = document.getElementById('statusTimer');
     const allToggleBtns = document.querySelectorAll('.clock-actions .toggle-btn');
 
-    // Map status → display
+    let clockState = null;
+    if (statusDot) {
+      clockState = {
+        status: 'clocked-out',
+        startTime: null,
+        timerInterval: null,
+        elapsedSeconds: 0
+      };
+    }
+
     const statusMap = {
       'clocked-out': { label: 'Clocked Out', dotClass: 'clocked-out', labelClass: 'clocked-out' },
       'clocked-in': { label: 'Clocked In', dotClass: 'clocked-in', labelClass: 'clocked-in' },
@@ -52,12 +54,12 @@ window.addEventListener('resize', () => {
     };
 
     function updateUI() {
+      if (!clockState) return;
       const info = statusMap[clockState.status];
       statusDot.className = 'status-dot ' + info.dotClass;
       statusLabel.textContent = info.label;
       statusLabel.className = 'status-label ' + info.labelClass;
 
-      // Highlight active toggle
       const actionMap = {
         'clocked-out': null,
         'clocked-in': 'clockin',
@@ -72,12 +74,7 @@ window.addEventListener('resize', () => {
         }
       });
 
-      // Timer behavior:
-      // - clocked-in: timer runs
-      // - on-lunch: timer paused (interval cleared, elapsed preserved)
-      // - clocked-out: timer stopped and reset to 0
       if (clockState.status === 'clocked-out') {
-        // stop and reset
         if (clockState.timerInterval) {
           clearInterval(clockState.timerInterval);
           clockState.timerInterval = null;
@@ -85,14 +82,12 @@ window.addEventListener('resize', () => {
         clockState.elapsedSeconds = 0;
         statusTimer.textContent = formatTime(clockState.elapsedSeconds);
       } else if (clockState.status === 'on-lunch') {
-        // pause (keep elapsedSeconds)
         if (clockState.timerInterval) {
           clearInterval(clockState.timerInterval);
           clockState.timerInterval = null;
         }
         statusTimer.textContent = formatTime(clockState.elapsedSeconds);
       } else if (clockState.status === 'clocked-in') {
-        // running
         if (!clockState.timerInterval) {
           clockState.timerInterval = setInterval(() => {
             clockState.elapsedSeconds++;
@@ -111,37 +106,24 @@ window.addEventListener('resize', () => {
 
     // ─── HANDLE CLOCK ACTIONS ───
     function handleClockAction(action) {
-      // Prevent invalid transitions
-      if (action === 'clockin' && clockState.status !== 'clocked-out') {
-        return;
-      }
-      if (action === 'startlunch' && clockState.status !== 'clocked-in') {
-        return;
-      }
-      if (action === 'endlunch' && clockState.status !== 'on-lunch') {
-        return;
-      }
-      if (action === 'clockout' && clockState.status === 'clocked-out') {
-        return;
-      }
+      if (!clockState) return;
+      if (action === 'clockin' && clockState.status !== 'clocked-out') return;
+      if (action === 'startlunch' && clockState.status !== 'clocked-in') return;
+      if (action === 'endlunch' && clockState.status !== 'on-lunch') return;
+      if (action === 'clockout' && clockState.status === 'clocked-out') return;
 
-      // Execute transition without resetting elapsed unless needed
       switch (action) {
         case 'clockin':
-          // fresh clock in always starts from zero
           clockState.status = 'clocked-in';
           clockState.elapsedSeconds = 0;
           break;
         case 'startlunch':
-          // pause timer, keep elapsed
           clockState.status = 'on-lunch';
           break;
         case 'endlunch':
-          // resume from previous elapsed
           clockState.status = 'clocked-in';
           break;
         case 'clockout':
-          // stop and reset
           clockState.status = 'clocked-out';
           clockState.elapsedSeconds = 0;
           break;
@@ -149,7 +131,6 @@ window.addEventListener('resize', () => {
           return;
       }
 
-      // Log for demo
       const actionLabels = {
         'clockin': 'Clock In',
         'startlunch': 'Start Lunch',
@@ -162,7 +143,7 @@ window.addEventListener('resize', () => {
     }
 
     // ─── INIT ───
-    updateUI();
+    if (clockState) updateUI();
 
     // ─── CHART: Attendance Trend ───
     const providerCtx = document.getElementById('providerChart');

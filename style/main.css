@@ -25,6 +25,8 @@
     font-family: 'Inter', sans-serif;
 }
 
+
+
 body {
     background: var(--gray-50);
     color: var(--gray-900);
@@ -45,9 +47,10 @@ body.sidebar-open {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch
 }
-.sidbarmobile{
+
+.sidbarmobile {
     padding: 10px;
-    background:rgb(30, 32, 30);
+    background: rgb(30, 32, 30);
 }
 
 /* .nexa-table {
@@ -254,7 +257,7 @@ canvas {
     overflow-x: auto;
 }
 
-.topbar-actions > * {
+.topbar-actions>* {
     flex-shrink: 0;
     white-space: nowrap;
 }
@@ -420,11 +423,7 @@ canvas {
     justify-content: center;
 }
 
-/* Wrapper column for each KPI card — 5 per row on desktop (unchanged from before) */
-.kpi-col {
-    flex: 0 0 20%;
-    max-width: 20%;
-}
+/* Wrapper column for each KPI card — uses Bootstrap grid classes (col-lg-2 etc.) */
 
 .kpi-icon {
     width: 50px;
@@ -493,12 +492,12 @@ canvas {
 }
 
 /* Reveal the mobile drawer + backdrop when the checkbox is toggled on */
-#sidebarToggle:checked ~ .sidebar-backdrop {
+#sidebarToggle:checked~.sidebar-backdrop {
     opacity: 1 !important;
     pointer-events: auto !important;
 }
 
-#sidebarToggle:checked ~ .sidebar-backdrop .sidebar {
+#sidebarToggle:checked~.sidebar-backdrop .sidebar {
     transform: translateX(0) !important;
 }
 
@@ -514,11 +513,11 @@ canvas {
     }
 
     /* Hide the always-on desktop sidebar completely; the drawer (inside .sidebar-backdrop) is the mobile nav instead */
-    body > .sidebar {
+    body>.sidebar {
         display: none;
     }
 
-    body.sidebar-open > .sidebar {
+    body.sidebar-open>.sidebar {
         display: flex !important;
         transform: translateX(0) !important;
     }
@@ -574,24 +573,24 @@ canvas {
         border-top: 1px solid var(--gray-200)
     }
 
-    /* KPI card columns: 2 per row on tablets */
-    .kpi-col {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+    /* KPI card columns: uses Bootstrap grid (col-md-4, col-sm-6) */
 
     /* Any fixed-pixel-width control (search boxes, selects, date pickers) never exceeds its row */
     .panel-header input[style*="width"],
     .panel-header select[style*="width"],
-    .panel-header > .d-flex > div[style*="width"] {
+    .panel-header>.d-flex>div[style*="width"] {
         max-width: 100% !important;
     }
 }
 
-@media(max-width:576px) {
-    /* KPI cards: full width, one per row on phones */
-    .kpi-col {
-        flex: 0 0 100%;
-        max-width: 100%;
+@media(max-width:1440px) {
+
+    .kpi-card .col-3,
+    .kpi-card .col-9 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        min-width: 75% !important;
     }
 }
+
+/* KPI cards: uses Bootstrap grid (col-sm-6) */

@@ -141,7 +141,7 @@
     </div>
 
     <div class="kpi-row mb-3">
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Hours Worked','160.00','Total hours worked in the current pay period','fa-clock','var(--green-50)','var(--green-600)')" style="cursor:pointer;">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -154,7 +154,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Hourly Rate','$18.00','Your current hourly pay rate','fa-money-bill-wave','#dbeafe','#1e40af')" style="cursor:pointer;">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i class="fa-solid fa-money-bill-wave"></i>
@@ -166,7 +166,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Regular Pay','$2,880','Gross pay from regular hours worked','fa-receipt','#ede9fe','#6d28d9')" style="cursor:pointer;">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-receipt"></i>
@@ -179,7 +179,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Overtime','$0.00','Overtime pay calculated at 1.5x hourly rate','fa-bolt','#ffedd5','#c2410c')" style="cursor:pointer;">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-bolt"></i></div>
@@ -190,7 +190,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card">
+      <div class="kpi-card" onclick="openKPIModal('Total Pay','$2,880','Total compensation for the current pay period','fa-circle-check','var(--green-50)','var(--green-600)')" style="cursor:pointer;">
         <div class="row">
           <div class="col-3">
             <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -379,6 +379,55 @@
 
     </div>
 
+    <!-- ─── KPI DETAIL MODAL ─── -->
+    <div class="modal fade" id="kpiDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius:14px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+                <div class="modal-header" style="border-bottom:1px solid var(--gray-100);padding:20px 24px;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="kpi-icon" id="kpiModalIcon" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                            <i class="fa-solid" id="kpiModalIconTag" style="font-size:18px;"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title fw-bold" id="kpiModalLabel" style="font-size:16px;margin:0;">Title</h5>
+                            <div class="text-muted" style="font-size:12px;">KPI Detail Breakdown</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding:24px;">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background:var(--gray-50);">
+                                <div class="small text-muted mb-1">Current Value</div>
+                                <div class="fw-bold" id="kpiModalValue" style="font-size:24px;color:var(--navy-900);">--</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="small text-muted mb-1">Description</div>
+                            <div id="kpiModalDesc" style="color:var(--gray-600);font-size:14px;line-height:1.6;">--</div>
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="table-responsive">
+                        <table class="earnings-table">
+                            <thead>
+                                <tr><th>Period</th><th class="text-end">Value</th><th class="text-end">Change</th></tr>
+                            </thead>
+                            <tbody id="kpiModalTableBody">
+                                <tr><td>Current Period</td><td class="text-end fw-semibold">--</td><td class="text-end text-success">--</td></tr>
+                                <tr><td>Previous Period</td><td class="text-end">--</td><td class="text-end text-danger">--</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:1px solid var(--gray-100);padding:16px 24px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background:var(--gray-100);color:var(--gray-700);border:none;font-weight:600;padding:8px 20px;border-radius:8px;font-size:13px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -406,46 +455,6 @@
           jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
         };
         html2pdf().set(opt).from(element).save();
-      }
-
-     
-
-      const providerCtx = document.getElementById('providerChart');
-      if (providerCtx) {
-        new Chart(providerCtx, {
-          type: 'bar',
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-            datasets: [
-              {
-                label: 'Production',
-                data: [18000, 21000, 24650, 22800, 25200],
-                backgroundColor: '#0d9488',
-                borderRadius: 6
-              },
-              {
-                label: 'Net Pay',
-                data: [5200, 6100, 7125, 6800, 7400],
-                backgroundColor: '#4338ca',
-                borderRadius: 6
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { display: true },
-              tooltip: { callbacks: { label: (c) => c.dataset.label + ': $' + c.parsed.y.toLocaleString() } }
-            },
-            scales: {
-              x: { grid: { display: false } },
-              y: {
-                beginAtZero: true,
-                ticks: { callback: (value) => '$' + (value / 1000) + 'K' }
-              }
-            }
-          }
-        });
       }
 
       // Payroll Overview grouped bar chart
@@ -501,6 +510,36 @@
           }
         }
       });
+
+      /* ─── KPI DETAIL MODAL ─── */
+      function openKPIModal(title, value, desc, icon, bg, color) {
+        document.getElementById('kpiModalLabel').textContent = title;
+        document.getElementById('kpiModalValue').textContent = value;
+        document.getElementById('kpiModalDesc').textContent = desc;
+        const iconContainer = document.getElementById('kpiModalIcon');
+        iconContainer.style.background = bg;
+        iconContainer.style.color = color;
+        const iconTag = document.getElementById('kpiModalIconTag');
+        iconTag.className = 'fa-solid ' + icon;
+        iconTag.style.color = color;
+
+        const tableBody = document.getElementById('kpiModalTableBody');
+        const rowData = {
+          'Hours Worked': ['160.00 hrs', '152.00 hrs', '+5.3%'],
+          'Hourly Rate': ['$18.00/hr', '$17.50/hr', '+2.9%'],
+          'Regular Pay': ['$2,880', '$2,660', '+8.3%'],
+          'Overtime': ['$0.00', '$87.50', '-100%'],
+          'Total Pay': ['$2,880', '$2,747.50', '+4.8%']
+        };
+        const data = rowData[title] || ['--', '--', '--'];
+        tableBody.innerHTML = `
+          <tr><td>Current Period</td><td class="text-end fw-semibold">${data[0]}</td><td class="text-end text-success">${data[2]}</td></tr>
+          <tr><td>Previous Period</td><td class="text-end">${data[1]}</td><td class="text-end text-danger">${data[2]}</td></tr>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById('kpiDetailModal'));
+        modal.show();
+      }
     </script>
 
 </body>

@@ -144,7 +144,7 @@
         </div>
 
         <div class="kpi-row mb-3">
-            <div class="kpi-card">
+            <div class="kpi-card" onclick="openQSTimeModal('quotes-today')" style="cursor:pointer;">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" onclick="openQSTimeModal('weekly-quotes')" style="cursor:pointer;">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#dbeafe;color:#1e40af;"><i
@@ -168,7 +168,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" onclick="openQSTimeModal('period-quotes')" style="cursor:pointer;">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#ede9fe;color:#6d28d9;"><i
@@ -180,7 +180,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" onclick="openQSTimeModal('commission-today')" style="cursor:pointer;">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i
@@ -192,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kpi-card">
+            <div class="kpi-card" onclick="openQSTimeModal('period-commission')" style="cursor:pointer;">
                 <div class="row">
                     <div class="col-3">
                         <div class="kpi-icon" style="background:var(--green-50);color:var(--green-600);"><i
@@ -329,6 +329,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="../js/javescript.js"></script>
     <script>
         let quotesToday = 0;
@@ -368,7 +369,136 @@
         sidebarBtn?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
         backdrop?.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
         window.addEventListener('resize', () => { if (window.innerWidth > 991) document.body.classList.remove('sidebar-open'); });
+
+        /* ─── QS TIME CLOCK DETAIL MODAL ─── */
+        function openQSTimeModal(type) {
+            const dataMap = {
+                'quotes-today': { icon: 'fa-file-lines', bg: '#ecfdf5', color: '#059669', label: 'Quotes Today', value: '0' },
+                'weekly-quotes': { icon: 'fa-calendar-week', bg: '#dbeafe', color: '#1e40af', label: 'Weekly Quotes', value: '42' },
+                'period-quotes': { icon: 'fa-chart-simple', bg: '#ede9fe', color: '#6d28d9', label: 'Period Quotes', value: '245' },
+                'commission-today': { icon: 'fa-dollar-sign', bg: '#ffedd5', color: '#c2410c', label: "Today's Commission", value: '$0' },
+                'period-commission': { icon: 'fa-wallet', bg: '#ecfdf5', color: '#059669', label: 'Period Commission', value: '$245' }
+            };
+            const d = dataMap[type];
+
+            document.getElementById('qsTimeModalLabel').textContent = d.label;
+            const iconContainer = document.getElementById('qsTimeModalIcon');
+            iconContainer.style.background = d.bg;
+            iconContainer.style.color = d.color;
+            const iconTag = document.getElementById('qsTimeModalIconTag');
+            iconTag.className = 'fa-solid ' + d.icon;
+            iconTag.style.color = d.color;
+
+            let html = '';
+            if (type === 'quotes-today') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Today's Quotes</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">0 Quotes</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Time Entry</th><th class="text-end">Quotes</th></tr></thead>
+                        <tbody>
+                            <tr><td>Morning Shift</td><td class="text-end">0</td></tr>
+                            <tr><td>Afternoon Shift</td><td class="text-end">0</td></tr>
+                            <tr class="fw-bold"><td>Total Today</td><td class="text-end">0</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="text-muted mt-2" style="font-size:12px;">Clock in to start tracking today's quotes.</div>`;
+            } else if (type === 'weekly-quotes') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">This Week's Quotes</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">42 Quotes</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Day</th><th class="text-end">Quotes</th><th class="text-end">Commission</th></tr></thead>
+                        <tbody>
+                            <tr><td>Monday</td><td class="text-end">10</td><td class="text-end">$10</td></tr>
+                            <tr><td>Tuesday</td><td class="text-end">8</td><td class="text-end">$8</td></tr>
+                            <tr><td>Wednesday</td><td class="text-end">12</td><td class="text-end">$12</td></tr>
+                            <tr><td>Thursday</td><td class="text-end">7</td><td class="text-end">$7</td></tr>
+                            <tr><td>Friday</td><td class="text-end">5</td><td class="text-end">$5</td></tr>
+                            <tr class="fw-bold"><td>Total</td><td class="text-end">42</td><td class="text-end">$42</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'period-quotes') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Pay Period Quotes</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">245 Quotes</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Week</th><th class="text-end">Quotes</th><th class="text-end">Commission</th></tr></thead>
+                        <tbody>
+                            <tr><td>Week 1 (Jul 1-7)</td><td class="text-end">125</td><td class="text-end">$125</td></tr>
+                            <tr><td>Week 2 (Jul 8-14)</td><td class="text-end">120</td><td class="text-end">$120</td></tr>
+                            <tr class="fw-bold"><td>Total</td><td class="text-end">245</td><td class="text-end">$245</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'commission-today') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Today's Commission</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">$0</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Description</th><th class="text-end">Quotes</th><th class="text-end">Rate</th><th class="text-end">Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td>Commission Earned</td><td class="text-end">0</td><td class="text-end">$1.00</td><td class="text-end fw-semibold">$0</td></tr>
+                            <tr class="fw-bold"><td colspan="3">Total Commission</td><td class="text-end">$0</td></tr>
+                        </tbody>
+                    </table>`;
+            } else if (type === 'period-commission') {
+                html = `
+                    <div class="mb-3">
+                        <div class="text-muted mb-1" style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Period Commission</div>
+                        <div class="fw-bold" style="font-size:28px;color:var(--navy-900);">$245</div>
+                    </div>
+                    <table class="earnings-table">
+                        <thead><tr><th>Week</th><th class="text-end">Quotes</th><th class="text-end">Commission</th></tr></thead>
+                        <tbody>
+                            <tr><td>Week 1 (Jul 1-7)</td><td class="text-end">125</td><td class="text-end">$125</td></tr>
+                            <tr><td>Week 2 (Jul 8-14)</td><td class="text-end">120</td><td class="text-end">$120</td></tr>
+                            <tr class="fw-bold"><td>Total</td><td class="text-end">245</td><td class="text-end fw-bold" style="color:var(--green-600);">$245</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="text-muted mt-3" style="font-size:12.5px;font-style:italic;">* Commission is calculated at $1.00 per quote. Final amounts may be adjusted by your Office Manager.</div>`;
+            }
+
+            document.getElementById('qsTimeModalBody').innerHTML = html;
+            const modal = new bootstrap.Modal(document.getElementById('qsTimeDetailModal'));
+            modal.show();
+        }
     </script>
+
+    <!-- ─── QS TIME CLOCK DETAIL MODAL ─── -->
+    <div class="modal fade" id="qsTimeDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="border-radius:14px;border:none;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+                <div class="modal-header" style="border-bottom:1px solid var(--gray-100);padding:20px 24px;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="kpi-icon" id="qsTimeModalIcon" style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                            <i class="fa-solid" id="qsTimeModalIconTag" style="font-size:18px;"></i>
+                        </div>
+                        <div>
+                            <h5 class="modal-title fw-bold" id="qsTimeModalLabel" style="font-size:16px;margin:0;">Title</h5>
+                            <div class="text-muted" style="font-size:12px;">Quote Tracking Details</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding:24px;">
+                    <div class="table-responsive" id="qsTimeModalBody">
+                        <!-- Dynamic content loaded by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:1px solid var(--gray-100);padding:16px 24px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background:var(--gray-100);color:var(--gray-700);border:none;font-weight:600;padding:8px 20px;border-radius:8px;font-size:13px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

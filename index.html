@@ -458,44 +458,54 @@
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
 
+            // Store user role in localStorage for page-level access control
             if (username === 'umair' && password === '1234') {
-                // manger
+                localStorage.setItem('nexaUserRole', 'Office Manager');
+                localStorage.setItem('nexaUserName', 'Umair');
                 window.location.assign('dashboard.html');
                 alert(`login successful! Welcome, ${username}.`);
             } else if (username === 'mahsan' && password === '1234') {
-                // social media
+                localStorage.setItem('nexaUserRole', 'Social Media');
+                localStorage.setItem('nexaUserName', 'Mahsan');
                 window.location.assign('SocialMedia/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             } else if (username === 'masghar' && password === '1234') {
-                // quality assurance
+                localStorage.setItem('nexaUserRole', 'QS');
+                localStorage.setItem('nexaUserName', 'Masghar');
                 window.location.assign('QS/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             } else if (username === 'James' && password === '1234') {
-                // provider
+                localStorage.setItem('nexaUserRole', 'Provider');
+                localStorage.setItem('nexaUserName', 'James');
                 window.location.assign('Doctores/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             } else if (username === 'mzubair' && password === '1234') {
-                // ISR
+                localStorage.setItem('nexaUserRole', 'ISR');
+                localStorage.setItem('nexaUserName', 'Zubair');
                 window.location.assign('ISR/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             }
             else if (username === 'mnadeem' && password === '1234') {
-                // Client experience
+                localStorage.setItem('nexaUserRole', 'CE');
+                localStorage.setItem('nexaUserName', 'Nadeem');
                 window.location.assign('CE/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             }
             else if (username === 'muhammad' && password === '1234') {
-                // SDR
+                localStorage.setItem('nexaUserRole', 'SDR');
+                localStorage.setItem('nexaUserName', 'Muhammad');
                 window.location.assign('SDR/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             }
             else if (username === 'madnan' && password === '1234') {
-                // Marketing
+                localStorage.setItem('nexaUserRole', 'Marketing');
+                localStorage.setItem('nexaUserName', 'Adnan');
                 window.location.assign('Marketing/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             }
              else if (username === 'masif' && password === '1234') {
-                // Marketing
+                localStorage.setItem('nexaUserRole', 'Dental Assistant');
+                localStorage.setItem('nexaUserName', 'Asif');
                 window.location.assign('Dental Assistants/Empdahshabord.html');
                 alert(`login successful! Welcome, ${username}.`);
             }
