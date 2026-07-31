@@ -34,6 +34,133 @@
       transform: translateY(-3px);
       box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
     }
+
+    /* ---- Accounts Receivable banner ---- */
+    .ar-alert {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(90deg, #b91c1c, #dc2626);
+      color: #fff;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.25);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .ar-alert:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(220, 38, 38, 0.32);
+    }
+
+    .ar-alert-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .ar-alert-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ar-alert-title {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+
+    .ar-alert-sub {
+      font-size: 12.5px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .ar-alert-total {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .ar-alert-amt {
+      display: block;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .ar-alert-caption {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      opacity: 0.8;
+    }
+
+    .ar-alert-cta {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .ar-alert-clear {
+      background: linear-gradient(90deg, #047857, #059669);
+      box-shadow: 0 8px 24px rgba(5, 150, 105, 0.25);
+    }
+
+    .ar-alert-clear:hover {
+      box-shadow: 0 12px 30px rgba(5, 150, 105, 0.32);
+    }
+
+    /* ---- AR collection modal ---- */
+    .ar-modal-summary {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .ar-modal-stat {
+      flex: 1;
+      min-width: 150px;
+      background: #f8fafc;
+      border: 1px solid #e2e6ed;
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .ar-modal-label {
+      display: block;
+      font-size: 11px;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ar-modal-value {
+      display: block;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-top: 2px;
+    }
+
+    .ar-row-paid {
+      opacity: 0.62;
+      background: #f0fdf4;
+    }
   </style>
 
 </head>
@@ -165,6 +292,8 @@
           <div class="col-9">
             <div class="kpi-label">Total Production</div>
             <div class="kpi-value">$412,500</div>
+            <div class="kpi-delta text-muted"><span class="staff-count-link"
+                style="cursor:pointer;text-decoration:underline;color:#1e40af;">20 Staff</span></div>
             <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 9% vs Feb</div>
           </div>
         </div>
@@ -178,6 +307,8 @@
           <div class="col-9">
             <div class="kpi-label">Total Payroll</div>
             <div class="kpi-value">$78,650</div>
+            <div class="kpi-delta text-muted"><span class="staff-count-link"
+                style="cursor:pointer;text-decoration:underline;color:#1e40af;">20 Staff</span></div>
             <div class="kpi-delta text-success"><i class="fa-solid fa-arrow-up"></i> 12% vs Feb</div>
           </div>
         </div>
@@ -233,6 +364,21 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="ar-alert" id="arBanner" role="button" onclick="openArCollection()"
+      title="Click to review &amp; collect outstanding balances">
+      <div class="ar-alert-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+      <div class="ar-alert-body">
+        <div class="ar-alert-title">Outstanding Accounts Receivable</div>
+        <div class="ar-alert-sub" id="arBannerSub">8 open balances across 8 patients — click to review &amp; mark as
+          paid</div>
+      </div>
+      <div class="ar-alert-total">
+        <span class="ar-alert-amt" id="arBannerTotal">$18,450.00</span>
+        <span class="ar-alert-caption">Outstanding</span>
+      </div>
+      <div class="ar-alert-cta"><i class="fa-solid fa-chevron-right"></i></div>
     </div>
 
     <!-- <div class="panel mb-3">
@@ -686,6 +832,59 @@
     </div>
   </div>
 
+  <!-- Accounts Receivable Collection Modal -->
+  <div class="modal fade" id="arCollectionModal" tabindex="-1" aria-labelledby="arCollectionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="arCollectionModalLabel"><i
+                class="fa-solid fa-hand-holding-dollar me-2 text-danger"></i>Accounts Receivable</h5>
+            <div class="modal-subtitle">Outstanding balances by patient — mark as paid once collected.</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="ar-modal-summary">
+            <div class="ar-modal-stat">
+              <span class="ar-modal-label">Open Balances</span>
+              <span class="ar-modal-value" id="arOpenCount">8</span>
+            </div>
+            <div class="ar-modal-stat">
+              <span class="ar-modal-label">Collected This Period</span>
+              <span class="ar-modal-value text-success" id="arCollectedTotal">$0.00</span>
+            </div>
+            <div class="ar-modal-stat">
+              <span class="ar-modal-label">Total Outstanding</span>
+              <span class="ar-modal-value text-danger" id="arOutstandingTotal">$18,450.00</span>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="nexa-table mb-0" id="arTable">
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Case</th>
+                  <th>Date</th>
+                  <th>Quoted</th>
+                  <th>Collected</th>
+                  <th>Outstanding</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody id="arTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="caseEditModal" tabindex="-1" aria-labelledby="caseEditModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -828,16 +1027,20 @@
   </div>
 
   <!-- Employee Production Detail Modal -->
-  <div class="modal fade" id="employeeProductionModal" tabindex="-1" aria-labelledby="employeeProductionModalLabel" aria-hidden="true">
+  <div class="modal fade" id="employeeProductionModal" tabindex="-1" aria-labelledby="employeeProductionModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="employeeProductionModalLabel"><i class="fa-solid fa-chart-column me-2 text-success"></i>Employee Production</h5>
+          <h5 class="modal-title" id="employeeProductionModalLabel"><i
+              class="fa-solid fa-chart-column me-2 text-success"></i>Employee Production</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="d-flex align-items-center gap-3 mb-3" id="empProdHeader">
-            <div class="avatar-lg" id="empProdAvatar" style="width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;">DH</div>
+            <div class="avatar-lg" id="empProdAvatar"
+              style="width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;">
+              DH</div>
             <div>
               <h5 class="mb-0" id="empProdName">Dr. Heider</h5>
               <small class="text-muted" id="empProdRole">Provider &mdash; Providers</small>
@@ -1214,7 +1417,7 @@
     document.querySelectorAll('.kpi-row .kpi-card').forEach((card) => {
       card.addEventListener('click', () => openKpiCardModal(card));
     });
- 
+
     // ---- Employee production data for Compensation Summary clicks ----
     const employeeProductionData = [
       {
@@ -1434,6 +1637,105 @@
       setTimeout(() => {
         modalValue.textContent = document.querySelector('.kpi-card .kpi-value')?.textContent.trim() || '';
       }, 2500);
+    }
+
+    // ---- Accounts Receivable ----
+    const arBalances = [
+      { id: 1, patient: 'Maria Garcia', case: 'Zirconia Veneer Case', date: 'Mar 31, 2026', quoted: 12500, collected: 9600, paid: false, paidAmount: 0 },
+      { id: 2, patient: 'James Wilson', case: 'Full Crown Case', date: 'Mar 31, 2026', quoted: 3200, collected: 2000, paid: false, paidAmount: 0 },
+      { id: 3, patient: 'Linda Brown', case: 'Composite Veneer Case', date: 'Mar 30, 2026', quoted: 4800, collected: 3000, paid: false, paidAmount: 0 },
+      { id: 4, patient: 'Yorie Gouboth', case: 'Composite Veneer Case', date: 'Mar 29, 2026', quoted: 6400, collected: 4000, paid: false, paidAmount: 0 },
+      { id: 5, patient: 'James Test', case: 'Full Crown Case', date: 'Mar 29, 2026', quoted: 2500, collected: 1000, paid: false, paidAmount: 0 },
+      { id: 6, patient: 'Emily Davis', case: 'Smile Design Case', date: 'Mar 30, 2026', quoted: 5000, collected: 2000, paid: false, paidAmount: 0 },
+      { id: 7, patient: 'Michael Brown', case: 'Implant Restoration Case', date: 'Mar 27, 2026', quoted: 7500, collected: 4000, paid: false, paidAmount: 0 },
+      { id: 8, patient: 'Robert Kim', case: 'Full Crown Case', date: 'Mar 28, 2026', quoted: 4150, collected: 2000, paid: false, paidAmount: 0 }
+    ];
+
+    const arCollectionModalEl = document.getElementById('arCollectionModal');
+    const arCollectionModal = new bootstrap.Modal(arCollectionModalEl);
+
+    function fmtMoney(n) {
+      return '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function arOutstanding(b) {
+      return Math.max(0, b.quoted - b.collected);
+    }
+
+    function arTotalOutstanding() {
+      return arBalances.reduce((sum, b) => sum + (b.paid ? 0 : arOutstanding(b)), 0);
+    }
+
+    function arInitials(name) {
+      return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    }
+
+    function renderArTable() {
+      const tbody = document.getElementById('arTableBody');
+      const openCount = arBalances.filter(b => !b.paid).length;
+      const collectedTotal = arBalances.filter(b => b.paid).reduce((s, b) => s + b.paidAmount, 0);
+      const outstandingTotal = arTotalOutstanding();
+
+      document.getElementById('arOpenCount').textContent = openCount;
+      document.getElementById('arCollectedTotal').textContent = fmtMoney(collectedTotal);
+      document.getElementById('arOutstandingTotal').textContent = fmtMoney(outstandingTotal);
+
+      tbody.innerHTML = arBalances.map(b => {
+        const collected = b.collected + (b.paid ? b.paidAmount : 0);
+        return `
+          <tr class="${b.paid ? 'ar-row-paid' : ''}">
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="avatar-sm" style="background:${b.paid ? '#059669' : '#dc2626'};">${arInitials(b.patient)}</div>
+                <span class="member-name">${b.patient}</span>
+              </div>
+            </td>
+            <td>${b.case}</td>
+            <td>${b.date}</td>
+            <td>${fmtMoney(b.quoted)}</td>
+            <td>${fmtMoney(collected)}</td>
+            <td class="fw-semibold ${b.paid ? 'text-success' : 'text-danger'}">${b.paid ? fmtMoney(0) : fmtMoney(arOutstanding(b))}</td>
+            <td class="text-center"><span class="badge-status ${b.paid ? 'active' : 'danger'}">${b.paid ? 'Paid' : 'Open'}</span></td>
+            <td class="text-end">${b.paid
+            ? '<span class="text-success small"><i class="fa-solid fa-circle-check me-1"></i>Collected</span>'
+            : `<button class="btn btn-sm btn-success" onclick="markArPaid(${b.id})"><i class="fa-solid fa-check me-1"></i>Mark as Paid</button>`}</td>
+          </tr>`;
+      }).join('');
+    }
+
+    function markArPaid(id) {
+      const b = arBalances.find(x => x.id === id);
+      if (!b || b.paid) return;
+      b.paid = true;
+      b.paidAmount = arOutstanding(b);
+      renderArTable();
+      updateArBanner();
+    }
+
+    function updateArBanner() {
+      const total = arTotalOutstanding();
+      const open = arBalances.filter(b => !b.paid).length;
+      const banner = document.getElementById('arBanner');
+      const totalEl = document.getElementById('arBannerTotal');
+
+      totalEl.textContent = fmtMoney(total);
+
+      if (total <= 0) {
+        banner.classList.add('ar-alert-clear');
+        banner.querySelector('.ar-alert-title').textContent = 'Accounts Receivable — All Collected';
+        banner.querySelector('.ar-alert-sub').textContent = 'No outstanding balances. Great job!';
+        banner.querySelector('.ar-alert-caption').textContent = 'Collected';
+      } else {
+        banner.classList.remove('ar-alert-clear');
+        banner.querySelector('.ar-alert-title').textContent = 'Outstanding Accounts Receivable';
+        banner.querySelector('.ar-alert-sub').textContent = `${open} open balance${open === 1 ? '' : 's'} across ${open} patient${open === 1 ? '' : 's'} — click to review & mark as paid`;
+        banner.querySelector('.ar-alert-caption').textContent = 'Outstanding';
+      }
+    }
+
+    function openArCollection() {
+      renderArTable();
+      arCollectionModal.show();
     }
   </script>
 

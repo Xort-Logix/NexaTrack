@@ -156,6 +156,19 @@
       font-size: 14px;
     }
 
+    .lock-success-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
     .btn-purple {
       background: #6D5CF6;
       color: #fff;
@@ -186,9 +199,10 @@
       cursor: pointer;
       transition: transform 0.15s, box-shadow 0.15s;
     }
+
     .kpi-mini-card[role="button"]:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
     }
 
     .donut-center-lg {
@@ -207,6 +221,225 @@
     .donut-center-lg .lbl {
       color: #6b7280;
       font-size: 14px;
+    }
+
+    /* ---- Payroll Packet — Staff Pay-Stub Cards ---- */
+    .packet-stub-card {
+      height: 100%;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 18px;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .packet-stub-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10);
+      border-color: #6D5CF6;
+    }
+
+    .packet-stub-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .packet-stub-logo {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: .3px;
+    }
+
+    .packet-stub-right {
+      text-align: right;
+    }
+
+    .packet-stub-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #111827;
+    }
+
+    .packet-stub-sub {
+      font-size: 10.5px;
+      color: #6b7280;
+    }
+
+    .packet-stub-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f3f5f9;
+    }
+
+    .packet-stub-body {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .packet-stub-emp-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .packet-stub-emp-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .packet-stub-emp-sub {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .packet-stub-emp-id {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .packet-stub-check {
+      flex: 1;
+      min-width: 180px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fafafa;
+    }
+
+    .packet-stub-check-title {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 15px;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .packet-stub-check-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    .packet-stub-check-row .script {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 13px;
+      color: #111827;
+    }
+
+    .packet-stub-check-amt {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .packet-stub-tables {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .packet-stub-table-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .packet-stub-table {
+      width: 100%;
+      font-size: 11px;
+      border-collapse: collapse;
+    }
+
+    .packet-stub-table th {
+      text-align: left;
+      font-size: 10px;
+      color: #6b7280;
+      padding: 4px 6px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .packet-stub-table th.text-end,
+    .packet-stub-table td.text-end {
+      text-align: right;
+    }
+
+    .packet-stub-table td {
+      padding: 4px 6px;
+      border-bottom: 1px solid #f3f4f6;
+      color: #374151;
+    }
+
+    .packet-stub-total {
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: #4338ca;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .packet-stub-total .lbl {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .packet-stub-total .val {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .packet-stub-thanks {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 11px;
+      margin-top: 10px;
+    }
+
+    .packet-totals-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 28px;
+      margin-top: 18px;
+      padding: 12px 18px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    /* ---- Case-by-Case Breakdown — clickable rows ---- */
+    .cases-breakdown-table tbody tr {
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+
+    .cases-breakdown-table tbody tr:hover {
+      background: #f5f6ff;
     }
   </style>
 </head>
@@ -288,6 +521,9 @@
       <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
       <div class="step-nav-item" data-step="3" onclick="goToStep(3)"><span class="num">3</span><span class="lbl">Final
           Summary</span></div>
+      <i class="fa-solid fa-chevron-right step-nav-arrow"></i>
+      <div class="step-nav-item" data-step="4" onclick="goToStep(4)"><span class="num">4</span><span class="lbl">Payroll
+          Packet</span></div>
     </div>
 
     <!-- ===== SCREEN 1 — GENERATE PAYROLL ===== -->
@@ -767,185 +1003,9 @@
 
           <!-- ===== PAYROLL PACKET PREVIEW ===== -->
           <div class="payroll-packet-section">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div>
-                <h3 class="fw-bold fs-5 mb-1"><i class="fa-solid fa-file-invoice me-2 text-success"></i>Payroll Packet
-                </h3>
-                <div class="text-muted small">Detailed payroll breakdown for May 1 – May 15, 2026. Review and finalize
-                  to lock the payroll.</div>
-              </div>
-              <button class="btn btn-outline-navy btn-sm" onclick="exportSummary()"><i
-                  class="fa-regular fa-file-lines me-1"></i>Export PDF</button>
-            </div>
 
             <!-- Employee Breakdown Table -->
-            <div class="table-responsive"
-              style="max-height:320px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:10px;">
-              <table class="wf-table mb-0" style="min-width:1000px;">
-                <thead style="position:sticky;top:0;background:#fff;z-index:2;">
-                  <tr>
-                    <th style="width:200px;">Staff</th>
-                    <th>Department</th>
-                    <th>Type</th>
-                    <th>Hours / Cases</th>
-                    <th>Rate / Commission</th>
-                    <th>Gross Pay</th>
-                    <th>Deductions</th>
-                    <th>Net Pay</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Dr. Nancy Rose</span></div>
-                    </td>
-                    <td>Provider</td>
-                    <td>Provider</td>
-                    <td>15 cases</td>
-                    <td>$350 / $150 per case</td>
-                    <td class="fw-semibold">$4,250.00</td>
-                    <td style="color:#dc2626;">$212.50</td>
-                    <td class="fw-semibold text-success">$4,037.50</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Dr. Miguel Ortiz</span></div>
-                    </td>
-                    <td>Provider</td>
-                    <td>Provider</td>
-                    <td>12 cases</td>
-                    <td>$350 / $150 per case</td>
-                    <td class="fw-semibold">$3,950.00</td>
-                    <td style="color:#dc2626;">$197.50</td>
-                    <td class="fw-semibold text-success">$3,752.50</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Dr. Amina Shah</span></div>
-                    </td>
-                    <td>Provider</td>
-                    <td>Provider</td>
-                    <td>18 cases</td>
-                    <td>$350 / $150 per case</td>
-                    <td class="fw-semibold">$4,000.00</td>
-                    <td style="color:#dc2626;">$200.00</td>
-                    <td class="fw-semibold text-success">$3,800.00</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">John Smith</span></div>
-                    </td>
-                    <td>SDR</td>
-                    <td>Hourly</td>
-                    <td>40 hrs</td>
-                    <td>$15.00/hr</td>
-                    <td class="fw-semibold">$1,145.50</td>
-                    <td style="color:#dc2626;">$57.28</td>
-                    <td class="fw-semibold text-success">$1,088.22</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Sarah Johnson</span></div>
-                    </td>
-                    <td>CE</td>
-                    <td>Hourly</td>
-                    <td>38 hrs</td>
-                    <td>$29.75/hr</td>
-                    <td class="fw-semibold">$1,375.20</td>
-                    <td style="color:#dc2626;">$68.76</td>
-                    <td class="fw-semibold text-success">$1,306.44</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Mike Anderson</span></div>
-                    </td>
-                    <td>ISR</td>
-                    <td>Commission</td>
-                    <td>14 cases</td>
-                    <td>8.5% commission</td>
-                    <td class="fw-semibold">$2,350.00</td>
-                    <td style="color:#dc2626;">$117.50</td>
-                    <td class="fw-semibold text-success">$2,232.50</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Ashley Williams</span></div>
-                    </td>
-                    <td>Marketing</td>
-                    <td>Salary</td>
-                    <td>—</td>
-                    <td>$2,000/mo</td>
-                    <td class="fw-semibold">$2,000.00</td>
-                    <td style="color:#dc2626;">$100.00</td>
-                    <td class="fw-semibold text-success">$1,900.00</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Chris Brown</span></div>
-                    </td>
-                    <td>Social Media</td>
-                    <td>Hourly</td>
-                    <td>38 hrs</td>
-                    <td>$15.26/hr</td>
-                    <td class="fw-semibold">$1,020.75</td>
-                    <td style="color:#dc2626;">$51.04</td>
-                    <td class="fw-semibold text-success">$969.71</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Emma Davis</span></div>
-                    </td>
-                    <td>Dental Assistant</td>
-                    <td>Hourly</td>
-                    <td>38 hrs</td>
-                    <td>$15.00/hr</td>
-                    <td class="fw-semibold">$980.30</td>
-                    <td style="color:#dc2626;">$49.02</td>
-                    <td class="fw-semibold text-success">$931.28</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
-                          src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80"><span
-                          class="fw-semibold">Daniel Martinez</span></div>
-                    </td>
-                    <td>Quote Specialist</td>
-                    <td>Hourly</td>
-                    <td>38 hrs</td>
-                    <td>$15.00/hr</td>
-                    <td class="fw-semibold">$1,150.25</td>
-                    <td style="color:#dc2626;">$57.51</td>
-                    <td class="fw-semibold text-success">$1,092.74</td>
-                  </tr>
-                </tbody>
-                <tfoot style="background:#f8fafc;border-top:2px solid #e5e7eb;">
-                  <tr>
-                    <td class="fw-bold" colspan="5">TOTAL (10 Staff)</td>
-                    <td class="fw-bold text-success">$22,222.00</td>
-                    <td class="fw-bold" style="color:#dc2626;">$1,111.11</td>
-                    <td class="fw-bold text-success">$21,110.89</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
+
 
             <div class="d-flex justify-content-between align-items-center mt-3 pt-3">
 
@@ -975,11 +1035,268 @@
         </div>
       </div>
     </div>
-    <!-- ===== SCREEN 4 — FLAGS & DISPUTES ===== -->
+
+    <!-- ===== SCREEN 4 — PAYROLL PACKET (AFTER FINALIZE & LOCK) ===== -->
+    <div class="screen-view" id="screen-4">
+      <a class="back-link" onclick="goToStep(3)"><i class="fa-solid fa-arrow-left"></i> Back to Summary</a>
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Payroll Packet</h1>
+          <div class="page-sub">Finalized and locked payroll for May 1 – May 15, 2026 — ready for distribution.</div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+            <i class="fa-solid fa-lock me-1 text-muted"></i> Locked &amp; Paid
+          </span>
+          <button class="btn btn-outline-navy" onclick="exportSummary()"><i
+              class="fa-regular fa-file-lines me-1"></i>Export Packet</button>
+        </div>
+      </div>
+
+      <!-- Success banner — shown right after Finalize Payroll & Lock -->
+      <div class="lock-success-banner" id="packetSuccessBanner" style="display:none;">
+        <i class="fa-solid fa-circle-check fs-4"></i>
+        <div>
+          <strong>Payroll finalized and locked successfully!</strong>
+          <div>All 26 Staff have been paid for May 1 – May 15, 2026. This packet is now available to Staff and can no
+            longer be edited.</div>
+        </div>
+      </div>
+
+      <div class="kpi-mini-row">
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,0)">
+          <div class="kpi-mini-label">Staff</div>
+          <div class="kpi-mini-value">26</div>
+          <div class="kpi-mini-note">Total Paid</div>
+        </div>
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,1)">
+          <div class="kpi-mini-label">Total Gross Payroll</div>
+          <div class="kpi-mini-value">$28,450.00</div>
+          <div class="kpi-mini-note">Before deductions</div>
+        </div>
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,2)">
+          <div class="kpi-mini-label">Total Deductions</div>
+          <div class="kpi-mini-value" style="color:#dc2626;">$1,850.00</div>
+          <div class="kpi-mini-note">Taxes &amp; benefits</div>
+        </div>
+        <div class="kpi-mini-card" role="button" tabindex="0" onclick="openKpiDetail(3,3)">
+          <div class="kpi-mini-label">Total Net Payroll</div>
+          <div class="kpi-mini-value text-success">$26,600.00</div>
+          <div class="kpi-mini-note">Take-home pay</div>
+        </div>
+      </div>
+
+      <div class="panel payroll-summary-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title mb-0"><i class="fa-solid fa-file-invoice me-2 text-success"></i>Payroll Packet —
+              Staff Breakdown</h2>
+            <div class="panel-sub">May 1 – May 15, 2026 · Pay Date: May 16, 2026 · Run ID: PR-2026-005</div>
+          </div>
+          <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+            <i class="fa-regular fa-calendar-check me-1 text-muted"></i> 26 Staff · 26 Paid
+          </span>
+        </div>
+
+        <div class="panel-body">
+          <div class="row g-3" id="packetCardGrid"></div>
+          <div class="packet-totals-bar" id="packetTotalsBar"></div>
+          <div style="display:none;">
+          <div class="table-responsive"
+            style="max-height:480px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:10px;">
+            <table class="wf-table mb-0" style="min-width:1000px;">
+              <thead style="position:sticky;top:0;background:#fff;z-index:2;">
+                <tr>
+                  <th style="width:200px;">Staff</th>
+                  <th>Department</th>
+                  <th>Type</th>
+                  <th>Hours / Cases</th>
+                  <th>Rate / Commission</th>
+                  <th>Gross Pay</th>
+                  <th>Deductions</th>
+                  <th>Net Pay</th>
+                </tr>
+              </thead>
+              <tbody id="packetTableBody">
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Dr. Nancy Rose</span></div>
+                  </td>
+                  <td>Provider</td>
+                  <td>Provider</td>
+                  <td>15 cases</td>
+                  <td>$350 / $150 per case</td>
+                  <td class="fw-semibold">$4,250.00</td>
+                  <td style="color:#dc2626;">$212.50</td>
+                  <td class="fw-semibold text-success">$4,037.50</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Dr. Miguel Ortiz</span></div>
+                  </td>
+                  <td>Provider</td>
+                  <td>Provider</td>
+                  <td>12 cases</td>
+                  <td>$350 / $150 per case</td>
+                  <td class="fw-semibold">$3,950.00</td>
+                  <td style="color:#dc2626;">$197.50</td>
+                  <td class="fw-semibold text-success">$3,752.50</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Dr. Amina Shah</span></div>
+                  </td>
+                  <td>Provider</td>
+                  <td>Provider</td>
+                  <td>18 cases</td>
+                  <td>$350 / $150 per case</td>
+                  <td class="fw-semibold">$4,000.00</td>
+                  <td style="color:#dc2626;">$200.00</td>
+                  <td class="fw-semibold text-success">$3,800.00</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">John Smith</span></div>
+                  </td>
+                  <td>SDR</td>
+                  <td>Hourly</td>
+                  <td>40 hrs</td>
+                  <td>$15.00/hr</td>
+                  <td class="fw-semibold">$1,145.50</td>
+                  <td style="color:#dc2626;">$57.28</td>
+                  <td class="fw-semibold text-success">$1,088.22</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Sarah Johnson</span></div>
+                  </td>
+                  <td>CE</td>
+                  <td>Hourly</td>
+                  <td>38 hrs</td>
+                  <td>$29.75/hr</td>
+                  <td class="fw-semibold">$1,375.20</td>
+                  <td style="color:#dc2626;">$68.76</td>
+                  <td class="fw-semibold text-success">$1,306.44</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Mike Anderson</span></div>
+                  </td>
+                  <td>ISR</td>
+                  <td>Commission</td>
+                  <td>14 cases</td>
+                  <td>8.5% commission</td>
+                  <td class="fw-semibold">$2,350.00</td>
+                  <td style="color:#dc2626;">$117.50</td>
+                  <td class="fw-semibold text-success">$2,232.50</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Ashley Williams</span></div>
+                  </td>
+                  <td>Marketing</td>
+                  <td>Salary</td>
+                  <td>—</td>
+                  <td>$2,000/mo</td>
+                  <td class="fw-semibold">$2,000.00</td>
+                  <td style="color:#dc2626;">$100.00</td>
+                  <td class="fw-semibold text-success">$1,900.00</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Chris Brown</span></div>
+                  </td>
+                  <td>Social Media</td>
+                  <td>Hourly</td>
+                  <td>38 hrs</td>
+                  <td>$15.26/hr</td>
+                  <td class="fw-semibold">$1,020.75</td>
+                  <td style="color:#dc2626;">$51.04</td>
+                  <td class="fw-semibold text-success">$969.71</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Emma Davis</span></div>
+                  </td>
+                  <td>Dental Assistant</td>
+                  <td>Hourly</td>
+                  <td>38 hrs</td>
+                  <td>$15.00/hr</td>
+                  <td class="fw-semibold">$980.30</td>
+                  <td style="color:#dc2626;">$49.02</td>
+                  <td class="fw-semibold text-success">$931.28</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center gap-2"><img class="emp-avatar-sm"
+                        src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80"><span
+                        class="fw-semibold">Daniel Martinez</span></div>
+                  </td>
+                  <td>Quote Specialist</td>
+                  <td>Hourly</td>
+                  <td>38 hrs</td>
+                  <td>$15.00/hr</td>
+                  <td class="fw-semibold">$1,150.25</td>
+                  <td style="color:#dc2626;">$57.51</td>
+                  <td class="fw-semibold text-success">$1,092.74</td>
+                </tr>
+              </tbody>
+              <tfoot id="packetTableFoot" style="background:#f8fafc;border-top:2px solid #e5e7eb;">
+                <tr>
+                  <td class="fw-bold" colspan="5">TOTAL (10 Staff)</td>
+                  <td class="fw-bold text-success">$22,222.00</td>
+                  <td class="fw-bold" style="color:#dc2626;">$1,111.11</td>
+                  <td class="fw-bold text-success">$21,110.89</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-3 pt-3 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <span class="badge bg-light text-dark px-3 py-2 rounded-pill"><i
+                  class="fa-solid fa-lock me-1 text-muted"></i>
+                Locked · Paid</span>
+              <span class="badge bg-light text-dark px-3 py-2 rounded-pill"><i
+                  class="fa-regular fa-calendar me-1 text-muted"></i> Pay Date: May 16, 2026</span>
+              <span class="badge bg-light text-dark px-3 py-2 rounded-pill"><i
+                  class="fa-regular fa-user me-1 text-muted"></i> Reviewed by: James Johnson</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-light border px-4" onclick="goToStep(1)"><i class="fa-solid fa-house me-1"></i>
+                Back to Payroll Runs</button>
+              <button class="btn btn-green px-4" onclick="exportSummary()"><i
+                  class="fa-regular fa-file-lines me-2"></i>Export Packet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FLAGS & DISPUTES (standalone — accessed from Locked runs) ===== -->
     <!-- ⚠️ This screen is NOT part of the payroll workflow.
          It is accessed from Locked payroll runs in Step 1.
          Employees flag discrepancies AFTER payroll is finalized. -->
-    <div class="screen-view" id="screen-4">
+    <div class="screen-view" id="screen-flags">
       <a class="back-link" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Back to Payroll Runs</a>
       <div class="topbar">
         <div>
@@ -1248,6 +1565,66 @@
     </div>
   </div>
 
+  <!-- Case Detail Modal (from Case-by-Case Breakdown) -->
+  <div class="modal fade" id="caseBreakdownDetailModal" tabindex="-1"
+    aria-labelledby="caseBreakdownDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="caseBreakdownDetailModalLabel"><i
+                class="fa-solid fa-folder-open me-2 text-primary"></i>Case Detail</h5>
+            <div class="modal-subtitle">View and edit the case used in this payroll breakdown.</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="caseBreakdownDetailBody">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Case ID</label>
+              <input type="text" class="form-control" id="cbdCaseId" readonly
+                style="background:#f8fafc;font-family:monospace;font-size:12px;">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Owner / Staff</label>
+              <input type="text" class="form-control" id="cbdOwner" readonly style="background:#f8fafc;">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Patient Name</label>
+              <input type="text" class="form-control" id="cbdPatient">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Case Type</label>
+              <input type="text" class="form-control" id="cbdType">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Status</label>
+              <select class="form-select" id="cbdStatus">
+                <option value="New">New</option>
+                <option value="Consult">Consult</option>
+                <option value="Treatment">Treatment</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Prep Complete">Prep Complete</option>
+                <option value="Financial">Financial</option>
+                <option value="Completed">Completed</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Production Value ($)</label>
+              <input type="number" class="form-control" id="cbdValue" step="0.01" min="0">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-green" onclick="saveCaseBreakdownDetail()"><i
+              class="fa-regular fa-floppy-disk me-1"></i> Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js">
 
   </script>
@@ -1257,7 +1634,7 @@
        STEP NAVIGATION
        ========================================================== */
     function goToStep(n) {
-      const screenMap = { 1: 'screen-1', 2: 'screen-2', 3: 'screen-3' };
+      const screenMap = { 1: 'screen-1', 2: 'screen-2', 3: 'screen-3', 4: 'screen-4' };
       document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
       const target = document.getElementById(screenMap[n]);
       if (target) target.classList.add('active');
@@ -1722,7 +2099,7 @@
                   </thead>
                   <tbody>
                     ${profile.cases.map(c => `
-                      <tr>
+                      <tr id="caseRow-${c.id}" onclick="openCaseBreakdownDetail('${c.id}')" title="Click to view / edit case">
                         <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-family:monospace;font-size:10.5px;color:#6b7280;">${c.id}</td>
                         <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-weight:500;">${c.patient}</td>
                         <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;">${c.type}</td>
@@ -1732,6 +2109,7 @@
                     `).join('')}
                   </tbody>
                 </table>
+                <div class="text-muted" style="font-size:11px;margin-top:6px;"><i class="fa-regular fa-hand-pointer me-1"></i>Click a case row to view / edit its details</div>
               </div>
               ` : ''}
 
@@ -1779,87 +2157,155 @@
     }
 
     /* ==========================================================
+       CASE BREAKDOWN DETAIL — click a case row to view / edit
+       ========================================================== */
+    function findCaseRecord(caseId) {
+      const pools = [doctorCaseData, isrCaseData];
+      for (let p = 0; p < pools.length; p++) {
+        const names = Object.keys(pools[p]);
+        for (let n = 0; n < names.length; n++) {
+          const list = pools[p][names[n]];
+          for (let i = 0; i < list.length; i++) {
+            if (list[i].id === caseId) return { list: list, index: i, employee: names[n] };
+          }
+        }
+      }
+      return null;
+    }
+
+    function openCaseBreakdownDetail(caseId) {
+      const rec = findCaseRecord(caseId);
+      const body = document.getElementById('caseBreakdownDetailBody');
+      if (!rec || !body) return;
+      const c = rec.list[rec.index];
+      const modalTitle = document.querySelector('#caseBreakdownDetailModal .modal-title');
+      if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-folder-open me-2 text-primary"></i>' + c.id;
+      document.getElementById('cbdCaseId').value = c.id;
+      document.getElementById('cbdOwner').value = rec.employee;
+      document.getElementById('cbdPatient').value = c.patient;
+      document.getElementById('cbdType').value = c.type;
+      document.getElementById('cbdStatus').value = c.status;
+      document.getElementById('cbdValue').value = c.productionValue;
+      const modal = new bootstrap.Modal(document.getElementById('caseBreakdownDetailModal'));
+      modal.show();
+    }
+
+    function saveCaseBreakdownDetail() {
+      const caseId = document.getElementById('cbdCaseId').value;
+      const rec = findCaseRecord(caseId);
+      if (!rec) return;
+      const c = rec.list[rec.index];
+      c.patient = document.getElementById('cbdPatient').value.trim() || c.patient;
+      c.type = document.getElementById('cbdType').value.trim() || c.type;
+      c.status = document.getElementById('cbdStatus').value;
+      const v = parseFloat(document.getElementById('cbdValue').value);
+      if (!isNaN(v) && v >= 0) {
+        c.productionValue = v;
+        c.value = '$' + v.toLocaleString('en-US', { minimumFractionDigits: 0 });
+      }
+
+      // Update the row inside the open breakdown modal (if visible)
+      const row = document.querySelector('#payrollDetailModalBody #caseRow-' + c.id);
+      if (row) {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 5) {
+          cells[1].innerText = c.patient;
+          cells[2].innerText = c.type;
+          const done = c.status === 'Completed' || c.status === 'Closed';
+          cells[3].innerHTML = '<span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;background:' +
+            (done ? '#ecfdf5' : '#fffbeb') + ';color:' + (done ? '#059669' : '#d97706') + ';">' + c.status + '</span>';
+          cells[4].innerText = c.value;
+        }
+        row.style.background = '#ecfdf5';
+        setTimeout(function () { row.style.background = ''; }, 1800);
+      }
+
+      const modal = bootstrap.Modal.getInstance(document.getElementById('caseBreakdownDetailModal'));
+      if (modal) modal.hide();
+    }
+
+    /* ==========================================================
        DOCTOR CASES — per-provider case breakdown
        ========================================================== */
     const doctorCaseData = {
       'Dr. Nancy Rose': [
-        { id: 'CASE-20260501-001', patient: 'Emily Johnson',   type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
-        { id: 'CASE-20260502-002', patient: 'Michael Torres',  type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
-        { id: 'CASE-20260503-003', patient: 'Sophia Adams',    type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
-        { id: 'CASE-20260504-004', patient: 'David Kim',       type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
-        { id: 'CASE-20260505-005', patient: 'Lisa Brown',      type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260506-006', patient: 'James Wilson',    type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260507-007', patient: 'Anna Martinez',   type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
-        { id: 'CASE-20260508-008', patient: 'Robert Chen',     type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260509-009', patient: 'Jessica Lee',     type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
-        { id: 'CASE-20260510-010', patient: 'Daniel Garcia',   type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260511-011', patient: 'Sarah Williams',  type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
-        { id: 'CASE-20260512-012', patient: 'Thomas Anderson', type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260513-013', patient: 'Mia Thompson',    type: 'Cosmetic Veneer',  status: 'Completed', value: '$3,500',  productionValue: 3500 },
-        { id: 'CASE-20260514-014', patient: 'William Davis',   type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
-        { id: 'CASE-20260515-015', patient: 'Olivia White',    type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 }
+        { id: 'CASE-20260501-001', patient: 'Emily Johnson', type: 'Cosmetic Veneer', status: 'Completed', value: '$3,500', productionValue: 3500 },
+        { id: 'CASE-20260502-002', patient: 'Michael Torres', type: 'Cosmetic Veneer', status: 'Completed', value: '$3,500', productionValue: 3500 },
+        { id: 'CASE-20260503-003', patient: 'Sophia Adams', type: 'Cosmetic Veneer', status: 'Completed', value: '$3,500', productionValue: 3500 },
+        { id: 'CASE-20260504-004', patient: 'David Kim', type: 'Cosmetic Veneer', status: 'Completed', value: '$3,500', productionValue: 3500 },
+        { id: 'CASE-20260505-005', patient: 'Lisa Brown', type: 'General Crown', status: 'Completed', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260506-006', patient: 'James Wilson', type: 'General Crown', status: 'Treatment', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260507-007', patient: 'Anna Martinez', type: 'General Filling', status: 'Completed', value: '$750', productionValue: 750 },
+        { id: 'CASE-20260508-008', patient: 'Robert Chen', type: 'General Crown', status: 'Completed', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260509-009', patient: 'Jessica Lee', type: 'Cosmetic Veneer', status: 'Completed', value: '$3,500', productionValue: 3500 },
+        { id: 'CASE-20260510-010', patient: 'Daniel Garcia', type: 'General Crown', status: 'Completed', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260511-011', patient: 'Sarah Williams', type: 'General Filling', status: 'Completed', value: '$750', productionValue: 750 },
+        { id: 'CASE-20260512-012', patient: 'Thomas Anderson', type: 'General Crown', status: 'Treatment', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260513-013', patient: 'Mia Thompson', type: 'Cosmetic Veneer', status: 'Completed', value: '$3,500', productionValue: 3500 },
+        { id: 'CASE-20260514-014', patient: 'William Davis', type: 'General Filling', status: 'Completed', value: '$750', productionValue: 750 },
+        { id: 'CASE-20260515-015', patient: 'Olivia White', type: 'General Crown', status: 'Treatment', value: '$1,200', productionValue: 1200 }
       ],
       'Dr. Miguel Ortiz': [
-        { id: 'CASE-20260501-016', patient: 'Ethan Moore',     type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260502-017', patient: 'Ava Taylor',      type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
-        { id: 'CASE-20260503-018', patient: 'Noah Jackson',    type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260504-019', patient: 'Isabella Harris', type: 'Ortho Braces',     status: 'Treatment', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260505-020', patient: 'Lucas Martin',    type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
-        { id: 'CASE-20260506-021', patient: 'Mia Robinson',    type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260507-022', patient: 'Alexander Clark', type: 'Ortho Braces',     status: 'Treatment', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260508-023', patient: 'Charlotte Lewis', type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
-        { id: 'CASE-20260509-024', patient: 'Benjamin Hall',   type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260510-025', patient: 'Amelia Allen',    type: 'Ortho Braces',     status: 'Completed', value: '$2,800',  productionValue: 2800 },
-        { id: 'CASE-20260511-026', patient: 'Henry Young',     type: 'Ortho Retainer',   status: 'Completed', value: '$1,500',  productionValue: 1500 },
-        { id: 'CASE-20260512-027', patient: 'Evelyn King',     type: 'Ortho Braces',     status: 'Treatment', value: '$2,800',  productionValue: 2800 }
+        { id: 'CASE-20260501-016', patient: 'Ethan Moore', type: 'Ortho Braces', status: 'Completed', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260502-017', patient: 'Ava Taylor', type: 'Ortho Retainer', status: 'Completed', value: '$1,500', productionValue: 1500 },
+        { id: 'CASE-20260503-018', patient: 'Noah Jackson', type: 'Ortho Braces', status: 'Completed', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260504-019', patient: 'Isabella Harris', type: 'Ortho Braces', status: 'Treatment', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260505-020', patient: 'Lucas Martin', type: 'Ortho Retainer', status: 'Completed', value: '$1,500', productionValue: 1500 },
+        { id: 'CASE-20260506-021', patient: 'Mia Robinson', type: 'Ortho Braces', status: 'Completed', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260507-022', patient: 'Alexander Clark', type: 'Ortho Braces', status: 'Treatment', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260508-023', patient: 'Charlotte Lewis', type: 'Ortho Retainer', status: 'Completed', value: '$1,500', productionValue: 1500 },
+        { id: 'CASE-20260509-024', patient: 'Benjamin Hall', type: 'Ortho Braces', status: 'Completed', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260510-025', patient: 'Amelia Allen', type: 'Ortho Braces', status: 'Completed', value: '$2,800', productionValue: 2800 },
+        { id: 'CASE-20260511-026', patient: 'Henry Young', type: 'Ortho Retainer', status: 'Completed', value: '$1,500', productionValue: 1500 },
+        { id: 'CASE-20260512-027', patient: 'Evelyn King', type: 'Ortho Braces', status: 'Treatment', value: '$2,800', productionValue: 2800 }
       ],
       'Dr. Amina Shah': [
-        { id: 'CASE-20260501-028', patient: 'Oliver Scott',    type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
-        { id: 'CASE-20260502-029', patient: 'Emma Green',      type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
-        { id: 'CASE-20260503-030', patient: 'Liam Baker',      type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
-        { id: 'CASE-20260504-031', patient: 'Sophia Nelson',   type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
-        { id: 'CASE-20260505-032', patient: 'Mason Carter',    type: 'Pediatric Filling',status: 'Treatment', value: '$600',    productionValue: 600 },
-        { id: 'CASE-20260506-033', patient: 'Isabella Rivera', type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
-        { id: 'CASE-20260507-034', patient: 'Logan Mitchell',  type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
-        { id: 'CASE-20260508-035', patient: 'Mia Roberts',     type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
-        { id: 'CASE-20260509-036', patient: 'Lucas Turner',    type: 'Pediatric Crown',  status: 'Treatment', value: '$1,100',  productionValue: 1100 },
-        { id: 'CASE-20260510-037', patient: 'Aria Phillips',   type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
-        { id: 'CASE-20260511-038', patient: 'Ethan Campbell',  type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
-        { id: 'CASE-20260512-039', patient: 'Harper Evans',    type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
-        { id: 'CASE-20260513-040', patient: 'Jackson Ward',    type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
-        { id: 'CASE-20260514-041', patient: 'Ella Collins',    type: 'Pediatric Filling',status: 'Treatment', value: '$600',    productionValue: 600 },
-        { id: 'CASE-20260515-042', patient: 'Aiden Stewart',   type: 'Pediatric Crown',  status: 'Completed', value: '$1,100',  productionValue: 1100 },
-        { id: 'CASE-20260516-043', patient: 'Scarlett Morris', type: 'Pediatric Exam',   status: 'Completed', value: '$350',    productionValue: 350 },
-        { id: 'CASE-20260517-044', patient: 'Henry Rogers',    type: 'Pediatric Filling',status: 'Completed', value: '$600',    productionValue: 600 },
-        { id: 'CASE-20260518-045', patient: 'Luna Reed',       type: 'Pediatric Crown',  status: 'Treatment', value: '$1,100',  productionValue: 1100 }
+        { id: 'CASE-20260501-028', patient: 'Oliver Scott', type: 'Pediatric Exam', status: 'Completed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260502-029', patient: 'Emma Green', type: 'Pediatric Filling', status: 'Completed', value: '$600', productionValue: 600 },
+        { id: 'CASE-20260503-030', patient: 'Liam Baker', type: 'Pediatric Crown', status: 'Completed', value: '$1,100', productionValue: 1100 },
+        { id: 'CASE-20260504-031', patient: 'Sophia Nelson', type: 'Pediatric Exam', status: 'Completed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260505-032', patient: 'Mason Carter', type: 'Pediatric Filling', status: 'Treatment', value: '$600', productionValue: 600 },
+        { id: 'CASE-20260506-033', patient: 'Isabella Rivera', type: 'Pediatric Crown', status: 'Completed', value: '$1,100', productionValue: 1100 },
+        { id: 'CASE-20260507-034', patient: 'Logan Mitchell', type: 'Pediatric Exam', status: 'Completed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260508-035', patient: 'Mia Roberts', type: 'Pediatric Filling', status: 'Completed', value: '$600', productionValue: 600 },
+        { id: 'CASE-20260509-036', patient: 'Lucas Turner', type: 'Pediatric Crown', status: 'Treatment', value: '$1,100', productionValue: 1100 },
+        { id: 'CASE-20260510-037', patient: 'Aria Phillips', type: 'Pediatric Exam', status: 'Completed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260511-038', patient: 'Ethan Campbell', type: 'Pediatric Filling', status: 'Completed', value: '$600', productionValue: 600 },
+        { id: 'CASE-20260512-039', patient: 'Harper Evans', type: 'Pediatric Crown', status: 'Completed', value: '$1,100', productionValue: 1100 },
+        { id: 'CASE-20260513-040', patient: 'Jackson Ward', type: 'Pediatric Exam', status: 'Completed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260514-041', patient: 'Ella Collins', type: 'Pediatric Filling', status: 'Treatment', value: '$600', productionValue: 600 },
+        { id: 'CASE-20260515-042', patient: 'Aiden Stewart', type: 'Pediatric Crown', status: 'Completed', value: '$1,100', productionValue: 1100 },
+        { id: 'CASE-20260516-043', patient: 'Scarlett Morris', type: 'Pediatric Exam', status: 'Completed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260517-044', patient: 'Henry Rogers', type: 'Pediatric Filling', status: 'Completed', value: '$600', productionValue: 600 },
+        { id: 'CASE-20260518-045', patient: 'Luna Reed', type: 'Pediatric Crown', status: 'Treatment', value: '$1,100', productionValue: 1100 }
       ],
       'Dr. James Wilson': [
-        { id: 'CASE-20260501-046', patient: 'Jack Cooper',     type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260502-047', patient: 'Lily Adams',      type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
-        { id: 'CASE-20260503-048', patient: 'Dylan Murphy',    type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260504-049', patient: 'Chloe Foster',    type: 'General Cleaning', status: 'Completed', value: '$300',    productionValue: 300 },
-        { id: 'CASE-20260505-050', patient: 'Owen Price',      type: 'General Crown',    status: 'Completed', value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260506-051', patient: 'Hannah Wood',     type: 'General Filling',  status: 'Completed', value: '$750',    productionValue: 750 },
-        { id: 'CASE-20260507-052', patient: 'Samuel Brooks',   type: 'General Crown',    status: 'Treatment', value: '$1,200',  productionValue: 1200 }
+        { id: 'CASE-20260501-046', patient: 'Jack Cooper', type: 'General Crown', status: 'Completed', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260502-047', patient: 'Lily Adams', type: 'General Filling', status: 'Completed', value: '$750', productionValue: 750 },
+        { id: 'CASE-20260503-048', patient: 'Dylan Murphy', type: 'General Crown', status: 'Treatment', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260504-049', patient: 'Chloe Foster', type: 'General Cleaning', status: 'Completed', value: '$300', productionValue: 300 },
+        { id: 'CASE-20260505-050', patient: 'Owen Price', type: 'General Crown', status: 'Completed', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260506-051', patient: 'Hannah Wood', type: 'General Filling', status: 'Completed', value: '$750', productionValue: 750 },
+        { id: 'CASE-20260507-052', patient: 'Samuel Brooks', type: 'General Crown', status: 'Treatment', value: '$1,200', productionValue: 1200 }
       ],
       'Dr. Sarah Chen': [
-        { id: 'CASE-20260501-053', patient: 'Grace Bennett',   type: 'Root Canal Molar', status: 'Completed', value: '$2,400',  productionValue: 2400 },
-        { id: 'CASE-20260502-054', patient: 'Nathan Gray',     type: 'Root Canal Premolar',status: 'Completed',value: '$1,800',  productionValue: 1800 },
-        { id: 'CASE-20260503-055', patient: 'Victoria James',  type: 'Root Canal Molar', status: 'Treatment', value: '$2,400',  productionValue: 2400 },
-        { id: 'CASE-20260504-056', patient: 'Ryan Cooper',     type: 'Root Canal Incisor',status: 'Completed',value: '$1,200',  productionValue: 1200 },
-        { id: 'CASE-20260505-057', patient: 'Zoe Peterson',    type: 'Root Canal Molar', status: 'Completed', value: '$2,400',  productionValue: 2400 }
+        { id: 'CASE-20260501-053', patient: 'Grace Bennett', type: 'Root Canal Molar', status: 'Completed', value: '$2,400', productionValue: 2400 },
+        { id: 'CASE-20260502-054', patient: 'Nathan Gray', type: 'Root Canal Premolar', status: 'Completed', value: '$1,800', productionValue: 1800 },
+        { id: 'CASE-20260503-055', patient: 'Victoria James', type: 'Root Canal Molar', status: 'Treatment', value: '$2,400', productionValue: 2400 },
+        { id: 'CASE-20260504-056', patient: 'Ryan Cooper', type: 'Root Canal Incisor', status: 'Completed', value: '$1,200', productionValue: 1200 },
+        { id: 'CASE-20260505-057', patient: 'Zoe Peterson', type: 'Root Canal Molar', status: 'Completed', value: '$2,400', productionValue: 2400 }
       ],
       'Dr. Robert Kim': [
-        { id: 'CASE-20260501-058', patient: 'Aaron Bailey',    type: 'Wisdom Extraction',status: 'Completed', value: '$1,500',  productionValue: 1500 },
-        { id: 'CASE-20260502-059', patient: 'Natalie Brooks',  type: 'Impacted Canine',  status: 'Completed', value: '$2,200',  productionValue: 2200 },
-        { id: 'CASE-20260503-060', patient: 'Tyler Coleman',   type: 'Wisdom Extraction',status: 'Treatment', value: '$1,500',  productionValue: 1500 }
+        { id: 'CASE-20260501-058', patient: 'Aaron Bailey', type: 'Wisdom Extraction', status: 'Completed', value: '$1,500', productionValue: 1500 },
+        { id: 'CASE-20260502-059', patient: 'Natalie Brooks', type: 'Impacted Canine', status: 'Completed', value: '$2,200', productionValue: 2200 },
+        { id: 'CASE-20260503-060', patient: 'Tyler Coleman', type: 'Wisdom Extraction', status: 'Treatment', value: '$1,500', productionValue: 1500 }
       ],
       'Dr. Maria Garcia': [
-        { id: 'CASE-20260501-061', patient: 'Katherine Hayes', type: 'Scaling & Root Plan',status:'Completed', value: '$1,800',  productionValue: 1800 },
-        { id: 'CASE-20260502-062', patient: 'Brendan Fox',     type: 'Periodontal Maint', status: 'Completed', value: '$750',    productionValue: 750 }
+        { id: 'CASE-20260501-061', patient: 'Katherine Hayes', type: 'Scaling & Root Plan', status: 'Completed', value: '$1,800', productionValue: 1800 },
+        { id: 'CASE-20260502-062', patient: 'Brendan Fox', type: 'Periodontal Maint', status: 'Completed', value: '$750', productionValue: 750 }
       ],
       'Dr. David Park': [
-        { id: 'CASE-20260501-063', patient: 'Rebecca Stone',   type: 'Full Denture',     status: 'Completed', value: '$3,500',  productionValue: 3500 }
+        { id: 'CASE-20260501-063', patient: 'Rebecca Stone', type: 'Full Denture', status: 'Completed', value: '$3,500', productionValue: 3500 }
       ]
     };
 
@@ -1872,54 +2318,54 @@
        ========================================================== */
     const isrCaseData = {
       'Mike Anderson': [
-        { id: 'CASE-20260501-101', patient: 'John Peterson',  type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
-        { id: 'CASE-20260502-102', patient: 'Maria Sanchez',  type: 'Treatment Coordination', status: 'Closed', value: '$450', productionValue: 450 },
-        { id: 'CASE-20260503-103', patient: 'Robert Blake',   type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
-        { id: 'CASE-20260504-104', patient: 'Jennifer Lee',   type: 'Financial Arrangement', status: 'Closed', value: '$180', productionValue: 180 },
-        { id: 'CASE-20260505-105', patient: 'William Chen',   type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
-        { id: 'CASE-20260506-106', patient: 'Amanda Torres',  type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
-        { id: 'CASE-20260507-107', patient: 'David Kim',      type: 'Insurance Verification', status: 'Closed', value: '$290', productionValue: 290 },
-        { id: 'CASE-20260508-108', patient: 'Sophia Brown',   type: 'Treatment Coordination', status: 'Closed', value: '$480', productionValue: 480 },
-        { id: 'CASE-20260509-109', patient: 'James Wilson',   type: 'Financial Arrangement', status: 'Closed', value: '$200', productionValue: 200 },
-        { id: 'CASE-20260510-110', patient: 'Olivia Davis',   type: 'Insurance Verification', status: 'Closed', value: '$350', productionValue: 350 },
-        { id: 'CASE-20260511-111', patient: 'Ethan Moore',    type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
-        { id: 'CASE-20260512-112', patient: 'Mia Garcia',     type: 'Insurance Verification', status: 'Closed', value: '$300', productionValue: 300 },
+        { id: 'CASE-20260501-101', patient: 'John Peterson', type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
+        { id: 'CASE-20260502-102', patient: 'Maria Sanchez', type: 'Treatment Coordination', status: 'Closed', value: '$450', productionValue: 450 },
+        { id: 'CASE-20260503-103', patient: 'Robert Blake', type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
+        { id: 'CASE-20260504-104', patient: 'Jennifer Lee', type: 'Financial Arrangement', status: 'Closed', value: '$180', productionValue: 180 },
+        { id: 'CASE-20260505-105', patient: 'William Chen', type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
+        { id: 'CASE-20260506-106', patient: 'Amanda Torres', type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260507-107', patient: 'David Kim', type: 'Insurance Verification', status: 'Closed', value: '$290', productionValue: 290 },
+        { id: 'CASE-20260508-108', patient: 'Sophia Brown', type: 'Treatment Coordination', status: 'Closed', value: '$480', productionValue: 480 },
+        { id: 'CASE-20260509-109', patient: 'James Wilson', type: 'Financial Arrangement', status: 'Closed', value: '$200', productionValue: 200 },
+        { id: 'CASE-20260510-110', patient: 'Olivia Davis', type: 'Insurance Verification', status: 'Closed', value: '$350', productionValue: 350 },
+        { id: 'CASE-20260511-111', patient: 'Ethan Moore', type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
+        { id: 'CASE-20260512-112', patient: 'Mia Garcia', type: 'Insurance Verification', status: 'Closed', value: '$300', productionValue: 300 },
         { id: 'CASE-20260513-113', patient: 'Lucas Martinez', type: 'Financial Arrangement', status: 'Closed', value: '$190', productionValue: 190 },
-        { id: 'CASE-20260514-114', patient: 'Ava Thompson',   type: 'Insurance Verification', status: 'Closed', value: '$330', productionValue: 330 }
+        { id: 'CASE-20260514-114', patient: 'Ava Thompson', type: 'Insurance Verification', status: 'Closed', value: '$330', productionValue: 330 }
       ],
       'Laura Kim': [
-        { id: 'CASE-20260501-201', patient: 'Charlotte White',  type: 'Treatment Coordination', status: 'Closed', value: '$430', productionValue: 430 },
-        { id: 'CASE-20260502-202', patient: 'Henry Jackson',    type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
-        { id: 'CASE-20260503-203', patient: 'Ella Harris',      type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
-        { id: 'CASE-20260504-204', patient: 'Alexander Clark',  type: 'Financial Arrangement', status: 'Closed', value: '$195', productionValue: 195 },
-        { id: 'CASE-20260505-205', patient: 'Scarlett Lewis',   type: 'Treatment Coordination', status: 'Closed', value: '$460', productionValue: 460 },
-        { id: 'CASE-20260506-206', patient: 'Benjamin Hall',    type: 'Insurance Verification', status: 'Closed', value: '$340', productionValue: 340 },
-        { id: 'CASE-20260507-207', patient: 'Amelia Young',     type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
-        { id: 'CASE-20260508-208', patient: 'Lucas King',       type: 'Insurance Verification', status: 'Closed', value: '$300', productionValue: 300 },
-        { id: 'CASE-20260509-209', patient: 'Harper Wright',    type: 'Financial Arrangement', status: 'Closed', value: '$185', productionValue: 185 },
-        { id: 'CASE-20260510-210', patient: 'Evelyn Lopez',     type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
-        { id: 'CASE-20260511-211', patient: 'Logan Green',      type: 'Treatment Coordination', status: 'Closed', value: '$450', productionValue: 450 }
+        { id: 'CASE-20260501-201', patient: 'Charlotte White', type: 'Treatment Coordination', status: 'Closed', value: '$430', productionValue: 430 },
+        { id: 'CASE-20260502-202', patient: 'Henry Jackson', type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260503-203', patient: 'Ella Harris', type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
+        { id: 'CASE-20260504-204', patient: 'Alexander Clark', type: 'Financial Arrangement', status: 'Closed', value: '$195', productionValue: 195 },
+        { id: 'CASE-20260505-205', patient: 'Scarlett Lewis', type: 'Treatment Coordination', status: 'Closed', value: '$460', productionValue: 460 },
+        { id: 'CASE-20260506-206', patient: 'Benjamin Hall', type: 'Insurance Verification', status: 'Closed', value: '$340', productionValue: 340 },
+        { id: 'CASE-20260507-207', patient: 'Amelia Young', type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
+        { id: 'CASE-20260508-208', patient: 'Lucas King', type: 'Insurance Verification', status: 'Closed', value: '$300', productionValue: 300 },
+        { id: 'CASE-20260509-209', patient: 'Harper Wright', type: 'Financial Arrangement', status: 'Closed', value: '$185', productionValue: 185 },
+        { id: 'CASE-20260510-210', patient: 'Evelyn Lopez', type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
+        { id: 'CASE-20260511-211', patient: 'Logan Green', type: 'Treatment Coordination', status: 'Closed', value: '$450', productionValue: 450 }
       ],
       'Reggie Hart': [
-        { id: 'CASE-20260501-301', patient: 'Aria Nelson',      type: 'Insurance Verification', status: 'Closed', value: '$290', productionValue: 290 },
-        { id: 'CASE-20260502-302', patient: 'Mason Carter',     type: 'Treatment Coordination', status: 'Closed', value: '$410', productionValue: 410 },
-        { id: 'CASE-20260503-303', patient: 'Ella Mitchell',    type: 'Insurance Verification', status: 'Closed', value: '$270', productionValue: 270 },
-        { id: 'CASE-20260504-304', patient: 'Oliver Adams',     type: 'Financial Arrangement', status: 'Closed', value: '$175', productionValue: 175 },
-        { id: 'CASE-20260505-305', patient: 'Sophia Roberts',   type: 'Insurance Verification', status: 'Closed', value: '$330', productionValue: 330 },
-        { id: 'CASE-20260506-306', patient: 'Jack Turner',      type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
-        { id: 'CASE-20260507-307', patient: 'Lily Phillips',    type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
-        { id: 'CASE-20260508-308', patient: 'Dylan Campbell',   type: 'Insurance Verification', status: 'Closed', value: '$285', productionValue: 285 },
-        { id: 'CASE-20260509-309', patient: 'Chloe Evans',      type: 'Financial Arrangement', status: 'Closed', value: '$180', productionValue: 180 }
+        { id: 'CASE-20260501-301', patient: 'Aria Nelson', type: 'Insurance Verification', status: 'Closed', value: '$290', productionValue: 290 },
+        { id: 'CASE-20260502-302', patient: 'Mason Carter', type: 'Treatment Coordination', status: 'Closed', value: '$410', productionValue: 410 },
+        { id: 'CASE-20260503-303', patient: 'Ella Mitchell', type: 'Insurance Verification', status: 'Closed', value: '$270', productionValue: 270 },
+        { id: 'CASE-20260504-304', patient: 'Oliver Adams', type: 'Financial Arrangement', status: 'Closed', value: '$175', productionValue: 175 },
+        { id: 'CASE-20260505-305', patient: 'Sophia Roberts', type: 'Insurance Verification', status: 'Closed', value: '$330', productionValue: 330 },
+        { id: 'CASE-20260506-306', patient: 'Jack Turner', type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
+        { id: 'CASE-20260507-307', patient: 'Lily Phillips', type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260508-308', patient: 'Dylan Campbell', type: 'Insurance Verification', status: 'Closed', value: '$285', productionValue: 285 },
+        { id: 'CASE-20260509-309', patient: 'Chloe Evans', type: 'Financial Arrangement', status: 'Closed', value: '$180', productionValue: 180 }
       ],
       'Sarah Mitchell': [
-        { id: 'CASE-20260501-401', patient: 'Nathan Baker',     type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
-        { id: 'CASE-20260502-402', patient: 'Grace Collins',    type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
-        { id: 'CASE-20260503-403', patient: 'Samuel Ward',      type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
-        { id: 'CASE-20260504-404', patient: 'Victoria Rivera',  type: 'Insurance Verification', status: 'Closed', value: '$295', productionValue: 295 },
-        { id: 'CASE-20260505-405', patient: 'Ryan Cooper',      type: 'Financial Arrangement', status: 'Closed', value: '$185', productionValue: 185 },
-        { id: 'CASE-20260506-406', patient: 'Zoe Patterson',   type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
-        { id: 'CASE-20260507-407', patient: 'Aaron Bailey',     type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
-        { id: 'CASE-20260508-408', patient: 'Natalie Foster',   type: 'Insurance Verification', status: 'Closed', value: '$305', productionValue: 305 }
+        { id: 'CASE-20260501-401', patient: 'Nathan Baker', type: 'Insurance Verification', status: 'Closed', value: '$310', productionValue: 310 },
+        { id: 'CASE-20260502-402', patient: 'Grace Collins', type: 'Treatment Coordination', status: 'Closed', value: '$420', productionValue: 420 },
+        { id: 'CASE-20260503-403', patient: 'Samuel Ward', type: 'Insurance Verification', status: 'Closed', value: '$280', productionValue: 280 },
+        { id: 'CASE-20260504-404', patient: 'Victoria Rivera', type: 'Insurance Verification', status: 'Closed', value: '$295', productionValue: 295 },
+        { id: 'CASE-20260505-405', patient: 'Ryan Cooper', type: 'Financial Arrangement', status: 'Closed', value: '$185', productionValue: 185 },
+        { id: 'CASE-20260506-406', patient: 'Zoe Patterson', type: 'Treatment Coordination', status: 'Closed', value: '$440', productionValue: 440 },
+        { id: 'CASE-20260507-407', patient: 'Aaron Bailey', type: 'Insurance Verification', status: 'Closed', value: '$320', productionValue: 320 },
+        { id: 'CASE-20260508-408', patient: 'Natalie Foster', type: 'Insurance Verification', status: 'Closed', value: '$305', productionValue: 305 }
       ]
     };
 
@@ -2192,7 +2638,7 @@
                   </thead>
                   <tbody>
                     ${doctorCases.map(c => `
-                      <tr>
+                      <tr id="caseRow-${c.id}" onclick="openCaseBreakdownDetail('${c.id}')" title="Click to view / edit case">
                         <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-family:monospace;font-size:10.5px;color:#6b7280;">${c.id}</td>
                         <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;font-weight:500;">${c.patient}</td>
                         <td style="padding:5px 8px;border-bottom:1px solid #f1f4f9;">${c.type}</td>
@@ -2202,6 +2648,7 @@
                     `).join('')}
                   </tbody>
                 </table>
+                <div class="text-muted" style="font-size:11px;margin-top:6px;"><i class="fa-regular fa-hand-pointer me-1"></i>Click a case row to view / edit its details</div>
               </div>
               ` : ''}
 
@@ -2294,6 +2741,16 @@
       return '$' + Number(value || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
+    window.addEventListener('DOMContentLoaded', function () {
+      renderPacketCards();
+      document.querySelectorAll('#packetTableBody tr').forEach(function (row) {
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', function () {
+          openPacketRowDetail(row);
+        });
+      });
+    });
+
     /* ---- Editable Summary Card Toggle & Save ---- */
     function toggleSummaryEdit(btn) {
       const card = btn.closest('.detail-summary-card');
@@ -2357,14 +2814,440 @@
        ========================================================== */
     function finalizePayroll() {
       if (confirm('Are you sure you want to finalize and lock this payroll? This action CANNOT be undone.')) {
-        alert('✅ Payroll has been finalized and locked successfully!\n\nAll Staff have been paid for May 1 – May 15, 2026.\nA payroll packet has been generated and saved.\n\nStaff can now view their statements and flag any discrepancies if needed.');
-        goToStep(1);
+        // Mark the current in-progress run as Locked on Screen 1
+        const inProgressRow = document.querySelector('#runsTableBody tr[data-status="inprogress"]');
+        if (inProgressRow) {
+          inProgressRow.setAttribute('data-status', 'locked');
+          const cells = inProgressRow.querySelectorAll('td');
+          if (cells.length >= 6) {
+            cells[4].innerHTML = '<span class="status-pill locked">Locked</span>';
+            cells[5].innerHTML = '<div class="d-flex gap-1"><button class="btn btn-sm btn-outline-navy" onclick="openPayrollPacket()">View Packet</button><button class="btn btn-sm btn-outline-navy" onclick="openFlagsPanel()">Flags</button></div>';
+          }
+        }
+        const countIn = document.getElementById('countInProgress');
+        const countLk = document.getElementById('countLocked');
+        if (countIn) countIn.textContent = Math.max(0, (parseInt(countIn.textContent) || 0) - 1);
+        if (countLk) countLk.textContent = (parseInt(countLk.textContent) || 0) + 1;
+
+        // Show the success banner and open the Payroll Packet screen (Step 4)
+        const banner = document.getElementById('packetSuccessBanner');
+        if (banner) banner.style.display = 'flex';
+        goToStep(4);
       }
     }
 
     /* ==========================================================
        PAYROLL PACKET — VIEW FROM LOCKED RUNS
        ========================================================== */
+    const packetEmployeeDetails = {
+      'Dr. Nancy Rose': {
+        name: 'Dr. Nancy Rose',
+        department: 'Provider',
+        payType: 'Provider',
+        employeeId: 'PRV001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$4,250.00',
+        deductions: '$212.50',
+        net: '$4,037.50',
+        earnings: [
+          { desc: 'Service Pay', units: '15 cases', rate: '$350 / $150 per case', amount: '$4,250.00' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$212.50' }
+        ]
+      },
+      'Dr. Miguel Ortiz': {
+        name: 'Dr. Miguel Ortiz',
+        department: 'Provider',
+        payType: 'Provider',
+        employeeId: 'PRV002',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$3,950.00',
+        deductions: '$197.50',
+        net: '$3,752.50',
+        earnings: [
+          { desc: 'Service Pay', units: '12 cases', rate: '$350 / $150 per case', amount: '$3,950.00' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$197.50' }
+        ]
+      },
+      'Dr. Amina Shah': {
+        name: 'Dr. Amina Shah',
+        department: 'Provider',
+        payType: 'Provider',
+        employeeId: 'PRV003',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$4,000.00',
+        deductions: '$200.00',
+        net: '$3,800.00',
+        earnings: [
+          { desc: 'Service Pay', units: '18 cases', rate: '$350 / $150 per case', amount: '$4,000.00' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$200.00' }
+        ]
+      },
+      'John Smith': {
+        name: 'John Smith',
+        department: 'SDR',
+        payType: 'Hourly',
+        employeeId: 'SDR001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$1,145.50',
+        deductions: '$57.28',
+        net: '$1,088.22',
+        earnings: [
+          { desc: 'Regular Hours', units: '40 hrs', rate: '$15.00/hr', amount: '$1,145.50' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$57.28' }
+        ]
+      },
+      'Sarah Johnson': {
+        name: 'Sarah Johnson',
+        department: 'CE',
+        payType: 'Hourly',
+        employeeId: 'CE001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$1,375.20',
+        deductions: '$68.76',
+        net: '$1,306.44',
+        earnings: [
+          { desc: 'Regular Hours', units: '38 hrs', rate: '$29.75/hr', amount: '$1,375.20' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$68.76' }
+        ]
+      },
+      'Mike Anderson': {
+        name: 'Mike Anderson',
+        department: 'ISR',
+        payType: 'Commission',
+        employeeId: 'ISR001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$2,350.00',
+        deductions: '$117.50',
+        net: '$2,232.50',
+        earnings: [
+          { desc: 'Commission', units: '14 cases', rate: '8.5% commission', amount: '$2,350.00' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$117.50' }
+        ]
+      },
+      'Ashley Williams': {
+        name: 'Ashley Williams',
+        department: 'Marketing',
+        payType: 'Salary',
+        employeeId: 'MKT001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$2,000.00',
+        deductions: '$100.00',
+        net: '$1,900.00',
+        earnings: [
+          { desc: 'Salary', units: '—', rate: '$2,000/mo', amount: '$2,000.00' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$100.00' }
+        ]
+      },
+      'Chris Brown': {
+        name: 'Chris Brown',
+        department: 'Social Media',
+        payType: 'Hourly',
+        employeeId: 'SM001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$1,020.75',
+        deductions: '$51.04',
+        net: '$969.71',
+        earnings: [
+          { desc: 'Regular Hours', units: '38 hrs', rate: '$15.26/hr', amount: '$1,020.75' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$51.04' }
+        ]
+      },
+      'Emma Davis': {
+        name: 'Emma Davis',
+        department: 'Dental Assistant',
+        payType: 'Hourly',
+        employeeId: 'DA001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$980.30',
+        deductions: '$49.02',
+        net: '$931.28',
+        earnings: [
+          { desc: 'Regular Hours', units: '38 hrs', rate: '$15.00/hr', amount: '$980.30' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$49.02' }
+        ]
+      },
+      'Daniel Martinez': {
+        name: 'Daniel Martinez',
+        department: 'Quote Specialist',
+        payType: 'Hourly',
+        employeeId: 'QS001',
+        payPeriod: 'May 1 – May 15, 2026',
+        payDate: 'May 16, 2026',
+        gross: '$1,150.25',
+        deductions: '$57.51',
+        net: '$1,092.74',
+        earnings: [
+          { desc: 'Regular Hours', units: '38 hrs', rate: '$15.00/hr', amount: '$1,150.25' }
+        ],
+        deductionsList: [
+          { desc: 'Tax & Benefits', amount: '$57.51' }
+        ]
+      }
+    };
+
+    const packetAvatarUrls = {
+      'Dr. Nancy Rose': 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=80&q=80',
+      'Dr. Miguel Ortiz': 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=80&q=80',
+      'Dr. Amina Shah': 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=80&q=80',
+      'John Smith': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80',
+      'Sarah Johnson': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80',
+      'Mike Anderson': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80',
+      'Ashley Williams': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80',
+      'Chris Brown': 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=80&q=80',
+      'Emma Davis': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80',
+      'Daniel Martinez': 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=80&q=80'
+    };
+
+    function renderPacketCards() {
+      const grid = document.getElementById('packetCardGrid');
+      if (!grid) return;
+      const names = Object.keys(packetEmployeeDetails);
+      grid.innerHTML = names.map(function (name) {
+        const d = packetEmployeeDetails[name];
+        const earningsRows = d.earnings.map(function (item) {
+          return '<tr><td>' + item.desc + '</td><td>' + item.units + '</td><td>' + item.rate + '</td></tr>';
+        }).join('');
+        const deductionsRows = d.deductionsList.map(function (item) {
+          return '<tr><td>' + item.desc + '</td><td class="text-end" style="color:#dc2626;">(' + item.amount.replace('-', '') + ')</td></tr>';
+        }).join('');
+        return `
+      <div class="col-12 col-md-6 col-xl-4 d-flex">
+      <div class="packet-stub-card w-100" onclick="openPacketCardDetail('${name.replace(/'/g, "\\'")}')" title="Click to enlarge pay stub">
+        <div class="packet-stub-head">
+          <div class="packet-stub-logo"><i class="fa-solid fa-bolt text-primary me-1"></i>NEXATRACK</div>
+          <div class="packet-stub-right">
+            <div class="packet-stub-title">Payroll Statement</div>
+            <div class="packet-stub-sub">Pay Date: ${d.payDate}</div>
+          </div>
+        </div>
+        <div class="packet-stub-meta">
+          <span class="badge" style="background:#dcfce7;color:#16a34a;font-weight:700;padding:4px 10px;border-radius:999px;font-size:10px;">Locked</span>
+          <span style="font-size:11px;color:#6b7280;">Pay Period: <strong style="color:#374151;">${d.payPeriod}</strong></span>
+        </div>
+        <div class="packet-stub-body">
+          <div>
+            <div class="packet-stub-emp-label">Employee</div>
+            <div class="packet-stub-emp-name">${name}</div>
+            <div class="packet-stub-emp-sub">${d.payType}</div>
+            <div class="packet-stub-emp-id">Employee ID: ${d.employeeId}</div>
+          </div>
+          <div class="packet-stub-check">
+            <div class="packet-stub-check-title">Check Preview</div>
+            <div class="packet-stub-check-row"><span>Pay To The Order Of</span><span class="script">${name}</span></div>
+            <hr style="margin:4px 0;">
+            <div class="packet-stub-check-row"><span>Memo</span><span class="script">${d.payPeriod}</span></div>
+            <hr style="margin:4px 0;">
+            <div class="packet-stub-check-row" style="align-items:center;margin-top:6px;">
+              <span style="font-size:10px;color:#9ca3af;">Amount</span>
+              <span class="packet-stub-check-amt">${d.net}</span>
+            </div>
+          </div>
+        </div>
+        <div class="packet-stub-tables">
+          <div>
+            <div class="packet-stub-table-title">Earnings</div>
+            <table class="packet-stub-table">
+              <thead><tr><th>Description</th><th>Units</th><th>Rate</th></tr></thead>
+              <tbody>${earningsRows}</tbody>
+              <tfoot><tr><td class="fw-bold">Total</td><td></td><td class="fw-bold">${d.gross}</td></tr></tfoot>
+            </table>
+          </div>
+          <div>
+            <div class="packet-stub-table-title">Deductions</div>
+            <table class="packet-stub-table">
+              <thead><tr><th>Description</th><th class="text-end">Amount</th></tr></thead>
+              <tbody>${deductionsRows}</tbody>
+              <tfoot><tr><td class="fw-bold">Total</td><td class="text-end fw-bold" style="color:#dc2626;">(${d.deductions.replace('-', '')})</td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="packet-stub-total">
+          <span class="lbl">Total Pay (Net)</span>
+          <span class="val">${d.net}</span>
+        </div>
+        <div class="packet-stub-thanks">Thank you for your hard work!</div>
+      </div>
+      </div>`;
+      }).join('');
+
+      const bar = document.getElementById('packetTotalsBar');
+      if (bar) {
+        const sum = function (f) {
+          return names.reduce(function (s, n) {
+            return s + (parseFloat(String(packetEmployeeDetails[n][f]).replace(/[^0-9.]/g, '')) || 0);
+          }, 0);
+        };
+        bar.innerHTML =
+          '<span class="fw-bold">TOTAL (' + names.length + ' Staff)</span>' +
+          '<span class="fw-bold text-success">' + formatCurrency(sum('gross')) + '</span>' +
+          '<span class="fw-bold" style="color:#dc2626;">' + formatCurrency(sum('deductions')) + '</span>' +
+          '<span class="fw-bold text-success">' + formatCurrency(sum('net')) + '</span>';
+      }
+    }
+
+    function openPacketCardDetail(name) {
+      openPacketRowDetail(name);
+    }
+
+function openPacketRowDetail(row) {
+  let name;
+  if (typeof row === 'string') {
+    name = row;
+  } else {
+    const nameEl = row.querySelector('td:first-child .fw-semibold');
+    name = nameEl ? nameEl.innerText.trim() : row.cells[0].innerText.trim();
+  }
+  const details = packetEmployeeDetails[name];
+  const modalTitle = document.querySelector('#payrollDetailModal .modal-title');
+  const modalSubtitle = document.querySelector('#payrollDetailModal .modal-subtitle');
+  const saveBtn = document.getElementById('savePayrollDetailBtn');
+  const approveBtn = document.getElementById('approvePayrollDetailBtn');
+  if (saveBtn) saveBtn.style.display = 'none';
+  if (approveBtn) approveBtn.style.display = 'none';
+  if (modalTitle) modalTitle.innerHTML = '<i class="fa-solid fa-file-lines me-2 text-primary"></i> Payroll Statement / Pay Stub (Employee View)';
+  if (modalSubtitle) modalSubtitle.innerText = 'View payments and history';
+
+  const body = document.getElementById('payrollDetailModalBody');
+  if (!body) return;
+
+  const earningsRows = details ? details.earnings.map(item => `
+        <tr>
+          <td>${item.desc}</td>
+          <td>${item.units}</td>
+          <td>${item.rate}</td>
+        </tr>
+      `).join('') : '';
+
+  const deductionsRows = details ? details.deductionsList.map(item => `
+        <tr>
+          <td>${item.desc}</td>
+          <td class="text-end" style="color:#dc2626;">(${item.amount.replace('-', '')})</td>
+        </tr>
+      `).join('') : '';
+
+  body.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <div style="font-size:14px;color:#374151;">Pay Period: <strong>${details ? details.payPeriod : 'May 1 – May 15, 2026'}</strong></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="badge" style="background:#dcfce7;color:#16a34a;font-weight:700;padding:6px 14px;border-radius:999px;">Locked</span>
+        <button class="btn btn-outline-primary btn-sm" style="border-radius:10px;">
+          <i class="fa-solid fa-download me-1"></i> Download PDF
+        </button>
+      </div>
+    </div>
+
+    <div style="border:1px solid #e5e7eb;border-radius:18px;padding:28px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+        <div style="font-size:20px;font-weight:800;color:#111827;letter-spacing:.3px;">
+          <i class="fa-solid fa-bolt text-primary me-1"></i>NEXATRACK
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#111827;">Payroll Statement</div>
+          <div style="font-size:12px;color:#6b7280;">Pay Date: ${details ? details.payDate : 'May 16, 2026'}</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:24px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#9ca3af;margin-bottom:4px;">Employee</div>
+          <div style="font-size:16px;font-weight:700;color:#111827;">${details ? details.name : name}</div>
+          <div style="color:#6b7280;font-size:13px;">${details ? details.payType : ''}</div>
+          <div style="margin-top:6px;font-size:12px;color:#9ca3af;">Employee ID: ${details ? details.employeeId : '—'}</div>
+        </div>
+
+        <div style="flex:1;min-width:260px;max-width:460px;border:1px solid #d1d5db;border-radius:14px;padding:18px 20px;background:#fafafa;">
+          <div style="font-family:'Brush Script MT', cursive;font-size:20px;color:#111827;margin-bottom:14px;">Check Preview</div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#6b7280;margin-bottom:4px;">
+            <span>Pay To The Order Of</span>
+            <span style="font-family:'Brush Script MT', cursive;font-size:16px;color:#111827;">${details ? details.name : name}</span>
+          </div>
+          <hr style="margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#6b7280;margin-bottom:4px;">
+            <span>Memo</span>
+            <span style="font-family:'Brush Script MT', cursive;font-size:16px;color:#111827;">${details ? details.payPeriod : 'May 1 – May 15, 2026'}</span>
+          </div>
+          <hr style="margin:6px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+            <span style="font-size:12px;color:#9ca3af;">Amount</span>
+            <span style="font-size:22px;font-weight:800;color:#111827;">${details ? details.net : '$0.00'}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Earnings</div>
+          <table class="wf-table mb-0" style="font-size:13px;width:100%;">
+            <thead>
+              <tr><th>Description</th><th>Hours/Units</th><th>Rate</th></tr>
+            </thead>
+            <tbody>${earningsRows}</tbody>
+            <tfoot>
+              <tr>
+                <td class="fw-bold">Total Earnings</td>
+                <td></td>
+                <td class="fw-bold">${details ? details.gross : '$0.00'}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Deductions / Adjustments</div>
+          <table class="wf-table mb-0" style="font-size:13px;width:100%;">
+            <thead>
+              <tr><th>Description</th><th class="text-end">Amount</th></tr>
+            </thead>
+            <tbody>${deductionsRows}</tbody>
+            <tfoot>
+              <tr>
+                <td class="fw-bold">Total Deductions</td>
+                <td class="text-end fw-bold" style="color:#dc2626;">(${details ? details.deductions.replace('-', '') : '$0.00'})</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div style="border-radius:14px;padding:18px 24px;background:#4338ca;color:#fff;display:flex;justify-content:space-between;align-items:center;margin-top:24px;">
+        <div style="font-size:14px;font-weight:700;">Total Pay (Net)</div>
+        <div style="font-size:22px;font-weight:800;">${details ? details.net : '$0.00'}</div>
+      </div>
+
+      <div style="text-align:center;color:#9ca3af;font-size:13px;margin-top:18px;">Thank you for your hard work!</div>
+    </div>
+  `;
+
+  const modal = new bootstrap.Modal(document.getElementById('payrollDetailModal'));
+  modal.show();
+}
+
     function openPayrollPacket() {
       const modalTitle = document.querySelector('#payrollDetailModal .modal-title');
       const modalSubtitle = document.querySelector('#payrollDetailModal .modal-subtitle');
@@ -2431,9 +3314,9 @@
        FLAGS — OPEN FROM LOCKED RUNS
        ========================================================== */
     function openFlagsPanel() {
-      // Show the screen-4 (flags) as a standalone view
+      // Show the flags screen as a standalone view
       document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
-      document.getElementById('screen-4').classList.add('active');
+      document.getElementById('screen-flags').classList.add('active');
       document.querySelectorAll('.step-nav-item').forEach(item => item.classList.remove('active', 'done'));
       window.scrollTo(0, 0);
       updateFlagCounts();
@@ -2570,6 +3453,7 @@
     function exportSummary() {
       const screen2Active = document.getElementById('screen-2').classList.contains('active');
       const screen3Active = document.getElementById('screen-3').classList.contains('active');
+      const screen4Active = document.getElementById('screen-4').classList.contains('active');
 
       let csvRows = [];
       csvRows.push('"NexaTrack Payroll Summary"');
@@ -2631,8 +3515,31 @@
           const amount = item.querySelector('.val')?.textContent.trim() || '';
           csvRows.push(`"${name}","${count}","${amount}"`);
         });
+      } else if (screen4Active) {
+        // Export the finalized Payroll Packet
+        const rows = document.querySelectorAll('#packetTableBody tr');
+        if (rows.length === 0) {
+          alert('No packet data to export.');
+          return;
+        }
+        csvRows.push('"Payroll Packet — May 1 – May 15, 2026"');
+        csvRows.push('"Status: Locked & Paid · Generated: ' + new Date().toLocaleString() + '"');
+        csvRows.push('');
+        csvRows.push('"Staff","Department","Type","Hours / Cases","Rate / Commission","Gross Pay","Deductions","Net Pay"');
+        rows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          const vals = Array.from(cells).map(cell => '"' + cell.textContent.trim().replace(/\s+/g, ' ') + '"');
+          csvRows.push(vals.join(','));
+        });
+        const tfoot = document.querySelector('#packetTableFoot');
+        if (tfoot) {
+          csvRows.push('');
+          tfoot.querySelectorAll('td').forEach(cell => {
+            csvRows.push('"' + cell.textContent.trim().replace(/\s+/g, ' ') + '"');
+          });
+        }
       } else {
-        alert('Please go to the Review Center or Final Summary to export.');
+        alert('Please go to the Review Center, Final Summary, or Payroll Packet to export.');
         return;
       }
 

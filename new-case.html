@@ -819,6 +819,78 @@
       margin-top: 6px;
     }
 
+    /* AR (Accounts Receivable) callout on the Financial step */
+    .ar-callout {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1.5px solid #f59e0b;
+      background: #fffbeb;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .ar-callout.no-ar {
+      border-color: var(--green-500);
+      background: var(--green-50);
+    }
+
+    .ar-callout-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--gray-900);
+    }
+
+    .ar-callout-head i {
+      color: #b45309;
+    }
+
+    .ar-callout.no-ar .ar-callout-head i {
+      color: var(--green-600);
+    }
+
+    .ar-callout-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 28px;
+    }
+
+    .ar-callout-grid > div {
+      min-width: 120px;
+    }
+
+    .ar-label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      color: var(--gray-500);
+      margin-bottom: 2px;
+    }
+
+    .ar-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--gray-900);
+    }
+
+    .ar-note {
+      font-size: 12px;
+      color: #92400e;
+      background: #fef3c7;
+      border-radius: 7px;
+      padding: 7px 10px;
+    }
+
+    .ar-callout.no-ar .ar-note {
+      color: var(--green-600);
+      background: #d1fae5;
+    }
+
     .basis-badge {
       display: inline-block;
       font-size: 10.5px;
@@ -1095,7 +1167,7 @@
               <div class="col-12">
                 <label class="form-label d-block">Quoted Amount</label>
                 <div class="input-group mb-2"><span class="input-group-text">$</span>
-                  <input type="number" class="form-control" id="quotedAmount" value="1200" oninput="updateSummary()">
+                  <input type="number" class="form-control" id="quotedAmount" value="12500" oninput="updateSummary()">
                 </div>
               </div>
 
@@ -1106,6 +1178,18 @@
                 </div>
                 <div id="paymentTypeList"></div>
                 <div class="rate-note mb-0">Collected Amount = sum of all payment type entries below.</div>
+              </div>
+
+              <div class="col-12">
+                <div class="ar-callout" id="arCallout">
+                  <div class="ar-callout-head"><i class="fa-solid fa-file-invoice-dollar"></i> Accounts Receivable (AR) Difference</div>
+                  <div class="ar-callout-grid">
+                    <div><span class="ar-label">Quoted</span><span class="ar-value" id="arQuoted">$0.00</span></div>
+                    <div><span class="ar-label">Collected</span><span class="ar-value" id="arCollected">$0.00</span></div>
+                    <div><span class="ar-label">AR Difference</span><span class="ar-value" id="arDiff">$0.00</span></div>
+                  </div>
+                  <div class="ar-note" id="arNote">Fully collected — no outstanding balance.</div>
+                </div>
               </div>
 
               <div class="col-md-6"><label class="form-label">Lab Cost <span
@@ -1184,6 +1268,7 @@
           <div class="section-label mt-3">Financial Summary</div>
           <div class="payroll-row"><span>Treatment Value</span><span id="sTreatVal">$12,500.00</span></div>
           <div class="payroll-row"><span>Collected</span><span id="sCollected">$0.00</span></div>
+          <div class="payroll-row"><span>AR Difference (Quoted − Collected)</span><span id="sArDiff">$0.00</span></div>
           <div class="payroll-row"><span>Lab Cost</span><span id="sLabCost">$0.00</span></div>
           <div class="payroll-row"><span>Fees (Merchant + Financing)</span><span id="sMerchFee">$0.00</span></div>
           <div class="payroll-row"><span>Gross Profit</span><span id="sGross">$0.00</span></div>
@@ -1196,7 +1281,7 @@
           <div class="payroll-row total"><span>Total Production</span><span id="sTotalProd">$13,300.00</span></div>
 
           <button class="btn btn-green w-100 mt-3" id="saveCaseBtn" style="display:none;"
-            onclick="alert('Case saved. Dashboard, Production, Statements, and Payroll Runs all update automatically.')"><i
+            onclick="alert('Case saved. Dashboard, Production, Statements, and Payroll Runs all update automatically.'); window.location.href='cases.html';"><i
               class="fa-solid fa-check me-1"></i>SAVE CASE</button>
         </div>
       </div>
@@ -1495,9 +1580,38 @@
       const gross = collected - lab;
       const net = gross - totalFees;
 
+      // ── AR Difference (Quoted Amount − Collected Amount) ──
+      const quotedAmt = parseFloat(document.getElementById('quotedAmount').value) || 0;
+      const arDiff = quotedAmt - collected;
+
       // ── Financial Summary ──
       document.getElementById('sTreatVal').textContent = '$' + tv.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sCollected').textContent = '$' + collected.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+      // AR Difference row in Live Summary
+      const sArDiff = document.getElementById('sArDiff');
+      if (sArDiff) {
+        sArDiff.textContent = (arDiff < 0 ? '−' : '') + '$' + Math.abs(arDiff).toLocaleString(undefined, { minimumFractionDigits: 2 });
+        sArDiff.style.color = arDiff > 0 ? '#b45309' : (arDiff < 0 ? '#dc2626' : 'var(--green-600)');
+      }
+
+      // AR callout on the Financial step (before saving)
+      const arQuotedEl = document.getElementById('arQuoted');
+      if (arQuotedEl) {
+        arQuotedEl.textContent = '$' + quotedAmt.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        document.getElementById('arCollected').textContent = '$' + collected.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        const arDiffVal = document.getElementById('arDiff');
+        arDiffVal.textContent = (arDiff < 0 ? '−' : '') + '$' + Math.abs(arDiff).toLocaleString(undefined, { minimumFractionDigits: 2 });
+        arDiffVal.style.color = arDiff > 0 ? '#b45309' : (arDiff < 0 ? '#dc2626' : 'var(--green-600)');
+        const callout = document.getElementById('arCallout');
+        callout.classList.toggle('has-ar', arDiff !== 0);
+        callout.classList.toggle('no-ar', arDiff === 0);
+        document.getElementById('arNote').textContent = arDiff > 0
+          ? 'Still to collect — this amount will appear on Statements as outstanding AR.'
+          : arDiff < 0
+            ? 'Collected exceeds the quoted amount (over-collection).'
+            : 'Fully collected — no outstanding balance.';
+      }
       document.getElementById('sLabCost').textContent = '$' + lab.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sMerchFee').textContent = '$' + totalFees.toLocaleString(undefined, { minimumFractionDigits: 2 });
       document.getElementById('sGross').textContent = '$' + gross.toLocaleString(undefined, { minimumFractionDigits: 2 });
@@ -1530,7 +1644,7 @@
 
       // Seed one payment type row and one fee row by default
       addPaymentType();
-      document.querySelector('#paymentTypeList .payment-amount-input').value = 12500;
+      document.querySelector('#paymentTypeList .payment-amount-input').value = 9600;
       addFeeEntry();
 
       // Initial calculation

@@ -13,6 +13,66 @@
   <link rel="stylesheet" href="../style/dashborad.css">
   <link rel="stylesheet" href="../style/main.css">
 
+  <style>
+    /* My Case History rows are clickable */
+    .nexa-table tbody tr {
+      cursor: pointer;
+      transition: background .12s ease;
+    }
+
+    /* Case detail modal */
+    .detail-label {
+      font-size: 11px;
+      color: var(--gray-500);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      margin-bottom: 4px;
+    }
+
+    .detail-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 9px;
+      padding: 10px 12px;
+      height: 100%;
+    }
+
+    .detail-value {
+      font-weight: 800;
+      font-size: 13.5px;
+      color: var(--gray-900);
+    }
+
+    .detail-breakdown-box {
+      border-top: 1px solid var(--gray-200);
+      padding-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--gray-700);
+      gap: 8px;
+    }
+
+    .detail-breakdown-row.total {
+      font-weight: 800;
+      font-size: 14px;
+      border-top: 1px dashed var(--gray-200);
+      padding-top: 10px;
+      margin-top: 2px;
+    }
+
+    .detail-breakdown-row.total span:last-child {
+      color: var(--green-600);
+    }
+  </style>
+
 </head>
 
 <body>
@@ -195,7 +255,7 @@
               </thead>
 
               <tbody>
-                <tr>
+                <tr role="button" onclick="openCaseDetail(0)">
                   <td>Jan 10, 2026</td>
                   <td>Maria Garcia</td>
                   <td>Zirconia Veneer Case</td>
@@ -204,7 +264,7 @@
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
 
-                <tr>
+                <tr role="button" onclick="openCaseDetail(1)">
                   <td>Feb 05, 2026</td>
                   <td>James Wilson</td>
                   <td>Full Crown Case</td>
@@ -213,7 +273,7 @@
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
 
-                <tr>
+                <tr role="button" onclick="openCaseDetail(2)">
                   <td>Mar 12, 2026</td>
                   <td>Linda Brown</td>
                   <td>Composite Veneer Case</td>
@@ -222,7 +282,7 @@
                   <td><span class="badge-status warn">Verified</span></td>
                 </tr>
 
-                <tr>
+                <tr role="button" onclick="openCaseDetail(3)">
                   <td>Apr 18, 2026</td>
                   <td>Michael Davis</td>
                   <td>Implant Restoration</td>
@@ -231,7 +291,7 @@
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
 
-                <tr>
+                <tr role="button" onclick="openCaseDetail(4)">
                   <td>May 09, 2026</td>
                   <td>Sarah deo</td>
                   <td>Composite Veneer Case</td>
@@ -239,31 +299,31 @@
                   <td>Flat Case</td>
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
-                <tr>
+                <tr role="button" onclick="openCaseDetail(5)">
                   <td>May 09, 2026</td>
                   <td>mr Johnson</td>
                   <td>Zirconia Veneer Case</td>
                   <td>1</td>
-                  <td>per unit</td>
+                  <td>Per Unit</td>
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
-                <tr>
+                <tr role="button" onclick="openCaseDetail(6)">
                   <td>May 09, 2026</td>
                   <td>Sarah Johnson</td>
-                  <td>Whitening Treatment</td>
+                  <td>Whitening Quoted</td>
                   <td>1</td>
                   <td>Flat Case</td>
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
-                <tr>
+                <tr role="button" onclick="openCaseDetail(7)">
                   <td>May 09, 2026</td>
                   <td>Sarah Johnson</td>
-                  <td>Whitening Treatment</td>
+                  <td>Whitening Quoted</td>
                   <td>1</td>
                   <td>Flat Case</td>
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
-                <tr>
+                <tr role="button" onclick="openCaseDetail(8)">
                   <td>May 09, 2026</td>
                   <td>DEOcv</td>
                   <td>Zirconia Veneer Case</td>
@@ -272,7 +332,7 @@
                   <td><span class="badge-status active">Completed</span></td>
                 </tr>
 
-                <tr>
+                <tr role="button" onclick="openCaseDetail(9)">
                   <td>Jun 21, 2026</td>
                   <td>Robert Lee</td>
                   <td>Dental Implant</td>
@@ -505,7 +565,89 @@
         document.getElementById('isrKpiModalBody').innerHTML = body;
         new bootstrap.Modal(document.getElementById('isrKpiModal')).show();
       }
+
+      /* ── My Case History → Full Case Detail (ISR view) ── */
+      const isrCases = [
+        { id: 'CASE-2026-0112', date: 'Jan 10, 2026', patient: 'Maria Garcia',  type: 'Zirconia Veneer Case', units: 20, method: 'Full Case', status: 'Completed', quoted: 18000, collected: 15000, rate: 6, treatment: 18000 },
+        { id: 'CASE-2026-0187', date: 'Feb 05, 2026', patient: 'James Wilson',  type: 'Full Crown Case',      units: 2,  method: 'Per Unit',  status: 'Completed', quoted: 4500,  collected: 4500,  rate: 6, treatment: 4500 },
+        { id: 'CASE-2026-0241', date: 'Mar 12, 2026', patient: 'Linda Brown',   type: 'Composite Veneer Case', units: 16, method: 'Full Case', status: 'Verified',  quoted: 7200,  collected: 7200,  rate: 6, treatment: 7200 },
+        { id: 'CASE-2026-0305', date: 'Apr 18, 2026', patient: 'Michael Davis', type: 'Implant Restoration',  units: 4,  method: 'Per Unit',  status: 'Completed', quoted: 8400,  collected: 8400,  rate: 6, treatment: 8400 },
+        { id: 'CASE-2026-0378', date: 'May 09, 2026', patient: 'Sarah deo',     type: 'Composite Veneer Case', units: 1,  method: 'Flat Case', status: 'Completed', quoted: 950,   collected: 950,   rate: 6, treatment: 950 },
+        { id: 'CASE-2026-0379', date: 'May 09, 2026', patient: 'mr Johnson',    type: 'Zirconia Veneer Case', units: 1,  method: 'Per Unit',  status: 'Completed', quoted: 1100,  collected: 1100,  rate: 6, treatment: 1100 },
+        { id: 'CASE-2026-0380', date: 'May 09, 2026', patient: 'Sarah Johnson', type: 'Whitening Quoted',     units: 1,  method: 'Flat Case', status: 'Completed', quoted: 400,   collected: 400,   rate: 6, treatment: 400 },
+        { id: 'CASE-2026-0381', date: 'May 09, 2026', patient: 'Sarah Johnson', type: 'Whitening Quoted',     units: 1,  method: 'Flat Case', status: 'Completed', quoted: 400,   collected: 400,   rate: 6, treatment: 400 },
+        { id: 'CASE-2026-0382', date: 'May 09, 2026', patient: 'DEOcv',         type: 'Zirconia Veneer Case', units: 1,  method: 'Mixed Case', status: 'Completed', quoted: 2000,  collected: 2000,  rate: 6, treatment: 2000 },
+        { id: 'CASE-2026-0446', date: 'Jun 21, 2026', patient: 'Robert Lee',    type: 'Dental Implant',       units: 2,  method: 'Per Unit',  status: 'Completed', quoted: 6800,  collected: 6800,  rate: 6, treatment: 6800 }
+      ];
+
+      function openCaseDetail(idx) {
+        const c = isrCases[idx];
+        if (!c) return;
+        const commission = c.collected * (c.rate / 100);
+        document.getElementById('caseDetailModalTitle').innerHTML =
+          '<i class="fa-solid fa-briefcase-medical me-2 text-success"></i>' + c.patient;
+        document.getElementById('caseDetailSubtitle').textContent = c.id;
+        const statusEl = document.getElementById('caseDetailStatus');
+        statusEl.textContent = c.status;
+        statusEl.className = 'badge-status ' + (c.status === 'Verified' ? 'warn' : 'active');
+        document.getElementById('cdDate').textContent = c.date;
+        document.getElementById('cdType').textContent = c.type;
+        document.getElementById('cdUnits').textContent = c.units;
+        document.getElementById('cdMethod').textContent = c.method;
+        document.getElementById('cdQuoted').textContent = '$' + c.quoted.toLocaleString();
+        document.getElementById('cdCollected').textContent = '$' + c.collected.toLocaleString();
+        document.getElementById('cdRate').textContent = c.rate + '%';
+        document.getElementById('cdCommission').textContent = '$' + commission.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        document.getElementById('cdTreatment').textContent = '$' + c.treatment.toLocaleString();
+        document.getElementById('cdOutstanding').textContent =
+          '$' + Math.max(0, c.quoted - c.collected).toLocaleString();
+        document.getElementById('cdGross').textContent =
+          '$' + (c.collected - Math.round(c.treatment * 0.35)).toLocaleString();
+        new bootstrap.Modal(document.getElementById('caseDetailModal')).show();
+      }
     </script>
+
+  <!-- ── Case Detail Modal (ISR view) ── -->
+  <div class="modal fade" id="caseDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content" style="border-radius:12px;border:none;">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title fw-bold" id="caseDetailModalTitle"></h5>
+            <div class="text-muted" style="font-size:12.5px;" id="caseDetailSubtitle"></div>
+          </div>
+          <span class="badge-status" id="caseDetailStatus"></span>
+        </div>
+        <div class="modal-body">
+          <div class="row g-2 mb-3">
+            <div class="col-6 col-md-3"><div class="detail-box"><div class="detail-label">Date</div><div class="detail-value" id="cdDate">—</div></div></div>
+            <div class="col-6 col-md-3"><div class="detail-box"><div class="detail-label">Case Type</div><div class="detail-value" id="cdType">—</div></div></div>
+            <div class="col-6 col-md-3"><div class="detail-box"><div class="detail-label">Units</div><div class="detail-value" id="cdUnits">—</div></div></div>
+            <div class="col-6 col-md-3"><div class="detail-box"><div class="detail-label">Comp Method</div><div class="detail-value" id="cdMethod">—</div></div></div>
+          </div>
+
+          <div class="detail-label mb-2">Commission</div>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>Quoted Amount</span><span class="fw-semibold" id="cdQuoted">—</span></div>
+            <div class="detail-breakdown-row"><span>Collected Amount</span><span class="fw-semibold" id="cdCollected">—</span></div>
+            <div class="detail-breakdown-row"><span>Commission Rate</span><span class="fw-semibold" id="cdRate">—</span></div>
+            <div class="detail-breakdown-row total"><span>Commission Earned</span><span id="cdCommission">—</span></div>
+          </div>
+
+          <div class="detail-label mb-2 mt-3">Financial</div>
+          <div class="detail-breakdown-box">
+            <div class="detail-breakdown-row"><span>Treatment Value</span><span class="fw-semibold" id="cdTreatment">—</span></div>
+            <div class="detail-breakdown-row"><span>Outstanding Balance</span><span class="fw-semibold" id="cdOutstanding">—</span></div>
+            <div class="detail-breakdown-row total"><span>Gross Profit</span><span id="cdGross">—</span></div>
+          </div>
+
+          <div class="text-end mt-3">
+            <a href="my-cases.html" class="btn btn-sm btn-outline-navy">View in My Cases</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 

@@ -833,6 +833,7 @@
     </tr>`).join('');
     }
     let currentMemberIndex = -1;
+    let kpiMembersFilter = 'members';
 
     function updateProfileStatus() {
       const m = members[currentMemberIndex];
@@ -849,6 +850,14 @@
       updateProfileStatus();
       renderTable();
       updateKpiCounts();
+    }
+
+    function changeMemberStatusModal(index, newStatus) {
+      if (index < 0 || !members[index]) return;
+      members[index].status = newStatus;
+      updateKpiCounts();
+      renderTable();
+      populateMembersModal(kpiMembersFilter);
     }
 
     function updateKpiCounts() {
@@ -973,6 +982,7 @@
         case 'members':
         case 'active':
         case 'inactive':
+          kpiMembersFilter = type;
           populateMembersModal(type);
           break;
         case 'payroll':
@@ -1003,7 +1013,12 @@
           <td><span class="badge-dept">${m.dept}</span></td>
           <td>${m.role}</td>
           <td><span class="badge-comp ${compBadgeClass[m.engine]}">${engineDisplayName(m.engine)}</span></td>
-          <td><span class="badge-status ${m.status}">${m.status.charAt(0).toUpperCase() + m.status.slice(1)}</span></td>
+          <td>
+            <select class="form-select status-change" aria-label="Change status for ${m.name}" onchange="changeMemberStatusModal(${members.indexOf(m)}, this.value)">
+              <option value="active" ${m.status === 'active' ? 'selected' : ''}>Active</option>
+              <option value="inactive" ${m.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+            </select>
+          </td>
         </tr>`).join('');
       const shownCount = filter === 'active' ? members.filter(m => m.status === 'active').length : filter === 'inactive' ? members.filter(m => m.status === 'inactive').length : members.length;
       document.getElementById('kpiMembersFooter').textContent = `Showing ${shownCount} of ${members.length} team members`;

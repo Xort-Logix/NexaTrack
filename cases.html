@@ -779,10 +779,11 @@
       const statusBadgeClass = c[6] || 'warn';
       const statusText = c[5] || 'N/A';
       // Derive a few extra fields for a richer view
-      const units = Math.floor(Math.random() * 15) + 5; // placeholder — real data would come from backend
-      const material = c[2].includes('Zirconia') ? 'Zirconia' : c[2].includes('Porcelain') ? 'Porcelain' : c[2].includes('Ceramic') ? 'Ceramic' : c[2].includes('Composite') ? 'Composite' : 'Various';
-      const location = 'Main Office';
-      const note = '—';
+      const ex = getCaseExtras(c);
+      const units = ex.units;
+      const material = ex.material;
+      const location = ex.location;
+      const note = ex.note;
 
       document.getElementById('caseDetailPlaceholder').style.display = 'none';
       document.getElementById('caseDetailContent').style.display = '';
@@ -833,8 +834,135 @@
       }
     }
 
+    // ---- Inline Edit (edit within the Case Details card) ----
+    const caseExtras = {}; // id -> { units, material, location, note }
+    let currentCaseIdx = null;
+
+    function getCaseExtras(c) {
+      if (!caseExtras[c[0]]) {
+        caseExtras[c[0]] = {
+          units: Math.floor(Math.random() * 15) + 5,
+          material: c[2].includes('Zirconia') ? 'Zirconia' : c[2].includes('Porcelain') ? 'Porcelain' : c[2].includes('Ceramic') ? 'Ceramic' : c[2].includes('Composite') ? 'Composite' : 'Various',
+          location: 'Main Office',
+          note: '—'
+        };
+      }
+      return caseExtras[c[0]];
+    }
+
     function editCase(caseId) {
-      window.location.href = 'new-case.html?edit=' + encodeURIComponent(caseId);
+      const idx = cases.findIndex(c => c[0] === caseId);
+      if (idx < 0) return;
+      currentCaseIdx = idx;
+      const c = cases[idx];
+      const ex = getCaseExtras(c);
+
+      const statusOptions = ['New', 'Consult', 'Treatment', 'In Progress', 'Prep Complete', 'Financial', 'Completed'];
+      const statusSel = statusOptions.map(s => `<option value="${s}" ${s === c[5] ? 'selected' : ''}>${s}</option>`).join('');
+
+      document.getElementById('caseDetailPlaceholder').style.display = 'none';
+      document.getElementById('caseDetailContent').style.display = '';
+
+      document.getElementById('caseDetailBody').innerHTML = `
+        <div class="row mb-2">
+          <div class="col-6"><div class="section-label">Edit Case Details</div></div>
+          <div class="col-6 text-end"><i class="fa fa-close" onclick="cancelCaseEdit()" style="cursor:pointer;color:var(--gray-500);" aria-hidden="true"></i></div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Case ID</label>
+          <input type="text" class="form-control form-control-sm" id="ceCaseId" value="${c[0]}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Patient</label>
+          <input type="text" class="form-control form-control-sm" id="cePatient" value="${c[1]}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Case Type</label>
+          <input type="text" class="form-control form-control-sm" id="ceType" value="${c[2]}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Provider / Closer</label>
+          <input type="text" class="form-control form-control-sm" id="ceProvider" value="${c[3]}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Treatment Value</label>
+          <input type="text" class="form-control form-control-sm" id="ceValue" value="${c[7]}">
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">Units</label>
+            <input type="number" class="form-control form-control-sm" id="ceUnits" value="${ex.units}" min="0">
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">Material</label>
+            <input type="text" class="form-control form-control-sm" id="ceMaterial" value="${ex.material}">
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Location</label>
+          <input type="text" class="form-control form-control-sm" id="ceLocation" value="${ex.location}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label small text-muted mb-1">Status</label>
+          <select class="form-select form-select-sm" id="ceStatus">${statusSel}</select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted mb-1">Note</label>
+          <textarea class="form-control form-control-sm" rows="2" id="ceNote" placeholder="Add a note...">${ex.note === '—' ? '' : ex.note}</textarea>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-green flex-grow-1" onclick="saveCaseEdit()" style="background:var(--green-500);border-color:var(--green-500);color:#fff;font-weight:600;"><i class="fa-regular fa-floppy-disk me-1"></i>Save Changes</button>
+          <button class="btn btn-sm btn-outline-navy" onclick="cancelCaseEdit()">Cancel</button>
+        </div>
+      `;
+    }
+
+    function saveCaseEdit() {
+      if (currentCaseIdx === null) return;
+      const c = cases[currentCaseIdx];
+      const ex = getCaseExtras(c);
+      const oldId = c[0];
+      const bc = boardCases.find(b => b.id === oldId); // find by original id
+
+      const newId = document.getElementById('ceCaseId').value.trim();
+      c[0] = newId || oldId;
+      c[1] = document.getElementById('cePatient').value.trim() || c[1];
+      c[2] = document.getElementById('ceType').value.trim() || c[2];
+      c[3] = document.getElementById('ceProvider').value.trim() || c[3];
+      c[7] = document.getElementById('ceValue').value.trim() || c[7];
+      c[5] = document.getElementById('ceStatus').value;
+      c[6] = c[5] === 'Completed' ? 'active' : (c[5] === 'New' ? 'inactive' : 'warn');
+      ex.units = document.getElementById('ceUnits').value || ex.units;
+      ex.material = document.getElementById('ceMaterial').value.trim() || ex.material;
+      ex.location = document.getElementById('ceLocation').value.trim() || ex.location;
+      ex.note = document.getElementById('ceNote').value.trim() || '—';
+
+      if (newId && newId !== oldId) {
+        delete caseExtras[oldId];
+        caseExtras[c[0]] = ex;
+      }
+
+      if (bc) {
+        bc.id = c[0];
+        bc.patient = c[1];
+        bc.type = c[2];
+        bc.doctor = c[3];
+        bc.value = c[7];
+        bc.status = c[5];
+        bc.stage = STATUS_TO_STAGE[c[5]] || bc.stage;
+      }
+
+      const idx = currentCaseIdx;
+      currentCaseIdx = null;
+      updateTableData();
+      showCaseDetail(idx);
+    }
+
+    function cancelCaseEdit() {
+      if (currentCaseIdx === null) return;
+      const idx = currentCaseIdx;
+      currentCaseIdx = null;
+      showCaseDetail(idx);
     }
 
     /* =========================================================       KPI CARD DETAIL — Cases Overview

@@ -179,8 +179,8 @@
                         <div class="fw-bold" id="doctorCaseCount">0</div>
                     </div>
                     <div class="text-center">
-                        <div class="small text-muted">Treatment Value</div>
-                        <div class="fw-bold" id="doctorTreatmentValue">$0.00</div>
+                        <div class="small text-muted">Quoted  Value</div>
+                        <div class="fw-bold" id="doctorQuoted Value">$0.00</div>
                     </div>
                     <div class="text-center">
                         <div class="small text-muted">Latest Status</div>
@@ -237,7 +237,7 @@
                                     <th>Department</th>
                                     <th>Provider/Closer</th>
                                     <th>Status</th>
-                                    <th>Treatment Value</th>
+                                    <th>Quoted  Value</th>
                                     <th>Date Created</th>
                                 </tr>
                             </thead>
@@ -319,12 +319,12 @@
             const doctorName = 'Dr. Heider';
             const cases = [
                 ["CASE-20260331-001", "Maria Garcia", "Zirconia Veneer Case", "Dr. Heider", "provider", "Completed", "active", "$14,050.00", "2023-03-31"],
-                ["CASE-20260331-002", "James Wilson", "Full Crown Case", "Dr. Vanessa", "provider", "Treatment", "warn", "$3,875.00", "2023-03-31"],
+                ["CASE-20260331-002", "James Wilson", "Full Crown Case", "Dr. Vanessa", "provider", "Quoted ", "warn", "$3,875.00", "2023-03-31"],
                 ["CASE-20260330-001", "Linda Brown", "Composite Veneer Case", "Dr. Heider", "provider", "Consult", "warn", "$4,800.00", "2023-03-30"],
                 ["CASE-20260330-002", "Yorie Gauberth", "Zirconia Veneer Case", "Dr. Safa", "provider", "In Progress", "warn", "$13,125.00", "2023-03-30"],
-                ["CASE-20260329-001", "James Test", "Composite Veneer Case", "Dr. Heider", "provider", "Treatment", "warn", "$4,000.00", "2023-03-29"],
+                ["CASE-20260329-001", "James Test", "Composite Veneer Case", "Dr. Heider", "provider", "Quoted ", "warn", "$4,000.00", "2023-03-29"],
                 ["CASE-20260329-002", "Anna Taylor", "Full Crown Case", "Dr. Vanessa", "provider", "New", "inactive", "$7,500.00", "2023-03-29"],
-                ["CASE-20260328-001", "Robert Anderson", "Porcelain Veneer Case", "Dr. Safa", "provider", "Treatment", "warn", "$12,600.00", "2023-03-28"],
+                ["CASE-20260328-001", "Robert Anderson", "Porcelain Veneer Case", "Dr. Safa", "provider", "Quoted ", "warn", "$12,600.00", "2023-03-28"],
                 ["CASE-20260328-002", "Lisa Martinez", "Zirconia Veneer Case", "Dr. Heider", "provider", "Completed", "active", "$16,400.00", "2023-03-28"],
                 ["CASE-20260327-001", "David Lee", "Crown (Single)", "Dr. Vanessa", "provider", "Consult", "warn", "$1,250.00", "2023-03-27"],
                 ["CASE-20260327-002", "Samantha Green", "Composite Veneer Case", "Dr. Heider", "provider", "New", "inactive", "$5,200.00", "2023-03-27"],
@@ -342,7 +342,7 @@
             function renderDoctorSummary() {
                 const totalValue = doctorCases.reduce((sum, c) => sum + parseCurrency(c[7]), 0);
                 document.getElementById('doctorCaseCount').textContent = doctorCases.length;
-                document.getElementById('doctorTreatmentValue').textContent = formatCurrency(totalValue);
+                document.getElementById('doctorQuoted Value').textContent = formatCurrency(totalValue);
                 document.getElementById('doctorLatestStatus').textContent = doctorCases[0]?.[5] || '—';
             }
 
@@ -426,7 +426,7 @@
                 <option value="">Select a reason…</option>
                 <option value="Patient not responding">Patient not responding</option>
                 <option value="Insurance issue">Insurance issue</option>
-                <option value="Treatment plan changed">Treatment plan changed</option>
+                <option value="Quoted  plan changed">Quoted  plan changed</option>
                 <option value="Financial concern">Financial concern</option>
                 <option value="Schedule conflict">Schedule conflict</option>
                 <option value="Requires specialist">Requires specialist</option>
@@ -569,7 +569,7 @@
                     <p class="text-muted" style="font-size:13px;">Cases started (in progress) this period</p>
                     <div class="detail-breakdown-box">
                         <div class="detail-breakdown-row"><span>🚀 New Cases (This Period)</span><span class="fw-semibold">98</span></div>
-                        <div class="detail-breakdown-row"><span>🔧 In Treatment</span><span class="fw-semibold">42</span></div>
+                        <div class="detail-breakdown-row"><span>🔧 In Quoted </span><span class="fw-semibold">42</span></div>
                         <div class="detail-breakdown-row"><span>📋 Needs Exam / Consult</span><span class="fw-semibold">28</span></div>
                         <div class="detail-breakdown-row"><span>💰 Financial Planning</span><span class="fw-semibold">18</span></div>
                         <div class="detail-breakdown-row"><span>✅ Prep / Ready</span><span class="fw-semibold">10</span></div>
@@ -620,7 +620,7 @@
         const STAGES = [
             { id: 'needs-exam',     label: 'Needs Exam',      css: 'stage-needs-exam' },
             { id: 'consult',        label: 'Consult',          css: 'stage-consult' },
-            { id: 'treatment',      label: 'Treatment',        css: 'stage-treatment' },
+            { id: 'Quoted ',      label: 'Quoted ',        css: 'stage-Quoted ' },
             { id: 'prep-ready',     label: 'Prep / Ready',     css: 'stage-prep-ready' },
             { id: 'financial-planning', label: 'Financial Planning', css: 'stage-financial-planning' },
             { id: 'finished',       label: 'Finished',         css: 'stage-finished' },
@@ -630,8 +630,8 @@
             'New': 'needs-exam',
             'Needs Exam': 'needs-exam',
             'Consult': 'consult',
-            'Treatment': 'treatment',
-            'In Progress': 'treatment',
+            'Quoted ': 'Quoted ',
+            'In Progress': 'Quoted ',
             'Prep Complete': 'prep-ready',
             'Prep / Ready': 'prep-ready',
             'Financial Planning': 'financial-planning',
@@ -712,7 +712,7 @@
                         </div>
                         <div class="row-item">
                             <span class="label">Value</span>
-                            <span class="value treatment-value">${c.value}</span>
+                            <span class="value Quoted -value">${c.value}</span>
                         </div>
                     </div>
                     <div class="patient-card-footer">

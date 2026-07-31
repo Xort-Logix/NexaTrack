@@ -205,7 +205,7 @@
             <div class="kpi-icon" style="background:#ffedd5;color:#c2410c;"><i class="fa-solid fa-percent"></i></div>
           </div>
           <div class="col-9">
-            <div class="kpi-label">Show Rate</div>
+            <div class="kpi-label">Start Rate</div>
             <div class="kpi-value">68.2%</div>
             <div class="kpi-delta text-success">+6.1% vs Feb 1 – Feb 28</div>
           </div>
@@ -223,18 +223,7 @@
           </div>
         </div>
       </div>
-      <div class="kpi-card" role="button" tabindex="0" onclick="openReportKpiDetail(4)">
-        <div class="row">
-          <div class="col-3">
-            <div class="kpi-icon" style="background:#fce7f3;color:#9d174d;"><i class="fa-solid fa-bullseye"></i></div>
-          </div>
-          <div class="col-9">
-            <div class="kpi-label">Close Rate (Quote → Booked)</div>
-            <div class="kpi-value">18.7%</div>
-            <div class="kpi-delta text-success">+2.3% vs Feb 1 – Feb 28</div>
-          </div>
-        </div>
-      </div>
+      
     </div>
 
     <div class="toolbar-panel">
@@ -4042,7 +4031,7 @@
          KPI CARD DETAIL — Reports Overview
          ========================================================== */
       function openReportKpiDetail(idx) {
-        const titles = ['Booked Revenue', 'Cases Booked', 'Show Rate', 'Avg Case Value', 'Close Rate'];
+        const titles = ['Booked Revenue', 'Cases Booked', 'Start Rate', 'Avg Case Value', 'Close Rate'];
         const icons = ['fa-sack-dollar', 'fa-chart-line', 'fa-percent', 'fa-coins', 'fa-bullseye'];      
         const body = document.getElementById('reportDetailModalBody');
         const modalTitle = document.querySelector('#reportDetailModal .modal-title');
@@ -4074,14 +4063,14 @@
             </div>
             <div class="text-success small mt-2">+18 vs previous period</div>
           </div>`,
-          // 2 — Show Rate
+          // 2 — Start Rate
           `<div class="panel" style="border:none;box-shadow:none;">
-            <h5 class="fw-bold mb-3">Show Rate — 68.2%</h5>
+            <h5 class="fw-bold mb-3">Start Rate — 68.2%</h5>
             <div class="detail-breakdown-box">
               <div class="detail-breakdown-row"><span>📅 Scheduled Appointments</span><strong>970</strong></div>
-              <div class="detail-breakdown-row"><span>✅ Showed Up</span><strong>662</strong></div>
+              <div class="detail-breakdown-row"><span>✅ Started Treatment</span><strong>662</strong></div>
               <div class="detail-breakdown-row"><span>❌ No-Shows / Cancelled</span><strong>308</strong></div>
-              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Show Rate</span><strong>68.2%</strong></div>
+              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Start Rate</span><strong>68.2%</strong></div>
             </div>
             <div class="text-success small mt-2">+6.1% improvement vs previous period</div>
           </div>`,
@@ -4096,16 +4085,7 @@
             <div class="text-muted small mt-2">Cosmetic cases avg $9,450 • General cases avg $2,180</div>
           </div>`,
           // 4 — Close Rate
-          `<div class="panel" style="border:none;box-shadow:none;">
-            <h5 class="fw-bold mb-3">Close Rate — 18.7%</h5>
-            <div class="detail-breakdown-box">
-              <div class="detail-breakdown-row"><span>📋 Total Quotes Given</span><strong>674</strong></div>
-              <div class="detail-breakdown-row"><span>✅ Converted to Booked</span><strong>126</strong></div>
-              <div class="detail-breakdown-row"><span>❌ Not Converted</span><strong>548</strong></div>
-              <div class="detail-breakdown-row" style="border-top:2px solid #eef2f6;font-weight:700;"><span>Close Rate</span><strong>18.7%</strong></div>
-            </div>
-            <div class="text-success small mt-2">+2.3% improvement vs previous period</div>
-          </div>`
+         
         ];
         body.innerHTML = views[idx] || views[0];
         const modal = new bootstrap.Modal(document.getElementById('reportDetailModal'));

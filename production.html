@@ -122,50 +122,76 @@
       <div class="panel-body">
         <div class="d-flex gap-2 flex-wrap align-items-center">
           <div class="input-group" style="width: 280px;">
-          <input type="text" id="daterange" name='date' class="form-control">
-          <span class="input-group-text">
-            <i class="fa-regular fa-calendar"></i>
-          </span>
-        </div>
+            <input type="text" id="daterange" name='date' class="form-control">
+            <span class="input-group-text">
+              <i class="fa-regular fa-calendar"></i>
+            </span>
+          </div>
 
-        <select class="form-select form-select-sm-custom" style="width:190px;">
-          <option>All Departments</option>
-          <option>Sales</option>
-          <option>Marketing</option>
-          <option>Engineering</option>
-          <option>Human Resources</option>
-          <option>Finance</option>
-        </select>
-        <select class="form-select form-select-sm-custom" style="width:190px;">
-          <option>All Team Members</option>
-          <option>John Doe</option>
-          <option>Jane Smith</option>
-          <option>Bob Johnson</option>
-          <option>Alice Williams</option>
-          <option>Charlie Brown</option>
-        </select>
-        <select class="form-select form-select-sm-custom" style="width:190px;">
-          <option>All Case Types</option>
-          <option>Composite Veneers</option>
-          <option>Ceramic Veneers</option>
-          <option>Porcelain / Zirconia Veneers</option>
-          <option>Crowns (All Materials)</option>
-        </select>
-        <button class="filter-btn"><i class="fa-solid fa-sliders me-1"></i>Filters</button>
-        <div class="clear-filters" onclick="renderTable()">
-          <a href="#" class="clear-filters-link"><i class="fa fa-refresh" aria-hidden="true"></i>Clear Filters</a>
+          <select class="form-select form-select-sm-custom" style="width:190px;">
+            <option>All Departments</option>
+            <option>Sales</option>
+            <option>Marketing</option>
+            <option>Engineering</option>
+            <option>Human Resources</option>
+            <option>Finance</option>
+          </select>
+          <select class="form-select form-select-sm-custom" style="width:190px;">
+            <option>All Team Members</option>
+            <option>John Doe</option>
+            <option>Jane Smith</option>
+            <option>Bob Johnson</option>
+            <option>Alice Williams</option>
+            <option>Charlie Brown</option>
+          </select>
+          <select class="form-select form-select-sm-custom" style="width:190px;">
+            <option>All Case Types</option>
+            <option>Composite Veneers</option>
+            <option>Ceramic Veneers</option>
+            <option>Porcelain / Zirconia Veneers</option>
+            <option>Crowns (All Materials)</option>
+          </select>
+          <button class="filter-btn"><i class="fa-solid fa-sliders me-1"></i>Filters</button>
+          <div class="clear-filters" onclick="renderTable()">
+            <a href="#" class="clear-filters-link"><i class="fa fa-refresh" aria-hidden="true"></i>Clear Filters</a>
+          </div>
         </div>
       </div>
     </div>
-    </div>
 
     <style>
-      .kpi-card[role="button"] { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
-      .kpi-card[role="button"]:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.10); }
-      .detail-breakdown-box { border:1px solid #eef2f6; border-radius:10px; overflow:hidden; }
-      .detail-breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid #f3f5f9; font-size:14px; }
-      .detail-breakdown-row:last-child { border-bottom:none; }
-      .detail-breakdown-row span { color:#6b7280; }
+      .kpi-card[role="button"] {
+        cursor: pointer;
+        transition: transform 0.15s, box-shadow 0.15s;
+      }
+
+      .kpi-card[role="button"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+      }
+
+      .detail-breakdown-box {
+        border: 1px solid #eef2f6;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .detail-breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        border-bottom: 1px solid #f3f5f9;
+        font-size: 14px;
+      }
+
+      .detail-breakdown-row:last-child {
+        border-bottom: none;
+      }
+
+      .detail-breakdown-row span {
+        color: #6b7280;
+      }
     </style>
     <div class="row g-3 mb-3">
       <div class="col-lg-2 col-md-4 col-sm-6 col-12">
@@ -271,7 +297,7 @@
         </div>
 
         <!-- Top ISR Producers -->
-        <div class="col-lg-6">
+        <div class="col-lg-3">
           <div class="chart-card">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h2 class="panel-title mb-0">Top ISR Producers (By Production)</h2>
@@ -310,9 +336,47 @@
             <button class="btn btn-sm btn-outline-navy w-100 mt-2">View All ISR Producers</button>
           </div>
         </div>
-
+        <div class="col-lg-3">
+          <div class="chart-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h2 class="panel-title mb-0">Top Providers (By Production)</h2>
+            </div>
+            <div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">1</span>
+                  <div class="avatar-sm">JS</div><span class="small fw-semibold">js Smith</span>
+                </div><span class="small fw-bold">$156,250.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">2</span>
+                  <div class="avatar-sm">JL</div><span class="small fw-semibold">Josh Lme</span>
+                </div><span class="small fw-bold">$94,600.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">3</span>
+                  <div class="avatar-sm">ME</div><span class="small fw-semibold">Mich jones</span>
+                </div><span class="small fw-bold">$72,800.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2"
+                style="border-bottom:1px solid #f1f3f5;">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">4</span>
+                  <div class="avatar-sm">TR</div><span class="small fw-semibold">Tanya Ross</span>
+                </div><span class="small fw-bold">$44,200.00</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between py-2">
+                <div class="d-flex align-items-center gap-2"><span class="text-muted small">5</span>
+                  <div class="avatar-sm">AM</div><span class="small fw-semibold">Alex Mendoza</span>
+                </div><span class="small fw-bold">$38,500.00</span>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-outline-navy w-100 mt-2">View All ISR Producers</button>
+          </div>
+        </div>
         <!-- Top Producers (Doctors / ISR Toggle) -->
-    
+
       </div>
 
       <!-- Row 2: Case Type table + Team Member table + Snapshot -->
@@ -321,77 +385,77 @@
           <div class="panel panel-body h-100">
             <h2 class="panel-title mb-3">Production by Case Type</h2>
             <div class="table-responsive">
-            <table class="nexa-table">
-              <thead>
-                <tr>
-                  <th>Case Type</th>
-                  <th>Cases</th>
-                  <th>Units</th>
-                  <th>Production</th>
-                  <th>% of Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Composite Veneers</td>
-                  <td>42</td>
-                  <td>166</td>
-                  <td>$148,600</td>
-                  <td>17.0%</td>
-                </tr>
-                <tr>
-                  <td>Ceramic Veneers</td>
-                  <td>31</td>
-                  <td>132</td>
-                  <td>$128,250</td>
-                  <td>14.7%</td>
-                </tr>
-                <tr>
-                  <td>Porcelain / Zirconia Veneers</td>
-                  <td>28</td>
-                  <td>116</td>
-                  <td>$176,900</td>
-                  <td>20.2%</td>
-                </tr>
-                <tr>
-                  <td>Crowns (All Materials)</td>
-                  <td>17</td>
-                  <td>29</td>
-                  <td>$64,200</td>
-                  <td>7.3%</td>
-                </tr>
-                <tr>
-                  <td>Bridges</td>
-                  <td>5</td>
-                  <td>19</td>
-                  <td>$38,700</td>
-                  <td>4.4%</td>
-                </tr>
-                <tr>
-                  <td>Other General Procedures</td>
-                  <td>26</td>
-                  <td>176</td>
-                  <td>$149,900</td>
-                  <td>17.1%</td>
-                </tr>
-                <tr>
-                  <td>Other Cosmetic Procedures</td>
-                  <td>14</td>
-                  <td>-</td>
-                  <td>$167,800</td>
-                  <td>19.2%</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr class="fw-bold" style="border-top:2px solid var(--gray-200,#e2e6ed);color:#059669;">
-                  <td>TOTAL</td>
-                  <td>126</td>
-                  <td>662</td>
-                  <td>$874,250.00</td>
-                  <td>100%</td>
-                </tr>
-              </tfoot>
-            </table>
+              <table class="nexa-table">
+                <thead>
+                  <tr>
+                    <th>Case Type</th>
+                    <th>Cases</th>
+                    <th>Units</th>
+                    <th>Production</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Composite Veneers</td>
+                    <td>42</td>
+                    <td>166</td>
+                    <td>$148,600</td>
+                    <td>17.0%</td>
+                  </tr>
+                  <tr>
+                    <td>Ceramic Veneers</td>
+                    <td>31</td>
+                    <td>132</td>
+                    <td>$128,250</td>
+                    <td>14.7%</td>
+                  </tr>
+                  <tr>
+                    <td>Porcelain / Zirconia Veneers</td>
+                    <td>28</td>
+                    <td>116</td>
+                    <td>$176,900</td>
+                    <td>20.2%</td>
+                  </tr>
+                  <tr>
+                    <td>Crowns (All Materials)</td>
+                    <td>17</td>
+                    <td>29</td>
+                    <td>$64,200</td>
+                    <td>7.3%</td>
+                  </tr>
+                  <tr>
+                    <td>Bridges</td>
+                    <td>5</td>
+                    <td>19</td>
+                    <td>$38,700</td>
+                    <td>4.4%</td>
+                  </tr>
+                  <tr>
+                    <td>Other General Procedures</td>
+                    <td>26</td>
+                    <td>176</td>
+                    <td>$149,900</td>
+                    <td>17.1%</td>
+                  </tr>
+                  <tr>
+                    <td>Other Cosmetic Procedures</td>
+                    <td>14</td>
+                    <td>-</td>
+                    <td>$167,800</td>
+                    <td>19.2%</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="fw-bold" style="border-top:2px solid var(--gray-200,#e2e6ed);color:#059669;">
+                    <td>TOTAL</td>
+                    <td>126</td>
+                    <td>662</td>
+                    <td>$874,250.00</td>
+                    <td>100%</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>
@@ -399,91 +463,91 @@
           <div class="panel panel-body h-100">
             <h2 class="panel-title mb-3">Production by Team Member</h2>
             <div class="table-responsive">
-            <table class="nexa-table">
-              <thead>
-                <tr>
-                  <th>Team Member</th>
-                  <th>Department</th>
-                  <th>Cases</th>
-                  <th>Units</th>
-                  <th>Production</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Dr. Heider</td>
-                  <td>Providers</td>
-                  <td>32</td>
-                  <td>168</td>
-                  <td>$228,450.00</td>
-                </tr>
-                <tr>
-                  <td>Dr. Vanessa</td>
-                  <td>Providers</td>
-                  <td>28</td>
-                  <td>142</td>
-                  <td>$198,300.00</td>
-                </tr>
-                <tr>
-                  <td>Jeremiah Smith</td>
-                  <td>ISR (Commission)</td>
-                  <td>18</td>
-                  <td>-</td>
-                  <td>$156,250.00</td>
-                </tr>
-                <tr>
-                  <td>Joshua Lee</td>
-                  <td>ISR (Flat Pay)</td>
-                  <td>16</td>
-                  <td>-</td>
-                  <td>$94,600.00</td>
-                </tr>
-                <tr>
-                  <td>Dr. Safa</td>
-                  <td>Providers</td>
-                  <td>13</td>
-                  <td>76</td>
-                  <td>$87,700.00</td>
-                </tr>
-                <tr>
-                  <td>Bianca Torres</td>
-                  <td>SDR</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>$32,500.00</td>
-                </tr>
-                <tr>
-                  <td>Nancy Johnson</td>
-                  <td>CE</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>$24,750.00</td>
-                </tr>
-                <tr>
-                  <td>Lab Tech Team</td>
-                  <td>Lab</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>$18,200.00</td>
-                </tr>
-                <tr>
-                  <td>Carlos Ramirez</td>
-                  <td>Marketing</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>$12,500.00</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr class="fw-bold" style="border-top:2px solid var(--gray-200,#e2e6ed);color:#059669;">
-                  <td>TOTAL</td>
-                  <td></td>
-                  <td>126</td>
-                  <td>662</td>
-                  <td>$874,250.00</td>
-                </tr>
-              </tfoot>
-            </table>
+              <table class="nexa-table">
+                <thead>
+                  <tr>
+                    <th>Team Member</th>
+                    <th>Department</th>
+                    <th>Cases</th>
+                    <th>Units</th>
+                    <th>Production</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dr. Heider</td>
+                    <td>Providers</td>
+                    <td>32</td>
+                    <td>168</td>
+                    <td>$228,450.00</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Vanessa</td>
+                    <td>Providers</td>
+                    <td>28</td>
+                    <td>142</td>
+                    <td>$198,300.00</td>
+                  </tr>
+                  <tr>
+                    <td>Jeremiah Smith</td>
+                    <td>ISR (Commission)</td>
+                    <td>18</td>
+                    <td>-</td>
+                    <td>$156,250.00</td>
+                  </tr>
+                  <tr>
+                    <td>Joshua Lee</td>
+                    <td>ISR (Flat Pay)</td>
+                    <td>16</td>
+                    <td>-</td>
+                    <td>$94,600.00</td>
+                  </tr>
+                  <tr>
+                    <td>Dr. Safa</td>
+                    <td>Providers</td>
+                    <td>13</td>
+                    <td>76</td>
+                    <td>$87,700.00</td>
+                  </tr>
+                  <tr>
+                    <td>Bianca Torres</td>
+                    <td>SDR</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>$32,500.00</td>
+                  </tr>
+                  <tr>
+                    <td>Nancy Johnson</td>
+                    <td>CE</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>$24,750.00</td>
+                  </tr>
+                  <tr>
+                    <td>Lab Tech Team</td>
+                    <td>Lab</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>$18,200.00</td>
+                  </tr>
+                  <tr>
+                    <td>Carlos Ramirez</td>
+                    <td>Marketing</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>$12,500.00</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="fw-bold" style="border-top:2px solid var(--gray-200,#e2e6ed);color:#059669;">
+                    <td>TOTAL</td>
+                    <td></td>
+                    <td>126</td>
+                    <td>662</td>
+                    <td>$874,250.00</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>
@@ -521,43 +585,43 @@
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Department Breakdown</h2>
         <div class="table-responsive">
-        <table class="nexa-table">
-          <thead>
-            <tr>
-              <th>Department</th>
-              <th>Booked Revenue</th>
-              <th>% of Total</th>
-              <th>Cases Booked</th>
-              <th>Show Rate</th>
-              <th>Goal Progress</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Providers</td>
-              <td>$598,450.00</td>
-              <td>68.4%</td>
-              <td>78</td>
-              <td>72.1%</td>
-              <td><span class="badge-status active">104%</span></td>
-            </tr>
-            <tr>
-              <td>ISR (Commission)</td>
-              <td>$156,250.00</td>
-              <td>17.9%</td>
-              <td>45</td>
-              <td>68.6%</td>
-              <td><span class="badge-status active">92%</span></td>
-            </tr>
-            <tr>
-              <td>ISR (Flat Pay)</td>
-              <td>$72,800.00</td>
-              <td>8.3%</td>
-              <td>22</td>
-              <td>64.3%</td>
-              <td><span class="badge-status warn">87%</span></td>
-            </tr>
-            <!-- <tr>
+          <table class="nexa-table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Booked Revenue</th>
+                <th>% of Total</th>
+                <th>Cases Booked</th>
+                <th>Show Rate</th>
+                <th>Goal Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Providers</td>
+                <td>$598,450.00</td>
+                <td>68.4%</td>
+                <td>78</td>
+                <td>72.1%</td>
+                <td><span class="badge-status active">104%</span></td>
+              </tr>
+              <tr>
+                <td>ISR (Commission)</td>
+                <td>$156,250.00</td>
+                <td>17.9%</td>
+                <td>45</td>
+                <td>68.6%</td>
+                <td><span class="badge-status active">92%</span></td>
+              </tr>
+              <tr>
+                <td>ISR (Flat Pay)</td>
+                <td>$72,800.00</td>
+                <td>8.3%</td>
+                <td>22</td>
+                <td>64.3%</td>
+                <td><span class="badge-status warn">87%</span></td>
+              </tr>
+              <!-- <tr>
               <td>SDR</td>
               <td>$16,150.00</td>
               <td>1.8%</td>
@@ -581,8 +645,8 @@
               <td>-</td>
               <td>-</td>
             </tr> -->
-          </tbody>
-        </table>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -592,82 +656,82 @@
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Production by Team Member (Full)</h2>
         <div class="table-responsive">
-        <table class="nexa-table">
-          <thead>
-            <tr>
-              <th>Team Member</th>
-              <th>Department</th>
-              <th>Cases</th>
-              <th>Units</th>
-              <th>Production</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Dr. Heider</td>
-              <td>Providers</td>
-              <td>32</td>
-              <td>168</td>
-              <td>$228,450.00</td>
-            </tr>
-            <tr>
-              <td>Dr. Vanessa</td>
-              <td>Providers</td>
-              <td>28</td>
-              <td>142</td>
-              <td>$198,300.00</td>
-            </tr>
-            <tr>
-              <td>Jeremiah Smith</td>
-              <td>ISR (Commission)</td>
-              <td>18</td>
-              <td>-</td>
-              <td>$156,250.00</td>
-            </tr>
-            <tr>
-              <td>Joshua Lee</td>
-              <td>ISR (Flat Pay)</td>
-              <td>16</td>
-              <td>-</td>
-              <td>$94,600.00</td>
-            </tr>
-            <tr>
-              <td>Dr. Safa</td>
-              <td>Providers</td>
-              <td>13</td>
-              <td>76</td>
-              <td>$87,700.00</td>
-            </tr>
-            <tr>
-              <td>Bianca Torres</td>
-              <td>SDR</td>
-              <td>-</td>
-              <td>-</td>
-              <td>$32,500.00</td>
-            </tr>
-            <tr>
-              <td>Nancy Johnson</td>
-              <td>CE</td>
-              <td>-</td>
-              <td>-</td>
-              <td>$24,750.00</td>
-            </tr>
-            <tr>
-              <td>Lab Tech Team</td>
-              <td>Lab</td>
-              <td>-</td>
-              <td>-</td>
-              <td>$18,200.00</td>
-            </tr>
-            <tr>
-              <td>Carlos Ramirez</td>
-              <td>Marketing</td>
-              <td>-</td>
-              <td>-</td>
-              <td>$12,500.00</td>
-            </tr>
-          </tbody>
-        </table>
+          <table class="nexa-table">
+            <thead>
+              <tr>
+                <th>Team Member</th>
+                <th>Department</th>
+                <th>Cases</th>
+                <th>Units</th>
+                <th>Production</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dr. Heider</td>
+                <td>Providers</td>
+                <td>32</td>
+                <td>168</td>
+                <td>$228,450.00</td>
+              </tr>
+              <tr>
+                <td>Dr. Vanessa</td>
+                <td>Providers</td>
+                <td>28</td>
+                <td>142</td>
+                <td>$198,300.00</td>
+              </tr>
+              <tr>
+                <td>Jeremiah Smith</td>
+                <td>ISR (Commission)</td>
+                <td>18</td>
+                <td>-</td>
+                <td>$156,250.00</td>
+              </tr>
+              <tr>
+                <td>Joshua Lee</td>
+                <td>ISR (Flat Pay)</td>
+                <td>16</td>
+                <td>-</td>
+                <td>$94,600.00</td>
+              </tr>
+              <tr>
+                <td>Dr. Safa</td>
+                <td>Providers</td>
+                <td>13</td>
+                <td>76</td>
+                <td>$87,700.00</td>
+              </tr>
+              <tr>
+                <td>Bianca Torres</td>
+                <td>SDR</td>
+                <td>-</td>
+                <td>-</td>
+                <td>$32,500.00</td>
+              </tr>
+              <tr>
+                <td>Nancy Johnson</td>
+                <td>CE</td>
+                <td>-</td>
+                <td>-</td>
+                <td>$24,750.00</td>
+              </tr>
+              <tr>
+                <td>Lab Tech Team</td>
+                <td>Lab</td>
+                <td>-</td>
+                <td>-</td>
+                <td>$18,200.00</td>
+              </tr>
+              <tr>
+                <td>Carlos Ramirez</td>
+                <td>Marketing</td>
+                <td>-</td>
+                <td>-</td>
+                <td>$12,500.00</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -677,68 +741,68 @@
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Production by Procedure / Case Type</h2>
         <div class="table-responsive">
-        <table class="nexa-table">
-          <thead>
-            <tr>
-              <th>Case Type</th>
-              <th>Cases</th>
-              <th>Units</th>
-              <th>Production</th>
-              <th>%</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Composite Veneers</td>
-              <td>42</td>
-              <td>166</td>
-              <td>$148,600</td>
-              <td>17.0%</td>
-            </tr>
-            <tr>
-              <td>Ceramic Veneers</td>
-              <td>31</td>
-              <td>132</td>
-              <td>$128,250</td>
-              <td>14.7%</td>
-            </tr>
-            <tr>
-              <td>Porcelain / Zirconia Veneers</td>
-              <td>28</td>
-              <td>116</td>
-              <td>$176,900</td>
-              <td>20.2%</td>
-            </tr>
-            <tr>
-              <td>Crowns (All Materials)</td>
-              <td>17</td>
-              <td>29</td>
-              <td>$64,200</td>
-              <td>7.3%</td>
-            </tr>
-            <tr>
-              <td>Bridges</td>
-              <td>5</td>
-              <td>19</td>
-              <td>$38,700</td>
-              <td>4.4%</td>
-            </tr>
-            <tr>
-              <td>Other General Procedures</td>
-              <td>26</td>
-              <td>176</td>
-              <td>$149,900</td>
-              <td>17.1%</td>
-            </tr>
-            <tr>
-              <td>Other Cosmetic Procedures</td>
-              <td>14</td>
-              <td>-</td>
-              <td>$167,800</td>
-              <td>19.2%</td>
-            </tr>
-          </tbody>
-        </table>
+          <table class="nexa-table">
+            <thead>
+              <tr>
+                <th>Case Type</th>
+                <th>Cases</th>
+                <th>Units</th>
+                <th>Production</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Composite Veneers</td>
+                <td>42</td>
+                <td>166</td>
+                <td>$148,600</td>
+                <td>17.0%</td>
+              </tr>
+              <tr>
+                <td>Ceramic Veneers</td>
+                <td>31</td>
+                <td>132</td>
+                <td>$128,250</td>
+                <td>14.7%</td>
+              </tr>
+              <tr>
+                <td>Porcelain / Zirconia Veneers</td>
+                <td>28</td>
+                <td>116</td>
+                <td>$176,900</td>
+                <td>20.2%</td>
+              </tr>
+              <tr>
+                <td>Crowns (All Materials)</td>
+                <td>17</td>
+                <td>29</td>
+                <td>$64,200</td>
+                <td>7.3%</td>
+              </tr>
+              <tr>
+                <td>Bridges</td>
+                <td>5</td>
+                <td>19</td>
+                <td>$38,700</td>
+                <td>4.4%</td>
+              </tr>
+              <tr>
+                <td>Other General Procedures</td>
+                <td>26</td>
+                <td>176</td>
+                <td>$149,900</td>
+                <td>17.1%</td>
+              </tr>
+              <tr>
+                <td>Other Cosmetic Procedures</td>
+                <td>14</td>
+                <td>-</td>
+                <td>$167,800</td>
+                <td>19.2%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -748,48 +812,48 @@
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Weekly Production</h2>
         <div class="table-responsive">
-        <table class="nexa-table">
-          <thead>
-            <tr>
-              <th>Week</th>
-              <th>Cases</th>
-              <th>Units</th>
-              <th>Production</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mar 1 – Mar 7</td>
-              <td>27</td>
-              <td>142</td>
-              <td>$186,400</td>
-            </tr>
-            <tr>
-              <td>Mar 8 – Mar 14</td>
-              <td>31</td>
-              <td>158</td>
-              <td>$204,750</td>
-            </tr>
-            <tr>
-              <td>Mar 15 – Mar 21</td>
-              <td>34</td>
-              <td>171</td>
-              <td>$228,600</td>
-            </tr>
-            <tr>
-              <td>Mar 22 – Mar 28</td>
-              <td>29</td>
-              <td>161</td>
-              <td>$212,300</td>
-            </tr>
-            <tr>
-              <td>Mar 29 – Mar 31</td>
-              <td>5</td>
-              <td>30</td>
-              <td>$42,200</td>
-            </tr>
-          </tbody>
-        </table>
+          <table class="nexa-table">
+            <thead>
+              <tr>
+                <th>Week</th>
+                <th>Cases</th>
+                <th>Units</th>
+                <th>Production</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mar 1 – Mar 7</td>
+                <td>27</td>
+                <td>142</td>
+                <td>$186,400</td>
+              </tr>
+              <tr>
+                <td>Mar 8 – Mar 14</td>
+                <td>31</td>
+                <td>158</td>
+                <td>$204,750</td>
+              </tr>
+              <tr>
+                <td>Mar 15 – Mar 21</td>
+                <td>34</td>
+                <td>171</td>
+                <td>$228,600</td>
+              </tr>
+              <tr>
+                <td>Mar 22 – Mar 28</td>
+                <td>29</td>
+                <td>161</td>
+                <td>$212,300</td>
+              </tr>
+              <tr>
+                <td>Mar 29 – Mar 31</td>
+                <td>5</td>
+                <td>30</td>
+                <td>$42,200</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -799,54 +863,54 @@
       <div class="panel panel-body">
         <h2 class="panel-title mb-3">Daily Activity</h2>
         <div class="table-responsive">
-        <table class="nexa-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Cases</th>
-              <th>Units</th>
-              <th>Production</th>
-              <th>Top Producer</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mar 31, 2026</td>
-              <td>6</td>
-              <td>32</td>
-              <td>$42,300</td>
-              <td>Dr. Heider</td>
-            </tr>
-            <tr>
-              <td>Mar 30, 2026</td>
-              <td>5</td>
-              <td>27</td>
-              <td>$36,100</td>
-              <td>Dr. Vanessa</td>
-            </tr>
-            <tr>
-              <td>Mar 29, 2026</td>
-              <td>4</td>
-              <td>22</td>
-              <td>$28,900</td>
-              <td>Dr. Safa</td>
-            </tr>
-            <tr>
-              <td>Mar 28, 2026</td>
-              <td>5</td>
-              <td>26</td>
-              <td:>$33,450</td>
+          <table class="nexa-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Cases</th>
+                <th>Units</th>
+                <th>Production</th>
+                <th>Top Producer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mar 31, 2026</td>
+                <td>6</td>
+                <td>32</td>
+                <td>$42,300</td>
                 <td>Dr. Heider</td>
-            </tr>
-            <tr>
-              <td>Mar 27, 2026</td>
-              <td>3</td>
-              <td>18</td>
-              <td>$21,600</td>
-              <td>Jeremiah Smith</td>
-            </tr>
-          </tbody>
-        </table>
+              </tr>
+              <tr>
+                <td>Mar 30, 2026</td>
+                <td>5</td>
+                <td>27</td>
+                <td>$36,100</td>
+                <td>Dr. Vanessa</td>
+              </tr>
+              <tr>
+                <td>Mar 29, 2026</td>
+                <td>4</td>
+                <td>22</td>
+                <td>$28,900</td>
+                <td>Dr. Safa</td>
+              </tr>
+              <tr>
+                <td>Mar 28, 2026</td>
+                <td>5</td>
+                <td>26</td>
+                <td:>$33,450</td>
+                  <td>Dr. Heider</td>
+              </tr>
+              <tr>
+                <td>Mar 27, 2026</td>
+                <td>3</td>
+                <td>18</td>
+                <td>$21,600</td>
+                <td>Jeremiah Smith</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
